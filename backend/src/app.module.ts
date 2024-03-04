@@ -20,7 +20,7 @@ const configModule = ConfigModule.forRoot({
 const typeOrmModule = TypeOrmModule.forRoot({
   type: 'mysql',
   url: process.env.MYSQL_URL,
-  entities: [path.join(__dirname, '/**/*.entity{.ts, .js}')],
+  autoLoadEntities: true,
   synchronize: process.env.NODE_ENV === 'dev'
 });
 
@@ -30,7 +30,7 @@ const redisProvider: Provider = {
   provide: 'REDIS_CLIENT',
   useFactory: async () => {
     const client = createClient({
-        url: process.env.REDIS_URL
+      url: process.env.REDIS_URL
     });
     await client.connect();
     return client;
@@ -42,4 +42,4 @@ const redisProvider: Provider = {
   controllers: [AppController],
   providers: [redisProvider, AppService],
 })
-export class AppModule {}
+export class AppModule { }
