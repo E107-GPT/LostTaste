@@ -31,7 +31,6 @@ const mongooseModule = MongooseModule.forRoot(process.env.MONGODB_URL);
 const redisModule = CacheModule.registerAsync({
   useFactory: async () => ({
     store: () => redisStore({
-      ttl: 1000 * 60 * 60 * 24 * 7,
       url: process.env.REDIS_HOST
     })
   })
