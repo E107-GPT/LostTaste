@@ -5,9 +5,11 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongooseModule } from '@nestjs/mongoose';
-import { createClient } from 'redis';
+import { RedisClientOptions } from 'redis';
 import { ConfigModule } from '@nestjs/config';
 import * as path from 'path';
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-yet';
 
 const configModule = ConfigModule.forRoot({
   isGlobal: true,
@@ -26,20 +28,18 @@ const typeOrmModule = TypeOrmModule.forRoot({
 
 const mongooseModule = MongooseModule.forRoot(process.env.MONGODB_URL);
 
-const redisProvider: Provider = {
-  provide: 'REDIS_CLIENT',
-  useFactory: async () => {
-    const client = createClient({
-        url: process.env.REDIS_URL
-    });
-    await client.connect();
-    return client;
-  }
-}
+const redisModule = CacheModule.registerAsync({
+  useFactory: async () => ({
+    store: () => redisStore({
+      ttl: 1000 * 60 * 60 * 24 * 7,
+      url: process.env.REDIS_HOST
+    })
+  })
+});
 
 @Module({
-  imports: [configModule, typeOrmModule, mongooseModule, AuthModule, UserModule],
+  imports: [configModule, typeOrmModule, mongooseModule, redisModule, AuthModule, UserModule],
   controllers: [AppController],
-  providers: [redisProvider, AppService],
+  providers: [AppService],
 })
 export class AppModule {}
