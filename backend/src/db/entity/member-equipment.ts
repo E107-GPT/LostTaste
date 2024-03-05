@@ -1,6 +1,6 @@
 import { Entity, JoinColumn, OneToOne } from "typeorm";
 import { Code, Id } from "../decorators";
-import { Member } from "./user";
+import { Member } from "./member";
 import { CampSkinCode, JobCode, PetCode, SkinCode } from "src/types/codes";
 
 @Entity()

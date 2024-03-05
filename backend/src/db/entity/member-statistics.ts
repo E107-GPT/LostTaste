@@ -1,6 +1,6 @@
 import { Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
 import { Id } from "../decorators";
-import { Member } from "./user";
+import { Member } from "./member";
 
 @Entity()
 export class MemberStatistics {

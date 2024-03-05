@@ -1,7 +1,7 @@
 import { SkinCode } from "src/types/codes";
 import { Entity, JoinColumn, ManyToOne } from "typeorm";
 import { Code, GeneratedId } from "../decorators";
-import { Member } from "./user";
+import { Member } from "./member";
 
 @Entity()
 export class SkinUnlock {
