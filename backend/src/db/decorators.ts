@@ -8,7 +8,7 @@ export const GeneratedId = (comment?: string) => PrimaryGeneratedColumn({ type: 
 
 export const Id = (comment?: string) => PrimaryColumn({ type: 'bigint', comment});
 
-export const Code = (comment?: string) => Column({ type: 'varchar', length: 32, comment }); 
+export const Code = (comment?: string) => Column({ type: 'smallint', comment }); 
 
 export const Nickname = (comment?: string) => Column({ type: 'varchar', length: 16, comment });
 

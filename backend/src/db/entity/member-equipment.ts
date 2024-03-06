@@ -10,18 +10,18 @@ export class MemberEquipment extends EntityBase {
     id: number;
 
     @Code('착용 중 스킨 코드')
-    skinCode: keyof SkinCode;
+    skinCode: SkinCode;
     
     @Code('착용 중 캠프 스킨 코드')
-    campSkinCode: keyof CampSkinCode;
+    campSkinCode: CampSkinCode;
 
     @Code('착용 중 직업 코드')
-    jobCode: keyof JobCode;
+    jobCode: JobCode;
 
     @Code('착용 중 펫 코드')
-    petCode: keyof PetCode;
+    petCode: PetCode;
 
-    
+
     @OneToOne(() => Member)
     @JoinColumn({ name: 'memberId' })
     member: Member;

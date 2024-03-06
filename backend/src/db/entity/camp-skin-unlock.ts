@@ -14,5 +14,5 @@ export class CampSkinUnlock extends EntityBase {
     member: Member
 
     @Code('캠프 코드')
-    jobCode: keyof CampSkinCode
+    jobCode: CampSkinCode
 }

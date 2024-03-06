@@ -1,15 +1,15 @@
 export enum SkinCode {
-    DEFAULT,
+    DEFAULT = 0,
 };
 
 export enum CampSkinCode {
-    DEFAULT,
+    DEFAULT = 0,
 };
 
 export enum JobCode {
-    ADVENTURER,
+    ADVENTURER = 0,
 };
 
 export enum PetCode {
-    NONE,
+    NONE = 0,
 };

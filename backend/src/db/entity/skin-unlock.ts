@@ -14,5 +14,5 @@ export class SkinUnlock extends EntityBase {
     member: Member
 
     @Code('스킨 코드')
-    skinCode: keyof SkinCode
+    skinCode: SkinCode
 }

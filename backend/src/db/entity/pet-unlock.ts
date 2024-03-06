@@ -14,5 +14,5 @@ export class PetUnlock extends EntityBase {
     member: Member
 
     @Code('펫 코드')
-    jobCode: keyof PetCode
+    jobCode: PetCode
 }

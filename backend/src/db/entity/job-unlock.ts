@@ -14,5 +14,5 @@ export class JobUnlock extends EntityBase {
     member: Member
 
     @Code('직업 코드')
-    jobCode: keyof JobCode
+    jobCode: JobCode
 }
