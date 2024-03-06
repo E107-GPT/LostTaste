@@ -5,16 +5,17 @@ import { JobUnlock } from './job-unlock';
 import { MemberStatistics } from './member-statistics';
 import { PetUnlock } from './pet-unlock';
 import { SkinUnlock } from './skin-unlock';
+import { EntityBase } from '../entity-base';
 
 @Entity()
-export class Member {
+export class Member extends EntityBase {
   @GeneratedId('사용자 일련번호')
   id: number;
 
   @Nickname('사용자 닉네임')
   nickname: string;
 
-  @Username('사용자 이름')
+  @Username('로그인 시 사용자 이름')
   username: string;
 
   @Password('사용자 비밀번호')

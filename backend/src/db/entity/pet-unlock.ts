@@ -2,9 +2,10 @@ import { PetCode } from "src/types/codes";
 import { Entity, JoinColumn, ManyToOne } from "typeorm";
 import { Code, GeneratedId } from "../decorators";
 import { Member } from "./member";
+import { EntityBase } from "../entity-base";
 
 @Entity()
-export class PetUnlock {
+export class PetUnlock extends EntityBase {
     @GeneratedId('펫 해금 ID')
     id: number;
 

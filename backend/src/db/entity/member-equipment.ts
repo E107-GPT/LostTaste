@@ -2,9 +2,10 @@ import { Entity, JoinColumn, OneToOne } from "typeorm";
 import { Code, Id } from "../decorators";
 import { Member } from "./member";
 import { CampSkinCode, JobCode, PetCode, SkinCode } from "src/types/codes";
+import { EntityBase } from "../entity-base";
 
 @Entity()
-export class MemberEquipment {
+export class MemberEquipment extends EntityBase {
     @Id('사용자 ID')
     id: number;
 
@@ -20,6 +21,7 @@ export class MemberEquipment {
     @Code('착용 중 펫 코드')
     petCode: keyof PetCode;
 
+    
     @OneToOne(() => Member)
     @JoinColumn({ name: 'memberId' })
     member: Member;
