@@ -8,4 +8,4 @@
  * @param str 변환할 camelCase 문자열
  * @returns 변환된 snake_case 문자열
  */
-const convertCameltoSnake = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`); 
+const convertCamelToSnake = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`); 

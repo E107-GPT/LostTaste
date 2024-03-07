@@ -51,7 +51,7 @@ export const IsDeleted = (comment?: string) => Column({type: 'boolean', default:
  */
 export const CodeColumn = <T extends CodeTableEntity>(type: ObjectType<T>, name?: string) => (
     (target: Object, propertyKey: string | symbol): void => {
-        let newColumnName = name ?? convertCameltoSnake(propertyKey.toString());
+        let newColumnName = name ?? convertCamelToSnake(propertyKey.toString());
 
         JoinColumn({ name: newColumnName })(target, propertyKey);
         ManyToOne(() => type)(target, propertyKey);
