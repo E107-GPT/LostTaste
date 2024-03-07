@@ -9,6 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 const configModule = ConfigModule.forRoot({
   isGlobal: true,
@@ -22,6 +23,7 @@ const typeOrmModule = TypeOrmModule.forRoot({
   type: 'mysql',
   url: process.env.MYSQL_URL,
   entities: [ path.join(__dirname, '/db/entity/*.{js, ts}')],
+  namingStrategy: new SnakeNamingStrategy(),
   synchronize: process.env.NODE_ENV === 'dev'
 });
 
