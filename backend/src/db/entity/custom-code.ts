@@ -1,14 +1,12 @@
-import { Entity, JoinColumn, OneToOne } from "typeorm";
-import { Id } from "../decorators";
+import { Entity } from "typeorm";
+import { CodeColumn, CodeTableEntity, Id } from "../typeorm-utils";
 import { CustomCodeType } from "./custom-code-type";
 
 @Entity()
-export class CustomCode {
+export class CustomCode implements CodeTableEntity {
     @Id('커스텀 코드')
     id: number;
 
-    // @Code(CustomCodeType)
-    @JoinColumn({ name: 'prefix' })
-    @OneToOne(() => CustomCodeType)
+    @CodeColumn(CustomCodeType, 'prefix')
     prefix: CustomCodeType;
 }

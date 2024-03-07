@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
+import { CodeTableEntity } from "../typeorm-utils";
 
 @Entity()
-export class CustomCodeType {
+export class CustomCodeType implements CodeTableEntity {
     @PrimaryColumn({
         type: 'char',
         length: 3,
