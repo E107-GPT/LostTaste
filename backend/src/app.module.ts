@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { CodeModule } from './code/code.module';
 
 const configModule = ConfigModule.forRoot({
   isGlobal: true,
@@ -38,7 +39,7 @@ const redisModule = CacheModule.registerAsync({
 });
 
 @Module({
-  imports: [configModule, typeOrmModule, mongooseModule, redisModule, AuthModule, UserModule],
+  imports: [configModule, typeOrmModule, mongooseModule, redisModule, AuthModule, UserModule, CodeModule, CodeModule],
   controllers: [AppController],
   providers: [AppService],
 })

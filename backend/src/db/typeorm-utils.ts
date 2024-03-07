@@ -5,6 +5,7 @@
  */
 
 import { Column, CreateDateColumn, JoinColumn, ManyToOne, ObjectType, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { convertCamelToSnake } from "src/util/string-utils";
 
 /**
  * 코드성 테이블과 매핑되는 엔티티임을 표시하기 위한 마커 인터페이스입니다. 

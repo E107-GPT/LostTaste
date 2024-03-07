@@ -7,6 +7,6 @@ export class CustomCode implements CodeTableEntity {
     @Id('커스텀 코드')
     id: number;
 
-    @CodeColumn(CustomCodeType, 'prefix')
+    @CodeColumn(CustomCodeType)
     prefix: CustomCodeType;
 }
