@@ -3,12 +3,13 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 import * as fs from 'fs';
+import * as path from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     httpsOptions: {
-      key: fs.readFileSync(process.cwd() + '/resources/cert.key'),
-      cert: fs.readFileSync(process.cwd() + '/resources/cert.crt'),
+      key: fs.readFileSync(path.join(process.cwd(), process.env.HTTPS_KEY_PATH)),
+      cert: fs.readFileSync(path.join(process.cwd(), process.env.HTTPS_CERT_PATH)),
     }
   });
 
