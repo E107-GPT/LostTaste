@@ -63,10 +63,19 @@ public class PhotonTest : MonoBehaviourPunCallbacks
             PhotonNetwork.GameVersion = gameVersion;
 
             // 포톤 클라우드에 연결되는 시작 지점
-            PhotonNetwork.ConnectUsingSettings();
-
-            
+            PhotonNetwork.ConnectUsingSettings();            
         }        
+    }
+
+    public void makeRoom()
+    {
+        string roomName = GameObject.Find("GameManager").GetComponent<UIManager>().GetTitle();
+        RoomOptions room = new RoomOptions();
+        room.MaxPlayers = 4;
+        room.IsVisible = true;
+        room.IsOpen= true;
+
+        PhotonNetwork.CreateRoom(roomName, room);
     }
     #endregion
 
@@ -89,8 +98,9 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
-    {        
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxplayersPerRoom});
+    {
+        //PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxplayersPerRoom});
+        Debug.Log("방 들어가기 실패");
     }
 
     public override void OnJoinedRoom()

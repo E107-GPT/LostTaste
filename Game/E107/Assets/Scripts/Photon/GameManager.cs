@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     #region private methods
     void LoadArena()
     {
-        // 나스터 클라이언트인 경우에만 호출
+        // 마스터 클라이언트인 경우에만 호출
         if (!PhotonNetwork.IsMasterClient)
         {
             Debug.Log("PhotonNetwork: 레벨을 로드하려고 하지만 마스터 클라이언트가 아닙니다.");
@@ -61,4 +61,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
     }
     #endregion
+
+    private void Start()
+    {
+        Debug.Log(PhotonNetwork.CurrentRoom.Name);
+
+        Debug.Log(PhotonNetwork.CurrentRoom);
+
+    }
 }
