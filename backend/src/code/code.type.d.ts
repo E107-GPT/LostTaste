@@ -16,3 +16,8 @@ export interface CodeMap {
     custom: CustomCodeTypeMap
     item: ItemCodeMap;
 }
+
+export interface PrefixAndCode {
+    prefix: string,
+    code: string
+}
