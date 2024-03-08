@@ -4,10 +4,10 @@ import { CustomCodeType } from "./custom-code-type";
 
 @Entity()
 export class CustomCode implements CodeTableEntity {
-    @Id('커스텀 코드')
+    @Id('커스텀 코드 ID', 'custom_code_id')
     id: string;
 
-    @CodeColumn(CustomCodeType, 'prefix')
+    @CodeColumn(CustomCodeType, 'type_id')
     type: CustomCodeType;
 
     @Column({ type: 'varchar', length: 16})

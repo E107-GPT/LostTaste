@@ -19,9 +19,9 @@ export class PartyMember {
     isCaptain: boolean;
 
 
-    @ManyToOne(() => Member)
+    @ManyToOne(() => Member, member => member.id)
     member: Member;
 
-    @ManyToOne(() => Adventure)
+    @ManyToOne(() => Adventure, adventure => adventure.id)
     adventure: Adventure;
 }

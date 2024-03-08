@@ -37,7 +37,7 @@ export class CodeService implements OnApplicationBootstrap {
         const customCodes: CustomCode[] = await this.customCodeRepository.find();
 
         customCodes.forEach((customCode) => {
-            const prefix = customCode.type.prefix;
+            const prefix = customCode.type.id;
             if (custom.has(prefix)) {
                 custom.set(prefix, new Map() as CustomCodeMap);
             }
@@ -49,14 +49,14 @@ export class CodeService implements OnApplicationBootstrap {
         const itemCodes: ItemCode[] = await this.itemCodeRepository.find();
 
         itemCodes.forEach((itemCode) => {
-            this.codeMap.item.set(itemCode.itemCode, itemCode.itemName);
+            this.codeMap.item.set(itemCode.id, itemCode.itemName);
         });
 
         this.logger.log('공통 코드 로딩 완료!');
     }
 
     async getCustomCodeTypeEntity(prefix: string): Promise<CustomCodeType | undefined> {
-        return await this.customCodeTypeRepository.findOne({where: {prefix} });
+        return await this.customCodeTypeRepository.findOne({where: {id: prefix} });
     }
 
     async getCustomCodeEntity(fullCode: string | PrefixAndCode): Promise<CustomCode | undefined> {
@@ -77,7 +77,7 @@ export class CodeService implements OnApplicationBootstrap {
         }
         
         return await this.customCodeRepository.findOne({
-            where: {type: {prefix: prefix}, id: code}
+            where: {type: {id: prefix}, id: code}
         });
     }
 }

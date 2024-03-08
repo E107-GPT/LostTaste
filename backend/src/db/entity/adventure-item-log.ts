@@ -17,7 +17,7 @@ export class AdventureItemLog {
     @ManyToOne(() => PartyMember)
     partyMember: PartyMember;
 
-    @CodeColumn(ItemCode)
+    @ManyToOne(() => ItemCode)
     itemCode: ItemCode;
 
     @CreatedAt('로그 생성 시간')

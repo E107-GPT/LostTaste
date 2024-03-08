@@ -3,8 +3,8 @@ import { CodeTableEntity, Id } from "../typeorm-utils";
 
 @Entity()
 export class ItemCode implements CodeTableEntity {
-    @Id('아이템 코드')
-    itemCode: string;
+    @Id('아이템 코드', 'item_code_id')
+    id: string;
 
     @Column({
         type: 'varchar',

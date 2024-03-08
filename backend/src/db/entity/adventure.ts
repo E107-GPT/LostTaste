@@ -3,7 +3,7 @@ import { CreatedAt, GeneratedId } from "../typeorm-utils";
 
 @Entity()
 export class Adventure {
-    @GeneratedId('모험 ID')
+    @GeneratedId('모험 ID', 'adventure_id')
     id: string;
 
     /**

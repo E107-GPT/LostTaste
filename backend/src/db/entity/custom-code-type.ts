@@ -1,16 +1,16 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 import { CodeTableEntity } from "../typeorm-utils";
-import { CustomCode } from "./custom-code";
 
 @Entity()
 export class CustomCodeType implements CodeTableEntity {
     @PrimaryColumn({
+        name: 'custom_code_type_id',
         type: 'char',
         length: 3,
         nullable: false,
-        comment: '커스텀 코드 타입 접두사'
+        comment: '커스텀 코드 타입 ID'
     })
-    prefix: string;
+    id: string;
 
     @Column({
         type: 'varchar',

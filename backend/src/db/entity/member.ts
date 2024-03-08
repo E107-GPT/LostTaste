@@ -3,7 +3,7 @@ import { CreatedAt, GeneratedId } from "../typeorm-utils";
 
 @Entity()
 export class Member {
-    @GeneratedId('사용자 아이디')
+    @GeneratedId('사용자 아이디', 'member_id')
     id: string
 
     @Column({

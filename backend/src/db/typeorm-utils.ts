@@ -14,9 +14,10 @@ export interface CodeTableEntity {}
 /**
  * Auto-increment PK 타입에 대한 데코레이터를 제공합니다.
  * @param comment 코멘트
+ * @param name 컬럼 이름
  * @returns 
  */
-export const GeneratedId = (comment?: string) => PrimaryGeneratedColumn({ type: 'bigint', comment });
+export const GeneratedId = (comment?: string, name?: string) => PrimaryGeneratedColumn({ type: 'bigint', comment, name });
 
 /**
  * PK 타입에 대한 데코레이터를 제공합니다.
@@ -25,7 +26,7 @@ export const GeneratedId = (comment?: string) => PrimaryGeneratedColumn({ type: 
  * @param comment 코멘트
  * @returns 
  */
-export const Id = (comment?: string) => PrimaryColumn({ type: 'bigint', comment});
+export const Id = (comment?: string, name?: string) => PrimaryColumn({ type: 'bigint', comment, name});
 
 /**
  * 생성시간 컬럼에 대한 데코레이터를 제공합니다.
