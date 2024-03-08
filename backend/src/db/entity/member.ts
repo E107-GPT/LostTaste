@@ -1,4 +1,4 @@
-import { Column, Entity, Generated } from "typeorm";
+import { Column, Entity } from "typeorm";
 import { CreatedAt, GeneratedId } from "../typeorm-utils";
 
 @Entity()
