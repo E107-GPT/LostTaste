@@ -26,9 +26,9 @@ export class Adventure {
     @Column({
         type: 'tinyint',
         nullable: false,
-        comment: '진행 방 수'
+        comment: '진행 스테이지 수'
     })
-    roomCount: number;
+    stageCount: number;
 
     @Column({
         type: 'json',
