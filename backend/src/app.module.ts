@@ -25,7 +25,8 @@ const typeOrmModule = TypeOrmModule.forRoot({
   url: process.env.MYSQL_URL,
   entities: [ path.join(__dirname, '/db/entity/*.{js, ts}')],
   namingStrategy: new SnakeNamingStrategy(),
-  synchronize: process.env.NODE_ENV === 'dev'
+  synchronize: process.env.NODE_ENV === 'dev',
+  logging: process.env.NODE_ENV === 'dev'
 });
 
 const mongooseModule = MongooseModule.forRoot(process.env.MONGODB_URL);
