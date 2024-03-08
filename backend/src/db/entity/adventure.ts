@@ -26,7 +26,7 @@ export class Adventure {
     @Column({
         type: 'tinyint',
         nullable: false,
-        comment: '진행 스테이지 수'
+        comment: '클리어 스테이지 수'
     })
     stageCount: number;
 
