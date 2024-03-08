@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CustomCode } from 'src/db/entity/custom-code';
 import { Repository } from 'typeorm';
 import { CodeMap, CustomCodeMap } from './code.type';
+import { ItemCode } from 'src/db/entity/item-code';
 
 @Injectable()
 export class CodeService implements OnApplicationBootstrap {
@@ -11,6 +12,9 @@ export class CodeService implements OnApplicationBootstrap {
     constructor (
         @InjectRepository(CustomCode)
         private customCodeRepository: Repository<CustomCode>,
+
+        @InjectRepository(ItemCode)
+        private itemCodeRepository: Repository<ItemCode>,
     ) {}
     
     private codeMap: CodeMap = {
@@ -34,7 +38,11 @@ export class CodeService implements OnApplicationBootstrap {
             }
         });
         
-        // TODO: itemCode
+        const itemCodes: ItemCode[] = await this.itemCodeRepository.find();
+
+        itemCodes.forEach((itemCode) => {
+            this.codeMap.item.set(itemCode.itemCode, itemCode.itemName);
+        });
 
         this.logger.log('공통 코드 로딩 완료!');
     }
