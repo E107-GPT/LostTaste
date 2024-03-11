@@ -8,11 +8,6 @@ import { Column, CreateDateColumn, DeleteDateColumn, JoinColumn, ManyToOne, Obje
 import { CommonCode } from "./entity/common-code";
 
 /**
- * 코드성 테이블과 매핑되는 엔티티임을 표시하기 위한 마커 인터페이스입니다. 
- */
-export interface CodeTableEntity {}
-
-/**
  * Auto-increment PK 타입에 대한 데코레이터를 제공합니다.
  * @param comment 코멘트
  * @param name 컬럼 이름

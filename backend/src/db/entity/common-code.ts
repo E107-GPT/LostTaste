@@ -1,9 +1,9 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
-import { CodeTableEntity, Id } from "../typeorm-utils";
+import { Id } from "../typeorm-utils";
 import { CommonCodeType } from "./common-code-type";
 
 @Entity({ comment: '커스텀 코드' })
-export class CommonCode implements CodeTableEntity {
+export class CommonCode {
     @Id('커스텀 코드 ID', 'custom_code_id')
     id: string;
 

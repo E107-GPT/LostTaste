@@ -1,8 +1,7 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
-import { CodeTableEntity } from "../typeorm-utils";
 
 @Entity({ comment: '커스텀 코드 타입' })
-export class CommonCodeType implements CodeTableEntity {
+export class CommonCodeType {
     @PrimaryColumn({
         name: 'custom_code_type_id',
         type: 'char',
