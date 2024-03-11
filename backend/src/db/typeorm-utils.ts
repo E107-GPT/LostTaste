@@ -4,7 +4,8 @@
  * @author 구본웅
  */
 
-import { Column, CreateDateColumn, JoinColumn, ManyToOne, ObjectType, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, JoinColumn, ManyToOne, ObjectType, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { CommonCode } from "./entity/common-code";
 
 /**
  * 코드성 테이블과 매핑되는 엔티티임을 표시하기 위한 마커 인터페이스입니다. 
@@ -36,13 +37,6 @@ export const Id = (comment?: string, name?: string) => PrimaryColumn({ type: 'bi
 export const CreatedAt = (comment?: string) => CreateDateColumn({ type: 'datetime', comment });
 
 /**
- * 삭제여부 컬럼에 대한 데코레이터를 제공합니다.
- * @param comment 코멘트
- * @returns 
- */
-export const IsDeleted = (comment?: string) => Column({type: 'boolean', default: false, comment});
-
-/**
  * 공통코드 엔티티와 연관관계를 맺는 컬럼에 대한 데코레이터입니다.
  * 
  * 내부적으로, 코드 테이블과 단방향 참조의 1:N 관계를 매핑합니다. 이 데코레이터가 적용된 컬럼이 연관 관계의 주인(owner)이 됩니다.
@@ -58,3 +52,17 @@ export const CodeColumn = (name?: string, nullable: boolean = false) => (
         ManyToOne(() => CommonCode, { nullable })(target, propertyKey);
     }
 );
+
+/**
+ * 삭제 시간 컬럼에 대한 데코레이터를 제공합니다.
+ * @param comment 코멘트
+ * @returns 
+ */
+export const DeletedAt = (comment?: string) => DeleteDateColumn({ type: 'datetime', comment })
+
+/**
+ * 패스워드 컬럼에 대한 데코레이터를 제공합니다.
+ * @param comment 코멘트
+ * @returns 
+ */
+export const Password = (comment?: string) => Column({ type: 'char', length: 64, nullable: true, comment })

@@ -1,7 +1,7 @@
 import { Entity, JoinColumn, ManyToOne } from "typeorm";
 import { CreatedAt, Id } from "../typeorm-utils";
-import { PartyMember } from "./party-member";
 import { CommonCode } from "./common-code";
+import { PartyMember } from "./party-member";
 
 @Entity({ comment: '모험 아이템 기록' })
 export class AdventureItemLog {
