@@ -43,19 +43,18 @@ export const CreatedAt = (comment?: string) => CreateDateColumn({ type: 'datetim
 export const IsDeleted = (comment?: string) => Column({type: 'boolean', default: false, comment});
 
 /**
- * 코드 엔티티와 연관관계를 맺는 컬럼에 대한 데코레이터입니다.
+ * 공통코드 엔티티와 연관관계를 맺는 컬럼에 대한 데코레이터입니다.
  * 
  * 내부적으로, 코드 테이블과 단방향 참조의 1:N 관계를 매핑합니다. 이 데코레이터가 적용된 컬럼이 연관 관계의 주인(owner)이 됩니다.
  * 
  * NOTE: 만약 컬럼이 코드 테이블에 대해 FK이면서 식별 관계인 경우, 컬럼을 분리하고 `@Id`와 @ManyToOne`을 사용하세요.
  * 
- * @param type 참조할 코드 테이블의 엔티티 클래스
  * @param name 테이블 상에서의 컬럼 이름. 생략하면 참조 테이블의 ID 컬럼명이 snake_case로 변환되어 적용됩니다.
  * @param nullable 해당 컬럼의 Nullable 여부, 기본 false.
  */
-export const CodeColumn = <T extends CodeTableEntity>(type: ObjectType<T>, name?: string, nullable: boolean = false) => (
+export const CodeColumn = (name?: string, nullable: boolean = false) => (
     (target: Object, propertyKey: string | symbol): void => {
         JoinColumn({ name })(target, propertyKey);
-        ManyToOne(() => type, { nullable })(target, propertyKey);
+        ManyToOne(() => CommonCode, { nullable })(target, propertyKey);
     }
 );

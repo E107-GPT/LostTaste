@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { CodeColumn, CreatedAt, GeneratedId } from "../typeorm-utils";
 import { Member } from "./member";
 import { ItemCode } from "./item-code";
+import { CommonCode } from "./common-code";
 
 @Entity({ comment: '해금' })
 export class Unlock {
@@ -12,8 +13,8 @@ export class Unlock {
     @JoinColumn()
     member: Member;
 
-    @CodeColumn(ItemCode)
-    itemCode: ItemCode;
+    @CodeColumn()
+    itemCode: CommonCode;
 
     @Column({
         type: 'int',

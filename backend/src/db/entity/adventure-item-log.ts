@@ -1,7 +1,7 @@
 import { Entity, JoinColumn, ManyToOne } from "typeorm";
 import { CreatedAt, Id } from "../typeorm-utils";
-import { ItemCode } from "./item-code";
 import { PartyMember } from "./party-member";
+import { CommonCode } from "./common-code";
 
 @Entity({ comment: '모험 아이템 기록' })
 export class AdventureItemLog {
@@ -19,8 +19,8 @@ export class AdventureItemLog {
     @JoinColumn({ name: 'adventure_id', referencedColumnName: 'adventureId' })
     partyMember: PartyMember;
 
-    @ManyToOne(() => ItemCode)
-    itemCode: ItemCode;
+    @ManyToOne(() => CommonCode)
+    itemCode: CommonCode;
 
     @CreatedAt('로그 생성 시간')
     createdAt: Date;

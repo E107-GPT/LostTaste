@@ -1,21 +1,21 @@
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CustomCode } from 'src/db/entity/custom-code';
+import { CommonCode } from 'src/db/entity/common-code';
 import { Repository } from 'typeorm';
 import { CodeMap, CustomCodeMap, PrefixAndCode } from './code.type';
 import { ItemCode } from 'src/db/entity/item-code';
-import { CustomCodeType } from 'src/db/entity/custom-code-type';
+import { CommonCodeType } from 'src/db/entity/common-code-type';
 
 @Injectable()
 export class CodeService implements OnApplicationBootstrap {
     private readonly logger: Logger = new Logger(CodeService.name);
 
     constructor (
-        @InjectRepository(CustomCodeType)
-        private customCodeTypeRepository: Repository<CustomCodeType>,
+        @InjectRepository(CommonCodeType)
+        private customCodeTypeRepository: Repository<CommonCodeType>,
 
-        @InjectRepository(CustomCode)
-        private customCodeRepository: Repository<CustomCode>,
+        @InjectRepository(CommonCode)
+        private customCodeRepository: Repository<CommonCode>,
 
         @InjectRepository(ItemCode)
         private itemCodeRepository: Repository<ItemCode>,
@@ -34,7 +34,7 @@ export class CodeService implements OnApplicationBootstrap {
     async onApplicationBootstrap(): Promise<void> {
         const custom = this.codeMap.custom;
 
-        const customCodes: CustomCode[] = await this.customCodeRepository.find();
+        const customCodes: CommonCode[] = await this.customCodeRepository.find();
 
         customCodes.forEach((customCode) => {
             const prefix = customCode.type.id;
@@ -55,11 +55,11 @@ export class CodeService implements OnApplicationBootstrap {
         this.logger.log('공통 코드 로딩 완료!');
     }
 
-    async getCustomCodeTypeEntity(prefix: string): Promise<CustomCodeType | undefined> {
+    async getCustomCodeTypeEntity(prefix: string): Promise<CommonCodeType | undefined> {
         return await this.customCodeTypeRepository.findOne({where: {id: prefix} });
     }
 
-    async getCustomCodeEntity(fullCode: string | PrefixAndCode): Promise<CustomCode | undefined> {
+    async getCustomCodeEntity(fullCode: string | PrefixAndCode): Promise<CommonCode | undefined> {
         let prefix = '';
         let code = '';
         if (typeof fullCode === 'string') {
