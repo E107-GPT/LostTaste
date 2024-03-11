@@ -5,13 +5,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { redisStore } from 'cache-manager-redis-yet';
 import * as path from 'path';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { CodeModule } from './code/code.module';
-import { IndexController } from './index/index.controller';
+import { UserModule } from './user/user.module';
 
 const configModule = ConfigModule.forRoot({
   isGlobal: true,
@@ -42,7 +41,7 @@ const redisModule = CacheModule.registerAsync({
 
 @Module({
   imports: [configModule, typeOrmModule, mongooseModule, redisModule, AuthModule, UserModule, CodeModule, CodeModule],
-  controllers: [AppController, IndexController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule { }
