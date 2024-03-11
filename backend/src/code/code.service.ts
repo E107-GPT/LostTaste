@@ -1,10 +1,9 @@
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommonCode } from 'src/db/entity/common-code';
-import { Repository } from 'typeorm';
-import { CodeMap, CustomCodeMap, PrefixAndCode } from './code.type';
-import { ItemCode } from 'src/db/entity/item-code';
 import { CommonCodeType } from 'src/db/entity/common-code-type';
+import { Repository } from 'typeorm';
+import { CodeMap, PrefixAndCode } from './code.type';
 
 @Injectable()
 export class CodeService implements OnApplicationBootstrap {
@@ -12,19 +11,13 @@ export class CodeService implements OnApplicationBootstrap {
 
     constructor (
         @InjectRepository(CommonCodeType)
-        private customCodeTypeRepository: Repository<CommonCodeType>,
+        private commonCodeTypeRepository: Repository<CommonCodeType>,
 
         @InjectRepository(CommonCode)
-        private customCodeRepository: Repository<CommonCode>,
-
-        @InjectRepository(ItemCode)
-        private itemCodeRepository: Repository<ItemCode>,
+        private commonCodeRepository: Repository<CommonCode>,
     ) {}
     
-    private codeMap: CodeMap = {
-        custom: new Map(),
-        item: new Map()
-    };
+    private codeMap: CodeMap = new Map();
 
     private readonly CODE_PATTERN: RegExp = /^\[A-Za-z]{3}_\d{4}$/g;
 
@@ -32,34 +25,27 @@ export class CodeService implements OnApplicationBootstrap {
      * Nest 부팅 시 실행되는 함수
      */
     async onApplicationBootstrap(): Promise<void> {
-        const custom = this.codeMap.custom;
+        const customCodes: CommonCode[] = await this.commonCodeRepository.find();
 
-        const customCodes: CommonCode[] = await this.customCodeRepository.find();
-
-        customCodes.forEach((customCode) => {
-            const prefix = customCode.type.id;
-            if (custom.has(prefix)) {
-                custom.set(prefix, new Map() as CustomCodeMap);
+        customCodes.forEach((code) => {
+            const prefix = code.type.id;
+            if (this.codeMap.has(prefix)) {
+                this.codeMap.set(prefix, []);
             }
-            else {
-                custom.get(prefix).set(customCode.id, customCode.description)
-            }
-        });
-        
-        const itemCodes: ItemCode[] = await this.itemCodeRepository.find();
-
-        itemCodes.forEach((itemCode) => {
-            this.codeMap.item.set(itemCode.id, itemCode.itemName);
+            this.codeMap.get(prefix).push({
+                code: code.id,
+                description: code.description
+            });
         });
 
         this.logger.log('공통 코드 로딩 완료!');
     }
 
-    async getCustomCodeTypeEntity(prefix: string): Promise<CommonCodeType | undefined> {
-        return await this.customCodeTypeRepository.findOne({where: {id: prefix} });
+    async getCommonCodeTypeEntity(prefix: string): Promise<CommonCodeType | undefined> {
+        return await this.commonCodeTypeRepository.findOne({where: {id: prefix} });
     }
 
-    async getCustomCodeEntity(fullCode: string | PrefixAndCode): Promise<CommonCode | undefined> {
+    async getCommonCodeEntity(fullCode: string | PrefixAndCode): Promise<CommonCode | undefined> {
         let prefix = '';
         let code = '';
         if (typeof fullCode === 'string') {
@@ -76,7 +62,7 @@ export class CodeService implements OnApplicationBootstrap {
             code = fullCode.code;
         }
         
-        return await this.customCodeRepository.findOne({
+        return await this.commonCodeRepository.findOne({
             where: {type: {id: prefix}, id: code}
         });
     }
