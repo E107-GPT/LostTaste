@@ -1,7 +1,8 @@
-import { Column } from "typeorm";
+import { Column, Entity } from "typeorm";
 import { CodeColumn, CreatedAt, Id, Password } from "../typeorm-utils";
 import { CommonCode } from "./common-code";
 
+@Entity({ comment: '게시판' })
 export class Board {
     @Id('게시판 ID', 'board_id')
     id: string;
