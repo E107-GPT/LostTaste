@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { CodeModule } from './code/code.module';
+import { IndexController } from './index/index.controller';
 
 const configModule = ConfigModule.forRoot({
   isGlobal: true,
@@ -41,7 +42,7 @@ const redisModule = CacheModule.registerAsync({
 
 @Module({
   imports: [configModule, typeOrmModule, mongooseModule, redisModule, AuthModule, UserModule, CodeModule, CodeModule],
-  controllers: [AppController],
+  controllers: [AppController, IndexController],
   providers: [AppService],
 })
 export class AppModule { }
