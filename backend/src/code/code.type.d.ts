@@ -1,21 +1,15 @@
-type CustomCodeMap = Map<string, string>;
-type CustomCodeTypeMap = Map<string, CustomCodeMap>;
-type ItemCodeMap = Map<string, string>;
-
 // {
-// 	custom: {
-// 		<prefix>: {
-// 			<code>: <description>
-// 		}
-// 	}
-// 	item: {
+// 	<prefix>: {
 // 		<code>: <description>
-// 	}
+//  }
 // }
-export interface CodeMap {
-    custom: CustomCodeTypeMap
-    item: ItemCodeMap;
+
+export interface CodeRecord {
+    code: string,
+    description: string
 }
+
+export type CodeMap = Map<string, CodeRecord[]>;
 
 export interface PrefixAndCode {
     prefix: string,
