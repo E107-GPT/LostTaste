@@ -10,6 +10,8 @@ public class IntOnlyInputField : MonoBehaviour
     void Start()
     {
         inputField = GetComponent<InputField>();
+
+        // UI 시스템에서 input field 컴포넌트 값이 변할 때 마다 호출
         inputField.onValueChanged.AddListener(ValidateInput);
     }
 

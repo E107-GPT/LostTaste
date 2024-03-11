@@ -32,7 +32,6 @@ public class UIManager : MonoBehaviour
     {
         password = int.Parse(pw);
         ispassword = true;
-        Debug.Log(pw + " : " + password);
     }
     public int GetPassword()
     {

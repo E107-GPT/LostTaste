@@ -28,6 +28,10 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     [SerializeField]
     public  GameObject progressLabel;
 
+    [Tooltip("판넬은 이름과 버튼 가짐")]
+    [SerializeField]
+    public GameObject createRoomPanel;
+
     #endregion
 
     #region MonoBehaviour Callbacks
@@ -40,6 +44,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     {
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
+        createRoomPanel.SetActive(false);
     }
     #endregion
     
@@ -54,8 +59,10 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         // 포톤 네트워크 연결 여부 확인
         if (PhotonNetwork.IsConnected)
         {
-            // 랜덤한 방 진입
-            PhotonNetwork.JoinRandomRoom();
+            // 리스트 출력하기
+
+            //PhotonNetwork.JoinRandomRoom();
+            Debug.Log("로빙");
         }
         else
         {
@@ -65,6 +72,13 @@ public class PhotonTest : MonoBehaviourPunCallbacks
             // 포톤 클라우드에 연결되는 시작 지점
             PhotonNetwork.ConnectUsingSettings();            
         }        
+    }
+
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("JoinLobby");
+        
+        //PhotonNetwork.GetCustomRoomList(Photon.Realtime.TypedLobbyInfo.Default, "ispassword");
     }
 
     public void makeRoom()
@@ -82,7 +96,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
             room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "ispassword", ispassword},{ "password", password} };
         else
             room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "ispassword", false } };
-        Debug.Log(room.CustomRoomProperties);
+        Debug.Log("pw" + room.CustomRoomProperties["ispassword"]);
         PhotonNetwork.CreateRoom(roomName, room);
     }
     #endregion
@@ -92,10 +106,30 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     {
         if (isConnecting)
         {
-        Debug.Log("OnConnectedToMaster");
-        // 마스터에 들어갔을 때 랜덤 방 들어가기
-        PhotonNetwork.JoinRandomRoom();
+            Debug.Log("OnConnectedToMaster");
+            // 마스터에 들어갔을 때 랜덤 방 들어가기
+            progressLabel.SetActive(false);
+            createRoomPanel.SetActive(true);
+
+            
+            PhotonNetwork.JoinLobby();
         }
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        foreach(RoomInfo rooom in roomList)
+        {
+            Debug.Log("room : " + rooom.Name);
+
+            ExitGames.Client.Photon.Hashtable has = rooom.CustomProperties;
+
+            
+                Debug.Log("room : " + (bool)rooom.CustomProperties["ispassword"]);
+                Debug.Log("room +: " + (int)rooom.CustomProperties["password"]);
+        }
+
+        
     }
 
     public override void OnDisconnected(DisconnectCause cause)

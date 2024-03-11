@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         // 로비로 이동
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 
     public override void OnPlayerEnteredRoom(Player other)
