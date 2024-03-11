@@ -1,5 +1,5 @@
 import { Column, Entity } from "typeorm";
-import { CreatedAt, GeneratedId } from "../typeorm-utils";
+import { CreatedAt, DeletedAt, GeneratedId, Password } from "../typeorm-utils";
 
 @Entity({ comment: '사용자' })
 export class Member {
@@ -22,12 +22,7 @@ export class Member {
     })
     accountId: string;
 
-    @Column({
-        type: 'char',
-        length: 64,
-        nullable: true,
-        comment: '로그인 비밀번호 해시'
-    })
+    @Password("사용자 비밀번호 해시")
     password: string;
 
     @Column({
@@ -48,4 +43,7 @@ export class Member {
 
     @CreatedAt('사용자 회원가입 시간')
     createdAt: Date;
+
+    @DeletedAt('사용자 회원탈퇴 시간')
+    deletedAt: Date;
 }
