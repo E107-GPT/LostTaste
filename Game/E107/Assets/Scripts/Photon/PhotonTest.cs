@@ -69,12 +69,20 @@ public class PhotonTest : MonoBehaviourPunCallbacks
 
     public void makeRoom()
     {
-        string roomName = GameObject.Find("GameManager").GetComponent<UIManager>().GetTitle();
+        UIManager manager = GameObject.Find("GameManager").GetComponent<UIManager>();
+        string roomName = manager.GetTitle();
         RoomOptions room = new RoomOptions();
         room.MaxPlayers = 4;
         room.IsVisible = true;
         room.IsOpen= true;
-
+        bool ispassword = manager.GetIsPassword();
+        int password = manager.GetPassword();
+        Debug.Log("pw" +password);
+        if(ispassword)
+            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "ispassword", ispassword},{ "password", password} };
+        else
+            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "ispassword", false } };
+        Debug.Log(room.CustomRoomProperties);
         PhotonNetwork.CreateRoom(roomName, room);
     }
     #endregion
