@@ -1,9 +1,9 @@
 import { Column, Entity } from "typeorm";
 import { CodeTableEntity, Id } from "../typeorm-utils";
 
-@Entity()
+@Entity({ comment: '아이템 코드' })
 export class ItemCode implements CodeTableEntity {
-    @Id('아이템 코드', 'item_code_id')
+    @Id('아이템 코드 ID', 'item_code_id')
     id: string;
 
     @Column({

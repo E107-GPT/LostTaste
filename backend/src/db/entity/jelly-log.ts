@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { Id } from "../typeorm-utils";
 import { Member } from "./member";
 
-@Entity()
+@Entity({ comment: '젤리 변동 기록' })
 export class JellyLog {
     @Id('젤리 변동 기록 ID', 'jelly_log_id')
     id: string;

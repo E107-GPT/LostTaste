@@ -4,7 +4,7 @@ import { CustomCodeType } from "./custom-code-type";
 import { CustomCode } from "./custom-code";
 import { PartyMember } from "./party-member";
 
-@Entity()
+@Entity({ comment: '파티원 커스텀' })
 export class PartyMemberCustom {
     @Id('커스텀 코드 타입')
     customCodeTypeId: string;

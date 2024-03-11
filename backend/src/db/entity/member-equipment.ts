@@ -2,7 +2,7 @@ import { Entity, PrimaryColumn } from "typeorm";
 import { CodeColumn, CreatedAt, Id } from "../typeorm-utils";
 import { CustomCode } from "./custom-code";
 
-@Entity()
+@Entity({ comment: '사용자 착용 정보' })
 export class MemberEquipment {
 
     @PrimaryColumn({

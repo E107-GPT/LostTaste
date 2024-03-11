@@ -1,7 +1,7 @@
 import { Column, Entity } from "typeorm";
 import { CreatedAt, GeneratedId } from "../typeorm-utils";
 
-@Entity()
+@Entity({ comment: '모험' })
 export class Adventure {
     @GeneratedId('모험 ID', 'adventure_id')
     id: string;

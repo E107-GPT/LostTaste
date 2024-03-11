@@ -3,7 +3,7 @@ import { Member } from "./member";
 import { Id } from "../typeorm-utils";
 import { Adventure } from "./adventure";
 
-@Entity()
+@Entity({ comment: '파티원' })
 export class PartyMember {
     @Id('사용자 ID')
     memberId: string;

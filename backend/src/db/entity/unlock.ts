@@ -3,7 +3,7 @@ import { CodeColumn, CreatedAt, GeneratedId } from "../typeorm-utils";
 import { Member } from "./member";
 import { ItemCode } from "./item-code";
 
-@Entity()
+@Entity({ comment: '해금' })
 export class Unlock {
     @GeneratedId('해금 ID', 'unlock_id')
     id: string;
