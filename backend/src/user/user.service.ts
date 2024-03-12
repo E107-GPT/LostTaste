@@ -6,12 +6,6 @@ import { SignupDto } from 'src/auth/dto/signup.dto';
 import { Member } from 'src/db/entity/member';
 import { Repository } from 'typeorm';
 
-export type User = {
-    id: number,
-    username: string,
-    password: string,
-}
-
 @Injectable()
 export class UserService {
     private readonly HASH_SALT_ROUND = 10;
