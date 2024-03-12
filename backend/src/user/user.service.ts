@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import * as bcrypt from 'bcrypt';
-import { SignupDto } from 'src/user/dto/signup.dto';
 import { Member } from 'src/db/entity/member';
+import { SignupDto } from 'src/user/dto/signup.dto';
 import { Repository } from 'typeorm';
+import { UserProfileDto } from './dto/user-profile.dto';
 import { UserDto } from './dto/user.dto';
 
 @Injectable()
@@ -13,7 +14,7 @@ export class UserService {
 
     constructor (
         @InjectRepository(Member)
-        private memberRepository: Repository<Member>
+        private readonly memberRepository: Repository<Member>,
     ) {}
 
     async findByAccountId(username: string): Promise<Member | undefined> {
@@ -34,5 +35,23 @@ export class UserService {
 
     async hash(plaintext: string) {
         return await bcrypt.hash(plaintext, this.HASH_SALT_ROUND);
+    }
+
+    async getProfile(user: UserDto): Promise<UserProfileDto> {
+        const entity: Member = await this.findByDto(user);
+        const equipments = entity.equipments;
+
+        const customMap = new Map<string, string>();
+        equipments.forEach(equipment => {
+            const typeId = equipment.customCodeTypeId;
+            const id = equipment.customCode.id;
+
+            customMap.set(typeId, id);
+        });
+
+        return {
+            ...user,
+            lastCustom: customMap
+        };
     }
 }

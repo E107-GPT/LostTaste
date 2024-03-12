@@ -19,6 +19,6 @@ export class UserController {
     @Get('profile')
     @UseGuards(AuthGuard)
     getProfile(@AuthUser() user: UserDto) {
-        return user;
+        return this.userService.getProfile(user);
     }
 }
