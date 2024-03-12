@@ -1,9 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 import { UserService } from 'src/user/user.service';
 import { LoginDto } from './dto/login.dto';
-import * as bcrypt from 'bcrypt';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class AuthService {

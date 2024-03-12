@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { SignupDto } from 'src/user/dto/signup.dto';
 import { Member } from 'src/db/entity/member';
 import { Repository } from 'typeorm';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -17,6 +18,10 @@ export class UserService {
 
     async findByAccountId(username: string): Promise<Member | undefined> {
         return this.memberRepository.findOne({ where: { accountId: username } });
+    }
+
+    async findByDto(dto: UserDto): Promise<Member | undefined> {
+        return this.findByAccountId(dto.accountId);
     }
 
     async signup(dto: SignupDto): Promise<void> {

@@ -13,10 +13,4 @@ export class AuthController {
     async login(@Body() dto: LoginDto) {
         return this.authService.login(dto);
     }
-
-    @UseGuards(AuthGuard)
-    @Get('profile')
-    getProfile(@Request() req) {
-        return req.user;
-    }
 }

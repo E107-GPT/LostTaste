@@ -6,8 +6,11 @@ import { JwtModule } from '@nestjs/jwt';
 
 const jwtModule = JwtModule.register({
   global: true,
-  secret: process.env.JWT_SECRET,                // JWT Secret
-  signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },  // 만료 시간
+  secret: process.env.JWT_SECRET,
+  signOptions: {
+    algorithm: 'HS256',
+    expiresIn: process.env.JWT_EXPIRES_IN
+  }
 });
 
 @Module({
