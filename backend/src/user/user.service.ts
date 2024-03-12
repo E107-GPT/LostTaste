@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import * as bcrypt from 'bcrypt';
-import { SignupDto } from 'src/auth/dto/signup.dto';
+import { SignupDto } from 'src/user/dto/signup.dto';
 import { Member } from 'src/db/entity/member';
 import { Repository } from 'typeorm';
 
