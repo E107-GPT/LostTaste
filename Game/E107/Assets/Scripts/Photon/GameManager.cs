@@ -66,7 +66,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Debug.Log(PhotonNetwork.CurrentRoom.Name);
 
-        Debug.Log(PhotonNetwork.CurrentRoom);
+        Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties.Count);
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(PhotonNetwork.CurrentRoom.CustomProperties);
 
     }
 }

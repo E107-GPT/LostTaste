@@ -77,7 +77,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("JoinLobby");
-        
+
         //PhotonNetwork.GetCustomRoomList(Photon.Realtime.TypedLobbyInfo.Default, "ispassword");
     }
 
@@ -92,10 +92,17 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         bool ispassword = manager.GetIsPassword();
         int password = manager.GetPassword();
         Debug.Log("pw" +password);
-        if(ispassword)
+        if (ispassword)
+        {
             room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "ispassword", ispassword},{ "password", password} };
+            room.CustomRoomPropertiesForLobby = new string[] { "ispassword", "password" };
+        }
         else
+        {
             room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "ispassword", false } };
+            room.CustomRoomPropertiesForLobby = new string[] { "ispassword"};
+        }
+
         Debug.Log("pw" + room.CustomRoomProperties["ispassword"]);
         PhotonNetwork.CreateRoom(roomName, room);
     }
@@ -120,15 +127,12 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     {
         foreach(RoomInfo rooom in roomList)
         {
-            Debug.Log("room : " + rooom.Name);
-
             ExitGames.Client.Photon.Hashtable has = rooom.CustomProperties;
-
+            Debug.Log("room : " + rooom.Name + " " + has);
             
-                Debug.Log("room : " + (bool)rooom.CustomProperties["ispassword"]);
-                Debug.Log("room +: " + (int)rooom.CustomProperties["password"]);
-        }
 
+
+        }
         
     }
 
