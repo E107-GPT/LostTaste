@@ -3,14 +3,19 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserModule } from 'src/user/user.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
-const jwtModule = JwtModule.register({
+// 환경 변수를 동적으로 가져오기 위해 비동기를 사용
+const jwtModule = JwtModule.registerAsync({
+  inject: [ConfigService],
   global: true,
-  secret: process.env.JWT_SECRET,
-  signOptions: {
-    algorithm: 'HS256',
-    expiresIn: process.env.JWT_EXPIRES_IN
-  }
+  useFactory: (configService: ConfigService) => ({
+    secret: configService.get<string>('JWT_SECRET'),
+    signOptions: {
+      algorithm: 'HS256',
+      expiresIn: configService.get<string>('JWT_EXPIRES_IN')
+    }
+  })
 });
 
 @Module({
