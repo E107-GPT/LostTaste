@@ -1,16 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import * as bcrypt from 'bcrypt';
-import { SignupDto } from 'src/auth/dto/signup.dto';
 import { Member } from 'src/db/entity/member';
+import { SignupDto } from 'src/user/dto/signup.dto';
 import { Repository } from 'typeorm';
-
-export type User = {
-    id: number,
-    username: string,
-    password: string,
-}
+import { UserProfileDto } from './dto/user-profile.dto';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -18,11 +14,15 @@ export class UserService {
 
     constructor (
         @InjectRepository(Member)
-        private memberRepository: Repository<Member>
+        private readonly memberRepository: Repository<Member>,
     ) {}
 
     async findByAccountId(username: string): Promise<Member | undefined> {
         return this.memberRepository.findOne({ where: { accountId: username } });
+    }
+
+    async findByDto(dto: UserDto): Promise<Member | undefined> {
+        return this.findByAccountId(dto.accountId);
     }
 
     async signup(dto: SignupDto): Promise<void> {
@@ -35,5 +35,23 @@ export class UserService {
 
     async hash(plaintext: string) {
         return await bcrypt.hash(plaintext, this.HASH_SALT_ROUND);
+    }
+
+    async getProfile(user: UserDto): Promise<UserProfileDto> {
+        const entity: Member = await this.findByDto(user);
+        const equipments = entity.equipments;
+
+        const customMap = new Map<string, string>();
+        equipments.forEach(equipment => {
+            const typeId = equipment.customCodeTypeId;
+            const id = equipment.customCode.id;
+
+            customMap.set(typeId, id);
+        });
+
+        return {
+            ...user,
+            lastCustom: customMap
+        };
     }
 }

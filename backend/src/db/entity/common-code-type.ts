@@ -1,13 +1,13 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
-@Entity({ comment: '커스텀 코드 타입' })
+@Entity({ comment: '공통 코드 타입' })
 export class CommonCodeType {
     @PrimaryColumn({
-        name: 'custom_code_type_id',
+        name: 'common_code_type_id',
         type: 'char',
         length: 3,
         nullable: false,
-        comment: '커스텀 코드 타입 ID'
+        comment: '공통 코드 타입 ID'
     })
     id: string;
 
@@ -15,7 +15,7 @@ export class CommonCodeType {
         type: 'varchar',
         length: 16,
         nullable: true,
-        comment: '커스텀 코드 타입 설명'
+        comment: '공통 코드 타입 설명'
     })
     description: string;
 }

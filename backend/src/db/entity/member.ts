@@ -1,5 +1,6 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import { CreatedAt, DeletedAt, GeneratedId, Password } from "../typeorm-utils";
+import { MemberEquipment } from "./member-equipment";
 
 @Entity({ comment: '사용자' })
 export class Member {
@@ -46,4 +47,8 @@ export class Member {
 
     @DeletedAt('사용자 회원탈퇴 시간')
     deletedAt: Date;
+
+
+    @OneToMany(() => MemberEquipment, equipment => equipment.member, { eager: true })
+    equipments: MemberEquipment[];
 }
