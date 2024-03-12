@@ -37,7 +37,7 @@ const redisModule = CacheModule.registerAsync({
 });
 
 @Module({
-  imports: [configModule, typeOrmModule, redisModule, AuthModule, UserModule, CodeModule, CodeModule],
+  imports: [configModule, typeOrmModule, redisModule, AuthModule, UserModule, CodeModule],
   controllers: [AppController],
   providers: [AppService],
 })
