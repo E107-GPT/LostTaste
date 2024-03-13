@@ -10,13 +10,17 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     [Tooltip("방 최대 입장 수")]
     [SerializeField]
     private byte maxplayersPerRoom = 4;
+
+    
     #endregion
 
     #region private fields
     // 클라이언트 번호
     string gameVersion = "1";
     bool isConnecting;
-
+    List<RoomInfo> roomlist = new List<RoomInfo>();
+    // 선택한 방 정보
+    private RoomInfo selectRoom;
     #endregion
 
     #region public fields
@@ -31,6 +35,12 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     [Tooltip("판넬은 이름과 버튼 가짐")]
     [SerializeField]
     public GameObject createRoomPanel;
+    
+    
+    [Tooltip("판넬은 이름과 버튼 가짐")]
+    [SerializeField]
+    public GameObject passwordPanel;
+
 
     #endregion
 
@@ -45,6 +55,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
         createRoomPanel.SetActive(false);
+        passwordPanel.SetActive(false);
     }
     #endregion
     
@@ -61,7 +72,6 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         {
             // 리스트 출력하기
 
-            //PhotonNetwork.JoinRandomRoom();
             Debug.Log("로빙");
         }
         else
@@ -99,12 +109,39 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         }
         else
         {
-            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "ispassword", false } };
+            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "ispassword", ispassword } };
             room.CustomRoomPropertiesForLobby = new string[] { "ispassword"};
         }
 
-        Debug.Log("pw" + room.CustomRoomProperties["ispassword"]);
+        Debug.Log("pw" + (bool)room.CustomRoomProperties["ispassword"]);
         PhotonNetwork.CreateRoom(roomName, room);
+    }
+
+    public void roomEnter()
+    {
+        if (roomlist.Count < 1) return;
+        RoomInfo room = roomlist[0];
+        if ((bool)room.CustomProperties["ispassword"])
+        {
+            //password panel open
+            // 비번 검증 후 입장
+            selectRoom = room;
+            passwordPanel.SetActive(true);
+        }
+        else
+        {
+            // no password 바로 입장
+            PhotonNetwork.JoinRoom(room.Name);
+        }  
+    }
+
+    public void PasswordValidation(int pw)
+    {
+        // 비밀번호 맞으면 입장
+        if((int)selectRoom.CustomProperties["password"] == pw)
+        {
+            PhotonNetwork.JoinRoom(selectRoom.Name);
+        }
     }
     #endregion
 
@@ -127,11 +164,9 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     {
         foreach(RoomInfo rooom in roomList)
         {
+            roomlist .Add(rooom);
             ExitGames.Client.Photon.Hashtable has = rooom.CustomProperties;
             Debug.Log("room : " + rooom.Name + " " + has);
-            
-
-
         }
         
     }
@@ -145,7 +180,6 @@ public class PhotonTest : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        //PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxplayersPerRoom});
         Debug.Log("방 들어가기 실패");
     }
 
@@ -155,5 +189,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
 
         PhotonNetwork.LoadLevel("Room for 1");
     }
+
+    
     #endregion
 }
