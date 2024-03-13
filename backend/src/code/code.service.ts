@@ -16,7 +16,7 @@ export class CodeService implements OnApplicationBootstrap {
     
     private codeCache: CodeCache = new CodeCache();
 
-    private readonly CODE_PATTERN: RegExp = /^\[A-Za-z]{3}_\d{4}$/g;
+    private readonly CODE_PATTERN: RegExp = /^[A-Za-z]{3}_\d{4}$/;
 
     /**
      * Nest 부팅 시 실행되는 함수
