@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 import { UserProfileDto } from './dto/user-profile.dto';
 import { UserDto } from './dto/user.dto';
 import { CodeService } from 'src/code/code.service';
-import { PrefixAndCode } from 'src/code/code.type';
+import { PrefixAndCode } from 'src/code/code-util';
 import { MemberEquipment } from 'src/db/entity/member-equipment';
 
 @Injectable()
@@ -22,12 +22,7 @@ export class UserService {
     
     private readonly HASH_SALT_ROUND = 10;
 
-    private readonly DEFAULT_EQUIPMENTS: PrefixAndCode[] = [
-        { prefix: 'SKN', code: '1'},
-        { prefix: 'JOB', code: '1'},
-        { prefix: 'PET', code: '1'},
-        { prefix: 'CSK', code: '1'},
-    ];
+    private readonly DEFAULT_EQUIPMENTS: string[] = ['SKN_0001', 'JOB_0001', 'PET_0001', 'CSK_0001'];
 
     async findByAccountId(username: string): Promise<Member | undefined> {
         return this.memberRepository.findOne({ where: { accountId: username } });
