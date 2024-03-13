@@ -2,7 +2,7 @@ import { IsAlphanumeric, IsNotEmpty, Length } from "class-validator";
 
 export class LoginDto {
     @IsAlphanumeric()
-    username: string;
+    accountId: string;
 
     @IsNotEmpty()
     password: string;
