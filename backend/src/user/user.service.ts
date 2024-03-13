@@ -1,15 +1,14 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import * as bcrypt from 'bcrypt';
+import { CodeService } from 'src/code/code.service';
 import { Member } from 'src/db/entity/member';
+import { MemberEquipment } from 'src/db/entity/member-equipment';
 import { SignupDto } from 'src/user/dto/signup.dto';
 import { Repository } from 'typeorm';
 import { UserProfileDto } from './dto/user-profile.dto';
 import { UserDto } from './dto/user.dto';
-import { CodeService } from 'src/code/code.service';
-import { PrefixAndCode } from 'src/code/code-util';
-import { MemberEquipment } from 'src/db/entity/member-equipment';
 
 @Injectable()
 export class UserService {
@@ -39,10 +38,10 @@ export class UserService {
             nickname: dto.nickname,
         });
         
-        for (const prefixAndCode of this.DEFAULT_EQUIPMENTS) {
+        for (const fullCode of this.DEFAULT_EQUIPMENTS) {
             const memberEquipment = new MemberEquipment();
             memberEquipment.member = member;
-            memberEquipment.customCode = await this.codeService.getCommonCodeEntity(prefixAndCode);
+            memberEquipment.customCode = this.codeService.getCommonCodeEntity(fullCode);
             
             member.equipments.push(memberEquipment);
         }
