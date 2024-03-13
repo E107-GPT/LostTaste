@@ -11,6 +11,7 @@ import { CodeService } from './code.service';
     CommonCode,
   ])],
   providers: [CodeService],
-  controllers: [CodeController]
+  controllers: [CodeController],
+  exports: [CodeService]
 })
 export class CodeModule {}

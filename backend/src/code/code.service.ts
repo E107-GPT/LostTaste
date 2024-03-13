@@ -29,7 +29,7 @@ export class CodeService implements OnApplicationBootstrap {
 
         customCodes.forEach((code) => {
             const prefix = code.type.id;
-            if (this.codeMap.has(prefix)) {
+            if (!this.codeMap.has(prefix)) {
                 this.codeMap.set(prefix, []);
             }
             this.codeMap.get(prefix).push({

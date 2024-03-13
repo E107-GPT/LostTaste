@@ -11,9 +11,9 @@ export class CommonCode {
     })
     id: string;
 
-    @ManyToOne(() => CommonCodeType)
+    @ManyToOne(() => CommonCodeType, { eager: true })
     @JoinColumn({
-        name: 'type_id'
+        name: 'type_id',
     })
     type: CommonCodeType;
 
