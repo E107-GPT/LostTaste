@@ -49,6 +49,6 @@ export class Member {
     deletedAt: Date;
 
 
-    @OneToMany(() => MemberEquipment, equipment => equipment.member, { eager: true })
+    @OneToMany(() => MemberEquipment, equipment => equipment.member, { eager: true, cascade: true })
     equipments: MemberEquipment[];
 }
