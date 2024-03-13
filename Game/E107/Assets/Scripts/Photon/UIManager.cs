@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
     string roomName = "Room Name";
     int password = 0;
     bool ispassword = false;
+
+    [SerializeField]
+    string userName = "player";
     #endregion
 
     #region public ui
@@ -17,6 +20,17 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region public Methods
+
+    public void SetName(string uname)
+    {
+        userName = uname;
+    }
+
+    public string GetName()
+    {
+        return userName;
+    }
+
     public void SetTitle(string newRoomName)
     {
         roomName = newRoomName;
@@ -30,6 +44,7 @@ public class UIManager : MonoBehaviour
 
     public void SetPassword(string pw)
     {
+        if (pw.Length <= 0) return;
         password = int.Parse(pw);
         ispassword = true;
     }

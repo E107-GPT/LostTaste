@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         // 로비로 이동
+        PhotonNetwork.JoinLobby();
         SceneManager.LoadScene(0);
     }
 
@@ -35,6 +36,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         }   
     }
 
+    
+
     #endregion
 
     #region public method
@@ -58,7 +61,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         Debug.LogFormat("PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
 
         // 원하는 레벨 호출
-        PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
+        //PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
     }
     #endregion
 
@@ -67,8 +70,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         Debug.Log(PhotonNetwork.CurrentRoom.Name);
 
         Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties.Count);
-
+        if (!PhotonNetwork.IsMasterClient) PhotonNetwork.AutomaticallySyncScene = true;
         //PhotonNetwork.CurrentRoom.SetCustomProperties(PhotonNetwork.CurrentRoom.CustomProperties);
 
+        Debug.Log(PhotonNetwork.CurrentRoom.Players);
     }
 }

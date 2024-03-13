@@ -71,7 +71,9 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected)
         {
             // 리스트 출력하기
-
+            progressLabel.SetActive(false);
+            controlPanel.SetActive(true);
+            createRoomPanel.SetActive(true);
             Debug.Log("로빙");
         }
         else
@@ -87,7 +89,8 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("JoinLobby");
-
+        progressLabel.SetActive(false);
+        createRoomPanel.SetActive(true);
         //PhotonNetwork.GetCustomRoomList(Photon.Realtime.TypedLobbyInfo.Default, "ispassword");
     }
 
@@ -95,6 +98,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     {
         UIManager manager = GameObject.Find("GameManager").GetComponent<UIManager>();
         string roomName = manager.GetTitle();
+        string captainName = manager.GetName();
         RoomOptions room = new RoomOptions();
         room.MaxPlayers = 4;
         room.IsVisible = true;
@@ -104,13 +108,13 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         Debug.Log("pw" +password);
         if (ispassword)
         {
-            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "ispassword", ispassword},{ "password", password} };
-            room.CustomRoomPropertiesForLobby = new string[] { "ispassword", "password" };
+            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword},{ "password", password} };
+            room.CustomRoomPropertiesForLobby = new string[] { "captain","ispassword", "password" };
         }
         else
         {
-            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "ispassword", ispassword } };
-            room.CustomRoomPropertiesForLobby = new string[] { "ispassword"};
+            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword } };
+            room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword" };
         }
 
         Debug.Log("pw" + (bool)room.CustomRoomProperties["ispassword"]);
@@ -120,6 +124,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     public void roomEnter()
     {
         if (roomlist.Count < 1) return;
+        
         RoomInfo room = roomlist[0];
         if ((bool)room.CustomProperties["ispassword"])
         {
@@ -143,6 +148,17 @@ public class PhotonTest : MonoBehaviourPunCallbacks
             PhotonNetwork.JoinRoom(selectRoom.Name);
         }
     }
+
+    public void printList()
+    {
+        foreach(RoomInfo rooom in roomlist)
+        {
+            ExitGames.Client.Photon.Hashtable has = rooom.CustomProperties;
+            string roomInfo = "room : " + rooom.Name + " \n" + rooom.PlayerCount + " / " + rooom.MaxPlayers + "\n" + "isvisible : " + rooom.IsVisible + "\n" + "isopen : " + rooom.IsOpen
+                + "\n captain : " + has["captain"] + "\n" + has["ispassword"] + " / " + has["password"];
+            Debug.Log(roomInfo);
+        }
+    }
     #endregion
 
     #region MonoBehaviourPunCallbacks callbacks
@@ -152,9 +168,6 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         {
             Debug.Log("OnConnectedToMaster");
             // 마스터에 들어갔을 때 랜덤 방 들어가기
-            progressLabel.SetActive(false);
-            createRoomPanel.SetActive(true);
-
             
             PhotonNetwork.JoinLobby();
         }
@@ -164,15 +177,37 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     {
         foreach(RoomInfo rooom in roomList)
         {
-            roomlist .Add(rooom);
-            ExitGames.Client.Photon.Hashtable has = rooom.CustomProperties;
-            Debug.Log("room : " + rooom.Name + " " + has);
+            int idx = 0;
+            bool changed= false;
+            if (roomlist.Count > 0)
+            {
+                foreach(RoomInfo newroom in roomlist)
+                {
+                    if(rooom.Name == newroom.Name)
+                    {
+                        changed = true;
+                        break;
+                    }
+                    idx++;
+                }
+
+                   roomlist[idx] = rooom;
+
+            }
+            if(!changed || roomlist.Count <1)
+                roomlist .Add(rooom);
+
+            //ExitGames.Client.Photon.Hashtable has = rooom.CustomProperties;
+            //string roomInfo = "room : " + rooom.Name + " \n" + rooom.PlayerCount + " / " + rooom.MaxPlayers +"\n" + "isvisible : " +rooom.IsVisible+ "\n" + "isopen : " + rooom.IsOpen 
+            //    + "\n captain : " + has["captain"] + "\n" + has["ispassword"] + " / " + has["password"];
+            //Debug.Log(roomInfo);
         }
-        
+        printList();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+        isConnecting = false;
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
         Debug.LogWarningFormat("OnDisconnected {0}", cause);
@@ -183,11 +218,16 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         Debug.Log("방 들어가기 실패");
     }
 
+    public override void OnCreatedRoom()
+    {
+        
+        PhotonNetwork.LoadLevel("Room for 1");
+    }
+
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
 
-        PhotonNetwork.LoadLevel("Room for 1");
     }
 
     
