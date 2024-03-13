@@ -1,15 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class BaseController : MonoBehaviour
 {
-	// Start is called before the first frame update
+	protected Animator _animator;
+	protected Rigidbody _rigidbody;
+	protected NavMeshAgent _agent;
 	[SerializeField]
 	protected Vector3 _destPos;
 
 	[SerializeField]
 	protected Define.State _state = Define.State.Idle;
+
+	private static long enemy_ID = 0;
+	private long id;
+	[SerializeField]
+	protected string enemyEntityName;
+	private string personalColor;
+
+
+
+	public long ID
+	{
+		set
+		{
+			id = value;
+			enemy_ID++;
+		}
+		get
+		{
+			return id;
+		}
+	}
+
 	public virtual Define.State State
 	{
 		get { return _state; }
@@ -45,24 +70,39 @@ public abstract class BaseController : MonoBehaviour
 	}
 	void Update()
 	{
-		switch (State)
-		{
-			case Define.State.Die:
-				UpdateDie();
-				break;
-			case Define.State.Moving:
-				UpdateMoving();
-				break;
-			case Define.State.Idle:
-				UpdateIdle();
-				break;
-			case Define.State.Skill:
-				UpdateSkill();
-				break;
-			case Define.State.Dash:
-				UpdateDash();
-				break;
-		}
+
+		//switch (State)
+		//{
+		//	case Define.State.Die:
+		//		UpdateDie();
+		//		break;
+		//	case Define.State.Moving:
+		//		UpdateMoving();
+		//		break;
+		//	case Define.State.Idle:
+		//		UpdateIdle();
+		//		break;
+		//	case Define.State.Skill:
+		//		UpdateSkill();
+		//		break;
+		//	case Define.State.Dash:
+		//		UpdateDash();
+		//		break;
+		//}
+		Updated();
+	}
+	public abstract void Updated();
+	public virtual void Setup(string name)
+	{
+		// id, 이름, 색상 설정
+		ID = enemy_ID;
+		enemyEntityName = name;
+		int color = Random.Range(0, 1000000);
+		personalColor = $"#{color.ToString("X6")}";
+	}
+	public void PrintText(string text)
+	{
+		Debug.Log($"<color={personalColor}><b>{enemyEntityName}</b></color> : {text}");
 	}
 
 	public abstract void Init();

@@ -13,15 +13,12 @@ public enum MonsterState    // 피격 당하면 공격을 가한 플레이어를
     GLOBAL,
 }
 
-public class Monster : EnemyBaseEntity
+public class MonsterController : BaseController
 {
     [SerializeField]
     private Transform _detectPlayer;
     [SerializeField]
     private Transform _attackPlayer;
-    private Animator _animator;
-    private Rigidbody _rigidbody;
-    private NavMeshAgent _agent;
 
     private int _level;         // 스테이지 올라가면 몬스터도 강해지는 경우 필요
     [SerializeField]
@@ -34,9 +31,6 @@ public class Monster : EnemyBaseEntity
     private float _attackRange;
     [SerializeField]
     private float _detectRange;
-
-    private State<Monster>[] states;     // Monster의 모든 상태 정보
-    private StateMachine<Monster> stateMachine;     // 상태 관리를 StateMachine에 위임
 
     private Coroutine updateDetectPlayer;
     private Coroutine updateAttackPlayer;
@@ -90,13 +84,16 @@ public class Monster : EnemyBaseEntity
         get => _detectRange;
     }
 
+    protected State<MonsterController>[] states;     // Monster의 모든 상태 정보
+    protected StateMachine<MonsterController> stateMachine;
+
     public override void Setup(string name)
     {
         base.Setup(name);
 
         gameObject.name = $"{ID:D2}_Monster_{name}";    // 00_Monster_name 으로 hierarchy 창에서 보임
 
-        states = new State<Monster>[5];
+        states = new State<MonsterController>[5];
         states[(int)MonsterState.IDLE] = new MonsterStateItem.IDLE();
         states[(int)MonsterState.CHASE] = new MonsterStateItem.CHASE();
         states[(int)MonsterState.ATTACK] = new MonsterStateItem.ATTACK();
@@ -104,7 +101,7 @@ public class Monster : EnemyBaseEntity
         states[(int)MonsterState.GLOBAL] = new MonsterStateItem.StateGlobal();
 
         // stateMachine 초기화
-        stateMachine = new StateMachine<Monster>();
+        stateMachine = new StateMachine<MonsterController>();
         stateMachine.Setup(this, states[(int)MonsterState.IDLE]);
         stateMachine.SetGlobalState(states[(int)MonsterState.GLOBAL]);  // 전역 상태 설정
 
@@ -126,11 +123,9 @@ public class Monster : EnemyBaseEntity
         checkMonsterState = StartCoroutine(CheckMonsterState());
     }
 
-    public override void Updated()
+    private void FixedUpdate()
     {
-
-        // stateMachine 실행
-        stateMachine.Execute();
+        FreezeVelocity();
     }
 
     // 캐릭터에게 물리력을 받아도 밀려나는 가속도로 인해 이동에 방해받지 않는다.
@@ -261,7 +256,6 @@ public class Monster : EnemyBaseEntity
     {
         // 새로 바뀌는 상태를 저장
         curState = newState;
-
         // stateMachine에 상태 변경을 위임
         stateMachine.ChangeState(states[(int)newState]);
     }
@@ -269,5 +263,16 @@ public class Monster : EnemyBaseEntity
     public void RevertToPreviousState()
     {
         stateMachine.RevertToPreviousState();
+    }
+
+    public override void Init()
+    {
+        Setup(enemyEntityName);
+        
+    }
+
+    public override void Updated()
+    {
+        stateMachine.Execute();
     }
 }

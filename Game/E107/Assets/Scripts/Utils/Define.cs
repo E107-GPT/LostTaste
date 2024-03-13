@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class Define
 {
+    public enum MonsterState    // 피격 당하면 공격을 가한 플레이어를 추적하는 기능
+    {
+        IDLE = 0,
+        // PATROL,
+        CHASE,
+        ATTACK,
+        DIE,
+        GLOBAL,
+    }
+
     public enum State
     {
         Die,
