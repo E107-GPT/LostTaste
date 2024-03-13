@@ -9,7 +9,7 @@ public class Stat : MonoBehaviour
     [SerializeField]
     protected int _maxHp;
     [SerializeField]
-    protected int _attack;
+    protected int _attack;          // damage ¾î¶²°¨..?
     [SerializeField]
     protected float _moveSpeed;
 
