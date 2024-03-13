@@ -153,7 +153,6 @@ public class Monster : EnemyBaseEntity
             for (int i = 0; i < targetPlayers.Length; ++i)
             {
                 float dist = Vector3.Distance(this.transform.position, targetPlayers[i].transform.position);
-                PrintText($"dist: {dist}");
                 PrintText($"공격 사정거리 내의 플레이어를 {targetPlayers.Length}만큼 인식");
                 if (minDistAttack > dist)
                 {

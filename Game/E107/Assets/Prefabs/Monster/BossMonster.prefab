@@ -3475,6 +3475,8 @@ GameObject:
   - component: {fileID: 2360018824529132272}
   - component: {fileID: 8511895970222891146}
   - component: {fileID: -2256598554493354029}
+  - component: {fileID: -5219018721100819116}
+  - component: {fileID: 2304664441753155432}
   m_Layer: 0
   m_Name: BossMonster
   m_TagString: Untagged
@@ -3548,6 +3550,51 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &-5219018721100819116
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137786495578628170}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 84
+  m_CollisionDetection: 0
+--- !u!114 &2304664441753155432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137786495578628170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b65ba56f44d098946b5baec8654925b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detectPlayer: {fileID: 0}
+  _attackPlayer: {fileID: 0}
+  _hp: 0
+  _moveSpeed: 0
+  _attackRange: 0
+  _detectRange: 0
 --- !u!1 &3153326930071574659
 GameObject:
   m_ObjectHideFlags: 0
