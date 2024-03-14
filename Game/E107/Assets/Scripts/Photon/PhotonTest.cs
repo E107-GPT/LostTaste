@@ -99,7 +99,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
 
     public void makeRoom()
     {
-        UIManager manager = GameObject.Find("GameManager").GetComponent<UIManager>();
+        PhotonUIManager manager = GameObject.Find("GameManager").GetComponent<PhotonUIManager>();
         string roomName = manager.GetTitle();
         string captainName = manager.GetName();
 
@@ -132,7 +132,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     public void roomEnter(string roomName)
     {
         if (roomlist.Count < 1) return;
-        string nickname = GameObject.Find("GameManager").GetComponent<UIManager>().GetName();
+        string nickname = GameObject.Find("GameManager").GetComponent<PhotonUIManager>().GetName();
         if (nickname == null) return;
         PhotonNetwork.NickName = nickname;
 
