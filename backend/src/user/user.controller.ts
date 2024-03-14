@@ -23,10 +23,9 @@ export class UserController {
         return this.userService.getProfile(user);
     }
 
-    // TODO test
     @Patch('custom')
     @UseGuards(AuthGuard)
     patchCustom(@AuthUser() user: UserDto, @Body() dto: CustomChangeDto) {
-        return dto;
+        this.userService.changeCustom(user, dto);
     }
 }
