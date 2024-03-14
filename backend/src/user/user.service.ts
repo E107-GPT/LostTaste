@@ -37,7 +37,11 @@ export class UserService {
             password: await this.hash(dto.password),
             nickname: dto.nickname,
         });
-        
+
+        this.setDefaultCustom(member);
+    }
+
+    async setDefaultCustom(member: Member): Promise<void> {        
         member.equipments = [];
         for (const codeId of this.DEFAULT_EQUIPMENTS) {
             const memberEquipment = new MemberEquipment();
