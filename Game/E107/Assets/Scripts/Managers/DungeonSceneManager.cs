@@ -35,5 +35,8 @@ public class DungeonSceneManager : MonoBehaviour
         SceneManager.LoadScene(SelectedStage);
     }
 
-    
+    public void ExitDungeon()
+    {
+        SceneManager.LoadScene("Camp");
+    }
 }
