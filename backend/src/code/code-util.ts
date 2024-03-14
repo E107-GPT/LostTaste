@@ -1,11 +1,6 @@
 import { CommonCode } from "src/db/entity/common-code";
 import { CommonCodeType } from "src/db/entity/common-code-type";
 
-export interface PrefixAndCode {
-    prefix: string,
-    code: string
-}
-
 /*
 
 codeCache: {
@@ -47,3 +42,4 @@ export class CodeCache {
 		this.horizontal = new Map();
 	}
 }
+

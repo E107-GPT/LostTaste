@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CommonCode } from 'src/db/entity/common-code';
 import { CommonCodeType } from 'src/db/entity/common-code-type';
 import { Repository } from 'typeorm';
-import { CodeCache, CodeCacheHierarchyTypeData, PrefixAndCode } from './code-util';
+import { CodeCache, CodeCacheHierarchyTypeData } from './code-util';
 
 @Injectable()
 export class CodeService implements OnApplicationBootstrap {
@@ -32,42 +32,24 @@ export class CodeService implements OnApplicationBootstrap {
         const horizontal = this.codeCache.horizontal;
         customCodes.forEach((code) => {
             const type = code.type;
-            const typeId = type.id;
-            const codeId = code.id;
-            const fullCode = this.toFullCode({ prefix: typeId, code: codeId });
 
-            if (!hierarchical.has(typeId)) {
-                hierarchical.set(typeId, new CodeCacheHierarchyTypeData(type));
+            if (!hierarchical.has(type.id)) {
+                hierarchical.set(type.id, new CodeCacheHierarchyTypeData(type));
             }
-            hierarchical.get(typeId).codes.set(code.id, code);
-            horizontal.set(fullCode, code);
+            hierarchical.get(type.id).codes.set(code.id, code);
+            horizontal.set(code.id, code);
         });
 
         this.logger.log('공통 코드 로딩 완료!');
-    }
-
-    /**
-     * 코드 접두사와 ID를 받아 풀 코드를 구성합니다.
-     * 예) "SKN_0001", "PET_0002", "ITM_1234"
-     * @param prefixAndCode 코드 접두사와 코드 ID
-     * @returns 채번된 풀 코드
-     */
-    toFullCode(prefixAndCode: PrefixAndCode) {
-        return prefixAndCode.prefix + '_' + prefixAndCode.code.padStart(4, '0'); 
     }
 
     getCommonCodeTypeEntity(prefix: string): CommonCodeType | undefined {
         return this.codeCache.hierarchical.get(prefix).type;
     }
     
-    getCommonCodeEntity(fullCode: string | PrefixAndCode): CommonCode | undefined {
-        if (typeof fullCode === 'string') {
-            if (!this.CODE_PATTERN.test(fullCode)) {
-                throw new Error('잘못된 양식의 커스텀 코드입니다.');
-            }
-        }
-        else {
-            fullCode = this.toFullCode(fullCode);
+    getCommonCodeEntity(fullCode: string): CommonCode | undefined {
+        if (!this.CODE_PATTERN.test(fullCode)) {
+            throw new Error('잘못된 양식의 커스텀 코드입니다.');
         }
         
         return this.codeCache.horizontal.get(fullCode);
