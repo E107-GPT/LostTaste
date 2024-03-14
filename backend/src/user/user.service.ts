@@ -71,9 +71,9 @@ export class UserService {
         const customMap = new Map<string, string>();
         entity.equipments.forEach(equipment => {
             const typeId = equipment.customCodeTypeId;
-            const id = equipment.customCode.id;
+            const codeId = equipment.customCode.id;
 
-            customMap.set(typeId, id);
+            customMap.set(typeId, codeId);
         });
 
         return {
