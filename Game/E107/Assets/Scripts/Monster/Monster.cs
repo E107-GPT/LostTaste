@@ -226,7 +226,7 @@ public class Monster : EnemyBaseEntity
 
                 _animator.SetBool("isDetect", true);
                 _animator.SetBool("isPlayerInAttackRange", true);
-                ChangeState(MonsterState.ATTACK);
+                // ChangeState(MonsterState.ATTACK);
             }
             else if (DetectPlayer != null)
             {
@@ -234,7 +234,7 @@ public class Monster : EnemyBaseEntity
 
                 _animator.SetBool("isDetect", true);
                 _animator.SetBool("isPlayerInAttackRange", false);
-                ChangeState(MonsterState.CHASE);
+                // ChangeState(MonsterState.CHASE);
             }
             else
             {
