@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class SceneChange : MonoBehaviour
 {
+    // 포탈 타입은 스테이지 입장과 게임 종료 두 가지(게임 종료 시스템이 없기 때문에 임시로 제작)
+    public enum PortalType { Entrance, Exit }
+    public PortalType portalType;
+
     private HashSet<GameObject> playersInPortal = new HashSet<GameObject>();
 
     // 필요한 플레이어 수, 게임 설정에 따라 조정 (지금은 1명)
@@ -32,8 +36,15 @@ public class SceneChange : MonoBehaviour
     {
         if (playersInPortal.Count == totalPlayers)
         {
-            // 모든 플레이어가 포탈에 도달했을 때 실행할 로직
-            DungeonSceneManager.Instance.EnterDungeon();
+            switch (portalType)
+            {
+                case PortalType.Entrance:
+                    DungeonSceneManager.Instance.EnterDungeon();
+                    break;
+                case PortalType.Exit:
+                    DungeonSceneManager.Instance.ExitDungeon();
+                    break;
+            }
         }
     }
 }
