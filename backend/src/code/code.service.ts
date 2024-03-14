@@ -3,67 +3,55 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CommonCode } from 'src/db/entity/common-code';
 import { CommonCodeType } from 'src/db/entity/common-code-type';
 import { Repository } from 'typeorm';
-import { CodeMap, PrefixAndCode } from './code.type';
+import { CodeCache, CodeCacheHierarchyTypeData } from './code-util';
 
 @Injectable()
 export class CodeService implements OnApplicationBootstrap {
     private readonly logger: Logger = new Logger(CodeService.name);
 
     constructor (
-        @InjectRepository(CommonCodeType)
-        private commonCodeTypeRepository: Repository<CommonCodeType>,
-
         @InjectRepository(CommonCode)
         private commonCodeRepository: Repository<CommonCode>,
     ) {}
     
-    private codeMap: CodeMap = new Map();
+    private codeCache: CodeCache = new CodeCache();
 
-    private readonly CODE_PATTERN: RegExp = /^\[A-Za-z]{3}_\d{4}$/g;
+    private readonly CODE_PATTERN: RegExp = /^[A-Za-z]{3}_\d{4}$/;
 
     /**
      * Nest 부팅 시 실행되는 함수
      */
     async onApplicationBootstrap(): Promise<void> {
+        this.cacheAllCodes();
+    }
+
+    async cacheAllCodes(): Promise<void> {
         const customCodes: CommonCode[] = await this.commonCodeRepository.find();
 
+        const hierarchical = this.codeCache.hierarchical;
+        const horizontal = this.codeCache.horizontal;
         customCodes.forEach((code) => {
-            const prefix = code.type.id;
-            if (this.codeMap.has(prefix)) {
-                this.codeMap.set(prefix, []);
+            const type = code.type;
+
+            if (!hierarchical.has(type.id)) {
+                hierarchical.set(type.id, new CodeCacheHierarchyTypeData(type));
             }
-            this.codeMap.get(prefix).push({
-                code: code.id,
-                description: code.description
-            });
+            hierarchical.get(type.id).codes.set(code.id, code);
+            horizontal.set(code.id, code);
         });
 
         this.logger.log('공통 코드 로딩 완료!');
     }
 
-    async getCommonCodeTypeEntity(prefix: string): Promise<CommonCodeType | undefined> {
-        return await this.commonCodeTypeRepository.findOne({where: {id: prefix} });
+    getCommonCodeTypeEntity(prefix: string): CommonCodeType | undefined {
+        return this.codeCache.hierarchical.get(prefix).type;
     }
-
-    async getCommonCodeEntity(fullCode: string | PrefixAndCode): Promise<CommonCode | undefined> {
-        let prefix = '';
-        let code = '';
-        if (typeof fullCode === 'string') {
-            if (!this.CODE_PATTERN.test(fullCode)) {
-                throw new Error('잘못된 양식의 커스텀 코드입니다.');
-            }
     
-            const matchArray: RegExpMatchArray = fullCode.match(this.CODE_PATTERN);
-            prefix = matchArray[1];
-            code = matchArray[2];
-        }
-        else {
-            prefix = fullCode.prefix;
-            code = fullCode.code;
+    getCommonCodeEntity(fullCode: string): CommonCode | undefined {
+        if (!this.CODE_PATTERN.test(fullCode)) {
+            throw new Error('잘못된 양식의 커스텀 코드입니다.');
         }
         
-        return await this.commonCodeRepository.findOne({
-            where: {type: {id: prefix}, id: code}
-        });
+        return this.codeCache.horizontal.get(fullCode);
     }
 }

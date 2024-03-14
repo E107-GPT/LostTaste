@@ -5,7 +5,7 @@ export class SignupDto {
     @IsAlphanumeric()
     accountId: string;
 
-    @Matches(/^[A-Za-z0-9!@#$%^&*+=-]{8, 32}$/)
+    @Matches(/^[A-Za-z0-9!@#$%^&*+=-]{8,32}$/)
     password: string;
 
     @Length(1, 16)
