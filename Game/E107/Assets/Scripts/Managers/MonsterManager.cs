@@ -8,8 +8,7 @@ public enum Location
 {
     GROUND = 0,
 };
-
-public class MonsterController : MonoBehaviour
+public class MonsterManager : MonoBehaviour
 {
     // TYPE이 늘어나면 이러한 배열과 prefab 변수를 추가한다.
     [SerializeField]
@@ -17,48 +16,48 @@ public class MonsterController : MonoBehaviour
     [SerializeField]
     private GameObject monsterPrefab;   // monster TYPE prefab
 
-    private List<EnemyBaseEntity> entitys;  // Monster, Player 등 게임 상의 모든 entity를 담을 수 있다.
+    private List<BaseController> entitys;  // Monster, Player 등 게임 상의 모든 entity를 담을 수 있다.
 
     public static bool IsGameStop { set; get; } = false;
 
 
     private void Awake()
     {
-        entitys = new List<EnemyBaseEntity>();
+        entitys = new List<BaseController>();
 
         for (int i = 0; i < arrayMonsters.Length; i++)
         {
             Vector3 pos = new Vector3(5 + i, 0, 5 + i);
             GameObject clone = Instantiate(monsterPrefab, pos, Quaternion.identity);
-            Monster monsterEntity = clone.GetComponent<Monster>();
-            monsterEntity.Setup(arrayMonsters[i]);
+            MonsterController monster = clone.GetComponent<MonsterController>();
+            monster.Setup(arrayMonsters[i]);
 
-            entitys.Add(monsterEntity);
+            entitys.Add(monster);
         }
     }
 
     private void Update()
     {
-        if (IsGameStop == true) return;
+        //if (IsGameStop == true) return;
 
-        // 모든 monsterEntity를 동작시키기 위해서 Updated()를 호출한다.
-        for (int i = 0; i < entitys.Count; ++i)
-        {
-            //if (entitys[i].GetComponent<Monster>().Hp < 0)
-            //{
-            //    Destroy(entitys[i], 3.0f);
-            //    entitys[i] = null;
-            //    continue;
-            //}
-            entitys[i].Updated();
-        }
+        //// 모든 monsterEntity를 동작시키기 위해서 Updated()를 호출한다.
+        //for (int i = 0; i < entitys.Count; ++i)
+        //{
+        //    //if (entitys[i].GetComponent<Monster>().Hp < 0)
+        //    //{
+        //    //    Destroy(entitys[i], 3.0f);
+        //    //    entitys[i] = null;
+        //    //    continue;
+        //    //}
+        //    entitys[i].Updated();
+        //}
     }
 
     private void FixedUpdate()
     {
         for (int i = 0; i < entitys.Count; ++i)
         {
-            entitys[i].GetComponent<Monster>().FreezeVelocity();
+            entitys[i].GetComponent<MonsterController>().FreezeVelocity();
         }
     }
 

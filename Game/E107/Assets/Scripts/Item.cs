@@ -15,7 +15,7 @@ public class Item : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-        if (transform.root.GetComponent<PlayerController>().State == Define.State.Skill && other.gameObject.CompareTag("Monster"))
+        if (transform.root.GetComponent<PlayerController>().CurState is SkillState && other.gameObject.CompareTag("Monster"))
         {
             // 적의 HP를 참조하여 감소시킵니다.
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();

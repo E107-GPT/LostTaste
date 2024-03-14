@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 여러 Agent가 참조해서 사용할 수 있도록 Generic
-public class StateMachine<T> where T : class
+public class TmpStateMachine<T> where T : class
 {
     private T ownerEntity;          // StateMachine 소유주
     private State<T> curState;
