@@ -38,10 +38,12 @@ export class UserService {
             nickname: dto.nickname,
         });
         
-        for (const fullCode of this.DEFAULT_EQUIPMENTS) {
+        member.equipments = [];
+        for (const codeId of this.DEFAULT_EQUIPMENTS) {
             const memberEquipment = new MemberEquipment();
             memberEquipment.member = member;
-            memberEquipment.customCode = this.codeService.getCommonCodeEntity(fullCode);
+            memberEquipment.customCode = this.codeService.getCommonCodeEntity(codeId);
+            memberEquipment.customCodeTypeId = memberEquipment.customCode.type.id;
             
             member.equipments.push(memberEquipment);
         }
