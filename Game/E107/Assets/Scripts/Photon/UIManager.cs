@@ -63,4 +63,5 @@ public class UIManager : MonoBehaviour
         GameObject.Find("Launcher").GetComponent<PhotonTest>().PasswordValidation(password);
     }
     #endregion
+
 }

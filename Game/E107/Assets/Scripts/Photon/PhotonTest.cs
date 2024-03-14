@@ -102,6 +102,10 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         UIManager manager = GameObject.Find("GameManager").GetComponent<UIManager>();
         string roomName = manager.GetTitle();
         string captainName = manager.GetName();
+
+        if (captainName == null || roomName == null) return;
+
+
         RoomOptions room = new RoomOptions();
         room.MaxPlayers = 4;
         room.IsVisible = true;
@@ -125,10 +129,13 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, room);
     }
 
-    public void roomEnter()
+    public void roomEnter(string roomName)
     {
         if (roomlist.Count < 1) return;
-        PhotonNetwork.NickName = GameObject.Find("GameManager").GetComponent<UIManager>().GetName();
+        string nickname = GameObject.Find("GameManager").GetComponent<UIManager>().GetName();
+        if (nickname == null) return;
+        PhotonNetwork.NickName = nickname;
+
         RoomInfo curRoom = null;
         printList();
         foreach (KeyValuePair<string, RoomInfo> room in roomlist)
@@ -147,7 +154,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         else
         {
             // no password 바로 입장
-            PhotonNetwork.JoinRoom(curRoom.Name);
+            PhotonNetwork.JoinRoom(roomName);
         }  
     }
 
@@ -218,7 +225,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
-        
+      // 본인 캠프로 들어가기
         PhotonNetwork.LoadLevel("Room for 1");
     }
 
@@ -228,6 +235,17 @@ public class PhotonTest : MonoBehaviourPunCallbacks
 
     }
 
-    
+
     #endregion
+
+    private void OnGUI()
+    {
+        foreach(KeyValuePair<string, RoomInfo > room in roomlist)
+        {
+            if (GUILayout.Button(room.Value.Name))
+            {
+                roomEnter(room.Value.Name);
+            }
+        }
+    }
 }
