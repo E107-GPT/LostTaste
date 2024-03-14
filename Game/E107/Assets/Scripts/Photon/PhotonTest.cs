@@ -95,7 +95,6 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         Debug.Log("JoinLobby");
         progressLabel.SetActive(false);
         createRoomPanel.SetActive(true);
-        //PhotonNetwork.GetCustomRoomList(Photon.Realtime.TypedLobbyInfo.Default, "ispassword");
     }
 
     public void makeRoom()
@@ -107,6 +106,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
         room.MaxPlayers = 4;
         room.IsVisible = true;
         room.IsOpen= true;
+        PhotonNetwork.NickName = manager.GetName();
         bool ispassword = manager.GetIsPassword();
         int password = manager.GetPassword();
         Debug.Log("pw" +password);
@@ -128,7 +128,7 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     public void roomEnter()
     {
         if (roomlist.Count < 1) return;
-
+        PhotonNetwork.NickName = GameObject.Find("GameManager").GetComponent<UIManager>().GetName();
         RoomInfo curRoom = null;
         printList();
         foreach (KeyValuePair<string, RoomInfo> room in roomlist)
@@ -199,7 +199,6 @@ public class PhotonTest : MonoBehaviourPunCallbacks
                 else // 유저가 없으면 방 삭제
                     roomlist.Remove(rooom.Name);
             }
-
         }
         printList();
     }

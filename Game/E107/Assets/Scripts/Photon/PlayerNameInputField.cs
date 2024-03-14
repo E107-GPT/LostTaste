@@ -11,6 +11,7 @@ public class PlayerNameInputField : MonoBehaviour
 {
     #region private constants
     const string playerNamePrefKey = "PlayerName";
+    string playerName;
     #endregion
 
     #region MonoBehaviour BallBacks

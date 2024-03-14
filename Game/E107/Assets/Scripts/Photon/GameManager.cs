@@ -73,5 +73,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.CurrentRoom.SetCustomProperties(PhotonNetwork.CurrentRoom.CustomProperties);
 
         Debug.Log(PhotonNetwork.CurrentRoom.Players.Keys);
+
+        foreach(var playerId in PhotonNetwork.CurrentRoom.Players.Values)
+        {
+            string name = playerId.NickName;
+            if (playerId.IsLocal) name += " its me!";
+            Debug.Log(name);
+        }
     }
 }
