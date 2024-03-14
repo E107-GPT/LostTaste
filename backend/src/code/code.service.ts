@@ -14,7 +14,7 @@ export class CodeService implements OnApplicationBootstrap {
         private commonCodeRepository: Repository<CommonCode>,
     ) {}
     
-    private codeCache: CodeCache = new CodeCache();
+    public static codeCache: CodeCache = new CodeCache();
 
     private readonly CODE_PATTERN: RegExp = /^[A-Za-z]{3}_\d{4}$/;
 
@@ -28,8 +28,8 @@ export class CodeService implements OnApplicationBootstrap {
     async cacheAllCodes(): Promise<void> {
         const customCodes: CommonCode[] = await this.commonCodeRepository.find();
 
-        const hierarchical = this.codeCache.hierarchical;
-        const horizontal = this.codeCache.horizontal;
+        const hierarchical = CodeService.codeCache.hierarchical;
+        const horizontal = CodeService.codeCache.horizontal;
         customCodes.forEach((code) => {
             const type = code.type;
 
@@ -44,7 +44,7 @@ export class CodeService implements OnApplicationBootstrap {
     }
 
     getCommonCodeTypeEntity(prefix: string): CommonCodeType | undefined {
-        return this.codeCache.hierarchical.get(prefix).type;
+        return CodeService.codeCache.hierarchical.get(prefix).type;
     }
     
     getCommonCodeEntity(fullCode: string): CommonCode | undefined {
@@ -52,6 +52,6 @@ export class CodeService implements OnApplicationBootstrap {
             throw new Error('잘못된 양식의 커스텀 코드입니다.');
         }
         
-        return this.codeCache.horizontal.get(fullCode);
+        return CodeService.codeCache.horizontal.get(fullCode);
     }
 }

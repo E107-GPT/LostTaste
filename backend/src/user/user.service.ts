@@ -10,12 +10,16 @@ import { SignupDto } from 'src/user/dto/signup.dto';
 import { Repository } from 'typeorm';
 import { UserProfileDto } from './dto/user-profile.dto';
 import { UserDto } from './dto/user.dto';
+import { CustomChangeDto } from './dto/custom-change.dto';
 
 @Injectable()
 export class UserService {
     constructor (
         @InjectRepository(Member)
         private readonly memberRepository: Repository<Member>,
+
+        @InjectRepository(MemberEquipment)
+        private readonly memberEquipmentRepository: Repository<MemberEquipment>,
 
         private readonly codeService: CodeService
     ) {}
@@ -55,10 +59,8 @@ export class UserService {
             memberEquipment.customCode = this.codeService.getCommonCodeEntity(codeId);
             memberEquipment.customCodeTypeId = memberEquipment.customCode.type.id;
             
-            member.equipments.push(memberEquipment);
+            this.memberEquipmentRepository.save(memberEquipment);
         }
-
-        this.memberRepository.save(member);
     }
 
     async hash(plaintext: string) {
@@ -80,5 +82,16 @@ export class UserService {
             ...user,
             lastCustom: customMap
         };
+    }
+
+    async changeCustom(user: UserDto, dto: CustomChangeDto) {
+        const member: Member = await this.findByDto(user);
+        
+        const memberEquipment = new MemberEquipment();
+        memberEquipment.member = member;
+        memberEquipment.customCode = this.codeService.getCommonCodeEntity(dto.code);
+        memberEquipment.customCodeTypeId = dto.customType;
+
+        this.memberEquipmentRepository.save(memberEquipment);
     }
 }
