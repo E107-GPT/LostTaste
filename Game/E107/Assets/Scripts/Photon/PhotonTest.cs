@@ -18,7 +18,11 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     // 클라이언트 번호
     string gameVersion = "1";
     bool isConnecting;
-    List<RoomInfo> roomlist = new List<RoomInfo>();
+
+    // 방 이름으로 룸 정보 관리
+    // 중복 불가
+    Dictionary<string, RoomInfo> roomlist = new Dictionary<string, RoomInfo>();
+    
     // 선택한 방 정보
     private RoomInfo selectRoom;
     #endregion
@@ -124,19 +128,26 @@ public class PhotonTest : MonoBehaviourPunCallbacks
     public void roomEnter()
     {
         if (roomlist.Count < 1) return;
+
+        RoomInfo curRoom = null;
+        printList();
+        foreach (KeyValuePair<string, RoomInfo> room in roomlist)
+        {
+            curRoom = room.Value;
+            break;
+        }
         
-        RoomInfo room = roomlist[0];
-        if ((bool)room.CustomProperties["ispassword"])
+        if ((bool)curRoom.CustomProperties["ispassword"])
         {
             //password panel open
             // 비번 검증 후 입장
-            selectRoom = room;
+            selectRoom = curRoom;
             passwordPanel.SetActive(true);
         }
         else
         {
             // no password 바로 입장
-            PhotonNetwork.JoinRoom(room.Name);
+            PhotonNetwork.JoinRoom(curRoom.Name);
         }  
     }
 
@@ -151,10 +162,10 @@ public class PhotonTest : MonoBehaviourPunCallbacks
 
     public void printList()
     {
-        foreach(RoomInfo rooom in roomlist)
+        foreach (KeyValuePair<string, RoomInfo> room in roomlist)
         {
-            ExitGames.Client.Photon.Hashtable has = rooom.CustomProperties;
-            string roomInfo = "room : " + rooom.Name + " \n" + rooom.PlayerCount + " / " + rooom.MaxPlayers + "\n" + "isvisible : " + rooom.IsVisible + "\n" + "isopen : " + rooom.IsOpen
+            ExitGames.Client.Photon.Hashtable has = room.Value.CustomProperties;
+            string roomInfo = "room : " + room.Value.Name + " \n" + room.Value.PlayerCount + " / " + room.Value.MaxPlayers + "\n" + "isvisible : " + room.Value.IsVisible + "\n" + "isopen : " + room.Value.IsOpen
                 + "\n captain : " + has["captain"] + "\n" + has["ispassword"] + " / " + has["password"];
             Debug.Log(roomInfo);
         }
@@ -175,32 +186,20 @@ public class PhotonTest : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        foreach(RoomInfo rooom in roomList)
-        {
-            int idx = 0;
-            bool changed= false;
-            if (roomlist.Count > 0)
+        foreach (RoomInfo rooom in roomList)
+        {            
+            if (!roomlist.ContainsKey(rooom.Name))
             {
-                foreach(RoomInfo newroom in roomlist)
-                {
-                    if(rooom.Name == newroom.Name)
-                    {
-                        changed = true;
-                        break;
-                    }
-                    idx++;
-                }
-
-                   roomlist[idx] = rooom;
-
+                roomlist.Add(rooom.Name, rooom);
             }
-            if(!changed || roomlist.Count <1)
-                roomlist .Add(rooom);
+            else // 있으면 갱신
+            {
+                if (rooom.PlayerCount != 0)
+                    roomlist[rooom.Name] = rooom;
+                else // 유저가 없으면 방 삭제
+                    roomlist.Remove(rooom.Name);
+            }
 
-            //ExitGames.Client.Photon.Hashtable has = rooom.CustomProperties;
-            //string roomInfo = "room : " + rooom.Name + " \n" + rooom.PlayerCount + " / " + rooom.MaxPlayers +"\n" + "isvisible : " +rooom.IsVisible+ "\n" + "isopen : " + rooom.IsOpen 
-            //    + "\n captain : " + has["captain"] + "\n" + has["ispassword"] + " / " + has["password"];
-            //Debug.Log(roomInfo);
         }
         printList();
     }

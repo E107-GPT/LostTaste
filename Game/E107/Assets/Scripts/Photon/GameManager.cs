@@ -69,10 +69,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Debug.Log(PhotonNetwork.CurrentRoom.Name);
 
-        Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties.Count);
         if (!PhotonNetwork.IsMasterClient) PhotonNetwork.AutomaticallySyncScene = true;
         //PhotonNetwork.CurrentRoom.SetCustomProperties(PhotonNetwork.CurrentRoom.CustomProperties);
 
-        Debug.Log(PhotonNetwork.CurrentRoom.Players);
+        Debug.Log(PhotonNetwork.CurrentRoom.Players.Keys);
     }
 }
