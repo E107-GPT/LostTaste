@@ -32,4 +32,10 @@ public class Define
     {
         QuarterVeiw
     }
+
+    public enum  MonsterType
+    {
+        Slime = 0,
+        DrillDuck,
+    }
 }
