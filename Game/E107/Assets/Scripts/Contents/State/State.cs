@@ -28,7 +28,7 @@ public abstract class State : IState
 
 
 
-
+// 아마 필요 없어질 부분
 
 
 public abstract class State<T> where T : class

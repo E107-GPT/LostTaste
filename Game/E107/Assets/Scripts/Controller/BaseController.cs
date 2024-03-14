@@ -10,11 +10,7 @@ public abstract class BaseController : MonoBehaviour
 	protected NavMeshAgent _agent;
 	
 
-
-	[SerializeField]
-    protected Define.State _state = Define.State.Idle;
-
-	protected SMachine _statemachine;
+	protected StateMachine _statemachine;
 
 	public State CurState
     {
@@ -43,7 +39,7 @@ public abstract class BaseController : MonoBehaviour
 
 	private void Start()
 	{
-		_statemachine = new SMachine();
+		_statemachine = new StateMachine();
 		_animator = GetComponent<Animator>();
 		_rigidbody = GetComponent<Rigidbody>();
 		_agent = GetComponent<NavMeshAgent>();
