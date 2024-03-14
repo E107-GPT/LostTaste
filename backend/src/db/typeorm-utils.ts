@@ -44,7 +44,7 @@ export const CreatedAt = (comment?: string) => CreateDateColumn({ type: 'datetim
 export const CodeColumn = (name?: string, nullable: boolean = false) => (
     (target: Object, propertyKey: string | symbol): void => {
         JoinColumn({ name })(target, propertyKey);
-        ManyToOne(() => CommonCode, { nullable })(target, propertyKey);
+        ManyToOne(() => CommonCode, { nullable, eager: true })(target, propertyKey);
     }
 );
 

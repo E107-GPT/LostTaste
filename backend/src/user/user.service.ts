@@ -5,11 +5,11 @@ import * as bcrypt from 'bcrypt';
 import { CodeService } from 'src/code/code.service';
 import { Member } from 'src/db/entity/member';
 import { MemberEquipment } from 'src/db/entity/member-equipment';
+import { DuplicatedIdException } from 'src/exception/exception';
 import { SignupDto } from 'src/user/dto/signup.dto';
 import { Repository } from 'typeorm';
 import { UserProfileDto } from './dto/user-profile.dto';
 import { UserDto } from './dto/user.dto';
-import { DuplicatedIdException } from 'src/exception/exception';
 
 @Injectable()
 export class UserService {
@@ -71,9 +71,9 @@ export class UserService {
         const customMap = new Map<string, string>();
         entity.equipments.forEach(equipment => {
             const typeId = equipment.customCodeTypeId;
-            const id = equipment.customCode.id;
+            const codeId = equipment.customCode.id;
 
-            customMap.set(typeId, id);
+            customMap.set(typeId, codeId);
         });
 
         return {

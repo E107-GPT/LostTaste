@@ -13,7 +13,7 @@ export class AuthService {
 
     async login(dto: LoginDto): Promise<{accessToken: string}> {
         const user = await this.userService.findByAccountId(dto.accountId);
-        if (!user || bcrypt.compareSync(dto.password, user.password)) {
+        if (!user || !bcrypt.compareSync(dto.password, user.password)) {
             throw new NotFoundException();
         }
 
