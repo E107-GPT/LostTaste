@@ -151,7 +151,7 @@ public class PlayerController : BaseController
     void OnKeyboard()
     {
 
-        if (_statemachine.CurState is DieState || CurState is DashState) return;
+        if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
