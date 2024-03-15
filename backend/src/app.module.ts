@@ -13,6 +13,7 @@ import { CodeModule } from './code/code.module';
 import { MapToObjectInterceptor } from './common/map-to-object.interceptor';
 import { UserModule } from './user/user.module';
 import { BoardModule } from './board/board.module';
+import { PasswordModule } from './password/password.module';
 
 const configModule = ConfigModule.forRoot({
   isGlobal: true,
@@ -45,7 +46,7 @@ const mapToObjectProvider: ClassProvider = {
 }
 
 @Module({
-  imports: [configModule, typeOrmModule, redisModule, AuthModule, UserModule, CodeModule, BoardModule],
+  imports: [configModule, typeOrmModule, redisModule, AuthModule, UserModule, CodeModule, BoardModule, PasswordModule],
   controllers: [AppController],
   providers: [AppService, mapToObjectProvider],
 })

@@ -23,8 +23,6 @@ export class UserService {
 
         private readonly codeService: CodeService
     ) {}
-    
-    private readonly HASH_SALT_ROUND = 10;
 
     private readonly DEFAULT_EQUIPMENTS: string[] = ['SKN_0001', 'JOB_0001', 'PET_0001', 'CSK_0001'];
 
@@ -61,10 +59,6 @@ export class UserService {
             
             this.memberEquipmentRepository.save(memberEquipment);
         }
-    }
-
-    async hash(plaintext: string) {
-        return await bcrypt.hash(plaintext, this.HASH_SALT_ROUND);
     }
 
     async getProfile(user: UserDto): Promise<UserProfileDto> {
