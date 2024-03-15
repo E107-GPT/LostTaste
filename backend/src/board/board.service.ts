@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Board } from 'src/db/entity/board';
 import { LessThan, Repository } from 'typeorm';
 import { BoardBriefDto } from './dto/board-brief.dto';
@@ -7,6 +8,7 @@ import { BoardDetailDto } from './dto/board-detail.dto';
 @Injectable()
 export class BoardService {
     constructor(
+        @InjectRepository(Board)
         private readonly boardRepository: Repository<Board>
     ) {}
 
