@@ -1,5 +1,6 @@
 import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { BoardService } from './board.service';
+import { BoardPostDto } from './dto/board-post.dto';
 
 @Controller('board')
 export class BoardController {
@@ -21,7 +22,7 @@ export class BoardController {
   }
 
   @Post()
-  async post() {
-
+  async post(dto: BoardPostDto) {
+    this.boardService.post(dto);
   }
 }
