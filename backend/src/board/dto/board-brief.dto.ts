@@ -1,9 +1,10 @@
 import { Board } from "src/db/entity/board";
+import { CommonCode } from "src/db/entity/common-code";
 
 export class BoardBriefDto {
     id: string;
 
-    categoryCode: string;
+    categoryCode: typeof CommonCode.prototype.id;
 
     title: string;
 
