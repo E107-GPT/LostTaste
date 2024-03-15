@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Board } from 'src/db/entity/board';
 import { LessThan, Repository } from 'typeorm';
 import { BoardBriefDto } from './dto/board-brief.dto';
+import { BoardDetailDto } from './dto/board-detail.dto';
 
 @Injectable()
 export class BoardService {
@@ -17,5 +18,10 @@ export class BoardService {
         });
 
         return boards.map(BoardBriefDto.fromEntity);
+    }
+
+    async loadDetail(id: string): Promise<BoardDetailDto> {
+        const board = await this.boardRepository.findOneBy({ id });
+        return BoardDetailDto.fromEntity(board);
     }
 }
