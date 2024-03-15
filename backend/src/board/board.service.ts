@@ -9,9 +9,9 @@ export class BoardService {
         private readonly boardRepository: Repository<Board>
     ) {}
 
-    async loadBelowId(limit: number, lastSeenId?: typeof Board.prototype.id): Promise<BoardBriefDto[]> {
+    async loadBelowId(limit: number, before?: typeof Board.prototype.id): Promise<BoardBriefDto[]> {
         const boards: Board[] = await this.boardRepository.find({
-            where: lastSeenId ? { id: LessThan(lastSeenId) } : undefined,
+            where: before ? { id: LessThan(before) } : undefined,
             take: limit,
             order: {id: 'DESC'}
         });
