@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ObjectPersist : MonoBehaviour
 {
-    private static bool unitychanExists = false;
+    private static bool playerExists = false;
     private static bool maincameraExists = false;
 
     public enum ObjectType
     {
-        unitychan,
+        player,
         MainCamera,
     }
 
@@ -19,10 +19,10 @@ public class ObjectPersist : MonoBehaviour
     {
         switch (objectType)
         {
-            case ObjectType.unitychan:
-                if (!unitychanExists)
+            case ObjectType.player:
+                if (!playerExists)
                 {
-                    unitychanExists = true;
+                    playerExists = true;
                     DontDestroyOnLoad(gameObject);
                 }
                 else
