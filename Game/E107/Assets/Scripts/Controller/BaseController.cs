@@ -65,6 +65,7 @@ public abstract class BaseController : MonoBehaviour
 		Debug.Log($"<color={personalColor}><b>{entityName}</b></color> : {text}");
 	}
 
+
 	public abstract void Init();
 
 	public virtual void EnterIdle() { }
