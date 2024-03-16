@@ -13,7 +13,7 @@ public class PlayerController : BaseController
     public override void Init()
     {
         _currentItem = gameObject.GetComponentInChildren<Item>();
-
+        _stat = new PlayerStat(Define.UnitType.Player);
         _stat.InitStat(Define.UnitType.Player);
 
         Managers.Input.KeyAction -= OnKeyboard;
