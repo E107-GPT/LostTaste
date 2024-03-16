@@ -183,7 +183,7 @@ public class MonsterController : BaseController
     public override void EnterIdle()
     {
         base.EnterIdle();
-        //_animator.CrossFade("Idle", 0.1f);      // 기본적으로 base layer의 state를 나타냄
+        _animator.CrossFade("Idle", 0.1f);      // 기본적으로 base layer의 state를 나타냄
         _agent.speed = 0;
     }
     public override void ExcuteIdle()
@@ -200,7 +200,7 @@ public class MonsterController : BaseController
     public override void EnterMove()
     {
         base.EnterMove();
-        //_animator.CrossFade("Move", 1.0f);
+        _animator.CrossFade("Move", 1.0f);
         _agent.speed = _stat.MoveSpeed;
     }
     public override void ExcuteMove()
@@ -224,7 +224,7 @@ public class MonsterController : BaseController
     public override void EnterSkill()
     {
         base.EnterSkill();
-        //_animator.CrossFade("Attack", 0.1f);
+        _animator.CrossFade("Attack", 0.1f);
         _agent.speed = 0;
     }
     public override void ExcuteSkill()
@@ -249,7 +249,7 @@ public class MonsterController : BaseController
     public override void EnterDie() 
     {
         base.EnterDie();
-        //_animator.CrossFade("Die", 0.1f);
+        _animator.CrossFade("Die", 0.1f);
         // 스폰에서 몬스터 배열을 통해 null 처리 + destroy
     }
     public override void ExcuteDie() 
