@@ -50,7 +50,7 @@ public class Stat
                 _maxHp = 500;
                 _attackDamage = 15;
                 _moveSpeed = 5.0f;
-                _attackRange = 4.4f;
+                _attackRange = 4.0f;
                 break;
         }
     }

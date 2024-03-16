@@ -13,7 +13,7 @@ public abstract class BaseController : MonoBehaviour
 
 	protected StateMachine _statemachine;
 
-	public State CurState
+    public State CurState
     {
         get { return _statemachine.CurState; }
 		set { CurState = value; }
@@ -51,8 +51,8 @@ public abstract class BaseController : MonoBehaviour
 		_statemachine.Execute();
 	}
 
-	//public abstract void Updated();
-	public virtual void Setup(string name)
+    //public abstract void Updated();
+    public virtual void Setup(string name)
 	{
 		// id, 이름, 색상 설정
 		ID = entity_ID;

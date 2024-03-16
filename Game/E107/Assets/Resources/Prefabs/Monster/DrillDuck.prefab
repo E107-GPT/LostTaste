@@ -3475,8 +3475,8 @@ GameObject:
   - component: {fileID: 2360018824529132272}
   - component: {fileID: 8511895970222891146}
   - component: {fileID: -2256598554493354029}
-  - component: {fileID: -5219018721100819116}
   - component: {fileID: 2304664441753155432}
+  - component: {fileID: 2154674506615639540}
   m_Layer: 0
   m_Name: DrillDuck
   m_TagString: Untagged
@@ -3494,7 +3494,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9080431936399234292}
@@ -3550,7 +3550,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!54 &-5219018721100819116
+--- !u!114 &2304664441753155432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137786495578628170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b65ba56f44d098946b5baec8654925b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityName: 
+  _detectPlayer: {fileID: 0}
+  _attackPlayer: {fileID: 0}
+--- !u!54 &2154674506615639540
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3575,26 +3590,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2304664441753155432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137786495578628170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b65ba56f44d098946b5baec8654925b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _detectPlayer: {fileID: 0}
-  _attackPlayer: {fileID: 0}
-  _hp: 0
-  _moveSpeed: 0
-  _attackRange: 0
-  _detectRange: 0
 --- !u!1 &3153326930071574659
 GameObject:
   m_ObjectHideFlags: 0

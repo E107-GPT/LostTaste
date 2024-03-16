@@ -25,6 +25,7 @@ public class MonsterController : BaseController
 
     //private Coroutine updateAttackPlayer;
     private Coroutine checkMonsterState;
+    private Ray _ray;
 
     public NavMeshAgent Agent { private set; get; }
     public Transform DetectPlayer
@@ -52,6 +53,13 @@ public class MonsterController : BaseController
     private void FixedUpdate()
     {
         FreezeVelocity();
+    }
+
+    private void OnDrawGizmos()
+    {
+        _ray.origin = transform.position;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_ray.origin, _stat.AttackRange);
     }
 
     // 캐릭터에게 물리력을 받아도 밀려나는 가속도로 인해 이동에 방해받지 않는다.
@@ -226,6 +234,7 @@ public class MonsterController : BaseController
         base.EnterSkill();
         //_animator.CrossFade("Attack", 0.1f);
         _agent.speed = 0;
+        _agent.velocity = Vector3.zero;
     }
     public override void ExcuteSkill()
     {
@@ -236,6 +245,11 @@ public class MonsterController : BaseController
 
         Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
         transform.rotation = rotation;
+
+        // 만약 휙휙 돌아가는게 어색하면
+        // 현재 몬스터가 플레이어를 자연스럽게 바라보도록 천천히 회전함
+        // 현재 몬스터 객체가 바라보는 방향에 플레이어가 있는 경우 공격 animation 재생
+        // 이 기능을 넣으려면 animation event에서 피격 이벤트가 있어야 함
 
         // 플레이어 공격시 스탯 변경 이벤트
 
