@@ -7,10 +7,53 @@ public class Item : MonoBehaviour
     [SerializeField]
     protected int _attackDamage = 0;
 
+    float _attackRange = 8.0f;
+
+    GameObject _normalAttackObj;
+    BoxCollider _normalAttackCollider;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        Init();
+    }
+
+    protected void Init()
+    {
+        _normalAttackObj = new GameObject("NormalAttack");
+        _normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
+        _normalAttackObj.transform.localScale = new Vector3(1.0f, 1.0f, _attackRange);
+        _normalAttackObj.SetActive(false);
+        //Object.Instantiate(_normalAttackObj);
+    }
+    public void NormalAttack()
+    {
+        StartCoroutine(NormalAttackCorotine());
+    }
+
+    IEnumerator NormalAttackCorotine()
+    {
+        Debug.Log("123");
+        _normalAttackObj.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+
+        Transform root = gameObject.transform.root;
+
+        _normalAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
+        //_normalAttackObj.transform.position = root.position + root.forward * (_attackRange/2);
+        _normalAttackObj.transform.position = new Vector3(_normalAttackObj.transform.position.x, root.position.y + 0.5f, _normalAttackObj.transform.position.z);
+        _normalAttackObj.transform.rotation = root.rotation;
+
+
+        yield return new WaitForSeconds(0.3f);
+        _normalAttackObj.SetActive(false);
+
+
+    }
+
+    public void SkillAttack()
+    {
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -24,14 +67,8 @@ public class Item : MonoBehaviour
                 enemyHealth.TakeDamage(1, _attackDamage);
             }
         }
-
-        
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

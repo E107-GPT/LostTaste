@@ -6,9 +6,14 @@ using UnityEngine.AI;
 public class PlayerController : BaseController
 {
     PlayerStat _stat;
+    BoxCollider _hitCollider;
+    GameObject _hitObject;
+    Item _currentItem;
 
     public override void Init()
     {
+        _currentItem = gameObject.GetComponentInChildren<Item>();
+        _stat = new PlayerStat(Define.UnitType.Player);
         _stat.InitStat(Define.UnitType.Player);
 
         Managers.Input.KeyAction -= OnKeyboard;
@@ -17,6 +22,15 @@ public class PlayerController : BaseController
         Managers.Input.MouseAction += OnMouseClicked;
 
         _statemachine.ChangeState(new IdleState(this));
+        //_hitCollider = gameObject.GetComponent<BoxCollider>();
+        
+
+        _hitObject = new GameObject("TEST");
+        _hitObject.SetActive(true);
+        _hitObject.transform.parent = gameObject.transform;
+        _hitCollider = _hitObject.AddComponent<BoxCollider>();
+        _hitCollider.enabled = false;
+        Object.Instantiate(_hitObject);
 
         //Managers.Resource.Instantiate("UI/UI_Button");
         //UI_Button ui = Managers.UI.ShowPopupUI<UI_Button>();
@@ -120,12 +134,55 @@ public class PlayerController : BaseController
 
         Vector3 dir = hit.point - transform.position;
         Quaternion quat = Quaternion.LookRotation(dir);
+        
         transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
+
+
+
+        //_hitCollider.enabled = true;
+
+        //// �� ���������� ���� ��Ÿ��� �޾ƿ;��Ѵ�.
+        //// �������� �޾ƿ;��Ѵ�.
+        //float attackRangeTmp = 2.0f;
+        //_hitCollider.size = new Vector3(1.0f, 1.0f, attackRangeTmp);
+        //_hitCollider.center = new Vector3(0,0.5f, 0.5f + attackRangeTmp / 2);
+
+        // ���ʹ� (0.5 + �����Ÿ�) / 2
+        //StartCoroutine(NormalAttack());
+
+        _currentItem.NormalAttack();
     }
 
     public override void ExitSkill()
     {
         base.ExitSkill();
+        
+    }
+
+    IEnumerator NormalAttack()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        // �� ���������� ���� ��Ÿ��� �޾ƿ;��Ѵ�.
+        // �������� �޾ƿ;��Ѵ�.
+        // �׸��� _hitObject�� Demage�� �������ְ�
+        // _hitObject�� ������� ���ʹ� ������ ���ظ� �Դ´�. 
+
+
+
+
+        
+        _hitCollider.enabled = true;
+
+
+        float attackRangeTmp = 2.0f;
+        _hitCollider.size = new Vector3(1.0f, 1.0f, attackRangeTmp);
+        _hitCollider.center = new Vector3(0, 0.5f, 0.5f + attackRangeTmp / 2);
+
+        yield return new WaitForSeconds(0.5f);
+        _hitCollider.enabled = false;
+
+
     }
 
 
