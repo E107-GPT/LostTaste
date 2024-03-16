@@ -23,6 +23,9 @@ public class MonsterController : BaseController
 
     MonsterStat _stat;
 
+
+
+
     //private Coroutine updateAttackPlayer;
     private Coroutine checkMonsterState;
 
@@ -40,13 +43,14 @@ public class MonsterController : BaseController
 
     public override void Init()
     {
+        Debug.Log("123123");
         _statemachine.ChangeState(new IdleState(this));
         _agent.stoppingDistance = 1.5f;
 
         // 만약 TYPE을 controller에서 세팅하면
         // 현재 객체가 DrillDuck인지 Slime인지 판단한다.
         _stat = new MonsterStat(Define.UnitType.DrillDuck);
-
+        Debug.Log($"{_stat.Hp}");
         checkMonsterState = StartCoroutine(CheckMonsterState());
     }
     private void FixedUpdate()
@@ -250,6 +254,9 @@ public class MonsterController : BaseController
     {
         base.EnterDie();
         _animator.CrossFade("Die", 0.1f);
+
+        Destroy(gameObject);
+        
         // 스폰에서 몬스터 배열을 통해 null 처리 + destroy
     }
     public override void ExcuteDie() 
@@ -260,5 +267,30 @@ public class MonsterController : BaseController
     public override void ExitDie() 
     { 
         base.ExitDie(); 
+    }
+
+    public override void TakeDamage(int skillObjectId, int damage)
+    {
+        base.TakeDamage(skillObjectId, damage);
+
+        float lastAttackTime;
+        lastAttackTimes.TryGetValue(skillObjectId, out lastAttackTime);
+
+        if (Time.time - lastAttackTime < damageCooldown)
+        {
+            // 쿨다운 중이므로 피해를 주지 않음
+            return;
+        }
+
+        _stat.Hp -= damage;
+        lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
+        Debug.Log($"{_stat.Hp}!!!");
+
+        if (_stat.Hp <= 0)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
+
+
     }
 }
