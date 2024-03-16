@@ -38,7 +38,6 @@ public class MonsterController : BaseController
         get => _attackPlayer;
     }
 
-
     public override void Init()
     {
         _statemachine.ChangeState(new IdleState(this));
@@ -46,12 +45,10 @@ public class MonsterController : BaseController
 
         // 만약 TYPE을 controller에서 세팅하면
         // 현재 객체가 DrillDuck인지 Slime인지 판단한다.
-        
-        _stat.InitStat(Define.UnitType.DrillDuck);
+        _stat = new MonsterStat(Define.UnitType.DrillDuck);
 
         checkMonsterState = StartCoroutine(CheckMonsterState());
     }
-
     private void FixedUpdate()
     {
         FreezeVelocity();
@@ -78,7 +75,6 @@ public class MonsterController : BaseController
             for (int i = 0; i < targetPlayers.Length; ++i)
             {
                 float dist = Vector3.Distance(transform.position, targetPlayers[i].transform.position);
-                PrintText($"공격 사정거리 내의 플레이어를 {targetPlayers.Length}만큼 인식");
                 if (minDistAttack > dist)
                 {
                     minDistAttack = dist;
@@ -98,7 +94,6 @@ public class MonsterController : BaseController
             for (int i = 0; i < detectPlayers.Length; ++i)
             {
                 float dist = Vector3.Distance(this.transform.position, detectPlayers[i].transform.position);
-                PrintText($"플레이어를 {detectPlayers.Length}만큼 인식");
                 if (minDistDetect > dist)
                 {
                     minDistDetect = dist;
@@ -149,8 +144,8 @@ public class MonsterController : BaseController
             {
                 if (CurState is SkillState) continue;
 
-                //_animator.SetBool("isDetect", true);
-                //_animator.SetBool("isPlayerInAttackRange", true);
+                _animator.SetBool("isDetect", true);
+                _animator.SetBool("isPlayerInAttackRange", true);
 
                 _statemachine.ChangeState(new SkillState(this));
             }
@@ -158,8 +153,8 @@ public class MonsterController : BaseController
             {
                 if (CurState is MoveState) continue;
 
-                //_animator.SetBool("isDetect", true);
-                //_animator.SetBool("isPlayerInAttackRange", false);
+                _animator.SetBool("isDetect", true);
+                _animator.SetBool("isPlayerInAttackRange", false);
 
                 _statemachine.ChangeState(new MoveState(this));
             }
@@ -167,8 +162,8 @@ public class MonsterController : BaseController
             {
                 if (CurState is IdleState) continue;
 
-                //_animator.SetBool("isDetect", false);
-                //_animator.SetBool("isPlayerInAttackRange", false);
+                _animator.SetBool("isDetect", false);
+                _animator.SetBool("isPlayerInAttackRange", false);
                 DetectPlayer = null;
                 AttackPlayer = null;
 
@@ -188,8 +183,7 @@ public class MonsterController : BaseController
     public override void EnterIdle()
     {
         base.EnterIdle();
-        PrintText($"대기중");
-        _animator.CrossFade("Idle", 0.1f);      // 기본적으로 base layer의 state를 나타냄
+        //_animator.CrossFade("Idle", 0.1f);      // 기본적으로 base layer의 state를 나타냄
         _agent.speed = 0;
     }
     public override void ExcuteIdle()
@@ -206,8 +200,7 @@ public class MonsterController : BaseController
     public override void EnterMove()
     {
         base.EnterMove();
-        PrintText($"이동중");
-        _animator.CrossFade("Move", 0.1f);
+        //_animator.CrossFade("Move", 1.0f);
         _agent.speed = _stat.MoveSpeed;
     }
     public override void ExcuteMove()
@@ -231,8 +224,7 @@ public class MonsterController : BaseController
     public override void EnterSkill()
     {
         base.EnterSkill();
-        PrintText($"일반 공격중");
-        _animator.CrossFade("Attack", 0.1f);
+        //_animator.CrossFade("Attack", 0.1f);
         _agent.speed = 0;
     }
     public override void ExcuteSkill()
@@ -257,8 +249,7 @@ public class MonsterController : BaseController
     public override void EnterDie() 
     {
         base.EnterDie();
-        PrintText($"사망");
-        _animator.CrossFade("Die", 0.1f);
+        //_animator.CrossFade("Die", 0.1f);
         // 스폰에서 몬스터 배열을 통해 null 처리 + destroy
     }
     public override void ExcuteDie() 

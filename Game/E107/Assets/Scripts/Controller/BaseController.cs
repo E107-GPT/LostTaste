@@ -38,7 +38,7 @@ public abstract class BaseController : MonoBehaviour
 		}
 	}
 
-	private void Start()
+	private void Awake()
 	{
 		_statemachine = new StateMachine();
 		_animator = GetComponent<Animator>();
@@ -48,7 +48,7 @@ public abstract class BaseController : MonoBehaviour
 	}
 	void Update()
 	{
-		_statemachine.Update();
+		_statemachine.Execute();
 	}
 
 	//public abstract void Updated();

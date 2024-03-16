@@ -24,6 +24,8 @@ public class Stat
     public float AttackRange { set => _attackRange = value; get => _attackRange; }
     public Define.UnitType UnitType { get { return _unitType; } set { _unitType = value; } }    
 
+    public Stat(Define.UnitType unitType) { }
+
     public virtual void InitStat(Define.UnitType unitType) 
     {
         _unitType = unitType;
@@ -47,8 +49,8 @@ public class Stat
                 _hp = 500;
                 _maxHp = 500;
                 _attackDamage = 15;
-                _moveSpeed = 4.0f;
-                _attackRange = 2.3f;
+                _moveSpeed = 5.0f;
+                _attackRange = 4.4f;
                 break;
         }
     }
