@@ -18,7 +18,7 @@ async function bootstrap() {
     transform: true,
   }));
 
-  await app.listen(443);
+  await app.listen(process.env.SERVER_PORT);
 }
 bootstrap();
 
