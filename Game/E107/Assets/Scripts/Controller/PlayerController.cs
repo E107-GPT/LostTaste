@@ -12,9 +12,9 @@ public class PlayerController : BaseController
 
     public override void Init()
     {
-        _stat = gameObject.GetOrAddComponent<PlayerStat>();
         _currentItem = gameObject.GetComponentInChildren<Item>();
 
+        _stat.InitStat(Define.UnitType.Player);
 
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
@@ -141,13 +141,13 @@ public class PlayerController : BaseController
 
         //_hitCollider.enabled = true;
 
-        //// ³» ¾ÆÀÌÅÛÀ¸·Î ºÎÅÍ »ç°Å¸®¸¦ ¹Þ¾Æ¿Í¾ßÇÑ´Ù.
-        //// µ¥¹ÌÁöµµ ¹Þ¾Æ¿Í¾ßÇÑ´Ù.
+        //// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Í¾ï¿½ï¿½Ñ´ï¿½.
+        //// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Í¾ï¿½ï¿½Ñ´ï¿½.
         //float attackRangeTmp = 2.0f;
         //_hitCollider.size = new Vector3(1.0f, 1.0f, attackRangeTmp);
         //_hitCollider.center = new Vector3(0,0.5f, 0.5f + attackRangeTmp / 2);
 
-        // ¼¾ÅÍ´Â (0.5 + »çÁ¤°Å¸®) / 2
+        // ï¿½ï¿½ï¿½Í´ï¿½ (0.5 + ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½) / 2
         //StartCoroutine(NormalAttack());
 
         _currentItem.NormalAttack();
@@ -163,10 +163,10 @@ public class PlayerController : BaseController
     {
         yield return new WaitForSeconds(0.1f);
 
-        // ³» ¾ÆÀÌÅÛÀ¸·Î ºÎÅÍ »ç°Å¸®¸¦ ¹Þ¾Æ¿Í¾ßÇÑ´Ù.
-        // µ¥¹ÌÁöµµ ¹Þ¾Æ¿Í¾ßÇÑ´Ù.
-        // ±×¸®°í _hitObject¿¡ Demage¸¦ ¼³Á¤ÇØÁÖ°í
-        // _hitObject¿¡ ´ê¾ÒÀ»¶§ ¸ó½ºÅÍ´Â ¹«Á¶°Ç ÇÇÇØ¸¦ ÀÔ´Â´Ù. 
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Í¾ï¿½ï¿½Ñ´ï¿½.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Í¾ï¿½ï¿½Ñ´ï¿½.
+        // ï¿½×¸ï¿½ï¿½ï¿½ _hitObjectï¿½ï¿½ Demageï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½
+        // _hitObjectï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¸ï¿½ ï¿½Ô´Â´ï¿½. 
 
 
 

@@ -14,9 +14,8 @@ public class StateMachine
         _currentState.Enter();
     }
 
-    public void Update()
+    public void Execute()
     {
-        
         _currentState?.Execute();
     }
 

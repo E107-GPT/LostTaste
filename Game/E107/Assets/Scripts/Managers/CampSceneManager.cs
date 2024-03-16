@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class CampSceneManager : MonoBehaviour
@@ -33,9 +34,10 @@ public class CampSceneManager : MonoBehaviour
     void MovePlayerToEntrance()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player"); // 플레이어 오브젝트 찾기
+        NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
         if (player != null)
         {
-            player.transform.position = entrancePosition; // 플레이어 위치 설정
+            agent.Warp(entrancePosition); // 플레이어 위치 설정
         }
     }
 }

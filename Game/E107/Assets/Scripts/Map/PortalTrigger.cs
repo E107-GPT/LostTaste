@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 // 방 이동 포탈 
 
@@ -38,7 +39,15 @@ public class PortalTrigger : MonoBehaviour
             // 모든 플레이어를 목표 포탈 위치로 이동
             foreach (GameObject player in playersInPortal)
             {
-                player.transform.position = targetPortalLocation.position;
+                NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
+                if (agent != null)
+                {
+                    agent.Warp(targetPortalLocation.position);
+                }
+                else
+                {
+                    player.transform.position = targetPortalLocation.position;
+                }
             }
             
         }
