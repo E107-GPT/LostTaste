@@ -6,10 +6,15 @@ using UnityEngine.AI;
 public class PlayerController : BaseController
 {
     PlayerStat _stat;
+    BoxCollider _hitCollider;
+    GameObject _hitObject;
+    Item _currentItem;
 
     public override void Init()
     {
         _stat = gameObject.GetOrAddComponent<PlayerStat>();
+        _currentItem = gameObject.GetComponentInChildren<Item>();
+
 
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
@@ -17,6 +22,15 @@ public class PlayerController : BaseController
         Managers.Input.MouseAction += OnMouseClicked;
 
         _statemachine.ChangeState(new IdleState(this));
+        //_hitCollider = gameObject.GetComponent<BoxCollider>();
+        
+
+        _hitObject = new GameObject("TEST");
+        _hitObject.SetActive(true);
+        _hitObject.transform.parent = gameObject.transform;
+        _hitCollider = _hitObject.AddComponent<BoxCollider>();
+        _hitCollider.enabled = false;
+        Object.Instantiate(_hitObject);
 
         //Managers.Resource.Instantiate("UI/UI_Button");
         //UI_Button ui = Managers.UI.ShowPopupUI<UI_Button>();
@@ -120,12 +134,55 @@ public class PlayerController : BaseController
 
         Vector3 dir = hit.point - transform.position;
         Quaternion quat = Quaternion.LookRotation(dir);
+        
         transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
+
+
+
+        //_hitCollider.enabled = true;
+
+        //// 내 아이템으로 부터 사거리를 받아와야한다.
+        //// 데미지도 받아와야한다.
+        //float attackRangeTmp = 2.0f;
+        //_hitCollider.size = new Vector3(1.0f, 1.0f, attackRangeTmp);
+        //_hitCollider.center = new Vector3(0,0.5f, 0.5f + attackRangeTmp / 2);
+
+        // 센터는 (0.5 + 사정거리) / 2
+        //StartCoroutine(NormalAttack());
+
+        _currentItem.NormalAttack();
     }
 
     public override void ExitSkill()
     {
         base.ExitSkill();
+        
+    }
+
+    IEnumerator NormalAttack()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        // 내 아이템으로 부터 사거리를 받아와야한다.
+        // 데미지도 받아와야한다.
+        // 그리고 _hitObject에 Demage를 설정해주고
+        // _hitObject에 닿았을때 몬스터는 무조건 피해를 입는다. 
+
+
+
+
+        
+        _hitCollider.enabled = true;
+
+
+        float attackRangeTmp = 2.0f;
+        _hitCollider.size = new Vector3(1.0f, 1.0f, attackRangeTmp);
+        _hitCollider.center = new Vector3(0, 0.5f, 0.5f + attackRangeTmp / 2);
+
+        yield return new WaitForSeconds(0.5f);
+        _hitCollider.enabled = false;
+
+
     }
 
 
