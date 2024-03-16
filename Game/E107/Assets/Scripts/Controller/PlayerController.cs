@@ -9,7 +9,7 @@ public class PlayerController : BaseController
 
     public override void Init()
     {
-        _stat = gameObject.GetOrAddComponent<PlayerStat>();
+        _stat.InitStat(Define.UnitType.Player);
 
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;

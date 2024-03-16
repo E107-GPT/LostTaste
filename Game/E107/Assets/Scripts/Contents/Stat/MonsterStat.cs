@@ -1,43 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class MonsterStat : Stat
 {
+    [SerializeField]
     protected int _level;
-    protected float _attackRange;
+    [SerializeField]
     protected float _detectRange;
-    protected Define.MonsterType _monsterType;
 
-    public int Level { set => _level = value; get => _level; }
-    public float AttackRange { set => _attackRange = value; get => _attackRange; }
+    public int Level { get { return _level; } set { _level = value; } }
     public float DetectRange { set => _detectRange = value; get => _detectRange; }
-    public Define.MonsterType MonsterType
+
+    public MonsterStat(UnitType unitType) : base(unitType) 
     {
-        set => _monsterType = value;
-        get => _monsterType;
+        InitStat(unitType);
     }
 
-    public void InitStat(Define.MonsterType monsterType)
+    public override void InitStat(UnitType unitType)
     {
-        _monsterType = monsterType;
-        switch (_monsterType)
+        base.InitStat(unitType);
+
+        switch (unitType)
         {
-            case Define.MonsterType.Slime:
-                _hp = 100;
-                _maxHp = 100;
-                _attack = 5;
-                _moveSpeed = 2.0f;
-                _attackRange = 1.8f;
-                // _agent.stoppingDistance = 1.5f; 컴포넌트 지정값은 어디에..?
+            case UnitType.Slime:
+                _level = 1;
                 _detectRange = 15.0f;
                 break;
-            case Define.MonsterType.DrillDuck:
-                _hp = 500;
-                _maxHp = 500;
-                _attack = 15;
-                _moveSpeed = 4.0f;
-                _attackRange = 2.3f;
+            case UnitType.DrillDuck:
+                _level = 1;
                 _detectRange = 15.0f;
                 break;
         }

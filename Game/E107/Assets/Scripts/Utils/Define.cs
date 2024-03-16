@@ -33,9 +33,10 @@ public class Define
         QuarterVeiw
     }
 
-    public enum  MonsterType
+    public enum  UnitType
     {
-        Slime = 0,
+        Player = 0,
+        Slime,
         DrillDuck,
     }
 }

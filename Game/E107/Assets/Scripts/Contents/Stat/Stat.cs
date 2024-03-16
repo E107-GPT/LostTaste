@@ -2,52 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stat : MonoBehaviour
+public class Stat
 {
-    [SerializeField]
-    protected int _level;
     [SerializeField]
     protected int _hp;
     [SerializeField]
     protected int _maxHp;
     [SerializeField]
-    protected int _attack;          // damage ¾î¶²°¨..?
+    protected int _attackDamage;
     [SerializeField]
     protected float _moveSpeed;
     [SerializeField]
-    private float _attackRange;
+    protected float _attackRange;
     [SerializeField]
-    private float _detectRange;
+    protected Define.UnitType _unitType;
 
-    public int Level { get { return _level; } set { _level = value; } }
     public int Hp { get { return _hp; } set { _hp = value; } }
     public int MaxHp { get { return _maxHp; } set { _maxHp = value; } }
-    public int Attack { get { return _attack; } set { _attack = value; } }
+    public int AttackDamage { get { return _attackDamage; } set { _attackDamage = value; } }
     public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
-    public float AttackRange
+    public float AttackRange { set => _attackRange = value; get => _attackRange; }
+    public Define.UnitType UnitType { get { return _unitType; } set { _unitType = value; } }    
+
+    public Stat(Define.UnitType unitType) { }
+
+    public virtual void InitStat(Define.UnitType unitType) 
     {
-        set => _attackRange = value;
-        get => _attackRange;
-    }
-    public float DetectRange
-    {
-        set => _detectRange = value;
-        get => _detectRange;
+        _unitType = unitType;
+        switch (_unitType)
+        {
+            case Define.UnitType.Player:
+                _hp = 100;
+                _maxHp = 100;
+                _attackDamage = 10;
+                _moveSpeed = 5.0f;
+                _attackRange = 1.8f;
+                break;
+            case Define.UnitType.Slime:
+                _hp = 100;
+                _maxHp = 100;
+                _attackDamage = 5;
+                _moveSpeed = 2.0f;
+                _attackRange = 1.8f;
+                break;
+            case Define.UnitType.DrillDuck:
+                _hp = 500;
+                _maxHp = 500;
+                _attackDamage = 15;
+                _moveSpeed = 5.0f;
+                _attackRange = 4.4f;
+                break;
+        }
     }
 
-    private void Start()
-    {
-        _level = 1;
-        _hp = 100;
-        _maxHp = 100;
-        _attack = 10;
-        _moveSpeed = 5.0f;
-        _attackRange = 1.8f;
-        _detectRange = 15.0f;
-    }
     public virtual void OnAttacked(Stat attacker)
     {
-        int damage = attacker.Attack;
+        int damage = attacker.AttackDamage;
         Hp -= damage;
         if (Hp <= 0)
         {
