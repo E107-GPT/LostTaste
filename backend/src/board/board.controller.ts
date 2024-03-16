@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { BoardService } from './board.service';
 
 @Controller('board')
@@ -8,13 +8,16 @@ export class BoardController {
   ) { }
 
   @Get()
-  async get() {
-
+  async get(
+    @Query('limit') limit: number,
+    @Query('before') before: string | undefined
+  ) {
+    return await this.boardService.loadBelowId(limit, before);
   }
 
   @Get(':boardId')
-  async getBoardId() {
-
+  async getBoardId(@Param('boardId') boardId: string) {
+    return await this.boardService.loadDetail(boardId);
   }
 
   @Post()

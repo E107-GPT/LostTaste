@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { UserModule } from 'src/user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { PasswordModule } from 'src/password/password.module';
 
 // 환경 변수를 동적으로 가져오기 위해 비동기를 사용
 const jwtModule = JwtModule.registerAsync({
@@ -19,7 +20,7 @@ const jwtModule = JwtModule.registerAsync({
 });
 
 @Module({
-  imports: [UserModule, jwtModule],
+  imports: [UserModule, jwtModule, PasswordModule],
   controllers: [AuthController],
   providers: [AuthService],
 })
