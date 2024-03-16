@@ -9,7 +9,10 @@ public abstract class BaseController : MonoBehaviour
 	protected Animator _animator;
 	protected Rigidbody _rigidbody;
 	protected NavMeshAgent _agent;
-	
+	// 공격자의 마지막 공격 시간을 저장하는 사전
+	protected Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
+	protected float damageCooldown = 0.3f; // 피해를 다시 받기까지의 대기 시간(초)
+
 
 	protected StateMachine _statemachine;
 
@@ -46,7 +49,12 @@ public abstract class BaseController : MonoBehaviour
 		_agent = GetComponent<NavMeshAgent>();
 		Init();
 	}
-	void Update()
+
+    private void Start()
+    {
+		
+    }
+    void Update()
 	{
 		_statemachine.Execute();
 	}
@@ -66,6 +74,11 @@ public abstract class BaseController : MonoBehaviour
 	}
 
 	public abstract void Init();
+
+	public virtual void TakeDamage(int skillObjectId, int damage) {
+		Debug.Log($"{gameObject.name} is damaged {damage} by {skillObjectId}");
+	
+	}
 
 	public virtual void EnterIdle() { }
 
