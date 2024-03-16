@@ -1,6 +1,7 @@
 import { CacheModule } from '@nestjs/cache-manager';
-import { Module } from '@nestjs/common';
+import { ClassProvider, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { redisStore } from 'cache-manager-redis-yet';
 import * as path from 'path';
@@ -9,6 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { CodeModule } from './code/code.module';
+import { MapToObjectInterceptor } from './common/map-to-object.interceptor';
 import { UserModule } from './user/user.module';
 import { BoardModule } from './board/board.module';
 
@@ -37,9 +39,14 @@ const redisModule = CacheModule.registerAsync({
   })
 });
 
+const mapToObjectProvider: ClassProvider = {
+  provide: APP_INTERCEPTOR,
+  useClass: MapToObjectInterceptor
+}
+
 @Module({
   imports: [configModule, typeOrmModule, redisModule, AuthModule, UserModule, CodeModule, BoardModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, mapToObjectProvider],
 })
 export class AppModule { }

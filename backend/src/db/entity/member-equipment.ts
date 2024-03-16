@@ -22,8 +22,4 @@ export class MemberEquipment {
     @ManyToOne(() => Member)
     @JoinColumn({ name: 'member_id' })
     member: Member;
-
-    @CreatedAt('사용자 착용 정보 생성 시간')
-    createdAt: Date;
-
 }

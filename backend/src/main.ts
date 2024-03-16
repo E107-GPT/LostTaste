@@ -14,9 +14,11 @@ async function bootstrap() {
   });
 
   initializeSwagger(app);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+  }));
 
-  await app.listen(443);
+  await app.listen(process.env.SERVER_PORT);
 }
 bootstrap();
 
