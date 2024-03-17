@@ -14,7 +14,8 @@ public class InputManager
 
     public void OnUpdate()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        // 잠시 주석처리
+        //if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (Input.anyKey && KeyAction != null)
             KeyAction.Invoke();

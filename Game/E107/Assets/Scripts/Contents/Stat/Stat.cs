@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Stat
 {
+    // 공격자의 마지막 공격 시간을 저장하는 사전
+    private Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
+
+
     [SerializeField]
     protected int _hp;
     [SerializeField]
@@ -46,7 +50,7 @@ public class Stat
                 _attackRange = 1.8f;
                 break;
             case Define.UnitType.DrillDuck:
-                _hp = 500;
+                _hp = 250;
                 _maxHp = 500;
                 _attackDamage = 15;
                 _moveSpeed = 5.0f;
@@ -76,4 +80,5 @@ public class Stat
 
         //Managers.Game.Despawn(gameObject);
     }
+
 }

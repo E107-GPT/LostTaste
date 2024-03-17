@@ -2561,6 +2561,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1934422342058488164}
+  - component: {fileID: 1119283850644590022}
   m_Layer: 0
   m_Name: root
   m_TagString: Untagged
@@ -2584,6 +2585,19 @@ Transform:
   - {fileID: 4133582009764774313}
   m_Father: {fileID: 2360018824529132272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1119283850644590022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2290354627868605920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6692c66096e2ea743ac19c292a643522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackDamage: 0
 --- !u!1 &2379090769363839237
 GameObject:
   m_ObjectHideFlags: 0
@@ -3477,7 +3491,6 @@ GameObject:
   - component: {fileID: -2256598554493354029}
   - component: {fileID: 2304664441753155432}
   - component: {fileID: 2154674506615639540}
-  - component: {fileID: 2918779634943916968}
   m_Layer: 0
   m_Name: DrillDuck
   m_TagString: Untagged
@@ -3564,9 +3577,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityName: 
+  _unitType: 2
+  _existPlayer: []
   _detectPlayer: {fileID: 0}
   _attackPlayer: {fileID: 0}
-  _unitType: 2
+  _targetPlayer: {fileID: 0}
 --- !u!54 &2154674506615639540
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3594,27 +3609,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &2918779634943916968
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137786495578628170}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0, y: 1, z: 1}
 --- !u!1 &3153326930071574659
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class PlayerController : BaseController
     public override void Init()
     {
         _currentItem = gameObject.GetComponentInChildren<Item>();
+
         _stat = new PlayerStat(Define.UnitType.Player);
         _stat.InitStat(Define.UnitType.Player);
 
@@ -149,8 +150,9 @@ public class PlayerController : BaseController
 
         // ���ʹ� (0.5 + �����Ÿ�) / 2
         //StartCoroutine(NormalAttack());
-
+        // 왼쪽클릭
         _currentItem.NormalAttack();
+
     }
 
     public override void ExitSkill()
@@ -189,7 +191,7 @@ public class PlayerController : BaseController
 
     void OnMouseClicked(Define.MouseEvent evt)
     {
-        Debug.Log($"{CurState?.ToString()}");
+        //Debug.Log($"{CurState?.ToString()}");
         if (_statemachine.CurState is DieState || _statemachine.CurState is SkillState) return;
 
 
@@ -229,7 +231,6 @@ public class PlayerController : BaseController
     }
     void OnHitEvent()
     {
-        PrintText("Attacked!!");
         
         _statemachine.ChangeState(new IdleState(this));
 
@@ -238,6 +239,31 @@ public class PlayerController : BaseController
     void OnDashFinishedEvent()
     {
         _statemachine.ChangeState(new IdleState(this));
+    }
+
+    public override void TakeDamage(int skillObjectId, int damage)
+    {
+        base.TakeDamage(skillObjectId, damage);
+
+        float lastAttackTime;
+        lastAttackTimes.TryGetValue(skillObjectId, out lastAttackTime);
+
+        if (Time.time - lastAttackTime < damageCooldown)
+        {
+            // 쿨다운 중이므로 피해를 주지 않음
+            return;
+        }
+
+        _stat.Hp -= damage;
+        lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
+        Debug.Log($"{_stat.Hp}!!!");
+
+        if (_stat.Hp <= 0)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
+
+
     }
 
 

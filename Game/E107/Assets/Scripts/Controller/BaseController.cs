@@ -9,7 +9,10 @@ public abstract class BaseController : MonoBehaviour
 	protected Animator _animator;
 	protected Rigidbody _rigidbody;
 	protected NavMeshAgent _agent;
-	
+	// 공격자의 마지막 공격 시간을 저장하는 사전
+	protected Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
+	protected float damageCooldown = 0.3f; // 피해를 다시 받기까지의 대기 시간(초)
+
 
 	protected StateMachine _statemachine;
 
@@ -46,7 +49,12 @@ public abstract class BaseController : MonoBehaviour
 		_agent = GetComponent<NavMeshAgent>();
 		Init();
 	}
-	void Update()
+
+    private void Start()
+    {
+		
+    }
+    void Update()
 	{
 		_statemachine.Execute();
 	}
@@ -68,27 +76,38 @@ public abstract class BaseController : MonoBehaviour
 
 	public abstract void Init();
 
+	public virtual void TakeDamage(int skillObjectId, int damage) {
+		Debug.Log($"{gameObject.name} is damaged {damage} by {skillObjectId}");
+	
+	}
+
+	// IDLE
 	public virtual void EnterIdle() { }
-
 	public virtual void ExcuteIdle() { }
-
 	public virtual void ExitIdle() { }
 
+	// DIE
 	public virtual void EnterDie() { }
 	public virtual void ExcuteDie() { }
-
 	public virtual void ExitDie() { }
+
+	// SKILL
 	public virtual void EnterSkill() { }
 	public virtual void ExcuteSkill() { }
-
 	public virtual void ExitSkill() { }
+
+	// MOVE
 	public virtual void EnterMove() { }
 	public virtual void ExcuteMove() { }
-
 	public virtual void ExitMove() { }
+
+	// DASH
 	public virtual void EnterDash() { }
 	public virtual void ExcuteDash() { }
-
 	public virtual void ExitDash() { }
 
+	// DrillDuck Slide
+	public virtual void EnterSlide() { }
+	public virtual void ExcuteSlide() { }
+	public virtual void ExitSlide() { }
 }
