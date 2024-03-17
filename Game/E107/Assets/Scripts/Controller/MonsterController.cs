@@ -182,11 +182,11 @@ public class MonsterController : BaseController
             UpdateTargetPlayer();
 
             // Hp가 70% 이하라면 일정 시간마다 패턴 공격
-            //if ((_unitType is Define.UnitType.DrillDuck) && (_stat.Hp <= _stat.MaxHp * 0.7) && _isDonePattern == true)   // (_stat.Hp <= _stat.MaxHp * 0.7)
-            //{
-            //    if (CurState is DrillDuckSlideState) continue;
-            //    DrillDuckPatternAttack();
-            //}
+            if ((_unitType is Define.UnitType.DrillDuck) && (_stat.Hp <= _stat.MaxHp * 0.7) && _isDonePattern == true)   // (_stat.Hp <= _stat.MaxHp * 0.7)
+            {
+                if (CurState is DrillDuckSlideState) continue;
+                DrillDuckPatternAttack();
+            }
 
             if (AttackPlayer != null)
             {
@@ -327,6 +327,7 @@ public class MonsterController : BaseController
     }
 
     // DrillDuck - Slide
+    private Vector3 thisToTargetDist;
     public override void EnterSlide()
     {
         base.EnterSlide();
@@ -335,6 +336,7 @@ public class MonsterController : BaseController
         //_agent.speed = _stat.MoveSpeed * 2.0f;
         _agent.velocity = Vector3.zero;
         _isDonePattern = false;
+        thisToTargetDist = _targetPlayer.position - transform.position;
 
         //_animator.speed = 0.5f;
         _animator.CrossFade("Slide", 0.5f);
@@ -342,11 +344,11 @@ public class MonsterController : BaseController
     public override void ExcuteSlide()
     {
         base.ExcuteSlide();
+        // Vector3 thisToTargetDist = _targetPlayer.position - transform.position;
 
-        Vector3 thisToTargetDist = _targetPlayer.position - transform.position;
         Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
 
-        transform.Translate(thisToTargetDist.normalized * _stat.MoveSpeed * 2.0f * Time.deltaTime);
+        transform.Translate(thisToTargetDist.normalized * _stat.MoveSpeed * 10.0f * Time.deltaTime);
 
         //_agent.SetDestination(dirToTarget);     // 해당 방향으로 이동
     }
