@@ -7,7 +7,6 @@ public class PlayerController : BaseController
 {
     PlayerStat _stat;
     int _currentItemNum;
-    Item _currentItem;
 
     Item[] _inventory;
 
@@ -213,17 +212,17 @@ public class PlayerController : BaseController
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
         {
-            if (_currentItemNum == 1) return;
-            if (_inventory[0] != null) _inventory[1].gameObject.SetActive(true);
-            _inventory[_currentItemNum].gameObject.SetActive(false);
+            if (_currentItemNum == 1) return; // 이미 1번 무기일 경우
+            if (_inventory[1] != null) _inventory[1].gameObject.SetActive(true);
+            if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
 
             _currentItemNum = 1;
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
-            if (_currentItemNum == 2) return;
-            if (_inventory[1] != null) _inventory[2].gameObject.SetActive(true);
-            _inventory[_currentItemNum].gameObject.SetActive(false);
+            if (_currentItemNum == 2) return; // 이미 2번 무기일 경우
+            if (_inventory[2] != null) _inventory[2].gameObject.SetActive(true);
+            if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
 
             _currentItemNum = 2;
         }
@@ -243,7 +242,13 @@ public class PlayerController : BaseController
 
             _inventory[_currentItemNum] = _detectedItem;
             _inventory[_currentItemNum].OnEquip();
-            Debug.Log($"{_currentItem.gameObject.name} Equipped");
+            Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            if (_inventory[_currentItemNum] == null) return;
+
         }
 
         
