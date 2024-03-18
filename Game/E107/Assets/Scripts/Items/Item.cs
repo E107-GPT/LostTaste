@@ -51,6 +51,17 @@ public class Item : MonoBehaviour
         _normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
         _normalAttackCollider.isTrigger = true;
         _normalAttackObj.SetActive(false);
+        _itemCollider.enabled = false;
+        transform.localPosition = new Vector3(0, 0, 0);
+        isDropped = false;
+    }
+
+    public void OnDropped()
+    {
+        Destroy(_normalAttackObj);
+        isDropped = true;
+        _itemCollider.enabled = true;
+
     }
     public void NormalAttack()
     {

@@ -224,8 +224,22 @@ public class PlayerController : BaseController
             _inventory[1].gameObject.SetActive(true);
 
             _currentItem = _inventory[1];
+        }
 
+        if (_detectedItem != null && Input.GetKeyDown(KeyCode.E))
+        {
+            GameObject righthand = Util.FindChild(gameObject, "weapon_r", true);
+            _detectedItem.transform.parent = righthand.transform;
 
+            
+            _currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
+            _currentItem.gameObject.transform.parent = null;
+            _currentItem.gameObject.transform.position = gameObject.transform.position;
+            _currentItem.OnDropped();
+
+            _currentItem = _detectedItem;
+            _currentItem.OnEquip();
+            Debug.Log($"{_currentItem.gameObject.name} Equipped");
         }
 
 
@@ -270,7 +284,7 @@ public class PlayerController : BaseController
 
     public void DetectItem()
     {
-        Collider[] items = Physics.OverlapSphere(transform.position, 10.0f, LayerMask.GetMask("Item"));
+        Collider[] items = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item"));
         float closestDistance = Mathf.Infinity;
         Collider closestItem = null;
 
@@ -289,6 +303,10 @@ public class PlayerController : BaseController
             // 가장 가까운 오브젝트를 처리합니다. 예: 로그 출력
             Debug.Log("Closest Object: " + closestItem.gameObject.name);
             _detectedItem = closestItem.GetComponent<Item>();
+        }
+        else
+        {
+            _detectedItem = null;
         }
     }
 
