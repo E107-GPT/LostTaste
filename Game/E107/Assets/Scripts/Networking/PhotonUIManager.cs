@@ -84,9 +84,8 @@ public class PhotonUIManager : MonoBehaviour
 
         request.Add("accountId", "newworld");
         request.Add("password", "qwe123!@#");
-        request.Add("nickname", "newworld");
 
-        gameObject.GetComponent<HTTPRequest>().POSTCall("/auth/login", request);
+        gameObject.GetComponent<HTTPRequest>().POSTCall("auth/login", request);
     }
 
     #endregion
