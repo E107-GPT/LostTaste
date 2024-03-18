@@ -53,6 +53,7 @@ public class Item : MonoBehaviour
         _normalAttackObj.SetActive(false);
         _itemCollider.enabled = false;
         transform.localPosition = new Vector3(0, 0, 0);
+        transform.localRotation = new Quaternion(0, 0, 0, 0);
         isDropped = false;
     }
 
