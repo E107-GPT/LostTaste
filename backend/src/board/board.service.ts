@@ -8,6 +8,7 @@ import { BoardPostDto } from './dto/board-post.dto';
 import { CodeService } from 'src/code/code.service';
 import { PasswordService } from 'src/password/password.service';
 import { BoardDeleteDto } from './dto/board-delete.dto';
+import { NoSuchContentException, WrongPasswordException } from 'src/exception/exception';
 
 @Injectable()
 export class BoardService {
@@ -44,6 +45,14 @@ export class BoardService {
         })
     }
 
-    async delete(dto: BoardDeleteDto) {
+    async delete(boardId: string, dto: BoardDeleteDto) {
+        const entity = await this.boardRepository.findOneBy({ id: boardId });
+        if (!entity) {
+            throw new NoSuchContentException();
+        }
+        if (entity.password !== dto.password) {
+            throw new WrongPasswordException();
+        }
+        this.boardRepository.remove(entity);
     }
 }
