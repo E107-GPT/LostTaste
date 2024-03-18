@@ -66,7 +66,7 @@ public class Login : MonoBehaviour
         string id = loginInputID.text;
         string pw = loginInputPW.text;
 
-        // 중복된 아이디인 경우
+        // 유효하지 않은 아이디 및 비밀번호인 경우
         if (IsNotValidIDPW(id, pw))
         {
             warningText.text = "아이디와 비밀번호를 확인해주세요.";
