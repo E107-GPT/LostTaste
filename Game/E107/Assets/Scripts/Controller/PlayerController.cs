@@ -10,6 +10,8 @@ public class PlayerController : BaseController
 
     Item[] _inventory;
 
+    Item _detectedItem;
+
     
     
 
@@ -20,6 +22,7 @@ public class PlayerController : BaseController
         _stat = new PlayerStat(Define.UnitType.Player);
         _stat.InitStat(Define.UnitType.Player);
 
+        ///
         _inventory = new Item[2];
         GameObject righthand = Util.FindChild(gameObject, "weapon_r", true);
 
@@ -32,6 +35,7 @@ public class PlayerController : BaseController
         _inventory[1] = second;
 
         _currentItem = first;
+        ///
 
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
@@ -52,6 +56,13 @@ public class PlayerController : BaseController
     {
         base.EnterIdle();
         _animator.CrossFade("WAIT", 0.1f);
+    }
+
+    public override void ExcuteIdle()
+    {
+        base.ExcuteIdle();  
+        DetectItem();
+        Debug.Log("IDLE");
     }
 
     public override void EnterMove()
@@ -255,6 +266,33 @@ public class PlayerController : BaseController
 
 
     }
+
+
+    public void DetectItem()
+    {
+        Collider[] items = Physics.OverlapSphere(transform.position, 10.0f, LayerMask.GetMask("Item"));
+        float closestDistance = Mathf.Infinity;
+        Collider closestItem = null;
+
+        foreach (var item in items)
+        {
+            float distance = (item.transform.position - transform.position).sqrMagnitude;
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestItem = item;
+            }
+        }
+
+        if (closestItem != null)
+        {
+            // 가장 가까운 오브젝트를 처리합니다. 예: 로그 출력
+            Debug.Log("Closest Object: " + closestItem.gameObject.name);
+            _detectedItem = closestItem.GetComponent<Item>();
+        }
+    }
+
+
 
 
 
