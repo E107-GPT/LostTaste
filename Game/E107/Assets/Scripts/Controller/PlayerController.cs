@@ -170,7 +170,12 @@ public class PlayerController : BaseController
 
     }
 
-
+    public override void EnterDie()
+    {
+        base.EnterDie();
+        _animator.CrossFade("DIE", 0.1f);
+        
+    }
 
 
     void OnMouseClicked(Define.MouseEvent evt)
