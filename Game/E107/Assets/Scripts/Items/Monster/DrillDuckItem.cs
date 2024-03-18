@@ -39,7 +39,7 @@ public class DrillDuckItem : MonoBehaviour
         _slideAttackObj.AddComponent<SkillObject>();
         _slideAttackCollider = _slideAttackObj.AddComponent<BoxCollider>();
         _slideAttackCollider.isTrigger = true;
-        _slideAttackObj.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+        _slideAttackObj.transform.localScale = new Vector3(4.0f, 5.0f, 5.0f);
         _slideAttackObj.SetActive(false);
 
         _isNormalAttack = false;
@@ -56,7 +56,7 @@ public class DrillDuckItem : MonoBehaviour
         }
         else
         {
-            EndNormalAttack();
+            _normalAttackObj.SetActive(false);
         }
     }
 
@@ -80,18 +80,9 @@ public class DrillDuckItem : MonoBehaviour
 
         _normalAttackObj.SetActive(true);
     }
-    private void EndNormalAttack()
-    {
-        _normalAttackObj.SetActive(false);
-    }
-    public void CancelNormalAttack()
-    {
-        CancelInvoke("StartNormalAttack");
-        CancelInvoke("EndNormalAttack");
-    }
 
 
-    public void SkillAttack()
+    public void PatternAttack()
     {
         if (_isSlideAttack)
         {
@@ -99,7 +90,7 @@ public class DrillDuckItem : MonoBehaviour
         }
         else
         {
-            _normalAttackObj.SetActive(false);
+            _slideAttackObj.SetActive(false);
         }
     }
 
@@ -112,7 +103,16 @@ public class DrillDuckItem : MonoBehaviour
         _slideAttackObj.transform.position = new Vector3(_slideAttackObj.transform.position.x, root.position.y + 0.5f, _slideAttackObj.transform.position.z);
         _slideAttackObj.transform.rotation = root.rotation;
 
-        _normalAttackObj.SetActive(true);
+        _slideAttackObj.SetActive(true);
+    }
+
+    public void TrueSlideAttack()
+    {
+        _isSlideAttack = true;
+    }
+    public void FalseSlideAttack()
+    {
+        _isSlideAttack = false;
     }
 
     IEnumerator NormalAttackCorotine()

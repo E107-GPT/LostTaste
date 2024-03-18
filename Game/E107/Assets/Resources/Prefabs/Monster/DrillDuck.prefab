@@ -3478,6 +3478,7 @@ GameObject:
   - component: {fileID: 4292945358567477416}
   - component: {fileID: 2154674506615639540}
   - component: {fileID: 6063172700869700760}
+  - component: {fileID: -7462142561957068251}
   m_Layer: 0
   m_Name: DrillDuck
   m_TagString: Monster
@@ -3610,7 +3611,29 @@ MonoBehaviour:
   _detectPlayer: {fileID: 0}
   _attackPlayer: {fileID: 0}
   _targetPlayer: {fileID: 0}
-  _targetPlayer: {fileID: 0}
+--- !u!136 &-7462142561957068251
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137786495578628170}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &3153326930071574659
 GameObject:
   m_ObjectHideFlags: 0
