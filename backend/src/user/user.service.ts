@@ -63,9 +63,11 @@ export class UserService {
         }
     }
 
-    async getProfile(user: UserDto): Promise<UserProfileDto> {
+    async getProfile(userDto: UserDto): Promise<UserProfileDto> {
+        const member: Member = await this.memberRepository.findOneBy({ accountId: userDto.accountId });
+
         const memberEquipments: MemberEquipment[] = await this.memberEquipmentRepository.findBy({
-            member: { accountId: user.accountId }
+            member: { accountId: userDto.accountId }
         });
 
         const customMap = new Map<string, string>();
@@ -77,7 +79,8 @@ export class UserService {
         });
 
         return {
-            ...user,
+            ...userDto,
+            jelly: member.jelly,
             lastCustom: customMap
         };
     }
