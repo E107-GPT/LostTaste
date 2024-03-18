@@ -37,7 +37,7 @@ Shader "Custom/LeftToRightGradient"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // 왼쪽은 투명도 0.6의 검은색, 오른쪽은 투명도 0의 검은색으로 그라데이션을 적용합니다.
+                // 왼쪽에서 오른쪽으로 점차 투명해집니다.
                 float alpha = 0.6 - (i.uv.x * 0.6); // i.uv.x가 0에서 1로 이동함에 따라 알파값이 0.6에서 0으로 변화합니다.
                 return fixed4(0, 0, 0, alpha); // 검은색에 알파값을 적용합니다.
             }
