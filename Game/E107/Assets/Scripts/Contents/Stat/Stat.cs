@@ -50,11 +50,11 @@ public class Stat
                 _attackRange = 1.8f;
                 break;
             case Define.UnitType.DrillDuck:
-                _hp = 500;
+                _hp = 250;
                 _maxHp = 500;
                 _attackDamage = 15;
                 _moveSpeed = 5.0f;
-                _attackRange = 4.4f;
+                _attackRange = 4.0f;
                 break;
         }
     }

@@ -16,7 +16,7 @@ public abstract class BaseController : MonoBehaviour
 
 	protected StateMachine _statemachine;
 
-	public State CurState
+    public State CurState
     {
         get { return _statemachine.CurState; }
 		set { CurState = value; }
@@ -59,8 +59,8 @@ public abstract class BaseController : MonoBehaviour
 		_statemachine.Execute();
 	}
 
-	//public abstract void Updated();
-	public virtual void Setup(string name)
+    //public abstract void Updated();
+    public virtual void Setup(string name)
 	{
 		// id, 이름, 색상 설정
 		ID = entity_ID;
@@ -73,6 +73,7 @@ public abstract class BaseController : MonoBehaviour
 		Debug.Log($"<color={personalColor}><b>{entityName}</b></color> : {text}");
 	}
 
+
 	public abstract void Init();
 
 	public virtual void TakeDamage(int skillObjectId, int damage) {
@@ -80,27 +81,33 @@ public abstract class BaseController : MonoBehaviour
 	
 	}
 
+	// IDLE
 	public virtual void EnterIdle() { }
-
 	public virtual void ExcuteIdle() { }
-
 	public virtual void ExitIdle() { }
 
+	// DIE
 	public virtual void EnterDie() { }
 	public virtual void ExcuteDie() { }
-
 	public virtual void ExitDie() { }
+
+	// SKILL
 	public virtual void EnterSkill() { }
 	public virtual void ExcuteSkill() { }
-
 	public virtual void ExitSkill() { }
+
+	// MOVE
 	public virtual void EnterMove() { }
 	public virtual void ExcuteMove() { }
-
 	public virtual void ExitMove() { }
+
+	// DASH
 	public virtual void EnterDash() { }
 	public virtual void ExcuteDash() { }
-
 	public virtual void ExitDash() { }
 
+	// DrillDuck Slide
+	public virtual void EnterSlide() { }
+	public virtual void ExcuteSlide() { }
+	public virtual void ExitSlide() { }
 }
