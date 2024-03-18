@@ -6,7 +6,7 @@ public class Item : MonoBehaviour
 {
     [SerializeField]
     protected int _attackDamage = 0;
-
+    [SerializeField]
     float _attackRange = 8.0f;
 
     GameObject _normalAttackObj;
