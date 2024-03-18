@@ -39,12 +39,14 @@ public class Item : MonoBehaviour
     {
         _normalAttackObj = new GameObject("NormalAttack");
         _normalAttackObj.AddComponent<SkillObject>();
+
         _normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
         _normalAttackCollider.isTrigger = true;
         _normalAttackObj.SetActive(false);
         _itemCollider.enabled = false;
         transform.localPosition = new Vector3(0, 0, 0);
         transform.localRotation = new Quaternion(0, 0, 0, 0);
+        DontDestroyOnLoad(_normalAttackObj);
         isDropped = false;
     }
 
