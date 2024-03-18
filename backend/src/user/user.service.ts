@@ -64,10 +64,12 @@ export class UserService {
     }
 
     async getProfile(user: UserDto): Promise<UserProfileDto> {
-        const entity: Member = await this.findByDto(user);
+        const memberEquipments: MemberEquipment[] = await this.memberEquipmentRepository.findBy({
+            member: { accountId: user.accountId }
+        });
 
         const customMap = new Map<string, string>();
-        entity.equipments.forEach(equipment => {
+        memberEquipments.forEach(equipment => {
             const typeId = equipment.customCodeTypeId;
             const codeId = equipment.customCode.id;
 
