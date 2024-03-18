@@ -20,3 +20,7 @@ export const BusinessException = (statusCode: ErrorHttpStatusCode, defaultMessag
 );
 
 export class DuplicatedIdException extends BusinessException(HttpStatus.CONFLICT, "ID가 중복됩니다.") {}
+
+export class NoSuchContentException extends BusinessException(HttpStatus.NOT_FOUND, "해당하는 데이터가 없습니다.") {}
+
+export class WrongPasswordException extends BusinessException(HttpStatus.FORBIDDEN, "비밀번호가 틀렸습니다.") {}
