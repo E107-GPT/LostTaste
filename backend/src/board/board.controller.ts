@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/commo
 import { BoardService } from './board.service';
 import { BoardPostDto } from './dto/board-post.dto';
 import { BoardDeleteDto } from './dto/board-delete.dto';
+import { BoardGetDto } from './dto/board-get.dto';
 
 @Controller('board')
 export class BoardController {
@@ -10,11 +11,8 @@ export class BoardController {
   ) { }
 
   @Get()
-  async get(
-    @Query('limit') limit: number,
-    @Query('before') before: string | undefined
-  ) {
-    return await this.boardService.loadBelowId(limit, before);
+  async get(@Query() dto: BoardGetDto) {
+    return await this.boardService.loadBelowId(dto);
   }
 
   @Get(':boardId')

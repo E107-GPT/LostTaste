@@ -20,10 +20,10 @@ export class BoardService {
         private readonly passwordService: PasswordService
     ) {}
 
-    async loadBelowId(limit: number, before?: typeof Board.prototype.id): Promise<BoardBriefDto[]> {
+    async loadBelowId(dto): Promise<BoardBriefDto[]> {
         const boards: Board[] = await this.boardRepository.find({
-            where: before ? { id: LessThan(before) } : undefined,
-            take: limit,
+            where: dto.before ? { id: LessThan(dto.before) } : undefined,
+            take: dto.limit,
             order: {id: 'DESC'}
         });
 
