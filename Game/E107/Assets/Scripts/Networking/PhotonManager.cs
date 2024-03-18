@@ -9,7 +9,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #region private serializable fields
     [Tooltip("방 최대 입장 수")]
     [SerializeField]
-    private byte maxplayersPerRoom = 4;
+    //private byte maxplayersPerRoom = 4;
 
 
     #endregion
