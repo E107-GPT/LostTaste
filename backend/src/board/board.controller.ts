@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { BoardPostDto } from './dto/board-post.dto';
+import { BoardDeleteDto } from './dto/board-delete.dto';
 
 @Controller('board')
 export class BoardController {
@@ -24,5 +25,13 @@ export class BoardController {
   @Post()
   async post(dto: BoardPostDto) {
     this.boardService.post(dto);
+  }
+
+  @Delete(':boardId')
+  async deleteBoardId(
+    @Param('boardId') boardId: string,
+    @Body() dto: BoardDeleteDto
+  ) {
+    this.boardService.delete(dto);
   }
 }

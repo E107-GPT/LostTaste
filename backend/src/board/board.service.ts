@@ -7,6 +7,7 @@ import { BoardDetailDto } from './dto/board-detail.dto';
 import { BoardPostDto } from './dto/board-post.dto';
 import { CodeService } from 'src/code/code.service';
 import { PasswordService } from 'src/password/password.service';
+import { BoardDeleteDto } from './dto/board-delete.dto';
 
 @Injectable()
 export class BoardService {
@@ -41,5 +42,8 @@ export class BoardService {
             title: dto.title,
             content: dto.content
         })
+    }
+
+    async delete(dto: BoardDeleteDto) {
     }
 }
