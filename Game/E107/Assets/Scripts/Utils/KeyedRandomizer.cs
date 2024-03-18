@@ -38,10 +38,6 @@ public class KeyedRandomizer
     /// <returns>범위 내의 난수</returns>
     public int GetRaw(UInt16 key)
     {
-        if (key < 0 || key >= BAG_SIZE)
-        {
-            throw new ArgumentOutOfRangeException("key");
-        }
         return _bag[key];
     }
 
