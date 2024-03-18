@@ -91,7 +91,7 @@ public class KeyedRandomizer
     ///     예를 들면, 다음과 같은 코드는 각각 50%의 확률로 "dead" 또는 "alive"를 얻습니다.
     ///     <code>
     ///     var krng = new KeyedRandomizer(123);
-    ///     var schrodingersBox = new Probabilitytable&lt;string>() {
+    ///     var schrodingersBox = new ProbabilityTable&lt;string>() {
     ///         "dead": 0.5,
     ///         "alive": 0.5,
     ///     };
@@ -143,7 +143,7 @@ public class ProbabilityTable<E> : Dictionary<E, double> {
     ///     <summary>
     ///     확률 테이블을 만듭니다. 예시:
     ///     <code>
-    ///     var schrodingersBox = new Probabilitytable&lt;string>() {
+    ///     var schrodingersBox = new ProbabilityTable&lt;string>() {
     ///         "dead": 0.5,
     ///         "alive": 0.5,
     ///     };
