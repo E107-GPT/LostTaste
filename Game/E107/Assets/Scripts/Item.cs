@@ -41,6 +41,7 @@ public class Item : MonoBehaviour
         
         yield return new WaitForSeconds(0.3f);
         _normalAttackObj.SetActive(true);
+        Managers.Sound.Play("swing1");
         Transform root = gameObject.transform.root;
 
         _normalAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
