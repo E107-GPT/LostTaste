@@ -7,28 +7,49 @@ using UnityEngine;
 public class MonsterManager : MonoBehaviour
 {
     // TYPE이 늘어나면 이러한 배열과 prefab 변수를 추가한다.
-    [SerializeField]
-    private string[] monsterNames;     // monster 이름 배열, Inspector view에서 직접 입력
-    [SerializeField]
-    private GameObject monsterPrefab;   // monster TYPE prefab
+    //[SerializeField]
+    //private string[] monsterNames;     // monster 이름 배열, Inspector view에서 직접 입력
+    //[SerializeField]
+    //private GameObject monsterPrefab;   // monster TYPE prefab
 
-    private List<MonsterController> entitys;  // Monster entity를 담는다
+    //private List<MonsterController> entitys;  // Monster entity를 담는다
+
+    public static MonsterManager Instance { get; private set; }
+
+    [System.Serializable]
+    public class MonsterSpawnInfo
+    {
+        public string mapName;
+        public GameObject monsterPrefab;
+        public Transform[] spawnPoints;
+    }
+
+    public List<MonsterSpawnInfo> monsterSpawnInfos;
 
     private void Awake()
     {
-        entitys = new List<MonsterController>();
-
-        for (int i = 0; i < monsterNames.Length; i++)
+        if (Instance == null)
         {
-            Vector3 pos = new Vector3(0, 0);
-            GameObject clone = Instantiate(monsterPrefab, pos, Quaternion.identity);
-            MonsterController monsterController = clone.GetComponent<MonsterController>();
-
-            monsterController.Setup(Define.UnitType.DrillDuck.ToString());         // BaseController에서 각 객체의 이름을 부여
-            monsterController.name = $"{monsterController.ID:D2}_Monster_{monsterController.name}";    // 00_Monster_name 으로 hierarchy 창에서 보임
-
-            entitys.Add(monsterController);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+        //entitys = new List<MonsterController>();
+
+        //for (int i = 0; i < monsterNames.Length; i++)
+        //{
+        //    Vector3 pos = new Vector3(0, 5, 300);
+        //    GameObject clone = Instantiate(monsterPrefab, pos, Quaternion.identity);
+        //    MonsterController monsterController = clone.GetComponent<MonsterController>();
+
+        //    monsterController.Setup(Define.UnitType.DrillDuck.ToString());         // BaseController에서 각 객체의 이름을 부여
+        //    monsterController.name = $"{monsterController.ID:D2}_Monster_{monsterController.name}";    // 00_Monster_name 으로 hierarchy 창에서 보임
+
+        //    entitys.Add(monsterController);
+        //}
     }
 
     private void Update()
@@ -46,6 +67,28 @@ public class MonsterManager : MonoBehaviour
         //    //}
         //    entitys[i].Init();
         //}
+    }
+
+    // 특정 맵에 몬스터 소환
+    public void SpawnMonstersForMap(string mapName)
+    {
+        foreach (MonsterSpawnInfo info in monsterSpawnInfos)
+        {
+            if ( info == null)
+            {
+                Debug.Log("info is null");
+            }
+
+            if (info.mapName == mapName)
+            {
+                foreach (Transform spawnPoint in info.spawnPoints)
+                {
+                    GameObject clone = Instantiate(info.monsterPrefab, spawnPoint.position, spawnPoint.rotation);
+                    Debug.Log(clone);
+                }
+                break;
+            }
+        }
     }
 
     //private void FixedUpdate()
