@@ -107,16 +107,29 @@ public class KeyedRandomizer
     /// <seealso cref="ProbabilityTable{E}"/>
     public E GetFromTable<E>(int key, ProbabilityTable<E> table)
     {
-        double sum = table.Values.Sum();
+        double[] weights = table.Values.ToArray();
+        int len = weights.Length;
+        if (len == 0)
+        {
+            return default(E);
+        }
+
+        // weights의 누적합 (accs[i] = weights[0] + weights[1] + ... + weights[i])
+        double[] accs = new double[len];
+        accs[0] = weights[0];
+        for (int i=1; i<len; i++)
+        {
+            accs[i] = accs[i - 1] + weights[i];
+        }
+
+        double sum = accs[len - 1];
         double number = GetDouble(key, 0.0, sum);
 
-        double acc = 0.0;
-        foreach (E e in table.Keys)
+        for (int i=0; i<len; i++)
         {
-            acc += table[e];
-            if (number < acc)
+            if (number < accs[i])
             {
-                return e;
+                return table.Keys.ToArray()[i];
             }
         }
         throw new ArithmeticException("수학적으로 불가능한 경우가 일어났습니다.");
