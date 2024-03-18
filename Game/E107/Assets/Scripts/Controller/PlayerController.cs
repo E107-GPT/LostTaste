@@ -51,15 +51,13 @@ public class PlayerController : BaseController
     public override void EnterIdle()
     {
         base.EnterIdle();
-        Animator anim = GetComponent<Animator>();
-        anim.CrossFade("WAIT", 0.1f);
+        _animator.CrossFade("WAIT", 0.1f);
     }
 
     public override void EnterMove()
     {
         base.EnterMove();
-        Animator anim = GetComponent<Animator>();
-        anim.CrossFade("RUN", 0.1f);
+        _animator.CrossFade("RUN", 0.1f);
     }
     public override void ExcuteMove()
     {
@@ -118,8 +116,7 @@ public class PlayerController : BaseController
     public override void EnterDash()
     {
         base.EnterDash();
-        Animator anim = GetComponent<Animator>();
-        anim.CrossFade("DASH", 0.1f, -1, 0);
+        _animator.CrossFade("DASH", 0.1f, -1, 0);
 
     }
 
@@ -132,8 +129,7 @@ public class PlayerController : BaseController
     public override void EnterSkill()
     {
         base.EnterSkill();
-        Animator anim = GetComponent<Animator>();
-        anim.CrossFade("ATTACK", 0.1f, -1, 0);
+        _animator.CrossFade("ATTACK", 0.1f, -1, 0);
 
         LayerMask mask = LayerMask.GetMask("Ground");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
