@@ -32,4 +32,11 @@ public class Define
     {
         QuarterVeiw
     }
+
+    public enum  UnitType
+    {
+        Player = 0,
+        Slime,
+        DrillDuck,
+    }
 }

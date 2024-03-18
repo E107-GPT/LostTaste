@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon.StructWrapping;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,10 @@ public abstract class BaseController : MonoBehaviour
 	protected Animator _animator;
 	protected Rigidbody _rigidbody;
 	protected NavMeshAgent _agent;
-	
+	// 공격자의 마지막 공격 시간을 저장하는 사전
+	protected Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
+	protected float damageCooldown = 0.3f; // 피해를 다시 받기까지의 대기 시간(초)
+
 
 	protected StateMachine _statemachine;
 
@@ -18,10 +22,10 @@ public abstract class BaseController : MonoBehaviour
 		set { CurState = value; }
     }
 
-    private static long enemy_ID = 0;
+    private static long entity_ID = 0;
 	private long id;
 	[SerializeField]
-	protected string enemyEntityName;
+	protected string entityName;
 	private string personalColor;
 
 	public long ID
@@ -29,7 +33,7 @@ public abstract class BaseController : MonoBehaviour
 		set
 		{
 			id = value;
-			enemy_ID++;
+            entity_ID++;
 		}
 		get
 		{
@@ -37,7 +41,7 @@ public abstract class BaseController : MonoBehaviour
 		}
 	}
 
-	private void Start()
+	private void Awake()
 	{
 		_statemachine = new StateMachine();
 		_animator = GetComponent<Animator>();
@@ -45,26 +49,36 @@ public abstract class BaseController : MonoBehaviour
 		_agent = GetComponent<NavMeshAgent>();
 		Init();
 	}
-	void Update()
+
+    private void Start()
+    {
+		
+    }
+    void Update()
 	{
-		_statemachine.Update();
+		_statemachine.Execute();
 	}
 
 	//public abstract void Updated();
 	public virtual void Setup(string name)
 	{
 		// id, 이름, 색상 설정
-		ID = enemy_ID;
-		enemyEntityName = name;
+		ID = entity_ID;
+        entityName = name;
 		int color = Random.Range(0, 1000000);
 		personalColor = $"#{color.ToString("X6")}";
 	}
 	public void PrintText(string text)
 	{
-		Debug.Log($"<color={personalColor}><b>{enemyEntityName}</b></color> : {text}");
+		Debug.Log($"<color={personalColor}><b>{entityName}</b></color> : {text}");
 	}
 
 	public abstract void Init();
+
+	public virtual void TakeDamage(int skillObjectId, int damage) {
+		Debug.Log($"{gameObject.name} is damaged {damage} by {skillObjectId}");
+	
+	}
 
 	public virtual void EnterIdle() { }
 

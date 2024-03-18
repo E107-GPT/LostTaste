@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController : BaseController
 {
     PlayerStat _stat;
+    Item _currentItem;
 
     public override void Init()
     {
-        _stat = gameObject.GetOrAddComponent<PlayerStat>();
+        _currentItem = gameObject.GetComponentInChildren<Item>();
+
+        _stat = new PlayerStat(Define.UnitType.Player);
+        _stat.InitStat(Define.UnitType.Player);
 
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
@@ -16,6 +21,8 @@ public class PlayerController : BaseController
         Managers.Input.MouseAction += OnMouseClicked;
 
         _statemachine.ChangeState(new IdleState(this));
+        //_hitCollider = gameObject.GetComponent<BoxCollider>();
+        
 
         //Managers.Resource.Instantiate("UI/UI_Button");
         //UI_Button ui = Managers.UI.ShowPopupUI<UI_Button>();
@@ -41,19 +48,24 @@ public class PlayerController : BaseController
         base.ExcuteMove();
         if (Input.GetKey(KeyCode.W))
         {
+            Vector3 dirTo12 = new Vector3(-1.0f, 0.0f, 1.0f).normalized;
+            //transform.position += dirTo12 * Time.deltaTime * _stat.MoveSpeed;
+
             //transform.rotation = Quaternion.LookRotation(Vector3.forward);
             //transform.Translate(Vector3.forward * Time.deltaTime * _stat.MoveSpeed);
-            Vector3 dirTo12 = new Vector3(-1.0f, 0.0f, 1.0f).normalized;
-            transform.position += dirTo12 * Time.deltaTime * _stat.MoveSpeed;
+            _agent.Move(dirTo12 * Time.deltaTime * _stat.MoveSpeed);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTo12), 0.5f);
+
 
         }
         if (Input.GetKey(KeyCode.S))
         {
             //transform.rotation = Quaternion.LookRotation(Vector3.back);
             //transform.Translate(Vector3.forward * Time.deltaTime * _stat.MoveSpeed);
+            //transform.position += dirTo6 * Time.deltaTime * _stat.MoveSpeed;
             Vector3 dirTo6 = new Vector3(1.0f, 0.0f, -1.0f).normalized;
-            transform.position += dirTo6 * Time.deltaTime * _stat.MoveSpeed;
+            
+            _agent.Move(dirTo6 * Time.deltaTime * _stat.MoveSpeed);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTo6), 0.5f);
 
         }
@@ -61,8 +73,9 @@ public class PlayerController : BaseController
         {
             //transform.rotation = Quaternion.LookRotation(Vector3.left);
             //transform.Translate(Vector3.forward * Time.deltaTime * _stat.MoveSpeed);
+            //transform.position += dirTo9 * Time.deltaTime * _stat.MoveSpeed;
             Vector3 dirTo9 = new Vector3(-1.0f, 0.0f, -1.0f).normalized;
-            transform.position += dirTo9 * Time.deltaTime * _stat.MoveSpeed;
+            _agent.Move(dirTo9 * Time.deltaTime * _stat.MoveSpeed);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTo9), 0.5f);
 
         }
@@ -70,8 +83,9 @@ public class PlayerController : BaseController
         {
             //transform.rotation = Quaternion.LookRotation(Vector3.right);
             //transform.Translate(Vector3.forward * Time.deltaTime * _stat.MoveSpeed);
+            //transform.position += dirTo3 * Time.deltaTime * _stat.MoveSpeed;
             Vector3 dirTo3 = new Vector3(1.0f, 0.0f, 1.0f).normalized;
-            transform.position += dirTo3 * Time.deltaTime * _stat.MoveSpeed;
+            _agent.Move(dirTo3 * Time.deltaTime * _stat.MoveSpeed);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTo3), 0.5f);
 
         }
@@ -94,7 +108,8 @@ public class PlayerController : BaseController
     public override void ExcuteDash()
     {
         base.ExcuteDash();
-        transform.position += transform.forward * Time.deltaTime * _stat.MoveSpeed * 2;
+        _agent.Move(transform.forward * Time.deltaTime * _stat.MoveSpeed * 2);
+        //transform.position += transform.forward * Time.deltaTime * _stat.MoveSpeed * 2;
     }
     public override void EnterSkill()
     {
@@ -111,19 +126,31 @@ public class PlayerController : BaseController
 
         Vector3 dir = hit.point - transform.position;
         Quaternion quat = Quaternion.LookRotation(dir);
+        
         transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
+
+
+        // 왼쪽클릭
+        _currentItem.NormalAttack();
+        ParticleSystem effect = GetComponentInChildren<ParticleSystem>();
+        effect.Play();
+
     }
 
     public override void ExitSkill()
     {
         base.ExitSkill();
+        ParticleSystem effect = GetComponentInChildren<ParticleSystem>();
+        effect.Stop();
+
     }
+
 
 
 
     void OnMouseClicked(Define.MouseEvent evt)
     {
-        Debug.Log($"{CurState?.ToString()}");
+        //Debug.Log($"{CurState?.ToString()}");
         if (_statemachine.CurState is DieState || _statemachine.CurState is SkillState) return;
 
 
@@ -163,7 +190,6 @@ public class PlayerController : BaseController
     }
     void OnHitEvent()
     {
-        PrintText("Attacked!!");
         
         _statemachine.ChangeState(new IdleState(this));
 
@@ -172,6 +198,31 @@ public class PlayerController : BaseController
     void OnDashFinishedEvent()
     {
         _statemachine.ChangeState(new IdleState(this));
+    }
+
+    public override void TakeDamage(int skillObjectId, int damage)
+    {
+        base.TakeDamage(skillObjectId, damage);
+
+        float lastAttackTime;
+        lastAttackTimes.TryGetValue(skillObjectId, out lastAttackTime);
+
+        if (Time.time - lastAttackTime < damageCooldown)
+        {
+            // 쿨다운 중이므로 피해를 주지 않음
+            return;
+        }
+
+        _stat.Hp -= damage;
+        lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
+        Debug.Log($"{_stat.Hp}!!!");
+
+        if (_stat.Hp <= 0)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
+
+
     }
 
 

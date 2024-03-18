@@ -9,7 +9,7 @@ public class DungeonSceneManager : MonoBehaviour
     public static DungeonSceneManager Instance { get; private set; }
 
     // 던전 스테이지 배열
-    private string[] Stages = { "DungeonForrest" };
+    private string[] Stages = { "DungeonForest" };
 
     void Awake()
     {
@@ -35,5 +35,9 @@ public class DungeonSceneManager : MonoBehaviour
         SceneManager.LoadScene(SelectedStage);
     }
 
-    
+    // 던전 종료
+    public void ExitDungeon()
+    {
+        SceneManager.LoadScene("Camp");
+    }
 }
