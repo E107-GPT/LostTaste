@@ -6,14 +6,16 @@ using UnityEngine.AI;
 public class PlayerController : BaseController
 {
     PlayerStat _stat;
+    int _currentItemNum;
     Item _currentItem;
 
     Item[] _inventory;
 
     Item _detectedItem;
+    GameObject _righthand;
 
-    
-    
+
+
 
     public override void Init()
     {
@@ -23,18 +25,15 @@ public class PlayerController : BaseController
         _stat.InitStat(Define.UnitType.Player);
 
         ///
-        _inventory = new Item[2];
-        GameObject righthand = Util.FindChild(gameObject, "weapon_r", true);
+        _inventory = new Item[3];
+        _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
-        Item first = Managers.Resource.Instantiate("Weapons/OHS01_Stick", righthand.transform).GetComponent<Item>();
-        Item second = Managers.Resource.Instantiate("Weapons/THS07_Sword", righthand.transform).GetComponent<Item>();
+        Item first = Managers.Resource.Instantiate("Weapons/OHS01_Stick", _righthand.transform).GetComponent<Item>();
+
+        _inventory[1] = first;
+
+        _currentItemNum = 1;
         
-        second.gameObject.SetActive(false);
-
-        _inventory[0] = first;
-        _inventory[1] = second;
-
-        _currentItem = first;
         ///
 
         Managers.Input.KeyAction -= OnKeyboard;
@@ -62,7 +61,6 @@ public class PlayerController : BaseController
     {
         base.ExcuteIdle();  
         DetectItem();
-        Debug.Log("IDLE");
     }
 
     public override void EnterMove()
@@ -156,7 +154,7 @@ public class PlayerController : BaseController
 
 
         // 왼쪽클릭
-        _currentItem.NormalAttack();
+        _inventory[_currentItemNum].NormalAttack();
         ParticleSystem effect = GetComponentInChildren<ParticleSystem>();
         effect.Play();
 
@@ -211,37 +209,44 @@ public class PlayerController : BaseController
         }
         if (Input.GetKey(KeyCode.Space)) _statemachine.ChangeState(new DashState(this));
 
+
+        // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
         {
-            _inventory[0].gameObject.SetActive(true);
-            _inventory[1].gameObject.SetActive(false);
+            if (_currentItemNum == 1) return;
+            if (_inventory[0] != null) _inventory[1].gameObject.SetActive(true);
+            _inventory[_currentItemNum].gameObject.SetActive(false);
 
-            _currentItem = _inventory[0];
+            _currentItemNum = 1;
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
-            _inventory[0].gameObject.SetActive(false);
-            _inventory[1].gameObject.SetActive(true);
+            if (_currentItemNum == 2) return;
+            if (_inventory[1] != null) _inventory[2].gameObject.SetActive(true);
+            _inventory[_currentItemNum].gameObject.SetActive(false);
 
-            _currentItem = _inventory[1];
+            _currentItemNum = 2;
         }
 
+        // 무기 줍기
         if (_detectedItem != null && Input.GetKeyDown(KeyCode.E))
         {
-            GameObject righthand = Util.FindChild(gameObject, "weapon_r", true);
-            _detectedItem.transform.parent = righthand.transform;
-
             
-            _currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
-            _currentItem.gameObject.transform.parent = null;
-            _currentItem.gameObject.transform.position = gameObject.transform.position;
-            _currentItem.OnDropped();
+            _detectedItem.transform.parent = _righthand.transform;
 
-            _currentItem = _detectedItem;
-            _currentItem.OnEquip();
+            Item currentItem = _inventory[_currentItemNum];
+
+            currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
+            currentItem.gameObject.transform.parent = null;
+            currentItem.gameObject.transform.position = gameObject.transform.position;
+            currentItem.OnDropped();
+
+            _inventory[_currentItemNum] = _detectedItem;
+            _inventory[_currentItemNum].OnEquip();
             Debug.Log($"{_currentItem.gameObject.name} Equipped");
         }
 
+        
 
     }
     void OnHitEvent()
