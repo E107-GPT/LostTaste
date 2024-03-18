@@ -72,7 +72,7 @@ public class MonsterController : BaseController
     }
     private void FixedUpdate()
     {
-        FreezeVelocity();
+        //FreezeVelocity();
     }
 
     private void OnDrawGizmos()
@@ -87,26 +87,31 @@ public class MonsterController : BaseController
     }
 
     // 캐릭터에게 물리력을 받아도 밀려나는 가속도로 인해 이동에 방해받지 않는다.
-    public void FreezeVelocity()
-    {
-        _rigidbody.velocity = Vector3.zero;
-    }
+    //public void FreezeVelocity()
+    //{
+    //    _rigidbody.velocity = Vector3.zero;
+    //}
 
     // 보스 패턴을 위한 타겟팅
-    // 애니메이션 event 함수로 옮기자.
+    private float delay = 0f;
     private void UpdateTargetPlayer()
     {
-        Collider[] targetPlayers = Physics.OverlapSphere(transform.position, _stat.TargetRange, 1 << 7);
-
-        // 패턴 타겟팅 조건 추가
-        PrintText($"패턴 공격 범위내의 플레이어: {targetPlayers.Length}");
-        if (targetPlayers.Length > 0 )
+        delay++;
+        if (delay > _stat.AttackDelay)      // 이 함수가 AttackDelay만큼 호출되면 패턴 수행
         {
-            for (int i = 0; i < targetPlayers.Length; ++i)
+            Collider[] targetPlayers = Physics.OverlapSphere(transform.position, _stat.TargetRange, 1 << 7);
+
+            // 패턴 타겟팅 조건 추가
+            PrintText($"패턴 공격 범위내의 플레이어: {targetPlayers.Length}");
+            if (targetPlayers.Length > 0)
             {
-                // float dist = Vector3.Distance(transform.position, targetPlayers[i].transform.position);
-                _targetPlayer = targetPlayers[i].transform;
-                PrintText($"{_targetPlayer.gameObject.name}");
+                for (int i = 0; i < targetPlayers.Length; ++i)
+                {
+                    // float dist = Vector3.Distance(transform.position, targetPlayers[i].transform.position);
+                    _targetPlayer = targetPlayers[i].transform;
+                }
+
+                delay = 0;
             }
         }
     }
@@ -123,9 +128,7 @@ public class MonsterController : BaseController
             {
                 DetectPlayer = _existPlayer[i].transform;
             }
-            
         }
-
     }
 
     // 공격 범위 내의 플레이어 갱신
@@ -156,22 +159,6 @@ public class MonsterController : BaseController
         //minDistAttack = _stat.AttackRange;
     }
 
-    private float delay = 0f;
-    private void DrillDuckPatternAttack()
-    {
-        delay++;
-        if (delay > _stat.AttackDelay)      // 이 함수가 AttackDelay만큼 호출되면 패턴 수행
-        {
-            if (_targetPlayer != null)
-            {
-                _isDonePattern = false;
-                delay = 0;
-
-                _statemachine.ChangeState(new DrillDuckSlideState(this));
-            }
-        }
-    }
-
     IEnumerator CheckMonsterState()
     {
         while (_stat.Hp > 0)
@@ -179,16 +166,19 @@ public class MonsterController : BaseController
             yield return new WaitForSeconds(0.3f);
 
             UpdateAttackPlayer();
-            UpdateTargetPlayer();
-
             // Hp가 70% 이하라면 일정 시간마다 패턴 공격
-            if ((_unitType is Define.UnitType.DrillDuck) && (_stat.Hp <= _stat.MaxHp * 0.7) && _isDonePattern == true)   // (_stat.Hp <= _stat.MaxHp * 0.7)
+            if ((_unitType is Define.UnitType.DrillDuck) && _isDonePattern == true && (_stat.Hp <= _stat.MaxHp * 0.7))
             {
-                if (CurState is DrillDuckSlideState) continue;
-                DrillDuckPatternAttack();
+                UpdateTargetPlayer();
             }
 
-            if (AttackPlayer != null)
+            if (_targetPlayer != null)
+            {
+                if (CurState is DrillDuckSlideState) continue;
+
+                _statemachine.ChangeState(new DrillDuckSlideState(this));
+            }
+            else if (AttackPlayer != null)
             {
                 if (CurState is SkillState) continue;
 
@@ -205,7 +195,6 @@ public class MonsterController : BaseController
                 if (CurState is IdleState) continue;
                 DetectPlayer = null;
                 AttackPlayer = null;
-
                 _statemachine.ChangeState(new IdleState(this));
             }
         }
@@ -302,6 +291,7 @@ public class MonsterController : BaseController
     public override void ExitSkill()
     {
         base.ExitSkill();
+        _curItem.CancelNormalAttack();
     }
 
     // DIE
@@ -327,37 +317,52 @@ public class MonsterController : BaseController
     }
 
     // DrillDuck - Slide
-    private Vector3 thisToTargetDist;
     public override void EnterSlide()
     {
         base.EnterSlide();
-        _agent.ResetPath();
-        _agent.SetDestination(transform.position);  
-        //_agent.speed = _stat.MoveSpeed * 2.0f;
-        _agent.velocity = Vector3.zero;
-        _isDonePattern = false;
-        thisToTargetDist = _targetPlayer.position - transform.position;
+        _agent.velocity = Vector3.zero;        
+        Vector3 dirTarget = (_targetPlayer.position - transform.position).normalized;
+        Vector3 destPos = transform.position + dirTarget * _stat.TargetRange;
 
-        //_animator.speed = 0.5f;
+        _isDonePattern = false;
+
+        _agent.SetDestination(destPos);
         _animator.CrossFade("Slide", 0.5f);
     }
     public override void ExcuteSlide()
     {
         base.ExcuteSlide();
-        // Vector3 thisToTargetDist = _targetPlayer.position - transform.position;
 
-        Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
-
-        transform.Translate(thisToTargetDist.normalized * _stat.MoveSpeed * 10.0f * Time.deltaTime);
-
-        //_agent.SetDestination(dirToTarget);     // 해당 방향으로 이동
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            
+            if (aniTime <= 0.1f)
+            {
+                _agent.speed = _stat.MoveSpeed;
+            }
+            else if (aniTime <= 0.5f)
+            {
+                _agent.speed = _stat.MoveSpeed * 3.0f;
+            }
+            else if (aniTime < 1.0f)
+            {
+                _agent.speed = _stat.MoveSpeed / 2;
+            }
+            else if (aniTime >= 1.0f)
+            {
+                // 애니메이션 종료
+                _statemachine.ChangeState(new MoveState(this));
+            }
+        }
+        
     }
     public override void ExitSlide()
     {
         base.ExitSlide();
         //_animator.speed = 1f;
-        //_agent.speed = _stat.MoveSpeed;
         _isDonePattern = true;
+        _targetPlayer = null;
     }
 }
 

@@ -73,6 +73,12 @@ public class DrillDuckItem : MonoBehaviour
         _normalAttackObj.SetActive(false);
     }
 
+    public void CancelNormalAttack()
+    {
+        CancelInvoke("StartNormalAttack");
+        CancelInvoke("EndNormalAttack");
+    }
+
     public void SkillAttack()
     {
 
