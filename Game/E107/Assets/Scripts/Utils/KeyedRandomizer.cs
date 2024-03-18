@@ -13,7 +13,7 @@ using System.Linq;
 /// <seealso href="https://www.notion.so/240308-86e96526f4214ee3a886db561be31ff8"/>
 public class KeyedRandomizer
 {
-    private const int BAG_SIZE = UInt16.MaxValue;
+    private const int BAG_SIZE = UInt16.MaxValue + 1;
 
     private readonly int[] _bag = new int[BAG_SIZE];
 
