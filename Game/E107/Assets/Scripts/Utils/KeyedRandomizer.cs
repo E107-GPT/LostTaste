@@ -13,7 +13,7 @@ using System.Linq;
 /// <seealso href="https://www.notion.so/240308-86e96526f4214ee3a886db561be31ff8"/>
 public class KeyedRandomizer
 {
-    private const int BAG_SIZE = 32768;
+    private const int BAG_SIZE = UInt16.MaxValue;
 
     private readonly int[] _bag = new int[BAG_SIZE];
 
@@ -32,11 +32,11 @@ public class KeyedRandomizer
     }
 
     /// <summary>
-    /// 0 이상 <see cref="int.MaxValue"></see> 미만 범위 내의 <c>int</c>형 난수를 얻습니다.
+    /// 0 이상 <see cref="BAG_SIZE"></see> 미만 범위 내의 <c>int</c>형 난수를 얻습니다.
     /// </summary>
     /// <param name="key">랜덤 키</param>
     /// <returns>범위 내의 난수</returns>
-    public int GetRaw(int key)
+    public int GetRaw(UInt16 key)
     {
         if (key < 0 || key >= BAG_SIZE)
         {
@@ -53,7 +53,7 @@ public class KeyedRandomizer
     /// <param name="endExclusive">난수의 범위 끝 (범위에서 제외)</param>
     /// <returns>범위 내의 난수</returns>
     /// <exception cref="ArgumentOutOfRangeException">start가 end보다 더 큼</exception>
-    public int GetInt(int key, int startInclusive, int endExclusive)
+    public int GetInt(UInt16 key, int startInclusive, int endExclusive)
     {
         if (startInclusive >= endExclusive)
         {
@@ -68,7 +68,7 @@ public class KeyedRandomizer
     /// </summary>
     /// <param name="key">랜덤 키</param>
     /// <returns>0.0 ~ 1.0 범위 내의 난수</returns>
-    public double GetDouble(int key)
+    public double GetDouble(UInt16 key)
     {
         return (double)GetRaw(key) / int.MaxValue;
     }
@@ -81,7 +81,7 @@ public class KeyedRandomizer
     /// <param name="end">난수의 범위 끝</param>
     /// <returns>범위 내의 난수</returns>
     /// <exception cref="ArgumentOutOfRangeException">start가 end보다 더 큼</exception>
-    public double GetDouble(int key, double start, double end)
+    public double GetDouble(UInt16 key, double start, double end)
     {
         if (start > end)
         {
@@ -105,7 +105,7 @@ public class KeyedRandomizer
     /// <param name="key">랜덤 키</param>
     /// <param name="table">확률 테이블</param>
     /// <seealso cref="ProbabilityTable{E}"/>
-    public E GetFromTable<E>(int key, ProbabilityTable<E> table)
+    public E GetFromTable<E>(UInt16 key, ProbabilityTable<E> table)
     {
         double[] weights = table.Values.ToArray();
         int len = weights.Length;
