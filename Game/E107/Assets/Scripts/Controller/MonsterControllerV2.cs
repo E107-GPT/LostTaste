@@ -42,51 +42,6 @@ public class MonsterControllerV2 : BaseController
         _rigidbody.velocity = Vector3.zero;
     }
 
-
-
-    // 이동 타겟팅 기능
-    //protected void UpdateDectPlayer()
-    //{
-    //    int rand = -1;
-    //    _detectPlayer = _existPlayer[0].transform;
-    //    for (int i = 1; i < _existPlayer.Length; ++i)
-    //    {
-    //        rand = Random.Range(0, 2);     // 0 또는 1
-    //        if (rand == 0)
-    //        {
-    //            _detectPlayer = _existPlayer[i].transform;
-    //        }
-    //    }
-    //}
-
-    // 공격 범위 내의 플레이어 갱신
-    //protected void UpdateAttackPlayer()
-    //{
-    //    Collider[] attackPlayers = Physics.OverlapSphere(transform.position, _stat.AttackRange, 1 << 7);
-
-    //    //float minDistAttack = _stat.AttackRange;
-    //    PrintText($"공격 범위내의 플레이어: {attackPlayers.Length}");
-    //    if (attackPlayers.Length > 0)
-    //    {
-    //        for (int i = 0; i < attackPlayers.Length; ++i)
-    //        {
-    //            _attackPlayer = attackPlayers[i].gameObject.transform;
-    //            //float dist = Vector3.Distance(transform.position, targetPlayers[i].transform.position);
-    //            //if (minDistAttack > dist)
-    //            //{
-    //            //    minDistAttack = dist;
-    //            //    AttackPlayer = targetPlayers[i].gameObject.transform;
-    //            //}
-    //        }
-    //    }
-    //    else
-    //    {
-    //        _attackPlayer = null;
-    //    }
-
-    //    //minDistAttack = _stat.AttackRange;
-    //}
-
     protected void DetectPlayer()
     {
         Collider[] detectedPlayers = Physics.OverlapSphere(transform.position, 7.0f, LayerMask.GetMask("Player"));
@@ -97,6 +52,8 @@ public class MonsterControllerV2 : BaseController
             _statemachine.ChangeState(new MoveState(this));
             return;
         }
+
+        _detectedPlayer = null;
     }
 
     // IDLE
@@ -148,9 +105,15 @@ public class MonsterControllerV2 : BaseController
 
         _agent.SetDestination(_detectedPlayer.position);
 
-        if (distanceToPlayer < _stat.AttackRange)
+        if (distanceToPlayer <= _stat.AttackRange)
         {
             _statemachine.ChangeState(new SkillState(this));
+        }
+        else if (distanceToPlayer > 7.0f)
+        {
+            _detectedPlayer = null;
+            _statemachine.ChangeState(new IdleState(this));
+            
         }
         
     }

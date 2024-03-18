@@ -282,12 +282,7 @@ public class PlayerController : BaseController
         
 
     }
-    void OnHitEvent()
-    {
-        
-        _statemachine.ChangeState(new IdleState(this));
 
-    }
 
     void OnDashFinishedEvent()
     {
