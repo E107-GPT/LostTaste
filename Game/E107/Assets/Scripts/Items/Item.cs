@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     [SerializeField]
-    protected int _attackDamage = 0;
+    protected int _attackDamage = 50;
     [SerializeField]
     float _attackRange = 8.0f;
     [SerializeField]
@@ -38,7 +38,9 @@ public class Item : MonoBehaviour
     public void OnEquip()
     {
         _normalAttackObj = new GameObject("NormalAttack");
-        _normalAttackObj.AddComponent<SkillObject>();
+
+        Debug.Log(_attackDamage);
+        _normalAttackObj.AddComponent<SkillObject>().SetUp(transform, _attackDamage, 1);
 
         _normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
         _normalAttackCollider.isTrigger = true;
@@ -68,6 +70,7 @@ public class Item : MonoBehaviour
         
         yield return new WaitForSeconds(0.3f);
         _normalAttackObj.SetActive(true);
+        _normalAttackObj.GetComponent<SkillObject>().SetUp(transform.root, _attackDamage, 1);
         Managers.Sound.Play("swing1");
         Transform root = gameObject.transform.root;
 
