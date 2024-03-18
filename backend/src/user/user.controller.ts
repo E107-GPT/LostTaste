@@ -13,19 +13,19 @@ export class UserController {
     ) {}
 
     @Post()
-    post(@Body() dto: SignupDto) {
-        return this.userService.signup(dto);
+    async post(@Body() dto: SignupDto) {
+        return await this.userService.signup(dto);
     }
 
     @Get('profile')
     @UseGuards(AuthGuard)
-    getProfile(@AuthUser() user: UserDto) {
-        return this.userService.getProfile(user);
+    async getProfile(@AuthUser() user: UserDto) {
+        return await this.userService.getProfile(user);
     }
 
     @Patch('custom')
     @UseGuards(AuthGuard)
-    patchCustom(@AuthUser() user: UserDto, @Body() dto: CustomChangeDto) {
-        this.userService.changeCustom(user, dto);
+    async patchCustom(@AuthUser() user: UserDto, @Body() dto: CustomChangeDto) {
+        return await this.userService.changeCustom(user, dto);
     }
 }

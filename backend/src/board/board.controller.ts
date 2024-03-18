@@ -1,6 +1,8 @@
-import { Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { BoardPostDto } from './dto/board-post.dto';
+import { BoardDeleteDto } from './dto/board-delete.dto';
+import { BoardGetDto } from './dto/board-get.dto';
 
 @Controller('board')
 export class BoardController {
@@ -9,11 +11,8 @@ export class BoardController {
   ) { }
 
   @Get()
-  async get(
-    @Query('limit') limit: number,
-    @Query('before') before: string | undefined
-  ) {
-    return await this.boardService.loadBelowId(limit, before);
+  async get(@Query() dto: BoardGetDto) {
+    return await this.boardService.loadBelowId(dto);
   }
 
   @Get(':boardId')
@@ -22,7 +21,15 @@ export class BoardController {
   }
 
   @Post()
-  async post(dto: BoardPostDto) {
-    this.boardService.post(dto);
+  async post(@Body() dto: BoardPostDto) {
+    return await this.boardService.post(dto);
+  }
+
+  @Delete(':boardId')
+  async deleteBoardId(
+    @Param('boardId') boardId: string,
+    @Body() dto: BoardDeleteDto
+  ) {
+    return await this.boardService.delete(boardId, dto);
   }
 }

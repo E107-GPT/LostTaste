@@ -7,6 +7,8 @@ import { BoardDetailDto } from './dto/board-detail.dto';
 import { BoardPostDto } from './dto/board-post.dto';
 import { CodeService } from 'src/code/code.service';
 import { PasswordService } from 'src/password/password.service';
+import { BoardDeleteDto } from './dto/board-delete.dto';
+import { NoSuchContentException, WrongPasswordException } from 'src/exception/exception';
 
 @Injectable()
 export class BoardService {
@@ -18,10 +20,10 @@ export class BoardService {
         private readonly passwordService: PasswordService
     ) {}
 
-    async loadBelowId(limit: number, before?: typeof Board.prototype.id): Promise<BoardBriefDto[]> {
+    async loadBelowId(dto): Promise<BoardBriefDto[]> {
         const boards: Board[] = await this.boardRepository.find({
-            where: before ? { id: LessThan(before) } : undefined,
-            take: limit,
+            where: dto.before ? { id: LessThan(dto.before) } : undefined,
+            take: dto.limit,
             order: {id: 'DESC'}
         });
 
@@ -41,5 +43,16 @@ export class BoardService {
             title: dto.title,
             content: dto.content
         })
+    }
+
+    async delete(boardId: string, dto: BoardDeleteDto) {
+        const entity = await this.boardRepository.findOneBy({ id: boardId });
+        if (!entity) {
+            throw new NoSuchContentException();
+        }
+        if (!await this.passwordService.compare(dto.password, entity.password)) {
+            throw new WrongPasswordException();
+        }
+        this.boardRepository.remove(entity);
     }
 }
