@@ -48,7 +48,7 @@ public class KeyedRandomizer
     /// <param name="startInclusive">난수의 범위 시작 (범위에 포함)</param>
     /// <param name="endExclusive">난수의 범위 끝 (범위에서 제외)</param>
     /// <returns>범위 내의 난수</returns>
-    /// <exception cref="ArgumentOutOfRangeException">start가 end보다 더 큼</exception>
+    /// <exception cref="ArgumentOutOfRangeException">startInclusive가 endExclusive보다 같거나 더 큼</exception>
     public int GetInt(UInt16 key, int startInclusive, int endExclusive)
     {
         if (startInclusive >= endExclusive)
