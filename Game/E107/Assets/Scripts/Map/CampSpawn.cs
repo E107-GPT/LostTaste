@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
-public class CampSceneManager : MonoBehaviour
+public class CampSpawn : MonoBehaviour
 {
     Vector3 entrancePosition = new Vector3(0, 0, 0);
 

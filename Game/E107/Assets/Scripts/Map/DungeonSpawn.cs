@@ -4,31 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DungeonBuilder : MonoBehaviour
+public class DungeonSpawn : MonoBehaviour
 {
-    public GameObject entrancePrefab;
-    public GameObject bossPrefab;
-    public GameObject monster01Prefab;
-    public GameObject monster02Prefab;
-    public GameObject benefitPrefab;
-    public GameObject shopPrefab;
-    public GameObject trapPrefab;
-
     Vector3 entrancePosition = new Vector3(0.09f, 0, -12.11f);
 
 
     private void Start()
     {
-        //BuildDungeon();
         MovePlayerToEntrance();
     }
-
-
-    void BuildDungeon()
-    {
-
-    }
-
 
     // 플레이어를 입구방으로 이동
     void MovePlayerToEntrance()

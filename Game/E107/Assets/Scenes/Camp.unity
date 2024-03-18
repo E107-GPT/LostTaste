@@ -249,50 +249,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1990650022}
   m_SourcePrefab: {fileID: 100100000, guid: f555ecceac4a3f349bec9b9b9ff5b456, type: 3}
---- !u!1 &1572607082
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1572607083}
-  - component: {fileID: 1572607084}
-  m_Layer: 0
-  m_Name: DungeonSceneManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1572607083
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1572607082}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.24, y: 19.512705, z: -13.876782}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1572607084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1572607082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4a86bbc1ff3ca644978af1bd2a97ed9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1592699222
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +260,7 @@ GameObject:
   - component: {fileID: 1592699223}
   - component: {fileID: 1592699224}
   m_Layer: 0
-  m_Name: CampSceneManager
+  m_Name: CampSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -593,7 +549,6 @@ SceneRoots:
   - {fileID: 1995648043}
   - {fileID: 1037803180}
   - {fileID: 840778237}
-  - {fileID: 1572607083}
   - {fileID: 1592699223}
   - {fileID: 8455893802960189460}
   - {fileID: 930496075879567799}
