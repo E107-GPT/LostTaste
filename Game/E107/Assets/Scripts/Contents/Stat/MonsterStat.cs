@@ -16,7 +16,7 @@ public class MonsterStat : Stat
     [SerializeField]
     protected float _patternCDT;    // Cooldown Time
     [SerializeField]
-    protected float _patternDamage;
+    protected int _patternDamage;
     
 
     public int Level { get { return _level; } set { _level = value; } }
@@ -24,6 +24,7 @@ public class MonsterStat : Stat
     public float TargetRange { set => _targetRange = value; get => _targetRange; }
     public float PatternDelay { set => _patternkDelay = value; get => _patternkDelay; }
     public float PatternCDT { set => _patternCDT = value; get => _patternCDT; }
+    public int PatternDamage { get; }
 
     public MonsterStat(UnitType unitType) : base(unitType) 
     {
@@ -50,7 +51,7 @@ public class MonsterStat : Stat
                 _targetRange = 15.0f;
                 _patternkDelay = 10.0f;
                 _patternCDT = 10.0f;
-                _patternDamage = 40.0f;
+                _patternDamage = 40;
                 break;
         }
     }

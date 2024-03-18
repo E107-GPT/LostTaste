@@ -65,6 +65,8 @@ public class MonsterItem : MonoBehaviour
         
         Debug.Log($"Normal Attack - {_controller.gameObject.name}");
 
+        _normalAttackObj.GetComponent<SkillObject>().SetUp(transform, _attackDamage, 1);
+
         Transform root = gameObject.transform.root;
         _normalAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
         _normalAttackObj.transform.position = new Vector3(_normalAttackObj.transform.position.x, root.position.y + 0.5f, _normalAttackObj.transform.position.z);

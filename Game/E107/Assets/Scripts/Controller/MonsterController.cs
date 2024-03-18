@@ -36,17 +36,43 @@ public class MonsterController : BaseController
         _agent.acceleration = 40.0f;
         _statemachine.CurState = new IdleState(this);
 
-        // Editor Init
-        _existPlayer = GameObject.FindGameObjectsWithTag("Player");
-
         // Other Class
         _stat = new MonsterStat(_unitType);
         _curItem = GetComponent<MonsterItem>();
 
+        // Editor Init
+        _existPlayer = GameObject.FindGameObjectsWithTag("Player");
+        //StartCoroutine(CheckExistPlayer());
+
         // State
         _checkMonsterState = StartCoroutine(CheckMonsterState());
-        InvokeRepeating("UpdateDectPlayer", 0, 20.0f);              // 0초 후 호출, 20초마다 이동 타겟팅 수정 -> 여기서 가장 큰 데미지를 넣은 플레이어를 따라가게 할 수 있음
+        _detectPlayer = _existPlayer[0].transform;
+        InvokeRepeating("UpdateDectPlayer", 0, 20.0f);
     }
+
+    // DrillDuck에서 사용할 때 죽었는지 확인하는 if문에서 Null 에러가 발생한다.
+    // Slime도 확인
+
+    //protected IEnumerator CheckExistPlayer()
+    //{
+    //    yield return new WaitForSeconds(0.3f);
+
+    //    while (_existPlayer.Length != 0)
+    //    {
+    //        PrintText("CheckExistPlayer");
+    //        _existPlayer = GameObject.FindGameObjectsWithTag("Player");
+    //        for (int i = 0; i < _existPlayer.Length; ++i)
+    //        {
+    //            PlayerController playerController = _existPlayer[i].GetComponent<PlayerController>();
+    //            if (playerController.StateMachine.CurState is new DieState(playerController))
+    //            {
+    //                PrintText("죽었나?");
+    //                _existPlayer[i] = null;
+    //            }
+    //        }
+    //    }
+    //}
+
     private void FixedUpdate()
     {
         FreezeVelocity();
@@ -68,6 +94,7 @@ public class MonsterController : BaseController
 
 
     // 이동 타겟팅 기능
+    // 가장 큰 데미지를 넣은 플레이어를 추격하는 기능을 넣을 수 있다.
     protected void UpdateDectPlayer()
     {
         int rand = -1;
@@ -124,7 +151,7 @@ public class MonsterController : BaseController
 
                 _statemachine.ChangeState(new SkillState(this));
             }
-            else if (_existPlayer.Length != 0)
+            else if (_existPlayer.Length != 0 && _detectPlayer != null)
             {
                 if (CurState is MoveState) continue;
 

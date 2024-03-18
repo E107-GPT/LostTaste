@@ -5,9 +5,11 @@ using UnityEngine;
 public class DrillDuckItem : MonoBehaviour
 {
     [SerializeField]
-    protected int _attackDamage = 0;
+    protected int _attackDamage;
     [SerializeField]
-    private float _attackRange = 4.0f;
+    protected int _patternDamage;
+    [SerializeField]
+    protected float _attackRange;
     
     private bool _isNormalAttack;
     private bool _isSlideAttack;
@@ -26,6 +28,10 @@ public class DrillDuckItem : MonoBehaviour
 
     protected void Init()
     {
+        _attackDamage = gameObject.GetComponent<DrillDuckController>().Stat.AttackDamage;
+        _patternDamage = gameObject.GetComponent<DrillDuckController>().Stat.PatternDamage;
+        _attackRange = gameObject.GetComponent<DrillDuckController>().Stat.AttackRange;
+
         _normalAttackObj = new GameObject("NormalAttack");
         _normalAttackObj.AddComponent<SkillObject>();
         _normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
@@ -72,6 +78,8 @@ public class DrillDuckItem : MonoBehaviour
     {
         Debug.Log("Normal Attack - DrillDuck");
 
+        _normalAttackObj.GetComponent<SkillObject>().SetUp(transform, _attackDamage, 2);      // 현재 스킬의 ID = 2
+
         Transform root = gameObject.transform.root;
         _normalAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward * (_attackRange / 4));
         _normalAttackObj.transform.position = new Vector3(_normalAttackObj.transform.position.x - 1.0f, root.position.y + 0.5f, _normalAttackObj.transform.position.z);
@@ -97,6 +105,8 @@ public class DrillDuckItem : MonoBehaviour
     private void SlideAttack()
     {
         Debug.Log("Slide Attack - DrillDuck");
+
+        _slideAttackObj.GetComponent<SkillObject>().SetUp(transform, _attackDamage, 3);
 
         Transform root = gameObject.transform.root;
         _slideAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward);
