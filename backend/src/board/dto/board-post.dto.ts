@@ -24,7 +24,7 @@ export class BoardPostDto {
     title: string;
 
     @IsNotEmpty({
-        message: '내용은 비어있을 수 없습니다!'
+        message: '내용은 필수입니다!'
     })
     content: string;
 }
