@@ -8,12 +8,30 @@ public class PlayerController : BaseController
     PlayerStat _stat;
     Item _currentItem;
 
+    Item[] _inventory;
+
+    
+    
+
     public override void Init()
     {
-        _currentItem = gameObject.GetComponentInChildren<Item>();
+        
 
         _stat = new PlayerStat(Define.UnitType.Player);
         _stat.InitStat(Define.UnitType.Player);
+
+        _inventory = new Item[2];
+        GameObject righthand = Util.FindChild(gameObject, "weapon_r", true);
+
+        Item first = Managers.Resource.Instantiate("Weapons/OHS01_Stick", righthand.transform).GetComponent<Item>();
+        Item second = Managers.Resource.Instantiate("Weapons/THS07_Sword", righthand.transform).GetComponent<Item>();
+        
+        second.gameObject.SetActive(false);
+
+        _inventory[0] = first;
+        _inventory[1] = second;
+
+        _currentItem = first;
 
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
@@ -185,6 +203,23 @@ public class PlayerController : BaseController
             if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
         }
         if (Input.GetKey(KeyCode.Space)) _statemachine.ChangeState(new DashState(this));
+
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            _inventory[0].gameObject.SetActive(true);
+            _inventory[1].gameObject.SetActive(false);
+
+            _currentItem = _inventory[0];
+        }
+        else if (Input.GetKey(KeyCode.Alpha2))
+        {
+            _inventory[0].gameObject.SetActive(false);
+            _inventory[1].gameObject.SetActive(true);
+
+            _currentItem = _inventory[1];
+
+
+        }
 
 
     }
