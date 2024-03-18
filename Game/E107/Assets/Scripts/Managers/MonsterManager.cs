@@ -6,15 +6,12 @@ using UnityEngine;
 
 public class MonsterManager : MonoBehaviour
 {
-    // TYPE이 늘어나면 이러한 배열과 prefab 변수를 추가한다.
-    //[SerializeField]
-    //private string[] monsterNames;     // monster 이름 배열, Inspector view에서 직접 입력
-    //[SerializeField]
-    //private GameObject monsterPrefab;   // monster TYPE prefab
-
-    //private List<MonsterController> entitys;  // Monster entity를 담는다
-
     public static MonsterManager Instance { get; private set; }
+
+    // 각 맵에 소환된 몬스터 리스트
+    public List<GameObject> monstersInCurrentMap = new List<GameObject>();
+
+    private PortalTrigger portalTrigger;
 
     [System.Serializable]
     public class MonsterSpawnInfo
@@ -37,36 +34,49 @@ public class MonsterManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //entitys = new List<MonsterController>();
 
-        //for (int i = 0; i < monsterNames.Length; i++)
-        //{
-        //    Vector3 pos = new Vector3(0, 5, 300);
-        //    GameObject clone = Instantiate(monsterPrefab, pos, Quaternion.identity);
-        //    MonsterController monsterController = clone.GetComponent<MonsterController>();
-
-        //    monsterController.Setup(Define.UnitType.DrillDuck.ToString());         // BaseController에서 각 객체의 이름을 부여
-        //    monsterController.name = $"{monsterController.ID:D2}_Monster_{monsterController.name}";    // 00_Monster_name 으로 hierarchy 창에서 보임
-
-        //    entitys.Add(monsterController);
-        //}
+        StartCoroutine(CheckMonstersCoroutine());
     }
 
-    private void Update()
-    {
-        // Monster 동작은 BaseController에서 Update() 중
-        // 여기서도 MonsterController를 Init()하면 애니메이션이 동작하지 않는다.
+    //public int GetMonstersCount()
+    //{
+    //    // 리스트에서 null인 항목을 제거합니다. (제거된 몬스터 반영)
+    //    monstersInCurrentMap.RemoveAll(monster => monster == null);
+    //    // 현재 남아있는 몬스터의 수를 반환합니다.
+    //    return monstersInCurrentMap.Count;
+    //}
 
-        //for (int i = 0; i < entitys.Count; ++i)
-        //{
-        //    //if (entitys[i].GetComponent<Monster>().Hp < 0)
-        //    //{
-        //    //    Destroy(entitys[i], 3.0f);
-        //    //    entitys[i] = null;
-        //    //    continue;
-        //    //}
-        //    entitys[i].Init();
-        //}
+    public void SetPortalTrigger(PortalTrigger portal)
+    {
+        portalTrigger = portal;
+    }
+
+    IEnumerator CheckMonstersCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.0f);
+
+            monstersInCurrentMap.RemoveAll(monster => monster == null);
+            Debug.Log(monstersInCurrentMap.Count);
+            
+            if (monstersInCurrentMap.Count == 0)
+            {
+                Debug.Log("카운트 0되서 활성화 되야함");
+                if (portalTrigger != null)
+                {
+                    portalTrigger.ActivatePortal(true);
+                }
+            }
+            else
+            {
+                Debug.Log("카운트 0아니여서 비활성화 되야함");
+                if (portalTrigger != null)
+                {
+                    portalTrigger.ActivatePortal(false);
+                }
+            }
+        }
     }
 
     // 특정 맵에 몬스터 소환
@@ -74,28 +84,16 @@ public class MonsterManager : MonoBehaviour
     {
         foreach (MonsterSpawnInfo info in monsterSpawnInfos)
         {
-            if ( info == null)
-            {
-                Debug.Log("info is null");
-            }
-
             if (info.mapName == mapName)
             {
                 foreach (Transform spawnPoint in info.spawnPoints)
                 {
                     GameObject clone = Instantiate(info.monsterPrefab, spawnPoint.position, spawnPoint.rotation);
-                    Debug.Log(clone);
+                    monstersInCurrentMap.Add(clone);
                 }
                 break;
             }
         }
     }
 
-    //private void FixedUpdate()
-    //{
-    //    for (int i = 0; i < entitys.Count; ++i)
-    //    {
-    //        entitys[i].GetComponent<MonsterController>().FreezeVelocity();
-    //    }
-    //}
 }

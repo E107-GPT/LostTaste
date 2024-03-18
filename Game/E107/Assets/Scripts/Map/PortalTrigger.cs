@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,6 +15,22 @@ public class PortalTrigger : MonoBehaviour
 
     public string targetMapName;
 
+    public GameObject portal;
+
+    //private void Update()
+    //{
+    //    int monstersCount = MonsterManager.Instance.GetMonstersCount();
+
+    //    // monstersCount가 0이 아니면 포탈을 비활성화, 0이면 활성화
+    //    portal.SetActive(monstersCount == 0);
+    //}
+
+    public void ActivatePortal(bool isActive)
+    {
+        portal.SetActive(isActive);
+        Debug.Log("ActivatePortal called with " + isActive);
+    }
+
     // 트리거 범위안에 들어오면 인원수 체크
     private void OnTriggerEnter(Collider other)
     {
@@ -21,8 +38,8 @@ public class PortalTrigger : MonoBehaviour
         {
             playersInPortal.Add(other.gameObject);
             CheckAllPlayersInPortal();
+            MonsterManager.Instance.SetPortalTrigger(this);
             MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
-            Debug.Log("몬스터 소환됨");
         }
     }
 
