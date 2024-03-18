@@ -50,7 +50,7 @@ export class BoardService {
         if (!entity) {
             throw new NoSuchContentException();
         }
-        if (entity.password !== dto.password) {
+        if (!await this.passwordService.compare(dto.password, entity.password)) {
             throw new WrongPasswordException();
         }
         this.boardRepository.remove(entity);
