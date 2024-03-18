@@ -5,6 +5,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { CodeModule } from 'src/code/code.module';
 import { MemberEquipment } from 'src/db/entity/member-equipment';
+import { PasswordModule } from 'src/password/password.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { MemberEquipment } from 'src/db/entity/member-equipment';
       Member,
       MemberEquipment
     ]),
-    CodeModule
+    CodeModule,
+    PasswordModule
   ],
   controllers: [UserController],
   providers: [UserService],

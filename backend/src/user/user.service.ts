@@ -11,6 +11,7 @@ import { Repository } from 'typeorm';
 import { UserProfileDto } from './dto/user-profile.dto';
 import { UserDto } from './dto/user.dto';
 import { CustomChangeDto } from './dto/custom-change.dto';
+import { PasswordService } from 'src/password/password.service';
 
 @Injectable()
 export class UserService {
@@ -21,10 +22,9 @@ export class UserService {
         @InjectRepository(MemberEquipment)
         private readonly memberEquipmentRepository: Repository<MemberEquipment>,
 
-        private readonly codeService: CodeService
+        private readonly codeService: CodeService,
+        private readonly passwordService: PasswordService,
     ) {}
-    
-    private readonly HASH_SALT_ROUND = 10;
 
     private readonly DEFAULT_EQUIPMENTS: string[] = ['SKN_0001', 'JOB_0001', 'PET_0001', 'CSK_0001'];
 
@@ -44,7 +44,7 @@ export class UserService {
 
         const member: Member = await this.memberRepository.save({
             accountId: dto.accountId,
-            password: await this.hash(dto.password),
+            password: await this.passwordService.hash(dto.password),
             nickname: dto.nickname,
         });
 
@@ -61,10 +61,6 @@ export class UserService {
             
             this.memberEquipmentRepository.save(memberEquipment);
         }
-    }
-
-    async hash(plaintext: string) {
-        return await bcrypt.hash(plaintext, this.HASH_SALT_ROUND);
     }
 
     async getProfile(user: UserDto): Promise<UserProfileDto> {
