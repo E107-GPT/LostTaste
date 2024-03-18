@@ -6,14 +6,37 @@ using UnityEngine.AI;
 public class PlayerController : BaseController
 {
     PlayerStat _stat;
-    Item _currentItem;
+    int _currentItemNum;
+
+    Item[] _inventory;
+
+    Item _detectedItem;
+    GameObject _righthand;
+
+
+
 
     public override void Init()
     {
-        _currentItem = gameObject.GetComponentInChildren<Item>();
+        
 
         _stat = new PlayerStat(Define.UnitType.Player);
         _stat.InitStat(Define.UnitType.Player);
+
+        ///
+        _inventory = new Item[3];
+        _righthand = Util.FindChild(gameObject, "weapon_r", true);
+
+        Item first = Managers.Resource.Instantiate("Weapons/OHS01_Stick", _righthand.transform).GetComponent<Item>();
+        Item second = Managers.Resource.Instantiate("Weapons/Feast", _righthand.transform).GetComponent<Item>();
+        _inventory[1] = first;
+        _inventory[2] = second;
+
+        _currentItemNum = 1;
+
+        second.gameObject.SetActive(false);
+        
+        ///
 
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
@@ -33,15 +56,19 @@ public class PlayerController : BaseController
     public override void EnterIdle()
     {
         base.EnterIdle();
-        Animator anim = GetComponent<Animator>();
-        anim.CrossFade("WAIT", 0.1f);
+        _animator.CrossFade("WAIT", 0.1f);
+    }
+
+    public override void ExcuteIdle()
+    {
+        base.ExcuteIdle();  
+        DetectItem();
     }
 
     public override void EnterMove()
     {
         base.EnterMove();
-        Animator anim = GetComponent<Animator>();
-        anim.CrossFade("RUN", 0.1f);
+        _animator.CrossFade("RUN", 0.1f);
     }
     public override void ExcuteMove()
     {
@@ -100,8 +127,7 @@ public class PlayerController : BaseController
     public override void EnterDash()
     {
         base.EnterDash();
-        Animator anim = GetComponent<Animator>();
-        anim.CrossFade("DASH", 0.1f, -1, 0);
+        _animator.CrossFade("DASH", 0.1f, -1, 0);
 
     }
 
@@ -114,8 +140,7 @@ public class PlayerController : BaseController
     public override void EnterSkill()
     {
         base.EnterSkill();
-        Animator anim = GetComponent<Animator>();
-        anim.CrossFade("ATTACK", 0.1f, -1, 0);
+        _animator.CrossFade("ATTACK", 0.1f, -1, 0);
 
         LayerMask mask = LayerMask.GetMask("Ground");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -131,7 +156,7 @@ public class PlayerController : BaseController
 
 
         // 왼쪽클릭
-        _currentItem.NormalAttack();
+        _inventory[_currentItemNum].NormalAttack();
         ParticleSystem effect = GetComponentInChildren<ParticleSystem>();
         effect.Play();
 
@@ -145,7 +170,12 @@ public class PlayerController : BaseController
 
     }
 
-
+    public override void EnterDie()
+    {
+        base.EnterDie();
+        _animator.CrossFade("DIE", 0.1f);
+        
+    }
 
 
     void OnMouseClicked(Define.MouseEvent evt)
@@ -187,6 +217,69 @@ public class PlayerController : BaseController
         if (Input.GetKey(KeyCode.Space)) _statemachine.ChangeState(new DashState(this));
 
 
+        // 무기 교체
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            if (_currentItemNum == 1) return; // 이미 1번 무기일 경우
+            if (_inventory[1] != null) _inventory[1].gameObject.SetActive(true);
+            if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
+
+            _currentItemNum = 1;
+        }
+        else if (Input.GetKey(KeyCode.Alpha2))
+        {
+            if (_currentItemNum == 2) return; // 이미 2번 무기일 경우
+            if (_inventory[2] != null) _inventory[2].gameObject.SetActive(true);
+            if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
+
+            _currentItemNum = 2;
+        }
+
+        // 무기 줍기
+        if (_detectedItem != null && Input.GetKeyDown(KeyCode.E))
+        {
+            
+            _detectedItem.transform.parent = _righthand.transform;
+
+            Item currentItem = _inventory[_currentItemNum];
+
+            if(currentItem.gameObject.name == "Feast")
+            {
+                Destroy(currentItem);
+            }
+            else
+            {
+                currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
+                currentItem.gameObject.transform.parent = null;
+                currentItem.gameObject.transform.position = gameObject.transform.position;
+                currentItem.OnDropped();
+            }
+            
+
+
+            _inventory[_currentItemNum] = _detectedItem;
+            _inventory[_currentItemNum].OnEquip();
+            Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Item currentItem = _inventory[_currentItemNum];
+            // 맨손이면 못버린다.
+            if (currentItem.gameObject.name == "Feast") return;
+
+            currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
+            currentItem.gameObject.transform.parent = null;
+            currentItem.gameObject.transform.position = gameObject.transform.position;
+            currentItem.OnDropped();
+
+            _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/Feast", _righthand.transform).GetComponent<Item>();
+
+
+        }
+
+        
+
     }
     void OnHitEvent()
     {
@@ -202,6 +295,9 @@ public class PlayerController : BaseController
 
     public override void TakeDamage(int skillObjectId, int damage)
     {
+        // 대쉬 중에 무적
+        if (CurState is DashState) return;
+
         base.TakeDamage(skillObjectId, damage);
 
         float lastAttackTime;
@@ -224,6 +320,37 @@ public class PlayerController : BaseController
 
 
     }
+
+
+    public void DetectItem()
+    {
+        Collider[] items = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item"));
+        float closestDistance = Mathf.Infinity;
+        Collider closestItem = null;
+
+        foreach (var item in items)
+        {
+            float distance = (item.transform.position - transform.position).sqrMagnitude;
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestItem = item;
+            }
+        }
+
+        if (closestItem != null)
+        {
+            // 가장 가까운 오브젝트를 처리합니다. 예: 로그 출력
+            Debug.Log("Closest Object: " + closestItem.gameObject.name);
+            _detectedItem = closestItem.GetComponent<Item>();
+        }
+        else
+        {
+            _detectedItem = null;
+        }
+    }
+
+
 
 
 

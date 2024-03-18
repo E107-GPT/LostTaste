@@ -167,11 +167,199 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b41a37b2cb9723a438e149af45e5ef0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &578931137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 578931138}
+  m_Layer: 0
+  m_Name: ForestBossSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &578931138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578931137}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.5, z: -0, w: 0.86602545}
+  m_LocalPosition: {x: -4.6437836, y: 1, z: 9.443267}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1120677443905742665}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &627347949 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7223984692470007912, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
   m_PrefabInstance: {fileID: 5776572977031128706}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &650889545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 650889547}
+  - component: {fileID: 650889546}
+  - component: {fileID: 650889548}
+  m_Layer: 0
+  m_Name: NavMeshSurface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &650889546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650889545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: -334000983
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 4a017d7336eb27949af6dcd70707d30f, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!4 &650889547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650889545}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.7458484, y: 19.99, z: 261.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &650889548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650889545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: -1372625422
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: ac4fdec3a422be54685484332a056f39, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!1 &747110467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 747110468}
+  m_Layer: 0
+  m_Name: ForestMonster01Spawn01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &747110468
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747110467}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.86, y: 1, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5776572977031128707}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &794437403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 794437404}
+  m_Layer: 0
+  m_Name: ForestMonster01Spawn03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &794437404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794437403}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.55, y: 1, z: -4.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5776572977031128707}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &818002711
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,11 +404,104 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &832552832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 832552833}
+  m_Layer: 0
+  m_Name: ForestMonster01Spawn02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &832552833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832552832}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.18, y: 1, z: -4.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5776572977031128707}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &845817260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6818812016327543795, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
   m_PrefabInstance: {fileID: 1120677443905742664}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &908967059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 908967061}
+  - component: {fileID: 908967060}
+  m_Layer: 0
+  m_Name: SpawnMonster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &908967060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908967059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7684a90c9b5d5f4a951677028481bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterSpawnInfos:
+  - mapName: ForestMonster01
+    monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    spawnPoints:
+    - {fileID: 747110468}
+    - {fileID: 832552833}
+    - {fileID: 794437404}
+  - mapName: ForestMonster02
+    monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    spawnPoints:
+    - {fileID: 1284726227}
+    - {fileID: 1800089623}
+    - {fileID: 1390265137}
+    - {fileID: 1731006307}
+  - mapName: ForestBoss
+    monsterPrefab: {fileID: 3137786495578628170, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
+    spawnPoints:
+    - {fileID: 578931138}
+--- !u!4 &908967061
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908967059}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.645163, y: 6.829558, z: 168.86008}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &970295987
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,6 +702,130 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1284726226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1284726227}
+  m_Layer: 0
+  m_Name: ForestMonster02Spawn01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1284726227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284726226}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.258819, z: -0, w: 0.9659259}
+  m_LocalPosition: {x: -5.4, y: 1, z: -8.300003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7116547915656775851}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1390265136
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1390265137}
+  m_Layer: 0
+  m_Name: ForestMonster02Spawn03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1390265137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390265136}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.258819, z: -0, w: 0.9659259}
+  m_LocalPosition: {x: 13.54, y: 1, z: 2.630005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7116547915656775851}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1731006306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1731006307}
+  m_Layer: 0
+  m_Name: ForestMonster02Spawn04
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1731006307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731006306}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.258819, z: -0, w: 0.9659259}
+  m_LocalPosition: {x: 13.02, y: 1, z: -10.080002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7116547915656775851}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1800089622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1800089623}
+  m_Layer: 0
+  m_Name: ForestMonster02Spawn02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1800089623
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800089622}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.258819, z: -0, w: 0.9659259}
+  m_LocalPosition: {x: -2.6, y: 1, z: 9.699997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7116547915656775851}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1902156044
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,6 +910,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForestBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 8847655112222967185, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9205612891271410097, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -547,9 +956,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 9205612891271410097, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 578931138}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+--- !u!4 &1120677443905742665 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9205612891271410097, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+  m_PrefabInstance: {fileID: 1120677443905742664}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2085543782127943333
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -599,6 +1016,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: targetMapName
+      value: ForestMonster01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 627347949}
@@ -628,6 +1049,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+      propertyPath: targetMapName
+      value: ForestMonster02
+      objectReference: {fileID: 0}
     - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: targetPortalLocation
       value: 
@@ -699,9 +1124,23 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 894436710138760760, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8948282724543835403, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 747110468}
+    - targetCorrespondingSourceObject: {fileID: 8948282724543835403, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 832552833}
+    - targetCorrespondingSourceObject: {fileID: 8948282724543835403, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 794437404}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+--- !u!4 &5776572977031128707 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8948282724543835403, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+  m_PrefabInstance: {fileID: 5776572977031128706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7116547915656775850
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -710,6 +1149,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 324861400119088957, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      propertyPath: targetMapName
+      value: ForestBoss
+      objectReference: {fileID: 0}
     - target: {fileID: 324861400119088957, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: targetPortalLocation
       value: 
@@ -760,9 +1203,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 463902982113330353, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1284726227}
+    - targetCorrespondingSourceObject: {fileID: 463902982113330353, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1800089623}
+    - targetCorrespondingSourceObject: {fileID: 463902982113330353, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1390265137}
+    - targetCorrespondingSourceObject: {fileID: 463902982113330353, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1731006307}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+--- !u!4 &7116547915656775851 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 463902982113330353, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+  m_PrefabInstance: {fileID: 7116547915656775850}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -776,3 +1236,5 @@ SceneRoots:
   - {fileID: 319147128}
   - {fileID: 1902156047}
   - {fileID: 1249619523}
+  - {fileID: 650889547}
+  - {fileID: 908967061}
