@@ -22,7 +22,7 @@ export class BoardController {
 
   @Post()
   async post(@Body() dto: BoardPostDto) {
-    this.boardService.post(dto);
+    return await this.boardService.post(dto);
   }
 
   @Delete(':boardId')
@@ -30,6 +30,6 @@ export class BoardController {
     @Param('boardId') boardId: string,
     @Body() dto: BoardDeleteDto
   ) {
-    this.boardService.delete(boardId, dto);
+    return await this.boardService.delete(boardId, dto);
   }
 }
