@@ -28,10 +28,13 @@ public class PlayerController : BaseController
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
         Item first = Managers.Resource.Instantiate("Weapons/OHS01_Stick", _righthand.transform).GetComponent<Item>();
-
+        Item second = Managers.Resource.Instantiate("Weapons/Feast", _righthand.transform).GetComponent<Item>();
         _inventory[1] = first;
+        _inventory[2] = second;
 
         _currentItemNum = 1;
+
+        second.gameObject.SetActive(false);
         
         ///
 
@@ -235,10 +238,19 @@ public class PlayerController : BaseController
 
             Item currentItem = _inventory[_currentItemNum];
 
-            currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
-            currentItem.gameObject.transform.parent = null;
-            currentItem.gameObject.transform.position = gameObject.transform.position;
-            currentItem.OnDropped();
+            if(currentItem.gameObject.name == "Feast")
+            {
+                Destroy(currentItem);
+            }
+            else
+            {
+                currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
+                currentItem.gameObject.transform.parent = null;
+                currentItem.gameObject.transform.position = gameObject.transform.position;
+                currentItem.OnDropped();
+            }
+            
+
 
             _inventory[_currentItemNum] = _detectedItem;
             _inventory[_currentItemNum].OnEquip();
@@ -247,7 +259,17 @@ public class PlayerController : BaseController
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            if (_inventory[_currentItemNum] == null) return;
+            Item currentItem = _inventory[_currentItemNum];
+            // 맨손이면 못버린다.
+            if (currentItem.gameObject.name == "Feast") return;
+
+            currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
+            currentItem.gameObject.transform.parent = null;
+            currentItem.gameObject.transform.position = gameObject.transform.position;
+            currentItem.OnDropped();
+
+            _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/Feast", _righthand.transform).GetComponent<Item>();
+
 
         }
 

@@ -9,7 +9,7 @@ public class Item : MonoBehaviour
     [SerializeField]
     float _attackRange = 8.0f;
     [SerializeField]
-    bool isDropped = true;
+    bool isDropped = false;
     CapsuleCollider _itemCollider;
 
     GameObject _normalAttackObj;
@@ -26,22 +26,13 @@ public class Item : MonoBehaviour
         _itemCollider = gameObject.AddComponent<CapsuleCollider>();
         if (isDropped)
         {
-
             _itemCollider.enabled = true;
         }
         else
         {
             _itemCollider.enabled = false;
-        }
-        //_normalAttackObj = new GameObject("NormalAttack");
-        //_normalAttackObj.AddComponent<SkillObject>();
-        //_normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
-        //_normalAttackCollider.isTrigger = true;
-        //_normalAttackObj.transform.localScale = new Vector3(1.0f, 1.0f, _attackRange);
-        //_normalAttackObj.SetActive(false);
-        //Object.Instantiate(_normalAttackObj);
-
-        
+            OnEquip();
+        }    
     }
 
     public void OnEquip()
