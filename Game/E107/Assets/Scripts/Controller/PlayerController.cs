@@ -295,6 +295,9 @@ public class PlayerController : BaseController
 
     public override void TakeDamage(int skillObjectId, int damage)
     {
+        // 대쉬 중에 무적
+        if (CurState is DashState) return;
+
         base.TakeDamage(skillObjectId, damage);
 
         float lastAttackTime;
