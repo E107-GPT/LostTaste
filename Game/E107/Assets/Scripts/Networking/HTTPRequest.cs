@@ -20,7 +20,8 @@ public class HTTPRequest : MonoBehaviour
     // GET
     IEnumerator GET(string path)
     {
-        UnityWebRequest request = UnityWebRequest.Get(url + path);
+        UnityWebRequest request = UnityWebRequest.Get(url + "api/" +path);
+        
         yield return request.SendWebRequest();
 
         if (request.result != UnityWebRequest.Result.Success) // Unity 2020.1 이후부터는 isNetworkError와 isHttpError 대신 result 사용
@@ -59,8 +60,8 @@ public class HTTPRequest : MonoBehaviour
 
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonData);
         Debug.Log(jsonData);
-
-        UnityWebRequest postRequest = new UnityWebRequest(url + path, "POST");
+        Debug.Log(url + "api/" + path);
+        UnityWebRequest postRequest = new UnityWebRequest(url + "api/" + path, "POST");
         postRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         postRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         postRequest.SetRequestHeader("Content-Type", "application/json");

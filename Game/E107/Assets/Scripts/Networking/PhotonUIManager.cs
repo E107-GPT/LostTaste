@@ -60,7 +60,7 @@ public class PhotonUIManager : MonoBehaviour
     public void SetEnterPassword()
     {
         Debug.Log((password));
-        GameObject.Find("Launcher").GetComponent<PhotonTest>().PasswordValidation(password);
+        GameObject.Find("GameManager").GetComponent<PhotonManager>().PasswordValidation(password);
     }
 
 
@@ -68,15 +68,25 @@ public class PhotonUIManager : MonoBehaviour
     {
         Dictionary<string, string> request = new Dictionary<string, string>();
 
-        request.Add("accountId", "helloworld");
+        request.Add("accountId", "newworld");
         request.Add("password", "qwe123!@#");
-        request.Add("nickname", "helloworld");
+        request.Add("nickname", "newworld");
 
         gameObject.GetComponent<HTTPRequest>().POSTCall("user", request);
     }
     public void TestGet()
     {
         gameObject.GetComponent<HTTPRequest>().GetCall("user/profile");
+    }
+    public void Login()
+    {
+        Dictionary<string, string> request = new Dictionary<string, string>();
+
+        request.Add("accountId", "newworld");
+        request.Add("password", "qwe123!@#");
+        request.Add("nickname", "newworld");
+
+        gameObject.GetComponent<HTTPRequest>().POSTCall("/auth/login", request);
     }
 
     #endregion
