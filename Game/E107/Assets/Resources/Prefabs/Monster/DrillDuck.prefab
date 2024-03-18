@@ -2561,7 +2561,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1934422342058488164}
-  - component: {fileID: 1119283850644590022}
   m_Layer: 0
   m_Name: root
   m_TagString: Untagged
@@ -2585,19 +2584,6 @@ Transform:
   - {fileID: 4133582009764774313}
   m_Father: {fileID: 2360018824529132272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1119283850644590022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2290354627868605920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6692c66096e2ea743ac19c292a643522, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackDamage: 0
 --- !u!1 &2379090769363839237
 GameObject:
   m_ObjectHideFlags: 0
@@ -3489,11 +3475,12 @@ GameObject:
   - component: {fileID: 2360018824529132272}
   - component: {fileID: 8511895970222891146}
   - component: {fileID: -2256598554493354029}
-  - component: {fileID: 2304664441753155432}
+  - component: {fileID: 4292945358567477416}
   - component: {fileID: 2154674506615639540}
+  - component: {fileID: 6063172700869700760}
   m_Layer: 0
   m_Name: DrillDuck
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3564,7 +3551,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2304664441753155432
+--- !u!114 &4292945358567477416
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3573,15 +3560,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3137786495578628170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b65ba56f44d098946b5baec8654925b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 6692c66096e2ea743ac19c292a643522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityName: 
-  _unitType: 2
-  _existPlayer: []
-  _detectPlayer: {fileID: 0}
-  _attackPlayer: {fileID: 0}
-  _targetPlayer: {fileID: 0}
+  _attackDamage: 0
+  _attackRange: 4
 --- !u!54 &2154674506615639540
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3609,6 +3592,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6063172700869700760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137786495578628170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c47a659889bce6479e6c52f517e4bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityName: 
+  _unitType: 2
+  _existPlayer: []
+  _detectPlayer: {fileID: 0}
+  _attackPlayer: {fileID: 0}
+  _targetPlayer: {fileID: 0}
+  _targetPlayer: {fileID: 0}
 --- !u!1 &3153326930071574659
 GameObject:
   m_ObjectHideFlags: 0

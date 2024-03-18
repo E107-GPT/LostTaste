@@ -21,6 +21,8 @@ public abstract class BaseController : MonoBehaviour
         get { return _statemachine.CurState; }
 		set { CurState = value; }
     }
+	public NavMeshAgent Agent { get { return _agent; } }
+	public StateMachine StateMachine { get { return _statemachine; } }
 
     private static long entity_ID = 0;
 	private long id;
@@ -107,7 +109,7 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void ExitDash() { }
 
 	// DrillDuck Slide
-	public virtual void EnterSlide() { }
-	public virtual void ExcuteSlide() { }
-	public virtual void ExitSlide() { }
+	//public virtual void EnterSlide() { }
+	//public virtual void ExcuteSlide() { }
+	//public virtual void ExitSlide() { }
 }

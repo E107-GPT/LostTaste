@@ -6,133 +6,84 @@ using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.EventSystems.EventTrigger;
 
-//public enum MonsterState    // 피격 당하면 공격을 가한 플레이어를 추적하는 기능
-//{
-//    IDLE = 0,
-//    // PATROL,
-//    CHASE,
-//    ATTACK,
-//    DIE,
-//    GLOBAL,
-//}
-
-// Item을 상속받는 SlimeItem 컴포넌트를 넣는다.
-
-
+// 일반 몬스터
 public class MonsterController : BaseController
 {
     [SerializeField]
-    private Define.UnitType _unitType;
-
-
+    protected Define.UnitType _unitType;
     [SerializeField]
-    private GameObject[] _existPlayer;      // 필드 위에 존재하는 플레이어 수
-    [SerializeField]    
-    private Transform _detectPlayer;        // 일반 공격 범위를 벗어나면 랜덤한 플레이어에게 이동 -> 지금은 가까운 플레이어에게 이동
-    [SerializeField]
-    private Transform _attackPlayer;        // 일반 공격 타겟팅
-    [SerializeField]
-    private Transform _targetPlayer;        // 패턴 타겟팅
-
-    // 공격 collider를 사용하기 위함
-    // Item을 상속받는 객체 생성
-    // 스킬 공격은 event로 처리한다.
-    // _agent를 가져와서 speed 값을 애니메이션에 맞춰서 조정한다. SetDestination 이용
-
-    DrillDuckItem _curItem;
+    protected GameObject[] _existPlayer;      // 필드 위에 존재하는 플레이어 수
 
     protected MonsterStat _stat;
-    //private Coroutine updateAttackPlayer;
-    private Coroutine _checkMonsterState;
-    private Ray _ray;
-    private bool _isDonePattern;
-    private float _playAniTime;
+    private MonsterItem _curItem;
 
-    public NavMeshAgent Agent { private set; get; }
-    public Transform DetectPlayer { private set; get; }
-    public Transform AttackPlayer { private set; get; }
-    public Transform TargetPlayer { private set; get; }
+    [SerializeField]
+    protected Transform _detectPlayer;        // 일반 공격 범위를 벗어나면 랜덤한 플레이어에게 이동 -> 지금은 가까운 플레이어에게 이동
+    [SerializeField]
+    protected Transform _attackPlayer;        // 일반 공격 타겟팅
+
+    private Coroutine _checkMonsterState;
+    protected Ray _ray;                       // Gizmos에 사용
+
+    public MonsterStat Stat { get { return _stat; } }
+    public Transform AttackPlayer { get { return _attackPlayer; } }
 
     public override void Init()
     {
-        _curItem = GetComponentInChildren<DrillDuckItem>();
-
-        _existPlayer = GameObject.FindGameObjectsWithTag("Player");
-        PrintText($"플레이어가 {_existPlayer.Length}만큼 필드 위에 존재");
-
-        _statemachine.ChangeState(new IdleState(this));
-        _stat = new MonsterStat(_unitType);
+        // BaseController
         _agent.stoppingDistance = 1.5f;
         _agent.angularSpeed = 500.0f;
         _agent.acceleration = 40.0f;
-        _isDonePattern = true;
+        _statemachine.CurState = new IdleState(this);
 
+        // Editor Init
+        _existPlayer = GameObject.FindGameObjectsWithTag("Player");
+
+        // Other Class
+        _stat = new MonsterStat(_unitType);
+        _curItem = GetComponent<MonsterItem>();
+
+        // State
         _checkMonsterState = StartCoroutine(CheckMonsterState());
-        InvokeRepeating("UpdateDectPlayer", 0, 20.0f);      // 0초 후 호출, 20초마다 이동 타겟팅 수정
+        InvokeRepeating("UpdateDectPlayer", 0, 20.0f);              // 0초 후 호출, 20초마다 이동 타겟팅 수정 -> 여기서 가장 큰 데미지를 넣은 플레이어를 따라가게 할 수 있음
     }
     private void FixedUpdate()
     {
-        //FreezeVelocity();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos attackRangeGizmo = new Gizmos();
-        Gizmos targetRangeGizmo = new Gizmos();
-
-        _ray.origin = transform.position;
-        Gizmos.color = Color.red;
-        if (CurState is SkillState) Gizmos.DrawWireSphere(_ray.origin, _stat.AttackRange);
-        if (CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.TargetRange);
+        FreezeVelocity();
     }
 
     // 캐릭터에게 물리력을 받아도 밀려나는 가속도로 인해 이동에 방해받지 않는다.
-    //public void FreezeVelocity()
-    //{
-    //    _rigidbody.velocity = Vector3.zero;
-    //}
-
-    // 보스 패턴을 위한 타겟팅
-    private float delay = 0f;
-    private void UpdateTargetPlayer()
+    protected void FreezeVelocity()
     {
-        delay++;
-        if (delay > _stat.AttackDelay)      // 이 함수가 AttackDelay만큼 호출되면 패턴 수행
-        {
-            Collider[] targetPlayers = Physics.OverlapSphere(transform.position, _stat.TargetRange, 1 << 7);
-
-            // 패턴 타겟팅 조건 추가
-            PrintText($"패턴 공격 범위내의 플레이어: {targetPlayers.Length}");
-            if (targetPlayers.Length > 0)
-            {
-                for (int i = 0; i < targetPlayers.Length; ++i)
-                {
-                    // float dist = Vector3.Distance(transform.position, targetPlayers[i].transform.position);
-                    _targetPlayer = targetPlayers[i].transform;
-                }
-
-                delay = 0;
-            }
-        }
+        _rigidbody.velocity = Vector3.zero;
     }
 
+    protected void OnDrawGizmos()
+    {
+        _ray.origin = transform.position;
+        Gizmos.color = Color.red;
+        if (CurState is SkillState) Gizmos.DrawWireSphere(_ray.origin, _stat.AttackRange);  // 일반 공격 범위
+        if (CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.TargetRange);   // 패턴 공격 범위
+    }
+
+
     // 이동 타겟팅 기능
-    private void UpdateDectPlayer()
+    protected void UpdateDectPlayer()
     {
         int rand = -1;
-        DetectPlayer = _existPlayer[0].transform;
+        _detectPlayer = _existPlayer[0].transform;
         for (int i = 1; i < _existPlayer.Length; ++i)
         {
             rand = Random.Range(0, 2);     // 0 또는 1
             if (rand == 0)
             {
-                DetectPlayer = _existPlayer[i].transform;
+                _detectPlayer = _existPlayer[i].transform;
             }
         }
     }
 
     // 공격 범위 내의 플레이어 갱신
-    private void UpdateAttackPlayer()
+    protected void UpdateAttackPlayer()
     {
         Collider[] attackPlayers = Physics.OverlapSphere(transform.position, _stat.AttackRange, 1 << 7);
 
@@ -142,7 +93,7 @@ public class MonsterController : BaseController
         {
             for (int i = 0; i < attackPlayers.Length; ++i)
             {
-                AttackPlayer = attackPlayers[i].gameObject.transform;
+                _attackPlayer = attackPlayers[i].gameObject.transform;
                 //float dist = Vector3.Distance(transform.position, targetPlayers[i].transform.position);
                 //if (minDistAttack > dist)
                 //{
@@ -153,7 +104,7 @@ public class MonsterController : BaseController
         }
         else
         {
-            AttackPlayer = null;
+            _attackPlayer = null;
         }
 
         //minDistAttack = _stat.AttackRange;
@@ -166,19 +117,8 @@ public class MonsterController : BaseController
             yield return new WaitForSeconds(0.3f);
 
             UpdateAttackPlayer();
-            // Hp가 70% 이하라면 일정 시간마다 패턴 공격
-            if ((_unitType is Define.UnitType.DrillDuck) && _isDonePattern == true && (_stat.Hp <= _stat.MaxHp * 0.7))
-            {
-                UpdateTargetPlayer();
-            }
-
-            if (_targetPlayer != null)
-            {
-                if (CurState is DrillDuckSlideState) continue;
-
-                _statemachine.ChangeState(new DrillDuckSlideState(this));
-            }
-            else if (AttackPlayer != null)
+            
+            if (_attackPlayer != null)
             {
                 if (CurState is SkillState) continue;
 
@@ -193,15 +133,14 @@ public class MonsterController : BaseController
             else
             {
                 if (CurState is IdleState) continue;
-                DetectPlayer = null;
-                AttackPlayer = null;
+                _detectPlayer = null;
+                _attackPlayer = null;
                 _statemachine.ChangeState(new IdleState(this));
             }
         }
 
         _statemachine.ChangeState(new DieState(this));
         CancelInvoke("UpdateDectPlayer");
-        // 코루틴 종료
     }
 
     public override void TakeDamage(int skillObjectId, int damage)
@@ -226,7 +165,6 @@ public class MonsterController : BaseController
             _statemachine.ChangeState(new DieState(this));
         }
     }
-
 
     // IDLE
     public override void EnterIdle()
@@ -259,8 +197,20 @@ public class MonsterController : BaseController
     public override void ExcuteMove()
     {
         base.ExcuteMove();
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Move"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (aniTime <= 0.1f)
+            {
+                _agent.speed = _stat.MoveSpeed * 2.0f;
+            }
+            else if (aniTime <= 1.0f)
+            {
+                _agent.speed = _stat.MoveSpeed;
+            }
+        }
 
-        _agent.SetDestination(DetectPlayer.position);
+        _agent.SetDestination(_detectPlayer.position);
     }
     public override void ExitMove()
     {
@@ -273,29 +223,27 @@ public class MonsterController : BaseController
         base.EnterSkill();
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
-        _curItem.NormalAttack();
-
+        
         _animator.CrossFade("Attack", 0.3f);
     }
     public override void ExcuteSkill()
     {
         base.ExcuteSkill();
 
-        Vector3 thisToTargetDist = AttackPlayer.position - transform.position;
+        Vector3 thisToTargetDist = _attackPlayer.position - transform.position;
         Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
         // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
 
-        // _attackPlayer = null;       // Item은 코루틴에 맞추기 때문에 Skill 상태를 유지하면 안 된다.
+        _curItem.NormalAttack();
     }
     public override void ExitSkill()
     {
         base.ExitSkill();
-        _curItem.CancelNormalAttack();
     }
 
     // DIE
-    public override void EnterDie() 
+    public override void EnterDie()
     {
         base.EnterDie();
         _agent.speed = 0;
@@ -306,63 +254,13 @@ public class MonsterController : BaseController
         // 스폰에서 몬스터 배열을 통해 null 처리 또는 destroy
         Destroy(gameObject, 5.0f);
     }
-    public override void ExcuteDie() 
+    public override void ExcuteDie()
     {
         base.ExcuteDie();
     }
-
-    public override void ExitDie() 
-    { 
-        base.ExitDie(); 
-    }
-
-    // DrillDuck - Slide
-    public override void EnterSlide()
+    public override void ExitDie()
     {
-        base.EnterSlide();
-        _agent.velocity = Vector3.zero;        
-        Vector3 dirTarget = (_targetPlayer.position - transform.position).normalized;
-        Vector3 destPos = transform.position + dirTarget * _stat.TargetRange;
-
-        _isDonePattern = false;
-
-        _agent.SetDestination(destPos);
-        _animator.CrossFade("Slide", 0.5f);
-    }
-    public override void ExcuteSlide()
-    {
-        base.ExcuteSlide();
-
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
-        {
-            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            
-            if (aniTime <= 0.1f)
-            {
-                _agent.speed = _stat.MoveSpeed;
-            }
-            else if (aniTime <= 0.5f)
-            {
-                _agent.speed = _stat.MoveSpeed * 3.0f;
-            }
-            else if (aniTime < 1.0f)
-            {
-                _agent.speed = _stat.MoveSpeed / 2;
-            }
-            else if (aniTime >= 1.0f)
-            {
-                // 애니메이션 종료
-                _statemachine.ChangeState(new MoveState(this));
-            }
-        }
-        
-    }
-    public override void ExitSlide()
-    {
-        base.ExitSlide();
-        //_animator.speed = 1f;
-        _isDonePattern = true;
-        _targetPlayer = null;
+        base.ExitDie();
     }
 }
 

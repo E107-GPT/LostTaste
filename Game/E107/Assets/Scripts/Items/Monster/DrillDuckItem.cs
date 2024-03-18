@@ -8,11 +8,17 @@ public class DrillDuckItem : MonoBehaviour
     protected int _attackDamage = 0;
     [SerializeField]
     private float _attackRange = 4.0f;
+    
+    private bool _isNormalAttack;
+    private bool _isSlideAttack;
 
-    GameObject _normalAttackObj;
-    BoxCollider _normalAttackCollider;
+    private GameObject _normalAttackObj;
+    private BoxCollider _normalAttackCollider;
+    private GameObject _slideAttackObj;
+    private BoxCollider _slideAttackCollider;
 
-    // Start is called before the first frame update
+
+
     void Start()
     {
         Init();
@@ -24,15 +30,89 @@ public class DrillDuckItem : MonoBehaviour
         _normalAttackObj.AddComponent<SkillObject>();
         _normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
         _normalAttackCollider.isTrigger = true;
-        _normalAttackObj.transform.localScale = new Vector3(1.0f, 1.0f, _attackRange);
+        //_normalAttackObj.transform.localScale = new Vector3(1.0f, 1.0f, _attackRange);
+        _normalAttackObj.transform.localScale = new Vector3(2.5f, 5.0f, 3.0f);
         _normalAttackObj.SetActive(false);
         //Object.Instantiate(_normalAttackObj);
+
+        _slideAttackObj = new GameObject("SildeAttack");
+        _slideAttackObj.AddComponent<SkillObject>();
+        _slideAttackCollider = _slideAttackObj.AddComponent<BoxCollider>();
+        _slideAttackCollider.isTrigger = true;
+        _slideAttackObj.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+        _slideAttackObj.SetActive(false);
+
+        _isNormalAttack = false;
+        _isSlideAttack = false;
     }
     public void NormalAttack()
     {
         // StartCoroutine(NormalAttackCorotine());
-        InvokeRepeating("StartNormalAttack", 0.0f, 0.6f);
-        InvokeRepeating("EndNormalAttack", 0.3f, 0.6f);
+        //InvokeRepeating("StartNormalAttack", 0.0f, 0.6f);
+        //InvokeRepeating("EndNormalAttack", 0.3f, 0.6f);
+        if (_isNormalAttack)
+        {
+            StartNormalAttack();
+        }
+        else
+        {
+            EndNormalAttack();
+        }
+    }
+
+    public void TrueNormalAttack()
+    {
+        _isNormalAttack = true;
+    }
+    public void FalseNormalAttack()
+    {
+        _isNormalAttack = false;
+    }
+    private void StartNormalAttack()
+    {
+        Debug.Log("Normal Attack - DrillDuck");
+
+        Transform root = gameObject.transform.root;
+        _normalAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward * (_attackRange / 4));
+        _normalAttackObj.transform.position = new Vector3(_normalAttackObj.transform.position.x - 1.0f, root.position.y + 0.5f, _normalAttackObj.transform.position.z);
+        //_normalAttackObj.transform.localScale = new Vector3(2.5f, 5, 3);
+        _normalAttackObj.transform.rotation = root.rotation;
+
+        _normalAttackObj.SetActive(true);
+    }
+    private void EndNormalAttack()
+    {
+        _normalAttackObj.SetActive(false);
+    }
+    public void CancelNormalAttack()
+    {
+        CancelInvoke("StartNormalAttack");
+        CancelInvoke("EndNormalAttack");
+    }
+
+
+    public void SkillAttack()
+    {
+        if (_isSlideAttack)
+        {
+            SlideAttack();
+        }
+        else
+        {
+            _normalAttackObj.SetActive(false);
+        }
+    }
+
+    private void SlideAttack()
+    {
+        Debug.Log("Slide Attack - DrillDuck");
+
+        Transform root = gameObject.transform.root;
+        _slideAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward);
+        _slideAttackObj.transform.position = new Vector3(_slideAttackObj.transform.position.x, root.position.y + 0.5f, _slideAttackObj.transform.position.z);
+        _slideAttackObj.transform.rotation = root.rotation;
+
+        _normalAttackObj.SetActive(true);
     }
 
     IEnumerator NormalAttackCorotine()
@@ -51,37 +131,6 @@ public class DrillDuckItem : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
         _normalAttackObj.SetActive(false);
-
-
-    }
-
-    private void StartNormalAttack()
-    {
-        Debug.Log("Normal Attack");
-        _normalAttackObj.SetActive(true);
-        Transform root = gameObject.transform.root;
-
-        _normalAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward * (_attackRange / 4));
-        //_normalAttackObj.transform.position = root.position + root.forward * (_attackRange/2);
-        _normalAttackObj.transform.position = new Vector3(_normalAttackObj.transform.position.x - 1.0f, root.position.y + 0.5f, _normalAttackObj.transform.position.z);
-        _normalAttackObj.transform.localScale = new Vector3(2.5f, 5, 3);
-        _normalAttackObj.transform.rotation = root.rotation;
-    }
-
-    private void EndNormalAttack()
-    {
-        _normalAttackObj.SetActive(false);
-    }
-
-    public void CancelNormalAttack()
-    {
-        CancelInvoke("StartNormalAttack");
-        CancelInvoke("EndNormalAttack");
-    }
-
-    public void SkillAttack()
-    {
-
 
 
     }
