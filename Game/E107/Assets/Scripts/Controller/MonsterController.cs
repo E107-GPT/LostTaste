@@ -9,8 +9,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 // 일반 몬스터
 public class MonsterController : BaseController
 {
-    [SerializeField]
-    protected Define.UnitType _unitType;
+
     [SerializeField]
     protected GameObject[] _existPlayer;      // 필드 위에 존재하는 플레이어 수
 

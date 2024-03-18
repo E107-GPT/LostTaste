@@ -5,11 +5,12 @@ using UnityEngine.AI;
 
 public class PlayerController : BaseController
 {
+    //Stat
     PlayerStat _stat;
-    int _currentItemNum;
-
+    
+    // Item 관련 변수
     Item[] _inventory;
-
+    int _currentItemNum;
     Item _detectedItem;
     GameObject _righthand;
 
