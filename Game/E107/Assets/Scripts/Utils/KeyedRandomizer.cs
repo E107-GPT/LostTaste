@@ -92,8 +92,8 @@ public class KeyedRandomizer
     ///     <code>
     ///     var krng = new KeyedRandomizer(123);
     ///     var schrodingersBox = new ProbabilityTable&lt;string>() {
-    ///         "dead": 0.5,
-    ///         "alive": 0.5,
+    ///         { "dead", 0.5 },
+    ///         { "alive", 0.5 },
     ///     };
     ///     string result = krng.GetFromTable(123, schrodingersBox);
     ///     </code>
@@ -144,8 +144,8 @@ public class ProbabilityTable<E> : Dictionary<E, double> {
     ///     확률 테이블을 만듭니다. 예시:
     ///     <code>
     ///     var schrodingersBox = new ProbabilityTable&lt;string>() {
-    ///         "dead": 0.5,
-    ///         "alive": 0.5,
+    ///         { "dead", 0.5 },
+    ///         { "alive", 0.5 },
     ///     };
     ///     </code>
     ///     가중치는 모든 원소의 가중치 합에 대한 비로 반영됩니다.
