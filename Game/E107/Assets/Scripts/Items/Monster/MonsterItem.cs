@@ -6,9 +6,9 @@ using UnityEngine;
 public class MonsterItem : MonoBehaviour
 {
     [SerializeField]
-    protected int _attackDamage = 0;
+    protected int _attackDamage;
     [SerializeField]
-    private float _attackRange = 1.4f;
+    private float _attackRange;
     [SerializeField]
     private Define.UnitType _unitType;
 
@@ -27,6 +27,8 @@ public class MonsterItem : MonoBehaviour
     protected void Init()
     {
         _controller = GetComponent<MonsterController>();
+        _attackDamage = _controller.Stat.AttackDamage;
+        _attackRange = _controller.Stat.AttackRange;
 
         _normalAttackObj = new GameObject($"{_controller.gameObject.name} Attack");
         _normalAttackObj.AddComponent<SkillObject>();
@@ -64,6 +66,8 @@ public class MonsterItem : MonoBehaviour
     {
         
         Debug.Log($"Normal Attack - {_controller.gameObject.name}");
+
+        _normalAttackObj.GetComponent<SkillObject>().SetUp(transform, _attackDamage, 1);
 
         Transform root = gameObject.transform.root;
         _normalAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));

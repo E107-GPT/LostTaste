@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SkillObject : MonoBehaviour
 {
-    // Start is called before the first frame update
     int _damage;
     int _id;
     Transform _attacker;

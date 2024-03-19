@@ -58,7 +58,9 @@ public class DrillDuckSlideState : State
                 // 애니메이션 종료
                 _drillDuckController.StateMachine.ChangeState(new MoveState(_controller));
             }
+            _drillDuckController.Item.PatternAttack();
         }
+        
     }
 
     public override void Exit()

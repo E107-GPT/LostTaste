@@ -30,6 +30,7 @@ public class DrillDuckController : MonsterController
 
         // Editor Init
         _existPlayer = GameObject.FindGameObjectsWithTag("Player");
+        //StartCoroutine(CheckExistPlayer());
 
         // Other Class
         _stat = new MonsterStat(_unitType);

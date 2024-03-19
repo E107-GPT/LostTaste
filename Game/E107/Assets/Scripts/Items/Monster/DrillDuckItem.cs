@@ -5,9 +5,11 @@ using UnityEngine;
 public class DrillDuckItem : MonoBehaviour
 {
     [SerializeField]
-    protected int _attackDamage = 0;
+    protected int _attackDamage;
     [SerializeField]
-    private float _attackRange = 4.0f;
+    protected int _patternDamage;
+    [SerializeField]
+    protected float _attackRange;
     
     private bool _isNormalAttack;
     private bool _isSlideAttack;
@@ -26,6 +28,10 @@ public class DrillDuckItem : MonoBehaviour
 
     protected void Init()
     {
+        _attackDamage = gameObject.GetComponent<DrillDuckController>().Stat.AttackDamage;
+        _patternDamage = gameObject.GetComponent<DrillDuckController>().Stat.PatternDamage;
+        _attackRange = gameObject.GetComponent<DrillDuckController>().Stat.AttackRange;
+
         _normalAttackObj = new GameObject("NormalAttack");
         _normalAttackObj.AddComponent<SkillObject>();
         _normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
@@ -39,7 +45,7 @@ public class DrillDuckItem : MonoBehaviour
         _slideAttackObj.AddComponent<SkillObject>();
         _slideAttackCollider = _slideAttackObj.AddComponent<BoxCollider>();
         _slideAttackCollider.isTrigger = true;
-        _slideAttackObj.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+        _slideAttackObj.transform.localScale = new Vector3(4.0f, 5.0f, 5.0f);
         _slideAttackObj.SetActive(false);
 
         _isNormalAttack = false;
@@ -56,7 +62,7 @@ public class DrillDuckItem : MonoBehaviour
         }
         else
         {
-            EndNormalAttack();
+            _normalAttackObj.SetActive(false);
         }
     }
 
@@ -72,6 +78,8 @@ public class DrillDuckItem : MonoBehaviour
     {
         Debug.Log("Normal Attack - DrillDuck");
 
+        _normalAttackObj.GetComponent<SkillObject>().SetUp(transform, _attackDamage, 2);      // 현재 스킬의 ID = 2
+
         Transform root = gameObject.transform.root;
         _normalAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward * (_attackRange / 4));
         _normalAttackObj.transform.position = new Vector3(_normalAttackObj.transform.position.x - 1.0f, root.position.y + 0.5f, _normalAttackObj.transform.position.z);
@@ -80,18 +88,9 @@ public class DrillDuckItem : MonoBehaviour
 
         _normalAttackObj.SetActive(true);
     }
-    private void EndNormalAttack()
-    {
-        _normalAttackObj.SetActive(false);
-    }
-    public void CancelNormalAttack()
-    {
-        CancelInvoke("StartNormalAttack");
-        CancelInvoke("EndNormalAttack");
-    }
 
 
-    public void SkillAttack()
+    public void PatternAttack()
     {
         if (_isSlideAttack)
         {
@@ -99,7 +98,7 @@ public class DrillDuckItem : MonoBehaviour
         }
         else
         {
-            _normalAttackObj.SetActive(false);
+            _slideAttackObj.SetActive(false);
         }
     }
 
@@ -107,12 +106,22 @@ public class DrillDuckItem : MonoBehaviour
     {
         Debug.Log("Slide Attack - DrillDuck");
 
+        _slideAttackObj.GetComponent<SkillObject>().SetUp(transform, _patternDamage, 3);
         Transform root = gameObject.transform.root;
         _slideAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward);
         _slideAttackObj.transform.position = new Vector3(_slideAttackObj.transform.position.x, root.position.y + 0.5f, _slideAttackObj.transform.position.z);
         _slideAttackObj.transform.rotation = root.rotation;
 
-        _normalAttackObj.SetActive(true);
+        _slideAttackObj.SetActive(true);
+    }
+
+    public void TrueSlideAttack()
+    {
+        _isSlideAttack = true;
+    }
+    public void FalseSlideAttack()
+    {
+        _isSlideAttack = false;
     }
 
     IEnumerator NormalAttackCorotine()
