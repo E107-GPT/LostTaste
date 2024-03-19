@@ -157,7 +157,7 @@ public class PlayerController : BaseController
 
 
         // 왼쪽클릭
-        _inventory[_currentItemNum].NormalAttack();
+        _inventory[_currentItemNum].LeftSKill();
         ParticleSystem effect = GetComponentInChildren<ParticleSystem>();
         effect.Play();
 
