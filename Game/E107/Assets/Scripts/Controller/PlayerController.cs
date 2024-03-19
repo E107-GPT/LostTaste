@@ -14,7 +14,7 @@ public class PlayerController : BaseController
     Item _detectedItem;
     GameObject _righthand;
 
-
+    public PlayerStat Stat { get { return _stat; } }
 
 
     public override void Init()

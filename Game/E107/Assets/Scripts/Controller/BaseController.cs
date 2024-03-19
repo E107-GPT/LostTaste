@@ -111,12 +111,12 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void ExcuteDash() { }
 	public virtual void ExitDash() { }
 
-	//void OnHitEvent()
-	//{
+	void OnHitEvent()
+	{
 
-	//	_statemachine.ChangeState(new IdleState(this));
+		_statemachine.ChangeState(new IdleState(this));
 
-	//}
+	}
 
 	// DrillDuck Slide
 	//public virtual void EnterSlide() { }
