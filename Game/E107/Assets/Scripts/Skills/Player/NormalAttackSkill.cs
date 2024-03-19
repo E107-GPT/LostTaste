@@ -10,7 +10,6 @@ public class NormalAttackSkill : Skill
         SkillCoolDownTime = 0;
         RequiredMp = 0;
         Debug.Log("123123");
-        _particleSystem = Managers.Resource.Instantiate("Effects/SwordSlashThinBlue", Effect.transform);
         
 
     }
@@ -19,7 +18,7 @@ public class NormalAttackSkill : Skill
     {
         Debug.Log("Normal Attack");
         yield return new WaitForSeconds(0.3f);
-        _particleSystem.GetComponent<ParticleSystem>().Play();
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.NormalAttackEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
         Managers.Sound.Play("swing1");
@@ -33,7 +32,8 @@ public class NormalAttackSkill : Skill
 
         yield return new WaitForSeconds(0.3f);
         Managers.Resource.Destroy(skillObj.gameObject);
-        _particleSystem.GetComponent<ParticleSystem>().Stop();
+        Managers.Effect.Stop(ps);
+        
 
 
     }

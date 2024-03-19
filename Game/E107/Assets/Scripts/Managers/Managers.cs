@@ -13,6 +13,7 @@ public class Managers : MonoBehaviour
     SceneManagerEx _scene = new SceneManagerEx();
     SoundManager _sound = new SoundManager();
     PoolManager _pool = new PoolManager();
+    EffectManager _effect = new EffectManager();
     
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
@@ -20,6 +21,7 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PoolManager Pool { get { return Instance._pool; } }
+    public static EffectManager Effect { get { return Instance._effect; } }
 
     void Start()
     {
@@ -49,6 +51,7 @@ public class Managers : MonoBehaviour
 
             s_instance._pool.Init();
             s_instance._sound.Init();
+            s_instance._effect.Init();
         }
 
         
@@ -60,6 +63,7 @@ public class Managers : MonoBehaviour
         Input.Clear();
         Scene.Clear();
         UI.Clear();
+
         Pool.Clear();// 순서 주의
     }
 }
