@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public abstract class BaseController : MonoBehaviour
 {
 	[SerializeField]
-	protected Define.UnitType _unitType;
+	protected Define.UnitType _unitType;	// Setting the Unity Editor
 
 	protected Animator _animator;
 	protected Rigidbody _rigidbody;

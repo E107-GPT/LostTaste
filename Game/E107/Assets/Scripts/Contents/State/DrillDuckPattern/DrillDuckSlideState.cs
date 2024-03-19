@@ -56,9 +56,11 @@ public class DrillDuckSlideState : State
             else if (aniTime >= 1.0f)
             {
                 // 애니메이션 종료
-                _drillDuckController.StateMachine.ChangeState(new MoveState(_controller));
+                _drillDuckController.StateMachine.ChangeState(new IdleState(_controller));
             }
-            _drillDuckController.Item.PatternAttack();
+
+            // Skill 가져오기
+            //_drillDuckController.Item.PatternAttack();
         }
         
     }
