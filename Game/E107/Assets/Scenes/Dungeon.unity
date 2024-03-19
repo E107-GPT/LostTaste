@@ -23951,6 +23951,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1de5bf0b8e3073b48946e3672e25bf42, type: 3}
+--- !u!1 &6371490514339693853 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7518452846142823920, guid: 1de5bf0b8e3073b48946e3672e25bf42, type: 3}
+  m_PrefabInstance: {fileID: 6371490514339693852}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6371490514339693854 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 354208824655787863, guid: 1de5bf0b8e3073b48946e3672e25bf42, type: 3}
+  m_PrefabInstance: {fileID: 6371490514339693852}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6373905563754010422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24255,9 +24265,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4945173627535898988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: ac4e954e5c9a6c64087f8054bf01789a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPortalLocation: {fileID: 6371490514339693854}
+  totalPlayers: 1
+  targetMapName: CoastMonster01
+  portal: {fileID: 6371490514339693853}
 --- !u!1001 &6562873090657638206
 PrefabInstance:
   m_ObjectHideFlags: 0
