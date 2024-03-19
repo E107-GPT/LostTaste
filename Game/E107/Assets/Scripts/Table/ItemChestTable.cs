@@ -15,7 +15,7 @@ public class ItemDropTables
         { LEGENDARY_ITEMS,   0 },
     };
 
-    public static readonly ProbabilityTable<GameObject[]> SILVER_CHEST_TABLE = new ProbabilityTable<GameObject[]> {
+    public static readonly ProbabilityTable<GameObject[]> BETTER_CHEST_TABLE = new ProbabilityTable<GameObject[]> {
         { COMMON_ITEMS,     20 },
         { UNCOMMON_ITEMS,   30 },
         { RARE_ITEMS,       39 },
@@ -29,6 +29,19 @@ public class ItemDropTables
         { RARE_ITEMS,       30 },
         { EPIC_ITEMS,       40 },
         { LEGENDARY_ITEMS,   3 },
+    };
+    public enum ChestType
+    {
+        WOODEN = 0,
+        SILVER = 1,
+        GOLDEN = 2,
+    }
+
+    public static readonly ProbabilityTable<GameObject[]>[] CHEST_TABLES =
+    {
+        WOODEN_CHEST_TABLE,
+        BETTER_CHEST_TABLE,
+        GOLDEN_CHEST_TABLE
     };
 
     private static GameObject Load(string name)
