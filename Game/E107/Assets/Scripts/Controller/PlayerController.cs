@@ -128,6 +128,8 @@ public class PlayerController : BaseController
     public override void EnterDash()
     {
         base.EnterDash();
+        LookMousePosition();
+
         _animator.CrossFade("DASH", 0.1f, -1, 0);
 
     }
@@ -143,20 +145,9 @@ public class PlayerController : BaseController
         base.EnterSkill();
         _animator.CrossFade("ATTACK", 0.1f, -1, 0);
 
-        LayerMask mask = LayerMask.GetMask("Ground");
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        bool raycast = Physics.Raycast(ray, out hit, 100.0f, mask);
+        LookMousePosition();
 
-        Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
-
-        Vector3 dir = hit.point - transform.position;
-        Quaternion quat = Quaternion.LookRotation(dir);
-        
-        transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
-
-
-        // 왼쪽클릭
+                // 왼쪽클릭
         _inventory[_currentItemNum].LeftSKill();
 
     }
@@ -341,5 +332,20 @@ public class PlayerController : BaseController
         currentItem.gameObject.transform.parent = null;
         currentItem.gameObject.transform.position = gameObject.transform.position;
         currentItem.OnDropped();
+    }
+
+    public void LookMousePosition()
+    {
+        LayerMask mask = LayerMask.GetMask("Ground");
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        bool raycast = Physics.Raycast(ray, out hit, 100.0f, mask);
+
+        Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
+
+        Vector3 dir = hit.point - transform.position;
+        Quaternion quat = Quaternion.LookRotation(dir);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
     }
 }
