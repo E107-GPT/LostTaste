@@ -8,6 +8,6 @@ public class SlimeInfo : MonsterInfo
     protected override void Init()
     {
         base.Init();
-        _skillList.Add(gameObject.GetOrAddComponent<NormalAttackSkill>());
+        _skillList.Add(gameObject.GetOrAddComponent<SlimeAttackSkill>());
     }
 }
