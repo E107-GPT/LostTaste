@@ -26,6 +26,7 @@ public abstract class BaseController : MonoBehaviour
     }
 	public NavMeshAgent Agent { get { return _agent; } }
 	public StateMachine StateMachine { get { return _statemachine; } }
+	public Define.UnitType UnitType { get { return _unitType; } }	
 
     private static long entity_ID = 0;
 	private long id;
