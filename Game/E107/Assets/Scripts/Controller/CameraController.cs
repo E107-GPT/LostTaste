@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
     Vector3 _delta = new Vector3(3.0f, 6.0f, -5.0f);
 
     [SerializeField]
-    GameObject _player = null;
+    public GameObject _player = null;
 
     // Start is called before the first frame update
     void Start()

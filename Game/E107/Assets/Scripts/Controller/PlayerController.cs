@@ -10,6 +10,7 @@ public class PlayerController : BaseController
 
     public override void Init()
     {
+        if (gameObject.GetComponent<ObjectPersist>().objectType == ObjectPersist.ObjectType.Guest) return;
         _currentItem = gameObject.GetComponentInChildren<Item>();
 
         _stat = new PlayerStat(Define.UnitType.Player);

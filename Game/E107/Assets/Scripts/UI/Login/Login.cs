@@ -226,6 +226,6 @@ public class Login : MonoBehaviour
 
     public void MoveScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(3);
     }
 }

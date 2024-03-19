@@ -11,6 +11,7 @@ public class ObjectPersist : MonoBehaviour
     {
         player,
         MainCamera,
+        Guest
     }
 
     public ObjectType objectType;
