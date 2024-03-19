@@ -290,17 +290,17 @@ public class PlayerController : BaseController
 
     public void DetectInteractable()
     {
-        Collider[] items = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item"));
         float closestSqrDistance = Mathf.Infinity;
         Collider closestCollider = null;
 
-        foreach (var item in items)
+        foreach (var collider in colliders)
         {
-            float sqrDistance = (item.transform.position - transform.position).sqrMagnitude;
+            float sqrDistance = (collider.transform.position - transform.position).sqrMagnitude;
             if (sqrDistance < closestSqrDistance)
             {
                 closestSqrDistance = sqrDistance;
-                closestCollider = item;
+                closestCollider = collider;
             }
         }
 
