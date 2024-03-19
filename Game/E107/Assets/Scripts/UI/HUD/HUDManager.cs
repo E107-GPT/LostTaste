@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,20 +10,25 @@ public class HUDManager : MonoBehaviour
     // public TextMeshProUGUI goldText;
     public TextMeshProUGUI nicknameText;
     public TextMeshProUGUI jellyText;
+    public TextMeshProUGUI playerHealthText;
+    public TextMeshProUGUI drillDuckHealthText;
 
-    [SerializeField] private Slider healthSlider; // 체력 바로 사용할 Slider
-    [SerializeField] private PlayerStat playerStat; // 플레이어의 Stat 참조
+    public Slider playerHealthSlider;
+    public Slider drillDuckHealthSlider;
+
+    // 플레이어와 보스 몬스터 변수 선언
+    public PlayerController playerController;
+    public DrillDuckController drillDuckController;
 
     private float gameTime = 0;
 
     // 시작 시 호출되는 Start 메소드
     void Start()
     {
-        if (playerStat != null)
-        {
-            // 게임 시작 시, 플레이어의 최대 체력으로 체력 바 초기화
-            healthSlider.value = 1;
-        }
+        playerHealthSlider.value = 1;
+        drillDuckHealthSlider.value = 1;
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        drillDuckController = GameObject.Find("DrillDuck").GetComponent<DrillDuckController>();
     }
 
     // 매 프레임마다 호출되는 Update 메소드
@@ -34,7 +37,8 @@ public class HUDManager : MonoBehaviour
         UpdateGameTime(); // 게임 시간 업데이트
         // UpdateGoldDisplay(); // 골드 정보 업데이트
         UpdateUserInfoDisplay(); // 사용자 정보 업데이트
-        UpdateHealthBar(); // 체력바 업데이트 호출
+        UpdatePlayerHealthBar(); // 체력 바 업데이트
+        UpdateDrillDuckHealthBar();
     }
 
     // 게임 시간을 업데이트하는 메소드
@@ -61,14 +65,24 @@ public class HUDManager : MonoBehaviour
         jellyText.text = jelly.ToString();
     }
 
-    // 체력 바를 업데이트 하는 메소드
-    void UpdateHealthBar()
+    // 플레이어 체력 바를 업데이트 하는 메소드
+    void UpdatePlayerHealthBar()
     {
-        if (playerStat != null)
-        {
-            // 플레이어의 현재 체력 비율을 계산하여 체력 바에 반영
-            healthSlider.value = (float)playerStat.Hp / playerStat.MaxHp;
-        }
+        // 플레이어의 현재 체력을 체력 바에 반영
+        int Hp = playerController.Stat.Hp;
+        int MaxHp = playerController.Stat.MaxHp;
+        playerHealthSlider.value = (float)Hp / MaxHp;
+        playerHealthText.text = string.Format("{0:00} / {1:00}", Hp, MaxHp);
+    }
+
+    // 드릴 덕 체력 바를 업데이트 하는 메소드
+    void UpdateDrillDuckHealthBar()
+    {
+        // 플레이어의 현재 체력을 체력 바에 반영
+        int Hp = drillDuckController.Stat.Hp;
+        int MaxHp = drillDuckController.Stat.MaxHp;
+        drillDuckHealthSlider.value = (float)Hp / MaxHp;
+        drillDuckHealthText.text = string.Format("{0:00} / {1:00}", Hp, MaxHp);
     }
 }
 
