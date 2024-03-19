@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPlayerInteractable
 {
-    void OnInteract(GameObject player);
+    void OnInteracted(GameObject player);
 }
