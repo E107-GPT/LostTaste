@@ -3475,10 +3475,10 @@ GameObject:
   - component: {fileID: 2360018824529132272}
   - component: {fileID: 8511895970222891146}
   - component: {fileID: -2256598554493354029}
-  - component: {fileID: 4292945358567477416}
   - component: {fileID: 2154674506615639540}
   - component: {fileID: 6063172700869700760}
   - component: {fileID: -7462142561957068251}
+  - component: {fileID: 4255082375085990966}
   m_Layer: 0
   m_Name: DrillDuck
   m_TagString: Monster
@@ -3552,20 +3552,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4292945358567477416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137786495578628170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6692c66096e2ea743ac19c292a643522, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackDamage: 0
-  _attackRange: 4
 --- !u!54 &2154674506615639540
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3634,6 +3620,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4255082375085990966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137786495578628170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6692c66096e2ea743ac19c292a643522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackDamage: 0
+  _patternDamage: 0
+  _attackRange: 0
 --- !u!1 &3153326930071574659
 GameObject:
   m_ObjectHideFlags: 0

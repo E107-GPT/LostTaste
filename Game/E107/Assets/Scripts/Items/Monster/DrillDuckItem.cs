@@ -106,8 +106,7 @@ public class DrillDuckItem : MonoBehaviour
     {
         Debug.Log("Slide Attack - DrillDuck");
 
-        _slideAttackObj.GetComponent<SkillObject>().SetUp(transform, _attackDamage, 3);
-
+        _slideAttackObj.GetComponent<SkillObject>().SetUp(transform, _patternDamage, 3);
         Transform root = gameObject.transform.root;
         _slideAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward);
         _slideAttackObj.transform.position = new Vector3(_slideAttackObj.transform.position.x, root.position.y + 0.5f, _slideAttackObj.transform.position.z);

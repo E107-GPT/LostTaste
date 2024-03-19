@@ -64,7 +64,7 @@ public class MonsterController : BaseController
     //        for (int i = 0; i < _existPlayer.Length; ++i)
     //        {
     //            PlayerController playerController = _existPlayer[i].GetComponent<PlayerController>();
-    //            if (playerController.StateMachine.CurState is new DieState(playerController))
+    //            if (playerController.StateMachine.CurState is DieState)
     //            {
     //                PrintText("죽었나?");
     //                _existPlayer[i] = null;
