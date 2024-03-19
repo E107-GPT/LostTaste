@@ -85,17 +85,23 @@ public class HTTPRequest : MonoBehaviour
             Debug.LogError("error" + postRequest.error);
             Debug.Log("result" + postRequest.result);
             Debug.Log(postRequest.downloadHandler.text);
+            UserData data = JsonUtility.FromJson<UserData>(postRequest.downloadHandler.text);
 
             if (path.Equals("user")) // 회원가입일 경우
             {
                 // 로그인 화면으로 이동
                 Login login = GameObject.Find("Canvas/Login SignUp Window").GetComponent<Login>();
                 login.SignupFailure();
+                string warn = data.message;
+                if (warn.Length < 1) warn = "ID : 4-6 영숫자    닉네임 : 1-16\n비밀번호 : 8-32 영숫자특수문자";
+                login.ShowWarnMessage(warn);
             }
             else if (path.Equals("auth/login")) // 로그인일 경우
             {
+                Debug.Log(data.message);
                 Login login = GameObject.Find("Canvas/Login SignUp Window").GetComponent<Login>();
                 login.LoginFailure();
+                login.ShowWarnMessage(data.message);
             }
         }
         else // 통신 성공
@@ -131,6 +137,8 @@ public class HTTPRequest : MonoBehaviour
         public string accessToken;
         public string id;
         public string nickname;
+        public string error;
+        public string message;
     }
 
     public void POSTCall(string path, Dictionary<string, string> postParam)
