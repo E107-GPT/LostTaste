@@ -189,6 +189,17 @@ public class Login : MonoBehaviour
         connectingPanel.SetActive(false);
     }
 
+    public void ShowWarnMessage(string message)
+    {
+        Debug.Log(message);
+        if(message.Length > 0)
+            warningText.text = message;
+        else
+        {
+            warningText.text = "입력 오류가 발생했습니다.";
+        }
+    }
+
     /// <summary>
     /// Scene을 이동하는 함수
     /// </summary>
