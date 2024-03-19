@@ -956,7 +956,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1503878907877462611, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 9205612891271410097, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
       insertIndex: -1
@@ -1019,7 +1020,7 @@ PrefabInstance:
     - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: portal
       value: 
-      objectReference: {fileID: 2085543782127943334}
+      objectReference: {fileID: 5776572977031128708}
     - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: targetMapName
       value: ForestMonster01
@@ -1041,11 +1042,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
---- !u!1 &2085543782127943334 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7011782734232886834, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
-  m_PrefabInstance: {fileID: 2085543782127943333}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2886495432859477713 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6112978426738044116, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
@@ -1062,7 +1058,7 @@ PrefabInstance:
     - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: portal
       value: 
-      objectReference: {fileID: 5776572977031128708}
+      objectReference: {fileID: 7116547915656775852}
     - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: monstersCheck
       value: 3
@@ -1086,6 +1082,10 @@ PrefabInstance:
     - target: {fileID: 4033784640750350276, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707192551937478374, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+      propertyPath: m_Name
+      value: Portal-Monster01-N
       objectReference: {fileID: 0}
     - target: {fileID: 7266228654094695582, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: m_Name
@@ -1231,6 +1231,10 @@ PrefabInstance:
     - target: {fileID: 7766673843300418467, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: m_Name
       value: ForestMonster02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8154480885681472294, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      propertyPath: m_Name
+      value: Portal-Monster02-N
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
