@@ -444,12 +444,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4038317307188850962, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1000336152602518282, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3404257822698256024}
   m_SourcePrefab: {fileID: 100100000, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+--- !u!1 &3404257822698256023 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000336152602518282, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+  m_PrefabInstance: {fileID: 3404257822698256022}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3404257822698256024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3404257822698256023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 622182da8ca5c754f8df85334c88ec9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portalType: 0
+  totalPlayers: 1
 --- !u!1001 &4523813570554270582
 PrefabInstance:
   m_ObjectHideFlags: 0
