@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemChest : MonoBehaviour, IInteractableObject
+public class ItemChest : MonoBehaviour, IPlayerInteractable
 {
     public void OnInteract(GameObject player)
     {
