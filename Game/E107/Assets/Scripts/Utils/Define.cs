@@ -39,4 +39,10 @@ public class Define
         Slime,
         DrillDuck,
     }
+
+    public enum Effect
+    {
+        NormalAttackEffect,
+        MaxCount
+    }
 }
