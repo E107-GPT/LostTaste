@@ -10,6 +10,7 @@ public abstract class Skill : MonoBehaviour
     protected float _skillCoolDownTime;
     protected int _requiredMp;
     protected Transform _root;
+    protected Transform _effect;
 
     public string SkillName
     {
@@ -31,10 +32,17 @@ public abstract class Skill : MonoBehaviour
         get { return _root; }
         set { _root = value; }
     }
+    public Transform Effect
+    {
+        get { return _effect; }
+        set { _effect = value; }
+    }
 
     private void Start()
     {
         Root = transform.root;
+        Effect = transform.root.Find("Effect");
+
         Init();
     }
 

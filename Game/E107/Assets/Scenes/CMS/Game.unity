@@ -143,6 +143,8 @@ MonoBehaviour:
   _attackDamage: 10
   _attackRange: 4
   isDropped: 0
+  _leftSkill: {fileID: 0}
+  _rightSkill: {fileID: 0}
 --- !u!114 &135616452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,9 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitType: 0
   entityName: 
-  _existPlayer: []
   _detectPlayer: {fileID: 0}
-  _attackPlayer: {fileID: 0}
 --- !u!54 &665484681
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -837,6 +837,8 @@ MonoBehaviour:
   _attackDamage: 0
   _attackRange: 8
   isDropped: 1
+  _leftSkill: {fileID: 0}
+  _rightSkill: {fileID: 0}
 --- !u!1001 &1342487542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -848,6 +850,10 @@ PrefabInstance:
     - target: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
       propertyPath: m_Name
       value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4047972025199878, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1120,6 +1126,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 735457101331166425, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 735457101331166425, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 735457101331166425, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 735457101331166425, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 735457101331166425, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2619715197675514695, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'head'\n\tTransform 'head'\n\tFrom animation
+        clip 'Die02'"
+      objectReference: {fileID: 0}
     - target: {fileID: 7442885883130099825, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.100878716
@@ -1165,7 +1198,8 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7881718253546319574, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
