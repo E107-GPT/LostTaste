@@ -135,11 +135,12 @@ public class MonsterControllerV2 : BaseController
         // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
 
-        _curItem.NormalAttack();
+        _curItem.LeftSKill();
     }
     public override void ExcuteSkill()
     {
         base.ExcuteSkill();
+
 
         
     }
