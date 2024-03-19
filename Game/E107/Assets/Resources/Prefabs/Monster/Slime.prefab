@@ -486,11 +486,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65ba56f44d098946b5baec8654925b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityName: 
   _unitType: 1
-  _existPlayer: []
+  entityName: 
   _detectPlayer: {fileID: 0}
-  _attackPlayer: {fileID: 0}
 --- !u!54 &1368761961356705468
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -575,4 +573,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDamage: 0
   _attackRange: 1.8
+  isDropped: 0
   _unitType: 1

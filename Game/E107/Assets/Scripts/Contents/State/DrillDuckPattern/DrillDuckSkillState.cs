@@ -26,7 +26,7 @@ public class DrillDuckSkillState : State
     {
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
-        _attackPlayer = _drillDuckController.AttackPlayer;
+        //_attackPlayer = _drillDuckController.AttackPlayer;
 
         _animator.CrossFade("Attack", 0.3f);
     }

@@ -11,7 +11,7 @@ public class MonsterManager : MonoBehaviour
     // 각 맵에 소환된 몬스터 리스트
     public List<GameObject> monstersInCurrentMap = new List<GameObject>();
 
-    private PortalTrigger portalTrigger;
+    public PortalTrigger portalTrigger;
 
     [System.Serializable]
     public class MonsterSpawnInfo
@@ -38,24 +38,11 @@ public class MonsterManager : MonoBehaviour
         StartCoroutine(CheckMonstersCoroutine());
     }
 
-    //public int GetMonstersCount()
-    //{
-    //    // 리스트에서 null인 항목을 제거합니다. (제거된 몬스터 반영)
-    //    monstersInCurrentMap.RemoveAll(monster => monster == null);
-    //    // 현재 남아있는 몬스터의 수를 반환합니다.
-    //    return monstersInCurrentMap.Count;
-    //}
-
-    public void SetPortalTrigger(PortalTrigger portal)
-    {
-        portalTrigger = portal;
-    }
-
     IEnumerator CheckMonstersCoroutine()
     {
         while (true)
         {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.5f);
 
             monstersInCurrentMap.RemoveAll(monster => monster == null);
             Debug.Log(monstersInCurrentMap.Count);

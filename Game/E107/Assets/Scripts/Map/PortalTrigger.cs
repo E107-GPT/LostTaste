@@ -17,13 +17,6 @@ public class PortalTrigger : MonoBehaviour
 
     public GameObject portal;
 
-    //private void Update()
-    //{
-    //    int monstersCount = MonsterManager.Instance.GetMonstersCount();
-
-    //    // monstersCount가 0이 아니면 포탈을 비활성화, 0이면 활성화
-    //    portal.SetActive(monstersCount == 0);
-    //}
 
     public void ActivatePortal(bool isActive)
     {
@@ -36,9 +29,9 @@ public class PortalTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            MonsterManager.Instance.portalTrigger = this;
             playersInPortal.Add(other.gameObject);
             CheckAllPlayersInPortal();
-            MonsterManager.Instance.SetPortalTrigger(this);
             MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
         }
     }
@@ -70,7 +63,7 @@ public class PortalTrigger : MonoBehaviour
                     player.transform.position = targetPortalLocation.position;
                 }
             }
-            
+            portal.SetActive(false);
         }
     }
 }
