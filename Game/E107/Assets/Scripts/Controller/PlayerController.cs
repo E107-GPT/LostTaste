@@ -11,7 +11,7 @@ public class PlayerController : BaseController
     // Item 관련 변수
     Item[] _inventory;
     int _currentItemNum;
-    Item _detectedItem;
+    IPlayerInteractable _detectedInteractable;
     GameObject _righthand;
 
 
@@ -63,7 +63,7 @@ public class PlayerController : BaseController
     public override void ExcuteIdle()
     {
         base.ExcuteIdle();  
-        DetectItem();
+        DetectInteractable();
     }
 
     public override void EnterMove()
@@ -237,30 +237,9 @@ public class PlayerController : BaseController
         }
 
         // 무기 줍기
-        if (_detectedItem != null && Input.GetKeyDown(KeyCode.E))
+        if (_detectedInteractable != null && Input.GetKeyDown(KeyCode.E))
         {
-            
-            _detectedItem.transform.parent = _righthand.transform;
-
-            Item currentItem = _inventory[_currentItemNum];
-
-            if(currentItem.gameObject.name == "Feast")
-            {
-                Destroy(currentItem);
-            }
-            else
-            {
-                currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
-                currentItem.gameObject.transform.parent = null;
-                currentItem.gameObject.transform.position = gameObject.transform.position;
-                currentItem.OnDropped();
-            }
-            
-
-
-            _inventory[_currentItemNum] = _detectedItem;
-            _inventory[_currentItemNum].OnEquip();
-            Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
+            _detectedInteractable.OnInteracted(this.gameObject);
         }
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -269,18 +248,9 @@ public class PlayerController : BaseController
             // 맨손이면 못버린다.
             if (currentItem.gameObject.name == "Feast") return;
 
-            currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
-            currentItem.gameObject.transform.parent = null;
-            currentItem.gameObject.transform.position = gameObject.transform.position;
-            currentItem.OnDropped();
-
+            DropCurrentItem();
             _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/Feast", _righthand.transform).GetComponent<Item>();
-
-
         }
-
-        
-
     }
 
 
@@ -318,37 +288,61 @@ public class PlayerController : BaseController
     }
 
 
-    public void DetectItem()
+    public void DetectInteractable()
     {
         Collider[] items = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item"));
-        float closestDistance = Mathf.Infinity;
-        Collider closestItem = null;
+        float closestSqrDistance = Mathf.Infinity;
+        Collider closestCollider = null;
 
         foreach (var item in items)
         {
-            float distance = (item.transform.position - transform.position).sqrMagnitude;
-            if (distance < closestDistance)
+            float sqrDistance = (item.transform.position - transform.position).sqrMagnitude;
+            if (sqrDistance < closestSqrDistance)
             {
-                closestDistance = distance;
-                closestItem = item;
+                closestSqrDistance = sqrDistance;
+                closestCollider = item;
             }
         }
 
-        if (closestItem != null)
+        if (closestCollider != null)
         {
             // 가장 가까운 오브젝트를 처리합니다. 예: 로그 출력
-            Debug.Log("Closest Object: " + closestItem.gameObject.name);
-            _detectedItem = closestItem.GetComponent<Item>();
+            Debug.Log("Closest Object: " + closestCollider.gameObject.name);
+            _detectedInteractable = closestCollider.GetComponent<IPlayerInteractable>();
         }
         else
         {
-            _detectedItem = null;
+            _detectedInteractable = null;
         }
     }
 
+    public void EquipItem(Item item)
+    {
+        item.transform.parent = _righthand.transform;
 
+        Item currentItem = _inventory[_currentItemNum];
 
+        if (currentItem.gameObject.name == "Feast")
+        {
+            Destroy(currentItem);
+        }
+        else
+        {
+            DropCurrentItem();
+        }
 
+        _inventory[_currentItemNum] = item;
+        item.OnEquipped();
+        Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
+    }
 
+    public void DropCurrentItem()
+    {
+        Item currentItem = _inventory[_currentItemNum];
 
+        currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
+        currentItem.gameObject.transform.parent = null;
+        currentItem.gameObject.transform.position = gameObject.transform.position;
+        currentItem.OnDropped();
+    }
 }

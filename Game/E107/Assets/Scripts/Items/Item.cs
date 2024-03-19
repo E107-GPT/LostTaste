@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, IPlayerInteractable
 {
     [SerializeField]
     protected int _attackDamage = 50;
@@ -31,11 +31,11 @@ public class Item : MonoBehaviour
         else
         {
             _itemCollider.enabled = false;
-            OnEquip();
+            OnEquipped();
         }    
     }
 
-    public void OnEquip()
+    public void OnEquipped()
     {
         _normalAttackObj = new GameObject("NormalAttack");
 
@@ -87,12 +87,10 @@ public class Item : MonoBehaviour
 
     }
 
-    public void SkillAttack()
+    public void SkillAttack() { /* do nothing */}
+
+    public void OnInteracted(GameObject player)
     {
-
-
-
+        player.GetComponent<PlayerController>().EquipItem(this);
     }
-
-
-    }
+}
