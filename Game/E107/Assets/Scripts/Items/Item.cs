@@ -84,7 +84,6 @@ public class Item : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         _normalAttackObj.SetActive(false);
 
-
     }
 
     public void SkillAttack()
