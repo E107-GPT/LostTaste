@@ -469,6 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7684a90c9b5d5f4a951677028481bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monstersInCurrentMap: []
   monsterSpawnInfos:
   - mapName: ForestMonster01
     monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
@@ -1016,6 +1017,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 2085543782127943334}
+    - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: targetMapName
       value: ForestMonster01
       objectReference: {fileID: 0}
@@ -1036,6 +1041,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+--- !u!1 &2085543782127943334 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7011782734232886834, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+  m_PrefabInstance: {fileID: 2085543782127943333}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2886495432859477713 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6112978426738044116, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
@@ -1049,6 +1059,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 5776572977031128708}
+    - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+      propertyPath: monstersCheck
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: targetMapName
       value: ForestMonster02
@@ -1141,6 +1159,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8948282724543835403, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
   m_PrefabInstance: {fileID: 5776572977031128706}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5776572977031128708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6707192551937478374, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+  m_PrefabInstance: {fileID: 5776572977031128706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7116547915656775850
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1149,6 +1172,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 324861400119088957, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 7116547915656775852}
+    - target: {fileID: 324861400119088957, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      propertyPath: monstersCheck
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 324861400119088957, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: targetMapName
       value: ForestBoss
@@ -1221,6 +1252,11 @@ PrefabInstance:
 --- !u!4 &7116547915656775851 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 463902982113330353, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+  m_PrefabInstance: {fileID: 7116547915656775850}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7116547915656775852 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8154480885681472294, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
   m_PrefabInstance: {fileID: 7116547915656775850}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
