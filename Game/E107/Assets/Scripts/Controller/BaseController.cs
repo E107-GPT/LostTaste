@@ -81,9 +81,9 @@ public abstract class BaseController : MonoBehaviour
 
 	public abstract void Init();
 
-	public virtual void TakeDamage(int skillObjectId, int damage) {
+	public virtual void TakeDamage(int skillObjectId, int damage) 
+	{
 		Debug.Log($"{gameObject.name} is damaged {damage} by {skillObjectId}");
-	
 	}
 
 	// IDLE
@@ -111,15 +111,8 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void ExcuteDash() { }
 	public virtual void ExitDash() { }
 
-	//void OnHitEvent()
-	//{
-
-	//	_statemachine.ChangeState(new IdleState(this));
-
-	//}
-
-	// DrillDuck Slide
-	//public virtual void EnterSlide() { }
-	//public virtual void ExcuteSlide() { }
-	//public virtual void ExitSlide() { }
+	void OnHitEvent()
+	{
+		_statemachine.ChangeState(new IdleState(this));
+	}
 }
