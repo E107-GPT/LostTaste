@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
+import { BusinessExceptionFilter } from './exception/exception-filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -17,6 +18,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
   }));
+  app.useGlobalFilters(new BusinessExceptionFilter());
 
   await app.listen(process.env.SERVER_PORT);
 }

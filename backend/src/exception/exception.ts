@@ -1,12 +1,14 @@
 import { HttpStatus } from "@nestjs/common";
 import { ErrorHttpStatusCode } from "@nestjs/common/utils/http-error-by-code.util";
 
-export const BusinessException = (statusCode: ErrorHttpStatusCode, defaultMessage: string) => (
-    class extends Error {
-        message: string;
-        cause: Error | undefined;
-        statusCode: ErrorHttpStatusCode;
-    
+export class BusinessException extends Error {
+    message: string;
+    cause: Error | undefined;
+    statusCode: ErrorHttpStatusCode;
+}
+
+const BusinessExceptionFactory = (statusCode: ErrorHttpStatusCode, defaultMessage: string) => (
+    class extends BusinessException {
         constructor(data?: {
             message?: string,
             cause?: Error
@@ -19,8 +21,8 @@ export const BusinessException = (statusCode: ErrorHttpStatusCode, defaultMessag
     }
 );
 
-export class DuplicatedIdException extends BusinessException(HttpStatus.CONFLICT, "ID가 중복됩니다.") {}
+export class DuplicatedIdException extends BusinessExceptionFactory(HttpStatus.CONFLICT, "ID가 중복됩니다.") {}
 
-export class NoSuchContentException extends BusinessException(HttpStatus.NOT_FOUND, "해당하는 데이터가 없습니다.") {}
+export class NoSuchContentException extends BusinessExceptionFactory(HttpStatus.NOT_FOUND, "해당하는 데이터가 없습니다.") {}
 
-export class WrongPasswordException extends BusinessException(HttpStatus.FORBIDDEN, "비밀번호가 틀렸습니다.") {}
+export class WrongPasswordException extends BusinessExceptionFactory(HttpStatus.FORBIDDEN, "비밀번호가 틀렸습니다.") {}
