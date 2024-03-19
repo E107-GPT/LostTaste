@@ -14,7 +14,7 @@ public class PlayerController : BaseController
     IPlayerInteractable _detectedInteractable;
     GameObject _righthand;
 
-
+    public PlayerStat Stat { get { return _stat; } }
 
 
     public override void Init()
@@ -157,17 +157,14 @@ public class PlayerController : BaseController
 
 
         // 왼쪽클릭
-        _inventory[_currentItemNum].NormalAttack();
-        ParticleSystem effect = GetComponentInChildren<ParticleSystem>();
-        effect.Play();
+        _inventory[_currentItemNum].LeftSKill();
 
     }
 
     public override void ExitSkill()
     {
         base.ExitSkill();
-        ParticleSystem effect = GetComponentInChildren<ParticleSystem>();
-        effect.Stop();
+
 
     }
 

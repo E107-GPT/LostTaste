@@ -12,9 +12,9 @@ public abstract class BaseController : MonoBehaviour
 	protected Animator _animator;
 	protected Rigidbody _rigidbody;
 	protected NavMeshAgent _agent;
-	// °ø°ÝÀÚÀÇ ¸¶Áö¸· °ø°Ý ½Ã°£À» ÀúÀåÇÏ´Â »çÀü
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
 	protected Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
-	protected float damageCooldown = 0.3f; // ÇÇÇØ¸¦ ´Ù½Ã ¹Þ±â±îÁöÀÇ ´ë±â ½Ã°£(ÃÊ)
+	protected float damageCooldown = 0.3f; // ï¿½ï¿½ï¿½Ø¸ï¿½ ï¿½Ù½ï¿½ ï¿½Þ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½(ï¿½ï¿½)
 
 
 	protected StateMachine _statemachine;
@@ -67,7 +67,7 @@ public abstract class BaseController : MonoBehaviour
     //public abstract void Updated();
     public virtual void Setup(string name)
 	{
-		// id, ÀÌ¸§, »ö»ó ¼³Á¤
+		// id, ï¿½Ì¸ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		ID = entity_ID;
         entityName = name;
 		int color = Random.Range(0, 1000000);
@@ -81,9 +81,9 @@ public abstract class BaseController : MonoBehaviour
 
 	public abstract void Init();
 
-	public virtual void TakeDamage(int skillObjectId, int damage) {
+	public virtual void TakeDamage(int skillObjectId, int damage) 
+	{
 		Debug.Log($"{gameObject.name} is damaged {damage} by {skillObjectId}");
-	
 	}
 
 	// IDLE
@@ -113,13 +113,6 @@ public abstract class BaseController : MonoBehaviour
 
 	void OnHitEvent()
 	{
-
 		_statemachine.ChangeState(new IdleState(this));
-
-	}
-
-	// DrillDuck Slide
-	//public virtual void EnterSlide() { }
-	//public virtual void ExcuteSlide() { }
-	//public virtual void ExitSlide() { }
+	} // d
 }
