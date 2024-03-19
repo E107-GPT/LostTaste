@@ -6,13 +6,10 @@ public class ItemChest : MonoBehaviour, IPlayerInteractable
 {
     public ItemChestType chestType;
 
-    public void OnInteract(GameObject player)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void OnInteracted(GameObject player)
     {
-        throw new System.NotImplementedException();
+        Animator animator = GetComponent<Animator>();
+
+        animator.SetBool("Opened", true);
     }
 }
