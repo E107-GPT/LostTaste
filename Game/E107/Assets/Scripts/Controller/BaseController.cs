@@ -114,5 +114,5 @@ public abstract class BaseController : MonoBehaviour
 	void OnHitEvent()
 	{
 		_statemachine.ChangeState(new IdleState(this));
-	}
+	} // d
 }
