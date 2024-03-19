@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemChest : MonoBehaviour, IPlayerInteractable
 {
-    public ItemDropTables.ChestType chestType;
+    public ItemChestType chestType;
 
     public void OnInteract(GameObject player)
     {

@@ -30,12 +30,6 @@ public class ItemDropTables
         { EPIC_ITEMS,       40 },
         { LEGENDARY_ITEMS,   3 },
     };
-    public enum ChestType
-    {
-        WOODEN = 0,
-        SILVER = 1,
-        GOLDEN = 2,
-    }
 
     public static readonly ProbabilityTable<GameObject[]>[] CHEST_TABLES =
     {
@@ -72,4 +66,11 @@ public class ItemDropTables
     public static readonly GameObject[] BOSS_ITEMS = new GameObject[] {
         Load("OHS06_Sword"),    // test
     };
+}
+
+public enum ItemChestType
+{
+    WOODEN = 0,
+    BETTER = 1,
+    GOLDEN = 2,
 }
