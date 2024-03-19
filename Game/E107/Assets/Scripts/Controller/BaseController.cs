@@ -6,6 +6,9 @@ using UnityEngine.AI;
 
 public abstract class BaseController : MonoBehaviour
 {
+	[SerializeField]
+	protected Define.UnitType _unitType;
+
 	protected Animator _animator;
 	protected Rigidbody _rigidbody;
 	protected NavMeshAgent _agent;
@@ -107,6 +110,13 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void EnterDash() { }
 	public virtual void ExcuteDash() { }
 	public virtual void ExitDash() { }
+
+	void OnHitEvent()
+	{
+
+		_statemachine.ChangeState(new IdleState(this));
+
+	}
 
 	// DrillDuck Slide
 	//public virtual void EnterSlide() { }
