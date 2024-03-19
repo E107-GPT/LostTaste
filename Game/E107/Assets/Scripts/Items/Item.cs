@@ -59,6 +59,7 @@ public class Item : MonoBehaviour
         _itemCollider.enabled = true;
 
     }
+
     public void NormalAttack()
     {
         StartCoroutine(NormalAttackCorotine());
