@@ -29,7 +29,7 @@ public class DrillDuckController : MonsterController
         _statemachine.CurState = new IdleState(this);
 
         // Editor Init
-        _existPlayer = GameObject.FindGameObjectsWithTag("Player");
+        //_existPlayer = GameObject.FindGameObjectsWithTag("Player");
         //StartCoroutine(CheckExistPlayer());
 
         // Other Class
@@ -42,7 +42,7 @@ public class DrillDuckController : MonsterController
         _isDonePattern = true;
 
         // State
-        _checkMonsterState = StartCoroutine(CheckDrillDuckState());
+        //_checkMonsterState = StartCoroutine(CheckDrillDuckState());
         InvokeRepeating("UpdateDectPlayer", 0, 20.0f);              // 0초 후 호출, 20초마다 이동 타겟팅 수정 -> 여기서 가장 큰 데미지를 넣은 플레이어를 따라가게 할 수 있음
     }
 
@@ -73,48 +73,48 @@ public class DrillDuckController : MonsterController
         }
     }
 
-    IEnumerator CheckDrillDuckState()
-    {
-        while (_stat.Hp > 0)
-        {
-            yield return new WaitForSeconds(0.3f);
+    //IEnumerator CheckDrillDuckState()
+    //{
+    //    while (_stat.Hp > 0)
+    //    {
+    //        yield return new WaitForSeconds(0.3f);
 
-            UpdateAttackPlayer();
-            // Hp가 70% 이하라면 일정 시간마다 패턴 공격
-            if ((_unitType is Define.UnitType.DrillDuck) && _isDonePattern == true && (_stat.Hp <= _stat.MaxHp))
-            {
-                UpdateTargetPlayer();
-            }
+    //        UpdateAttackPlayer();
+    //        // Hp가 70% 이하라면 일정 시간마다 패턴 공격
+    //        if ((_unitType is Define.UnitType.DrillDuck) && _isDonePattern == true && (_stat.Hp <= _stat.MaxHp))
+    //        {
+    //            UpdateTargetPlayer();
+    //        }
 
 
-            if (_targetPlayer != null)
-            {
-                if (CurState is DrillDuckSlideState) continue;
+    //        if (_targetPlayer != null)
+    //        {
+    //            if (CurState is DrillDuckSlideState) continue;
 
-                _statemachine.ChangeState(_slideState);
-            }
-            else if (_attackPlayer != null)
-            {
-                if (CurState is DrillDuckSkillState) continue;
+    //            _statemachine.ChangeState(_slideState);
+    //        }
+    //        else if (_attackPlayer != null)
+    //        {
+    //            if (CurState is DrillDuckSkillState) continue;
 
-                _statemachine.ChangeState(_skillState);
-            }
-            else if (_existPlayer.Length != 0)
-            {
-                if (CurState is MoveState) continue;
+    //            _statemachine.ChangeState(_skillState);
+    //        }
+    //        else if (_existPlayer.Length != 0)
+    //        {
+    //            if (CurState is MoveState) continue;
 
-                _statemachine.ChangeState(new MoveState(this));
-            }
-            else
-            {
-                if (CurState is IdleState) continue;
-                _detectPlayer = null;
-                _attackPlayer = null;
-                _statemachine.ChangeState(new IdleState(this));
-            }
-        }
+    //            _statemachine.ChangeState(new MoveState(this));
+    //        }
+    //        else
+    //        {
+    //            if (CurState is IdleState) continue;
+    //            _detectPlayer = null;
+    //            _attackPlayer = null;
+    //            _statemachine.ChangeState(new IdleState(this));
+    //        }
+    //    }
 
-        _statemachine.ChangeState(new DieState(this));
-        CancelInvoke("UpdateDectPlayer");
-    }
+    //    _statemachine.ChangeState(new DieState(this));
+    //    CancelInvoke("UpdateDectPlayer");
+    //}
 }

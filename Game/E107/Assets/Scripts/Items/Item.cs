@@ -7,13 +7,13 @@ public class Item : MonoBehaviour
     [SerializeField]
     protected int _attackDamage = 50;
     [SerializeField]
-    float _attackRange = 8.0f;
+    protected float _attackRange = 8.0f;
     [SerializeField]
-    bool isDropped = false;
-    CapsuleCollider _itemCollider;
+    protected bool isDropped = false;
+    protected CapsuleCollider _itemCollider;
 
-    GameObject _normalAttackObj;
-    BoxCollider _normalAttackCollider;
+    protected GameObject _normalAttackObj;
+    protected BoxCollider _normalAttackCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,7 @@ public class Item : MonoBehaviour
         Init();
     }
 
-    protected void Init()
+    protected virtual void Init()
     {
         _itemCollider = gameObject.AddComponent<CapsuleCollider>();
         if (isDropped)

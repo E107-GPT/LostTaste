@@ -3,20 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterItem : MonoBehaviour
+public class MonsterItem : Item
 {
-    [SerializeField]
-    protected int _attackDamage;
-    [SerializeField]
-    private float _attackRange;
+
+
     [SerializeField]
     private Define.UnitType _unitType;
-
-
-    private bool _isNormalAttack;
-
-    private GameObject _normalAttackObj;
-    private BoxCollider _normalAttackCollider;
+    //private bool _isNormalAttack;
     private MonsterController _controller;
 
     void Start()
@@ -24,9 +17,11 @@ public class MonsterItem : MonoBehaviour
         Init();
     }
 
-    protected void Init()
+    protected override void Init()
     {
+        base.Init();
         _controller = GetComponent<MonsterController>();
+
         _attackDamage = _controller.Stat.AttackDamage;
         _attackRange = _controller.Stat.AttackRange;
 
@@ -34,48 +29,53 @@ public class MonsterItem : MonoBehaviour
         _normalAttackObj.AddComponent<SkillObject>();
         _normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
         _normalAttackCollider.isTrigger = true;
-
         // 몬스터마다 변하는 부분
         _normalAttackObj.transform.localScale = new Vector3(1.0f, 5.0f, 1.1f);
 
         _normalAttackObj.SetActive(false);
 
-        _isNormalAttack = false;
+        //_isNormalAttack = false;
     }
-    public void NormalAttack()
-    {
-        if (_isNormalAttack)
-        {
-            StartNormalAttack();
-        }
-        else
-        {
-            _normalAttackObj.SetActive(false);
-        }
-    }
+    //public void NormalAttack()
+    //{
+    //    if (_isNormalAttack)
+    //    {
+    //        StartNormalAttack();
+    //    }
+    //    else
+    //    {
+    //        _normalAttackObj.SetActive(false);
+    //    }
+    //}
+    //public void TrueNormalAttack()
+    //{
+    //    _isNormalAttack = true;
+    //}
+    //public void FalseNormalAttack()
+    //{
+    //    _isNormalAttack = false;
+    //}
 
-    public void TrueNormalAttack()
+    
+
+    private IEnumerator NormalAttackCorotine()
     {
-        _isNormalAttack = true;
-    }
-    public void FalseNormalAttack()
-    {
-        _isNormalAttack = false;
-    }
-    private void StartNormalAttack()
-    {
-        
         Debug.Log($"Normal Attack - {_controller.gameObject.name}");
 
-        _normalAttackObj.GetComponent<SkillObject>().SetUp(transform, _attackDamage, 1);
+        yield return new WaitForSeconds(0.3f);
 
+        _normalAttackObj.GetComponent<SkillObject>().SetUp(transform, _attackDamage, 1);
         Transform root = gameObject.transform.root;
         _normalAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
         _normalAttackObj.transform.position = new Vector3(_normalAttackObj.transform.position.x, root.position.y + 0.5f, _normalAttackObj.transform.position.z);
         //_normalAttackObj.transform.localScale = new Vector3(2.5f, 5, 3);
         _normalAttackObj.transform.rotation = root.rotation;
 
+        // Managers.Sound.Play();
         _normalAttackObj.SetActive(true);
+
+        yield return new WaitForSeconds(0.3f);
+        _normalAttackObj.SetActive(false);
     }
 
 }
