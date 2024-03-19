@@ -11,13 +11,13 @@ public class NormalAttackSkill : Skill
 
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, int _attackRange)
+    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
         Debug.Log("Normal Attack");
         yield return new WaitForSeconds(0.3f);
 
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(transform.root, _attackDamage, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
         Managers.Sound.Play("swing1");
 
         

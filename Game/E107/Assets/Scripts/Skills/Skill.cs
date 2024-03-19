@@ -40,13 +40,13 @@ public abstract class Skill : MonoBehaviour
 
     // 스킬 쿨다운 설정
     protected abstract void Init();
-    protected int Cast(int _attackDamage) {
+    public int Cast(int _attackDamage, float _attackRange) {
         if (Time.time - _lastCastTime < SkillCoolDownTime) return 0;
-        StartCoroutine(SkillCoroutine(_attackDamage));
+        StartCoroutine(SkillCoroutine(_attackDamage, _attackRange));
         return RequiredMp; 
     }
 
-    protected abstract IEnumerator SkillCoroutine(int _attackDamage, int _attackRange);
+    protected abstract IEnumerator SkillCoroutine(int _attackDamage, float _attackRange);
 
 
 }

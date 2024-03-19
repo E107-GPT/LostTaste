@@ -30,7 +30,7 @@ public class SkillObject : MonoBehaviour
         {
             Debug.Log($"{other.gameObject.name}");
 
-            other.gameObject.GetComponent<MonsterController>().TakeDamage(_id, _damage);
+            other.gameObject.GetComponent<MonsterControllerV2>().TakeDamage(_id, _damage);
         }
         else if (_attacker.gameObject.CompareTag("Monster") && other.gameObject.CompareTag("Player"))
         {
