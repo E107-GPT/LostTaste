@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 13527358370522533}
   - component: {fileID: 4008155954635057664}
   - component: {fileID: 1187582316465315530}
-  - component: {fileID: 3608525623956300446}
+  - component: {fileID: 1981915356109932159}
   m_Layer: 9
   m_Name: OHS01_Stick
   m_TagString: Player
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3608525623956300446
+--- !u!114 &1981915356109932159
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,9 +93,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 827500848075308831}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
+  m_Script: {fileID: 11500000, guid: 962a59e2d2d26174cbaf92c37ecc591c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _attackDamage: 50
-  _attackRange: 2
+  _attackRange: 8
   isDropped: 0
+  _leftSkill: {fileID: 0}
+  _rightSkill: {fileID: 0}
