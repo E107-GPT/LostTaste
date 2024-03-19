@@ -10,7 +10,8 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class MonsterController : BaseController
 {
     protected MonsterStat _stat;
-    private MonsterItem _curItem;
+    private MonsterInfo _monsterInfo;
+    private string _curSkillName;       // 현재 공격의 이름
 
     [SerializeField]
     protected Transform _detectPlayer;        // 이동 타겟팅, 일반 공격 범위를 벗어나면 랜덤한 플레이어에게 이동 -> 지금은 가까운 플레이어에게 이동
@@ -32,7 +33,7 @@ public class MonsterController : BaseController
 
         // Other Class
         _stat = new MonsterStat(_unitType);
-        _curItem = GetComponent<MonsterItem>();
+        _monsterInfo = GetComponent<MonsterInfo>();
 
         // Editor Init
         //_existPlayer = GameObject.FindGameObjectsWithTag("Player");
@@ -276,8 +277,10 @@ public class MonsterController : BaseController
         // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
 
-        _curItem.NormalAttack();
+        // 상속
+        _monsterInfo.SkillList[0].Cast(_stat.AttackDamage, _stat.AttackRange);
         _animator.CrossFade("Attack", 0.3f, -1, 0);
+
     }
     public override void ExcuteSkill()
     {
