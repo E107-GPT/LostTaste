@@ -99,9 +99,15 @@ public class HTTPRequest : MonoBehaviour
             else if (path.Equals("auth/login")) // 로그인일 경우
             {
                 Debug.Log(data.message);
+                string msg = data.message;
+
+                if(msg.Equals("Not Found"))
+                {
+                    msg = "사용자 정보를 불러올 수 없습니다.";
+                }
                 Login login = GameObject.Find("Canvas/Login SignUp Window").GetComponent<Login>();
                 login.LoginFailure();
-                login.ShowWarnMessage(data.message);
+                login.ShowWarnMessage(msg);
             }
         }
         else // 통신 성공

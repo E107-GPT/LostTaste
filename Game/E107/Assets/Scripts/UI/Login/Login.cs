@@ -196,7 +196,7 @@ public class Login : MonoBehaviour
             warningText.text = message;
         else
         {
-            warningText.text = "실패했습니다.";
+            warningText.text = "입력 오류가 발생했습니다.";
         }
     }
 
