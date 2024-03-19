@@ -27,14 +27,7 @@ public class MonsterInfo : MonoBehaviour
         _attackDamage = _controller.Stat.AttackDamage;
         _attackRange = _controller.Stat.AttackRange;
         _skillList = new List<Skill>();
-        //_normalAttackObj = new GameObject($"{_controller.gameObject.name} Attack");
-        //_normalAttackObj.AddComponent<SkillObject>();
-        //_normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
-        //_normalAttackCollider.isTrigger = true;
-        //// 몬스터마다 변하는 부분
-        //_normalAttackObj.transform.localScale = new Vector3(1.0f, 5.0f, 1.1f);
-
-        //_normalAttackObj.SetActive(false);
+        
     }
     //private IEnumerator NormalAttackCorotine()
     //{
