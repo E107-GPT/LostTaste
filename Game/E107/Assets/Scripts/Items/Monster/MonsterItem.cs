@@ -9,7 +9,6 @@ public class MonsterItem : Item
 
     [SerializeField]
     private Define.UnitType _unitType;
-    //private bool _isNormalAttack;
     private MonsterController _controller;
 
     void Start()
@@ -33,31 +32,7 @@ public class MonsterItem : Item
         _normalAttackObj.transform.localScale = new Vector3(1.0f, 5.0f, 1.1f);
 
         _normalAttackObj.SetActive(false);
-
-        //_isNormalAttack = false;
     }
-    //public void NormalAttack()
-    //{
-    //    if (_isNormalAttack)
-    //    {
-    //        StartNormalAttack();
-    //    }
-    //    else
-    //    {
-    //        _normalAttackObj.SetActive(false);
-    //    }
-    //}
-    //public void TrueNormalAttack()
-    //{
-    //    _isNormalAttack = true;
-    //}
-    //public void FalseNormalAttack()
-    //{
-    //    _isNormalAttack = false;
-    //}
-
-    
-
     private IEnumerator NormalAttackCorotine()
     {
         Debug.Log($"Normal Attack - {_controller.gameObject.name}");

@@ -9,9 +9,6 @@ using static UnityEngine.EventSystems.EventTrigger;
 // 일반 몬스터
 public class MonsterController : BaseController
 {
-
-    //protected GameObject[] _existPlayer;      // 필드 위에 존재하는 플레이어 수
-
     protected MonsterStat _stat;
     private MonsterItem _curItem;
 
