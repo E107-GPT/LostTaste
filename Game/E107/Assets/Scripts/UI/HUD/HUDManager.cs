@@ -18,7 +18,7 @@ public class HUDManager : MonoBehaviour
 
     // 플레이어와 보스 몬스터 변수 선언
     public PlayerController playerController;
-    public DrillDuckController drillDuckController;
+    // public DrillDuckController drillDuckController;
 
     private float gameTime = 0;
 
@@ -28,7 +28,7 @@ public class HUDManager : MonoBehaviour
         playerHealthSlider.value = 1;
         drillDuckHealthSlider.value = 1;
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        drillDuckController = GameObject.Find("DrillDuck").GetComponent<DrillDuckController>();
+        // drillDuckController = GameObject.Find("DrillDuck").GetComponent<DrillDuckController>();
     }
 
     // 매 프레임마다 호출되는 Update 메소드
@@ -38,7 +38,7 @@ public class HUDManager : MonoBehaviour
         // UpdateGoldDisplay(); // 골드 정보 업데이트
         UpdateUserInfoDisplay(); // 사용자 정보 업데이트
         UpdatePlayerHealthBar(); // 체력 바 업데이트
-        UpdateDrillDuckHealthBar();
+        // UpdateDrillDuckHealthBar();
     }
 
     // 게임 시간을 업데이트하는 메소드
@@ -76,13 +76,13 @@ public class HUDManager : MonoBehaviour
     }
 
     // 드릴 덕 체력 바를 업데이트 하는 메소드
-    void UpdateDrillDuckHealthBar()
-    {
-        // 플레이어의 현재 체력을 체력 바에 반영
-        int Hp = drillDuckController.Stat.Hp;
-        int MaxHp = drillDuckController.Stat.MaxHp;
-        drillDuckHealthSlider.value = (float)Hp / MaxHp;
-        drillDuckHealthText.text = string.Format("{0:00} / {1:00}", Hp, MaxHp);
-    }
+    // void UpdateDrillDuckHealthBar()
+    // {
+    //     // 플레이어의 현재 체력을 체력 바에 반영
+    //     int Hp = drillDuckController.Stat.Hp;
+    //     int MaxHp = drillDuckController.Stat.MaxHp;
+    //     drillDuckHealthSlider.value = (float)Hp / MaxHp;
+    //     drillDuckHealthText.text = string.Format("{0:00} / {1:00}", Hp, MaxHp);
+    // }
 }
 
