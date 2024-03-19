@@ -158,16 +158,13 @@ public class PlayerController : BaseController
 
         // 왼쪽클릭
         _inventory[_currentItemNum].LeftSKill();
-        ParticleSystem effect = GetComponentInChildren<ParticleSystem>();
-        effect.Play();
 
     }
 
     public override void ExitSkill()
     {
         base.ExitSkill();
-        ParticleSystem effect = GetComponentInChildren<ParticleSystem>();
-        effect.Stop();
+
 
     }
 
