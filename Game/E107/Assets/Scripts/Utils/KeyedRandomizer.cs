@@ -137,7 +137,7 @@ public class KeyedRandomizer
     /// <param name="key">·£´ý Å°</param>
     /// <param name="elements"></param> »ÌÀ» ¿ø¼Ò°¡ Æ÷ÇÔµÈ ¹è¿­
     /// <returns></returns> »ÌÈù ¿ø¼Ò
-    public E Get(UInt16 key, E[] elements)
+    public E Get<E>(UInt16 key, E[] elements)
     {
         return elements[GetInt(key, 0, elements.Length)];
     }
@@ -148,7 +148,7 @@ public class KeyedRandomizer
     /// <param name="key">·£´ý Å°</param>
     /// <param name="elements"></param> »ÌÀ» ¿ø¼Ò°¡ Æ÷ÇÔµÈ ¸®½ºÆ®
     /// <returns></returns> »ÌÈù ¿ø¼Ò
-    public E Get(UInt16 key, IList<E> elements)
+    public E Get<E>(UInt16 key, IList<E> elements)
     {
         return elements[GetInt(key, 0, elements.Count)];
     }
