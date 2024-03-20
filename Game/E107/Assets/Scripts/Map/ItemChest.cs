@@ -13,12 +13,20 @@ public class ItemChest : MonoBehaviour, IPlayerInteractable
     {
         var chestTable = ItemDropTables.CHEST_TABLES[(int) ChestType];
         var items = Managers.Random.Randomizer.GetFromTable(ItemTierRandomKey, chestTable);
-        GameObject item = Managers.Random.Randomizer.Get(ItemTypeRandomKey, items);
+        GameObject itemPrefab = Managers.Random.Randomizer.Get(ItemTypeRandomKey, items);
 
-        GameObject itemObject = Instantiate(item, this.gameObject.transform);
-        itemObject.transform.Translate(Vector3.up * 3.0f);
+        GameObject itemObject = Instantiate(itemPrefab);
+        itemObject.transform.parent = Managers.Scene.CurrentScene.transform;
+        itemObject.transform.parent = null;
+        itemObject.transform.position = gameObject.transform.position;
+
+        Item item = itemObject.GetComponent<Item>();
+        item.OnDropped();
 
         Animator animator = GetComponent<Animator>();
         animator.SetBool("Opened", true);
+
+        Collider collider = GetComponent<Collider>();
+        collider.enabled = false;
     }
 }
