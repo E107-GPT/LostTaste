@@ -8,10 +8,11 @@ using UnityEngine.UI;
 /// </summary>
 public class BossStatusUIActivator : MonoBehaviour
 {
-    [Tooltip("보스의 상태 정보를 표시하는 UI 패널입니다.")]
+    // 보스 상태 패널
+    [Header("[ 보스 상태 패널 ]")]
     public GameObject bossStatusPanel; // 보스 상태 패널
 
-    // 플레이어가 보스 방에 진입할 때 호출되는 메소드
+    // 플레이어가 보스 방에 진입할 때 호출되는 메서드
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
