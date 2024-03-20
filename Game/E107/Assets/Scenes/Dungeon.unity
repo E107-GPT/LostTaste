@@ -629,36 +629,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4827992662720445089, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
   m_PrefabInstance: {fileID: 382873389}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &578931138 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 657270822439003322, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-  m_PrefabInstance: {fileID: 2069782408799495178}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 442828825}
-  m_Layer: 0
-  m_Name: ForestMonster02Spawn11
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &442828825
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442828824}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.258819, z: -0, w: 0.9659259}
-  m_LocalPosition: {x: 13.75, y: 1, z: 14}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7116547915656775851}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &465013708
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,6 +660,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5776572977031128707}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &578931138 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 657270822439003322, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+  m_PrefabInstance: {fileID: 2069782408799495178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &598583091
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,7 +680,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &598583092
 Transform:
   m_ObjectHideFlags: 0
@@ -1033,16 +1008,11 @@ MonoBehaviour:
     - {fileID: 929503515}
     - {fileID: 1925269418}
     - {fileID: 1867479769}
-    - {fileID: 442828825}
+    - {fileID: 0}
   - mapName: ForestBoss
-    monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    monsterPrefab: {fileID: 3137786495578628170, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
     spawnPoints:
-    - {fileID: 1035451437}
-    - {fileID: 1944918366}
-    - {fileID: 1132789043}
-    - {fileID: 1953999857}
-    - {fileID: 598583092}
-    - {fileID: 930149691}
+    - {fileID: 578931138}
 --- !u!4 &908967061
 Transform:
   m_ObjectHideFlags: 0
@@ -1104,7 +1074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &930149691
 Transform:
   m_ObjectHideFlags: 0
@@ -1229,7 +1199,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1035451437
 Transform:
   m_ObjectHideFlags: 0
@@ -1260,7 +1230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1132789043
 Transform:
   m_ObjectHideFlags: 0
@@ -1846,7 +1816,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1944918366
 Transform:
   m_ObjectHideFlags: 0
@@ -1877,7 +1847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1953999857
 Transform:
   m_ObjectHideFlags: 0
@@ -2698,9 +2668,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 463902982113330353, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1867479769}
-    - targetCorrespondingSourceObject: {fileID: 463902982113330353, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 442828825}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
 --- !u!4 &7116547915656775851 stripped
