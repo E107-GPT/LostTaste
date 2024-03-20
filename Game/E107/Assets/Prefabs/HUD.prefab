@@ -2049,7 +2049,7 @@ GameObject:
   - component: {fileID: 1317321641794433980}
   - component: {fileID: 1508035901692320092}
   m_Layer: 5
-  m_Name: Boss Health Text
+  m_Name: Drill Duck Health Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3953,7 +3953,7 @@ GameObject:
   - component: {fileID: 4228582505885823052}
   - component: {fileID: 2808474564213109578}
   m_Layer: 5
-  m_Name: Time Text
+  m_Name: Game Time Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5637,7 +5637,7 @@ GameObject:
   - component: {fileID: 2228161153884022473}
   - component: {fileID: 3985362575162437536}
   m_Layer: 5
-  m_Name: Boss Status
+  m_Name: Drill Duck Status
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7161,7 +7161,7 @@ GameObject:
   - component: {fileID: 4251855264175625874}
   - component: {fileID: 5530370890952853793}
   m_Layer: 5
-  m_Name: Time Icon
+  m_Name: Game Time Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7754,7 +7754,7 @@ GameObject:
   - component: {fileID: 9119008648828217311}
   - component: {fileID: 9114044944617430296}
   m_Layer: 5
-  m_Name: Boss Health Slider
+  m_Name: Drill Duck Health Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7965,15 +7965,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTimeText: {fileID: 2808474564213109578}
-  nicknameText: {fileID: 7659969300899175424}
   jellyText: {fileID: 6698822217142172491}
+  nicknameText: {fileID: 7659969300899175424}
   playerHealthText: {fileID: 5921009835100272760}
-  drillDuckHealthText: {fileID: 1508035901692320092}
-  drillDuckNameText: {fileID: 4114552054409356813}
   playerHealthSlider: {fileID: 1351899267197911373}
+  playerController: {fileID: 365334001431943717, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
+  drillDuckNameText: {fileID: 4114552054409356813}
+  drillDuckHealthText: {fileID: 1508035901692320092}
   drillDuckHealthSlider: {fileID: 9114044944617430296}
-  playerController: {fileID: 2220484643290374687, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
-  drillDuckController: {fileID: 0}
+  drillDuckController: {fileID: 6063172700869700760, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
   GameOverWindow: {fileID: 0}
 --- !u!1 &3875586784577424255
 GameObject:
@@ -10075,7 +10075,7 @@ GameObject:
   - component: {fileID: 3501568225017693439}
   - component: {fileID: 1937749259163506091}
   m_Layer: 5
-  m_Name: Time Container
+  m_Name: Game Time Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15987,7 +15987,7 @@ GameObject:
   - component: {fileID: 7034381355754400399}
   - component: {fileID: 4114552054409356813}
   m_Layer: 5
-  m_Name: Boss Name Text
+  m_Name: Drill Duck Name Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17723,7 +17723,7 @@ GameObject:
   - component: {fileID: 3482241627320382987}
   - component: {fileID: 5670528036630202448}
   m_Layer: 5
-  m_Name: Boss Ailment Layout Group
+  m_Name: Drill Duck Ailment Layout Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

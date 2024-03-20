@@ -23,7 +23,7 @@ public class HTTPRequest : MonoBehaviour
         {
             if (path.Equals("user/profile"))
             {
-                GameObject.Find("Canvas/Login SignUp Window").GetComponent<Login>().ShowConnecting();
+                GameObject.Find("Canvas/Authentication Panel").GetComponent<Login>().ShowConnecting();
             }
             
             //Debug.Log(request.error);
@@ -38,7 +38,7 @@ public class HTTPRequest : MonoBehaviour
                 UserInfo.GetInstance().SetId(data.id);
                 UserInfo.GetInstance().SetNickName(data.nickname);
 
-                GameObject.Find("Canvas/Login SignUp Window").GetComponent<Login>().MoveScene();
+                GameObject.Find("Canvas/Authentication Panel").GetComponent<Login>().CloseAuthenticationPanel();
             }
         }
 
@@ -83,7 +83,7 @@ public class HTTPRequest : MonoBehaviour
             if (path.Equals("user")) // 회원가입일 경우
             {
                 // 로그인 화면으로 이동
-                Login login = GameObject.Find("Canvas/Login SignUp Window").GetComponent<Login>();
+                Login login = GameObject.Find("Canvas/Authentication Panel").GetComponent<Login>();
                 login.SignupFailure();
                 string msg = "ID : 4-6 영숫자    닉네임 : 1-16\n비밀번호 : 8-32 영숫자특수문자";
                 if (data.message.Length > 0)
@@ -96,7 +96,7 @@ public class HTTPRequest : MonoBehaviour
                 if (data.message.Length>0)
                     msg = data.message[0];
 
-                Login login = GameObject.Find("Canvas/Login SignUp Window").GetComponent<Login>();
+                Login login = GameObject.Find("Canvas/Authentication Panel").GetComponent<Login>();
                 login.LoginFailure();
                 login.ShowWarnMessage(msg);
             }
@@ -107,7 +107,7 @@ public class HTTPRequest : MonoBehaviour
             if (path.Equals("user")) // 회원가입일 경우
             {
                 // 로그인 화면으로 이동
-                Login login = GameObject.Find("Canvas/Login SignUp Window").GetComponent<Login>();
+                Login login = GameObject.Find("Canvas/Authentication Panel").GetComponent<Login>();
                 login.ShowLoginPanel();
             }
             else if (path.Equals("auth/login")) // 로그인일 경우
@@ -117,7 +117,7 @@ public class HTTPRequest : MonoBehaviour
                 //액세스 토큰으로 id, pw 받아오는 get 보내야함
                 UserInfo.GetInstance().SetToken(data.accessToken);
 
-                GameObject.Find("Canvas/Login SignUp Window").GetComponent<Login>().ShowConnecting();
+                GameObject.Find("Canvas/Authentication Panel").GetComponent<Login>().ShowConnecting();
                 GetCall("user/profile");
             }
         }

@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class CursorChanger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [Tooltip("UI 오브젝트 위에 마우스를 올렸을 때 변경될 손가락 모양의 커서 이미지입니다.")]
+    // 커서 이미지
+    [Header ("[ 커서 이미지 ]")]
     public Texture2D fingerCursor; // 손가락 모양의 커서 이미지
 
     // 마우스가 UI 오브젝트에 들어갈 때 호출되는 메서드
