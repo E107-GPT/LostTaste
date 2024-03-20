@@ -28,12 +28,11 @@ public class Login : MonoBehaviour
     public GameObject loginPanel; // 로그인 패널
     public GameObject signUpPanel; // 회원가입 패널
     public GameObject connectingPanel; // 커넥트 패널
+    // public GameObject nicknamePanel; // 닉네임 패널
 
-    // 경고 문구
+    // 텍스트
     public TextMeshProUGUI warningText; // 경고 텍스트
-
-    // 사용자가 로그인을 시도할 때 발생하는 이벤트
-    public event Action<string, string> onClickLogin;
+    // public TextMeshProUGUI nicknameText; // 닉네임 텍스트
 
     HTTPRequest request;
 
@@ -207,6 +206,7 @@ public class Login : MonoBehaviour
     {
         connectingPanel.SetActive(false);
         popupWindowPanel.SetActive(false);
+        // nicknamePanel.SetActive(true);
 
         // Press To Start
 
