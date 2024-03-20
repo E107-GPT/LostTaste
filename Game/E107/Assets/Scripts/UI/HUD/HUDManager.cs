@@ -88,6 +88,7 @@ public class HUDManager : MonoBehaviour
     //드릴 덕 체력 바를 업데이트 하는 메소드
     void UpdateDrillDuckHealthBar()
     {
+        if (GameObject.Find("DrillDuck(Clone)") == null) return;
         drillDuckController = GameObject.Find("DrillDuck(Clone)").GetComponent<DrillDuckController>();
         // 드릴 덕의 현재 체력을 체력 바에 반영
         int Hp = drillDuckController.Stat.Hp;
