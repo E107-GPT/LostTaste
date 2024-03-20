@@ -202,6 +202,7 @@ public class MonsterController : BaseController
         }
 
         _stat.Hp -= damage;
+        if (_stat.Hp < 0) _stat.Hp = 0;
         lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
         PrintText($"{_stat.Hp}!!!");
 
