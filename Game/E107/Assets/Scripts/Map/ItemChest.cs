@@ -11,8 +11,14 @@ public class ItemChest : MonoBehaviour, IPlayerInteractable
 
     public void OnInteracted(GameObject player)
     {
-        Animator animator = GetComponent<Animator>();
+        var chestTable = ItemDropTables.CHEST_TABLES[(int) ChestType];
+        var items = Managers.Random.Randomizer.GetFromTable(ItemTierRandomKey, chestTable);
+        GameObject item = Managers.Random.Randomizer.Get(ItemTypeRandomKey, items);
 
+        GameObject itemObject = Instantiate(item, this.gameObject.transform);
+        itemObject.transform.Translate(Vector3.up * 3.0f);
+
+        Animator animator = GetComponent<Animator>();
         animator.SetBool("Opened", true);
     }
 }

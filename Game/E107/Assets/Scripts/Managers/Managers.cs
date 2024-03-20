@@ -54,6 +54,7 @@ public class Managers : MonoBehaviour
             s_instance._pool.Init();
             s_instance._sound.Init();
             s_instance._effect.Init();
+            s_instance._random.Init();
         }
 
         
