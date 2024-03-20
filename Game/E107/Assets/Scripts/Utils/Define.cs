@@ -17,6 +17,8 @@ public class Define
         Login,
         Lobby,
         Game,
+        Camp,
+        Dungeon
     }
     public enum UIEvent
     {
