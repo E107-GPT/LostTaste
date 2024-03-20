@@ -12,13 +12,14 @@ public class HUDManager : MonoBehaviour
     public TextMeshProUGUI jellyText;
     public TextMeshProUGUI playerHealthText;
     public TextMeshProUGUI drillDuckHealthText;
+    public TextMeshProUGUI drillDuckNameText;
 
     public Slider playerHealthSlider;
     public Slider drillDuckHealthSlider;
 
     // 플레이어와 보스 몬스터 변수 선언
     public PlayerController playerController;
-    // public DrillDuckController drillDuckController;
+    public DrillDuckController drillDuckController;
 
     // 팝업 창
     public GameObject GameOverWindow;
@@ -31,17 +32,17 @@ public class HUDManager : MonoBehaviour
         playerHealthSlider.value = 1;
         drillDuckHealthSlider.value = 1;
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        // drillDuckController = GameObject.Find("DrillDuck").GetComponent<DrillDuckController>();
     }
 
     // 매 프레임마다 호출되는 Update 메소드
     void Update()
     {
+        // drillDuckController = GameObject.Find("DrillDuck(Clone)").GetComponent<DrillDuckController>();
         UpdateGameTime(); // 게임 시간 업데이트
         // UpdateGoldDisplay(); // 골드 정보 업데이트
         UpdateUserInfoDisplay(); // 사용자 정보 업데이트
         UpdatePlayerHealthBar(); // 체력 바 업데이트
-        // UpdateDrillDuckHealthBar();
+        UpdateDrillDuckHealthBar();
     }
 
     // 게임 시간을 업데이트하는 메소드
@@ -84,14 +85,21 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    // 드릴 덕 체력 바를 업데이트 하는 메소드
-    // void UpdateDrillDuckHealthBar()
-    // {
-    //     // 플레이어의 현재 체력을 체력 바에 반영
-    //     int Hp = drillDuckController.Stat.Hp;
-    //     int MaxHp = drillDuckController.Stat.MaxHp;
-    //     drillDuckHealthSlider.value = (float)Hp / MaxHp;
-    //     drillDuckHealthText.text = string.Format("{0:00} / {1:00}", Hp, MaxHp);
-    // }
+    //드릴 덕 체력 바를 업데이트 하는 메소드
+    void UpdateDrillDuckHealthBar()
+    {
+        drillDuckController = GameObject.Find("DrillDuck(Clone)").GetComponent<DrillDuckController>();
+        // 드릴 덕의 현재 체력을 체력 바에 반영
+        int Hp = drillDuckController.Stat.Hp;
+        int MaxHp = drillDuckController.Stat.MaxHp;
+        drillDuckHealthSlider.value = (float)Hp / MaxHp;
+        drillDuckHealthText.text = string.Format("{0:00} / {1:00}", Hp, MaxHp);
+        drillDuckNameText.text = "Drill Duck";
+
+        if (Hp < 0)
+        {
+            drillDuckHealthText.text = string.Format("0 / {0:00}", MaxHp);
+        }
+    }
 }
 

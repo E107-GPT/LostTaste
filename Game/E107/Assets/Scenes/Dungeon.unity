@@ -816,6 +816,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4827992662720445089, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
   m_PrefabInstance: {fileID: 382873389}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &382873394 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2808726442434117270, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+  m_PrefabInstance: {fileID: 382873389}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &428288065
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,42 +1061,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 514240648}
   m_CullTransparentMesh: 1
---- !u!4 &578931138 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 657270822439003322, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-  m_PrefabInstance: {fileID: 2069782408799495178}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &598583091
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 598583092}
-  m_Layer: 0
-  m_Name: ForestBossSpawn06
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &598583092
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 598583091}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.5, z: -0, w: 0.86602545}
-  m_LocalPosition: {x: 4, y: 1, z: 9.69}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2069782408799495179}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &627347949 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7223984692470007912, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
@@ -1529,11 +1498,10 @@ MonoBehaviour:
     - {fileID: 929503515}
     - {fileID: 1925269418}
     - {fileID: 1867479769}
-    - {fileID: 0}
   - mapName: ForestBoss
     monsterPrefab: {fileID: 3137786495578628170, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
     spawnPoints:
-    - {fileID: 578931138}
+    - {fileID: 1560005200011067568}
 --- !u!4 &908967061
 Transform:
   m_ObjectHideFlags: 0
@@ -1579,37 +1547,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7116547915656775851}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &930149690
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 930149691}
-  m_Layer: 0
-  m_Name: ForestBossSpawn07
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &930149691
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930149690}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.5, z: -0, w: 0.86602545}
-  m_LocalPosition: {x: 0.3, y: 1, z: 11.83}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2069782408799495179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &970295987
 GameObject:
@@ -1781,37 +1718,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1010032429}
   m_CullTransparentMesh: 1
---- !u!1 &1035451436
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1035451437}
-  m_Layer: 0
-  m_Name: ForestBossSpawn02
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1035451437
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1035451436}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.5, z: -0, w: 0.86602545}
-  m_LocalPosition: {x: -6.3, y: 1, z: 6.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2069782408799495179}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1088937434
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,37 +1852,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088937434}
   m_CullTransparentMesh: 1
---- !u!1 &1132789042
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1132789043}
-  m_Layer: 0
-  m_Name: ForestBossSpawn04
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1132789043
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132789042}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.5, z: -0, w: 0.86602545}
-  m_LocalPosition: {x: 2.38, y: 1, z: -0.55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2069782408799495179}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1249619519
 GameObject:
   m_ObjectHideFlags: 0
@@ -2683,68 +2558,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7116547915656775851}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1944918365
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1944918366}
-  m_Layer: 0
-  m_Name: ForestBossSpawn03
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1944918366
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944918365}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.5, z: -0, w: 0.86602545}
-  m_LocalPosition: {x: -3.4, y: 1, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2069782408799495179}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1953999856
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1953999857}
-  m_Layer: 0
-  m_Name: ForestBossSpawn05
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1953999857
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953999856}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.5, z: -0, w: 0.86602545}
-  m_LocalPosition: {x: 4.52, y: 1, z: 3.16}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2069782408799495179}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1962489227
 GameObject:
   m_ObjectHideFlags: 0
@@ -2983,6 +2796,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8715812189570216304}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1560005200011067568 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7215346947983311929, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+  m_PrefabInstance: {fileID: 3521618124361187960}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1683720021706816661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3056,102 +2874,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1de5bf0b8e3073b48946e3672e25bf42, type: 3}
---- !u!1001 &2069782408799495178
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1249704233508792245, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_Name
-      value: Portal-ForestBoss-Spawn
-      objectReference: {fileID: 0}
-    - target: {fileID: 1959884850817835030, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_Name
-      value: ForestBoss
-      objectReference: {fileID: 0}
-    - target: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9659258
-      objectReference: {fileID: 0}
-    - target: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.2588191
-      objectReference: {fileID: 0}
-    - target: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5894287261833664820, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: targetPortalLocation
-      value: 
-      objectReference: {fileID: 6502793266290773720}
-    - target: {fileID: 7587751146435070310, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_Name
-      value: Portal-ForestBoss-N
-      objectReference: {fileID: 0}
-    - target: {fileID: 7587751146435070310, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1035451437}
-    - targetCorrespondingSourceObject: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1944918366}
-    - targetCorrespondingSourceObject: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1132789043}
-    - targetCorrespondingSourceObject: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1953999857}
-    - targetCorrespondingSourceObject: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 598583092}
-    - targetCorrespondingSourceObject: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 930149691}
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
---- !u!4 &2069782408799495179 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1982878827349513799, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-  m_PrefabInstance: {fileID: 2069782408799495178}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2085543782127943333
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3322,6 +3044,92 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portalType: 1
   totalPlayers: 1
+--- !u!1001 &3521618124361187960
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2987071148729864630, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987071148729864630, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987071148729864630, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987071148729864630, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9659258
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987071148729864630, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987071148729864630, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.2588191
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987071148729864630, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987071148729864630, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987071148729864630, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2987071148729864630, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589419629187241905, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: targetPortalLocation
+      value: 
+      objectReference: {fileID: 6502793266290773720}
+    - target: {fileID: 6803457100963505000, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_Name
+      value: ForestBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808179910058395546, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: m_Name
+      value: Boss Status Open
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7808179910058395546, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3521618124361187962}
+  m_SourcePrefab: {fileID: 100100000, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+--- !u!1 &3521618124361187961 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7808179910058395546, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+  m_PrefabInstance: {fileID: 3521618124361187960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3521618124361187962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3521618124361187961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877a5f78f15a29b4caea78bd89613174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossStatusPanel: {fileID: 382873394}
 --- !u!1001 &3874269920680117285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3556,11 +3364,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6707192551937478374, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
   m_PrefabInstance: {fileID: 5776572977031128706}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5849115248557370555 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7346212275703252872, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
-  m_PrefabInstance: {fileID: 2069782408799495178}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5971818872477159771 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5576412124955643474, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
@@ -3689,7 +3492,7 @@ PrefabInstance:
     - target: {fileID: 324861400119088957, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 5849115248557370555}
+      objectReference: {fileID: 8740260950909690754}
     - target: {fileID: 463902982113330353, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3822,6 +3625,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &8740260950909690754 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4771026365255161315, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+  m_PrefabInstance: {fileID: 3521618124361187960}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3839,7 +3647,7 @@ SceneRoots:
   - {fileID: 2085543782127943333}
   - {fileID: 5776572977031128706}
   - {fileID: 7116547915656775850}
-  - {fileID: 2069782408799495178}
+  - {fileID: 3521618124361187960}
   - {fileID: 6529126844646436934}
   - {fileID: 1683720021706816661}
   - {fileID: 2734627655718074411}
