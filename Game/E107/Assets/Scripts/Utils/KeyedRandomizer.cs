@@ -130,6 +130,16 @@ public class KeyedRandomizer
         }
         throw new ArithmeticException("수학적으로 불가능한 경우가 일어났습니다.");
     }
+
+    public E Get(UInt16 key, E[] elements)
+    {
+        return elements[GetInt(key, 0, elements.Length)];
+    }
+
+    public E Get(UInt16 key, IList<E> elements)
+    {
+        return elements[GetInt(key, 0, elements.Count)];
+    }
 }
 
 /// <summary>
