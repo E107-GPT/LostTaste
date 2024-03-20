@@ -24,6 +24,15 @@ public class CampScene : BaseScene
 
         // 스테이지 이름 캠프로 변경
         stageText.text = "모험가의 캠프";
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    // 씬이 로드될 때 호출될 함수
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 커서를 기본 모양으로 리셋
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
     public override void Clear()
