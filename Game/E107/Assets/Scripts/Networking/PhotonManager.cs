@@ -81,7 +81,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             //controlPanel.SetActive(true);
             //createRoomPanel.SetActive(true);
             Debug.Log("로빙");
-            PhotonNetwork.JoinRandomOrCreateRoom();
         }
         else
         {
@@ -230,15 +229,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         // 본인 캠프로 들어가기
-        PhotonNetwork.LoadLevel("Room for 1");
+        //PhotonNetwork.LoadLevel("Room for 1");
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("OnJoinedRoom");
-        Debug.Log("keys" + PhotonNetwork.CurrentRoom.Players.Keys);
-        Debug.Log(UserInfo.GetInstance().getNickName());
-        Debug.Log(PhotonNetwork.NickName);
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
         List<Player> player = new List<Player>();
         foreach (KeyValuePair<int,  Player > playerId in PhotonNetwork.CurrentRoom.Players)
@@ -246,35 +241,24 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             player.Add(playerId.Value);
             Debug.Log(playerId.Key);
         }
+        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             //현재 유저가 아니면 소환
-            Transform spawnpt = GameObject.Find("CampSpawn").GetComponent<Transform>();
-            Debug.Log(i + " : " + PhotonNetwork.PlayerList[i].NickName);
-            GameObject player2 = PhotonNetwork.Instantiate("Player", spawnpt.position, spawnpt.rotation, 0);
 
             if (PhotonNetwork.PlayerList[i].IsLocal)
             {
+                Transform spawnpt = GameObject.Find("CampSpawn").GetComponent<Transform>();
+                Debug.Log(i + " : " + PhotonNetwork.PlayerList[i].NickName);
+                GameObject player2 = PhotonNetwork.Instantiate("Player", spawnpt.position, spawnpt.rotation, 0);
                 player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
+                player2.name = PhotonNetwork.PlayerList[i].NickName;
                 player2.GetComponent<ObjectPersist>().objectType = ObjectPersist.ObjectType.player;
+                player2.GetComponent<ObjectPersist>().Init();
                 player2.GetComponent<PlayerController>().Init();
                 GameObject.Find("MainCamera").GetComponent<CameraController>()._player = player2;
-                continue;
             }
-
-            player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
-            //Assets/Resources/Prefabs/guest.prefab
         }
-    }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-    //    Debug.Log("new player : " + newPlayer.NickName);
-    //    Transform spawnpt = GameObject.Find("CampSpawn").GetComponent<Transform>();
-
-    //    GameObject player2 = PhotonNetwork.Instantiate("player", spawnpt.position, spawnpt.rotation, 0);
-    //    player2.GetComponent<PhotonView>().TransferOwnership(newPlayer.ActorNumber);
-        //PhotonNetwork.Instantiate(player2)
     }
 
     #endregion

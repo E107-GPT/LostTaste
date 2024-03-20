@@ -44,4 +44,32 @@ public class ObjectPersist : MonoBehaviour
                 break;
         }
     }
+    public void Init()
+    {
+        switch (objectType)
+        {
+            case ObjectType.player:
+                if (!playerExists)
+                {
+                    playerExists = true;
+                    DontDestroyOnLoad(gameObject);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+                break;  
+            case ObjectType.MainCamera:
+                if (!maincameraExists)
+                {
+                    maincameraExists = true;
+                    DontDestroyOnLoad(gameObject);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+                break;
+        }
+    }
 }
