@@ -279,7 +279,14 @@ public class PlayerController : BaseController
             _statemachine.ChangeState(new DieState(this));
         }
 
+    }
 
+    public void ResetHP()
+    {
+        if (_stat != null)
+        {
+            _stat.Hp = _stat.MaxHp; // HP를 최대 HP로 초기화
+        }
     }
 
 
