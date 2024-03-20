@@ -16,6 +16,9 @@ public class PlayerController : BaseController
 
     public PlayerStat Stat { get { return _stat; } }
 
+    protected float _lastLeftSkillCastTime;
+    protected float _lastRightSkillCastTime;
+
 
     public override void Init()
     {
@@ -44,14 +47,26 @@ public class PlayerController : BaseController
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
 
+        StartMpRecover();
+
         _statemachine.ChangeState(new IdleState(this));
-        //_hitCollider = gameObject.GetComponent<BoxCollider>();
-        
+    }
 
-        //Managers.Resource.Instantiate("UI/UI_Button");
-        //UI_Button ui = Managers.UI.ShowPopupUI<UI_Button>();
+    public void StartMpRecover()
+    {
+        StartCoroutine(MpRecoverCoroutine());
+    }
 
-        //Managers.UI.ShowSceneUI<UI_Inven>();
+    IEnumerator MpRecoverCoroutine()
+    {
+        while(_stat.Hp > 0)
+        {
+            
+            _stat.Mp += 5;
+            if (_stat.Mp > _stat.MaxMp) _stat.Mp = _stat.MaxMp;
+             yield return new WaitForSeconds(1.0f);
+
+        }
     }
 
     public override void EnterIdle()
@@ -145,21 +160,29 @@ public class PlayerController : BaseController
         base.EnterSkill();
 
         // TODO: animation도 어떻게 해줘야겠지?
-        _animator = GetComponent<Animator>();
-        _animator.CrossFade("ATTACK", 0.1f, -1, 0);
+
 
         LookMousePosition();
 
         // 왼쪽클릭
+
         if (Input.GetMouseButton(0))
         {
-            _inventory[_currentItemNum].LeftSKill();
-            
+            _inventory[_currentItemNum].LeftSKillCast();
+
+
         }
         else if (Input.GetMouseButton(1))
         {
-            _inventory[_currentItemNum].RightSkill();
+
+            _inventory[_currentItemNum].RightSkillCast();
+            _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
+            Debug.Log(_stat.Mp);
+            _lastRightSkillCastTime = Time.time;
+
+
         }
+
 
 
     }
@@ -204,10 +227,26 @@ public class PlayerController : BaseController
 
         if (raycast)
         {
-            //Vector3 dir = hit.point - transform.position;
-            //Quaternion quat = Quaternion.LookRotation(dir);
-            //transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
-            _statemachine.ChangeState(new SkillState(this));
+            if (Input.GetMouseButton(0))
+            {
+                _statemachine.ChangeState(new SkillState(this));
+
+            }
+            else if (Input.GetMouseButton(1))
+            {
+                if(_stat.Mp >= _inventory[_currentItemNum].RightSkill.RequiredMp)
+                {
+                    Debug.Log($"Rquired Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
+                    if(_lastRightSkillCastTime == 0 || Time.time - _lastRightSkillCastTime >= _inventory[_currentItemNum].RightSkill.SkillCoolDownTime)
+                    {
+
+                        _statemachine.ChangeState(new SkillState(this));
+                    }
+
+                }
+
+            }
+            
         }
 
     }
