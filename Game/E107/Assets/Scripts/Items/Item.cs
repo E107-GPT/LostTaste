@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, IPlayerInteractable
 {
     [SerializeField]
     protected int _attackDamage = 50;
@@ -34,11 +34,11 @@ public class Item : MonoBehaviour
         else
         {
             _itemCollider.enabled = false;
-            OnEquip();
+            OnEquipped();
         }    
     }
 
-    public void OnEquip()
+    public void OnEquipped()
     {
         _itemCollider.enabled = false;
         transform.localPosition = new Vector3(0, 0, 0);
@@ -56,8 +56,10 @@ public class Item : MonoBehaviour
     public void LeftSKill()
     {
         _leftSkill.Cast(_attackDamage, _attackRange);
-        
     }
 
-
+    public void OnInteracted(GameObject player)
+    {
+        player.GetComponent<PlayerController>().EquipItem(this);
+    }
 }

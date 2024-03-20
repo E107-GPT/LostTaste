@@ -11,7 +11,7 @@ public class PlayerController : BaseController
     // Item 관련 변수
     Item[] _inventory;
     int _currentItemNum;
-    Item _detectedItem;
+    IPlayerInteractable _detectedInteractable;
     GameObject _righthand;
 
     public PlayerStat Stat { get { return _stat; } }
@@ -63,7 +63,7 @@ public class PlayerController : BaseController
     public override void ExcuteIdle()
     {
         base.ExcuteIdle();  
-        DetectItem();
+        DetectInteractable();
     }
 
     public override void EnterMove()
@@ -128,6 +128,8 @@ public class PlayerController : BaseController
     public override void EnterDash()
     {
         base.EnterDash();
+        LookMousePosition();
+
         _animator.CrossFade("DASH", 0.1f, -1, 0);
 
     }
@@ -143,20 +145,9 @@ public class PlayerController : BaseController
         base.EnterSkill();
         _animator.CrossFade("ATTACK", 0.1f, -1, 0);
 
-        LayerMask mask = LayerMask.GetMask("Ground");
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        bool raycast = Physics.Raycast(ray, out hit, 100.0f, mask);
+        LookMousePosition();
 
-        Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
-
-        Vector3 dir = hit.point - transform.position;
-        Quaternion quat = Quaternion.LookRotation(dir);
-        
-        transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
-
-
-        // 왼쪽클릭
+                // 왼쪽클릭
         _inventory[_currentItemNum].LeftSKill();
 
     }
@@ -234,30 +225,9 @@ public class PlayerController : BaseController
         }
 
         // 무기 줍기
-        if (_detectedItem != null && Input.GetKeyDown(KeyCode.E))
+        if (_detectedInteractable != null && Input.GetKeyDown(KeyCode.E))
         {
-            
-            _detectedItem.transform.parent = _righthand.transform;
-
-            Item currentItem = _inventory[_currentItemNum];
-
-            if(currentItem.gameObject.name == "Feast")
-            {
-                Destroy(currentItem);
-            }
-            else
-            {
-                currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
-                currentItem.gameObject.transform.parent = null;
-                currentItem.gameObject.transform.position = gameObject.transform.position;
-                currentItem.OnDropped();
-            }
-            
-
-
-            _inventory[_currentItemNum] = _detectedItem;
-            _inventory[_currentItemNum].OnEquip();
-            Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
+            _detectedInteractable.OnInteracted(this.gameObject);
         }
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -266,18 +236,9 @@ public class PlayerController : BaseController
             // 맨손이면 못버린다.
             if (currentItem.gameObject.name == "Feast") return;
 
-            currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
-            currentItem.gameObject.transform.parent = null;
-            currentItem.gameObject.transform.position = gameObject.transform.position;
-            currentItem.OnDropped();
-
+            DropCurrentItem();
             _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/Feast", _righthand.transform).GetComponent<Item>();
-
-
         }
-
-        
-
     }
 
 
@@ -315,37 +276,76 @@ public class PlayerController : BaseController
     }
 
 
-    public void DetectItem()
+    public void DetectInteractable()
     {
-        Collider[] items = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item"));
-        float closestDistance = Mathf.Infinity;
-        Collider closestItem = null;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item"));
+        float closestSqrDistance = Mathf.Infinity;
+        Collider closestCollider = null;
 
-        foreach (var item in items)
+        foreach (var collider in colliders)
         {
-            float distance = (item.transform.position - transform.position).sqrMagnitude;
-            if (distance < closestDistance)
+            float sqrDistance = (collider.transform.position - transform.position).sqrMagnitude;
+            if (sqrDistance < closestSqrDistance)
             {
-                closestDistance = distance;
-                closestItem = item;
+                closestSqrDistance = sqrDistance;
+                closestCollider = collider;
             }
         }
 
-        if (closestItem != null)
+        if (closestCollider != null)
         {
             // 가장 가까운 오브젝트를 처리합니다. 예: 로그 출력
-            Debug.Log("Closest Object: " + closestItem.gameObject.name);
-            _detectedItem = closestItem.GetComponent<Item>();
+            Debug.Log("Closest Object: " + closestCollider.gameObject.name);
+            _detectedInteractable = closestCollider.GetComponent<IPlayerInteractable>();
         }
         else
         {
-            _detectedItem = null;
+            _detectedInteractable = null;
         }
     }
 
+    public void EquipItem(Item item)
+    {
+        item.transform.parent = _righthand.transform;
 
+        Item currentItem = _inventory[_currentItemNum];
 
+        if (currentItem.gameObject.name == "Feast")
+        {
+            Destroy(currentItem);
+        }
+        else
+        {
+            DropCurrentItem();
+        }
 
+        _inventory[_currentItemNum] = item;
+        item.OnEquipped();
+        Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
+    }
 
+    public void DropCurrentItem()
+    {
+        Item currentItem = _inventory[_currentItemNum];
 
+        currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
+        currentItem.gameObject.transform.parent = null;
+        currentItem.gameObject.transform.position = gameObject.transform.position;
+        currentItem.OnDropped();
+    }
+
+    public void LookMousePosition()
+    {
+        LayerMask mask = LayerMask.GetMask("Ground");
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        bool raycast = Physics.Raycast(ray, out hit, 100.0f, mask);
+
+        Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
+
+        Vector3 dir = hit.point - transform.position;
+        Quaternion quat = Quaternion.LookRotation(dir);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
+    }
 }
