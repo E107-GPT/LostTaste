@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SkillObject : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class SkillObject : MonoBehaviour
         else if (_attacker.gameObject.CompareTag("Monster") && other.gameObject.CompareTag("Player"))
         {
             Debug.Log($"Monster Target: {other.gameObject.name}");
-
+            
             other.gameObject.GetComponent<PlayerController>().TakeDamage(_id, _damage);
         }
 

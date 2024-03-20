@@ -7,8 +7,8 @@ public class DrillDuckInfo : MonsterInfo
     protected override void Init()
     {
         base.Init();
-        _skillList.Add(gameObject.GetOrAddComponent<DrillDuckAttackSkill>());
-        _skillList.Add(gameObject.GetOrAddComponent<DrillDuckSlidePattern>());
+        Skill = gameObject.GetOrAddComponent<DrillDuckAttackSkill>();
+        Patterns.Add(gameObject.GetOrAddComponent<DrillDuckSlidePattern>());
 
     }
 }
