@@ -58,6 +58,11 @@ public class Item : MonoBehaviour, IPlayerInteractable
         _leftSkill.Cast(_attackDamage, _attackRange);
     }
 
+    public void RightSkill()
+    {
+        _rightSkill.Cast(_attackDamage, _attackRange);
+    }
+
     public void OnInteracted(GameObject player)
     {
         player.GetComponent<PlayerController>().EquipItem(this);

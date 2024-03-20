@@ -143,13 +143,24 @@ public class PlayerController : BaseController
     public override void EnterSkill()
     {
         base.EnterSkill();
+
+        // TODO: animation도 어떻게 해줘야겠지?
         _animator = GetComponent<Animator>();
         _animator.CrossFade("ATTACK", 0.1f, -1, 0);
 
         LookMousePosition();
 
-                // 왼쪽클릭
-        _inventory[_currentItemNum].LeftSKill();
+        // 왼쪽클릭
+        if (Input.GetMouseButton(0))
+        {
+            _inventory[_currentItemNum].LeftSKill();
+            
+        }
+        else if (Input.GetMouseButton(1))
+        {
+            _inventory[_currentItemNum].RightSkill();
+        }
+
 
     }
 

@@ -51,6 +51,7 @@ public abstract class Skill : MonoBehaviour
     public int Cast(int _attackDamage, float _attackRange) {
         if (Time.time - _lastCastTime < SkillCoolDownTime) return 0;
         StartCoroutine(SkillCoroutine(_attackDamage, _attackRange));
+        _lastCastTime = Time.time;
         return RequiredMp; 
     }
 

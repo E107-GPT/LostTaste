@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class NormalAttackSkill : Skill
 {
-    private GameObject _particleSystem;
     protected override void Init()
     {
         SkillCoolDownTime = 0;
         RequiredMp = 0;
-        Debug.Log("123123");
         
 
     }
