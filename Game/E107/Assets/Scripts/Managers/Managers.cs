@@ -14,6 +14,7 @@ public class Managers : MonoBehaviour
     SoundManager _sound = new SoundManager();
     PoolManager _pool = new PoolManager();
     EffectManager _effect = new EffectManager();
+    RandomManager _random = new RandomManager();
     
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
@@ -22,6 +23,7 @@ public class Managers : MonoBehaviour
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static EffectManager Effect { get { return Instance._effect; } }
+    public static RandomManager Random { get { return Instance._random; } }
 
     void Start()
     {
