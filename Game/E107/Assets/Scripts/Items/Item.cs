@@ -18,8 +18,7 @@ public class Item : MonoBehaviour, IPlayerInteractable
     [SerializeField]
     protected Skill _rightSkill;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Init();
     }
