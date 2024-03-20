@@ -26,4 +26,9 @@ public class ItemChest : MonoBehaviour, IPlayerInteractable
         Collider collider = GetComponent<Collider>();
         collider.enabled = false;
     }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }
