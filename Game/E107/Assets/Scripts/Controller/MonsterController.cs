@@ -36,29 +36,6 @@ public class MonsterController : BaseController
         _monsterInfo = GetComponent<MonsterInfo>();
     }
 
-    // DrillDuck에서 사용할 때 죽었는지 확인하는 if문에서 Null 에러가 발생한다.
-    // Slime도 확인
-
-    //protected IEnumerator CheckExistPlayer()
-    //{
-    //    yield return new WaitForSeconds(0.3f);
-
-    //    while (_existPlayer.Length != 0)
-    //    {
-    //        PrintText("CheckExistPlayer");
-    //        _existPlayer = GameObject.FindGameObjectsWithTag("Player");
-    //        for (int i = 0; i < _existPlayer.Length; ++i)
-    //        {
-    //            PlayerController playerController = _existPlayer[i].GetComponent<PlayerController>();
-    //            if (playerController.StateMachine.CurState is DieState)
-    //            {
-    //                PrintText("죽었나?");
-    //                _existPlayer[i] = null;
-    //            }
-    //        }
-    //    }
-    //}
-
     private void FixedUpdate()
     {
         FreezeVelocity();
@@ -74,8 +51,7 @@ public class MonsterController : BaseController
     {
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
-        if (CurState is IdleState) Gizmos.DrawWireSphere(_ray.origin, _stat.DetectRange);        // 탐색 범위
-        else if ((_unitType == Define.UnitType.DrillDuck) && CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.TargetRange);   // 패턴 공격 범위
+        if (CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.DetectRange);        // 탐색 범위
     }
 
     //이동 타겟팅 기능
@@ -116,76 +92,6 @@ public class MonsterController : BaseController
             _statemachine.ChangeState(new IdleState(this));
         }
     }
-
-    // 공격 범위 내의 플레이어 갱신
-    //protected void UpdateAttackPlayer()
-    //{
-    //    Collider[] attackPlayers = Physics.OverlapSphere(transform.position, _stat.AttackRange, 1 << 7);
-
-    //    foreach (Collider player in attackPlayers)
-    //    {
-    //        _attackPlayer = player.transform;
-    //        _statemachine.ChangeState(new SkillState(this));
-    //        return;
-    //    }
-
-    //    _attackPlayer = null;
-
-    //    //float minDistAttack = _stat.AttackRange;
-    //    PrintText($"공격 범위내의 플레이어: {attackPlayers.Length}");
-    //    if (attackPlayers.Length > 0)
-    //    {
-    //        for (int i = 0; i < attackPlayers.Length; ++i)
-    //        {
-    //            _attackPlayer = attackPlayers[i].gameObject.transform;
-    //            //float dist = Vector3.Distance(transform.position, targetPlayers[i].transform.position);
-    //            //if (minDistAttack > dist)
-    //            //{
-    //            //    minDistAttack = dist;
-    //            //    AttackPlayer = targetPlayers[i].gameObject.transform;
-    //            //}
-    //        }
-    //    }
-    //    else
-    //    {
-    //        _attackPlayer = null;
-    //    }
-
-    //    //minDistAttack = _stat.AttackRange;
-    //}
-
-    //IEnumerator CheckMonsterState()
-    //{
-    //    while (_stat.Hp > 0)
-    //    {
-    //        yield return new WaitForSeconds(0.3f);
-
-    //        UpdateAttackPlayer();
-
-    //        if (_attackPlayer != null)
-    //        {
-    //            if (CurState is SkillState) continue;
-
-    //            _statemachine.ChangeState(new SkillState(this));
-    //        }
-    //        else if (_existPlayer.Length != 0 && _detectPlayer != null)
-    //        {
-    //            if (CurState is MoveState) continue;
-
-    //            _statemachine.ChangeState(new MoveState(this));
-    //        }
-    //        else
-    //        {
-    //            if (CurState is IdleState) continue;
-    //            _detectPlayer = null;
-    //            _attackPlayer = null;
-    //            _statemachine.ChangeState(new IdleState(this));
-    //        }
-    //    }
-
-    //    _statemachine.ChangeState(new DieState(this));
-    //    CancelInvoke("UpdateDectPlayer");
-    //}
 
     public override void TakeDamage(int skillObjectId, int damage)
     {

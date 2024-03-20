@@ -5,23 +5,23 @@ using UnityEngine;
 public abstract class Pattern : MonoBehaviour
 {
     public static int _seq;
-    protected string _skillName;
+    protected string _patternName;
     protected float _lastCastTime;
-    protected float _skillCoolDownTime;
+    protected float _patternCoolDownTime;
     protected Transform _root;
     protected Transform _effect;
     protected GameObject _skillObj;
 
-    public string SkillName
+    public string PatternName
     {
-        get { return _skillName; }
-        set { _skillName = value; }
+        get { return _patternName; }
+        set { _patternName = value; }
     }
     public float LastCastTime { get { return _lastCastTime; } set { _lastCastTime = value; } }
-    public float SkillCoolDownTime
+    public float PatternCoolDownTime
     {
-        get { return _skillCoolDownTime; }
-        set { _skillCoolDownTime = value; }
+        get { return _patternCoolDownTime; }
+        set { _patternCoolDownTime = value; }
     }
 
     public Transform Root
@@ -40,9 +40,6 @@ public abstract class Pattern : MonoBehaviour
     {
         Root = transform.root;
         Effect = transform.root.Find("Effect");
-
-        _skillObj = Managers.Resource.Instantiate("Skills/SkillObject");
-        _skillObj.SetActive(false);
     }
 
     void Start()
@@ -50,6 +47,6 @@ public abstract class Pattern : MonoBehaviour
         Init();
     }
 
-    public abstract void SetCollider(int _attackDamage, float _attackRange);
+    public abstract void SetCollider(int attackDamage);
     public abstract void DeActiveCollider();
 }

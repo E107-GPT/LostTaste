@@ -7,10 +7,8 @@ using UnityEngine.AI;
 public class DrillDuckController : MonsterController
 {
     [SerializeField]
-    private bool _isDonePattern;            // 패턴이 끝났나?
     private float _lastPatternTime;
 
-    public bool IsDonePattern { get { return _isDonePattern; } set { _isDonePattern = value; } }
 
     public override void Init()
     {
@@ -19,9 +17,6 @@ public class DrillDuckController : MonsterController
 
         // Other Class
         _stat = new MonsterStat(_unitType);
-
-        // Cur Pattern
-        _isDonePattern = true;
     }
 
     private void FixedUpdate()
@@ -37,18 +32,27 @@ public class DrillDuckController : MonsterController
         _agent.SetDestination(_detectPlayer.position);
 
 
-        if (distToDetectPlayer <= _stat.TargetRange && (_stat.Hp <= _stat.MaxHp))
+        if (distToDetectPlayer <= _stat.AttackRange)
         {
-            _statemachine.ChangeState(new DrillDuckReadyState(this));
-        }
-        else if (distToDetectPlayer <= _stat.AttackRange)
-        {
-            _statemachine.ChangeState(new SkillState(this));
+            RandomPatternSelector();
         }
         else if (distToDetectPlayer > _stat.DetectRange)
         {
             _detectPlayer = null;
             _statemachine.ChangeState(new IdleState(this));
+        }
+    }
+
+    private void RandomPatternSelector()
+    {
+        int rand = Random.Range(0, 101);
+        if (rand <= 30)
+        {
+            _statemachine.ChangeState(new DrillDuckSlideState(this));
+        }
+        else if (rand <= 100)
+        {
+            _statemachine.ChangeState(new SkillState(this));
         }
     }
 
@@ -81,47 +85,21 @@ public class DrillDuckController : MonsterController
         base.ExitSkill();
     }
 
-    // Slide Ready: skill 생성 info 생성
-    public override void EnterDrillDuckReadyState()
-    {
-        _agent.velocity = Vector3.zero;
-        _agent.speed = 0;
-        Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        Vector3 destPos = transform.position + dirTarget * _stat.TargetRange;
-        _agent.SetDestination(destPos);
-
-        _animator.CrossFade("Grab", 0.5f, -1, 0);
-    }
-    public override void ExcuteDrillDuckReadyState()
-    {
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Grab"))
-        {
-            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;    // 속도: 0.3
-            if (aniTime >= 0.1f)
-            {
-                _statemachine.ChangeState(new DrillDuckSlideState(this));
-            }
-        }
-    }
-    public override void ExitDrillDuckReadyState()
-    {
-        _agent.speed = _stat.MoveSpeed;
-    }
-
     // Silde
     public override void EnterDrillDuckSlideState()
     {
-        //_isDonePattern = false;
-        //_agent.velocity = Vector3.zero;
-        //_agent.speed = 0;
+        _agent.velocity = Vector3.zero;
+        _agent.speed = 0;
 
         Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        Vector3 destPos = transform.position + dirTarget * _stat.TargetRange;
+        Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
 
-        // 경로상의 플레이어를 뚫고 가거나 밀쳐내고 가기 위함
+        // 경로상의 플레이어를 밀쳐내면서 돌진
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         _agent.radius *= 2;
         _agent.avoidancePriority = 0;
+
+        _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
 
         _agent.SetDestination(destPos);
         _animator.CrossFade("Slide", 0.2f, -1, 0);
@@ -130,7 +108,7 @@ public class DrillDuckController : MonsterController
     {
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
-            _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage, _stat.AttackRange);
+            
 
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
@@ -158,9 +136,6 @@ public class DrillDuckController : MonsterController
         _agent.radius /= 2;
         _agent.avoidancePriority = 50;
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
-        //GetComponent<Collider>().isTrigger = false;
-        //_isDonePattern = true;
-
     }
 
 }

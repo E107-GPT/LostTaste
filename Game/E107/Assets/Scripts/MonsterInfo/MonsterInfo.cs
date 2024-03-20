@@ -12,7 +12,9 @@ public class MonsterInfo : MonoBehaviour
     protected int _attackDamage;
     protected float _attackRange;
 
+    [SerializeField]
     protected Skill _skill;             // 각 몬스터가 가진 기본 공격
+    [SerializeField]
     protected List<Pattern> _patterns;   // 각 몬스터가 가진 패턴 공격
 
 
