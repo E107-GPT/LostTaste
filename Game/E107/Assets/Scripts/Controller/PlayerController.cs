@@ -143,6 +143,7 @@ public class PlayerController : BaseController
     public override void EnterSkill()
     {
         base.EnterSkill();
+        _animator = GetComponent<Animator>();
         _animator.CrossFade("ATTACK", 0.1f, -1, 0);
 
         LookMousePosition();
@@ -348,8 +349,9 @@ public class PlayerController : BaseController
         bool raycast = Physics.Raycast(ray, out hit, 100.0f, mask);
 
         Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
-
-        Vector3 dir = hit.point - transform.position;
+        Vector3 targetPoint = raycast ? hit.point : ray.GetPoint(10.0f); // 레이캐스트가 성공하면 hit.point를, 그렇지 않으면 레이의 방향으로 100 유닛 떨어진 지점을 사용
+        Vector3 dir = targetPoint - transform.position;
+        
         Quaternion quat = Quaternion.LookRotation(dir);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
