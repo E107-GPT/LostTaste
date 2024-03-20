@@ -152,6 +152,12 @@ public class PlayerController : BaseController
 
     }
 
+    public override void ExcuteSkill()
+    {
+        base.ExcuteSkill();
+        if (Input.GetKeyDown(KeyCode.Space)) _statemachine.ChangeState(new DashState(this));
+    }
+
     public override void ExitSkill()
     {
         base.ExitSkill();
@@ -170,7 +176,7 @@ public class PlayerController : BaseController
     void OnMouseClicked(Define.MouseEvent evt)
     {
         //Debug.Log($"{CurState?.ToString()}");
-        if (_statemachine.CurState is DieState || _statemachine.CurState is SkillState) return;
+        if (_statemachine.CurState is DieState || _statemachine.CurState is SkillState || CurState is DashState) return;
 
 
 
