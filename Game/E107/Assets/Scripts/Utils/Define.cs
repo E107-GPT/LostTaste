@@ -43,6 +43,7 @@ public class Define
     public enum Effect
     {
         NormalAttackEffect,
+        RightAttackEffect,
         MaxCount
     }
 }
