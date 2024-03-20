@@ -45,14 +45,14 @@ public class Stat
             case Define.UnitType.Slime:
                 _hp = 100;
                 _maxHp = 100;
-                _attackDamage = 5;
+                _attackDamage = 1;
                 _moveSpeed = 5.0f;
                 _attackRange = 1.4f;
                 break;
             case Define.UnitType.DrillDuck:
                 _hp = 500;
                 _maxHp = 500;
-                _attackDamage = 15;
+                _attackDamage = 5;
                 _moveSpeed = 8.0f;
                 _attackRange = 4.0f;
                 break;
