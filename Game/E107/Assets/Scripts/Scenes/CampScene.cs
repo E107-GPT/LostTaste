@@ -21,14 +21,14 @@ public class CampScene : BaseScene
     {
         base.Init();
         SceneType = Define.Scene.Camp;
-
-
-
         // 스테이지 텍스트를 캠프 이름으로 업데이트
         stageText.text = "모험가의 캠프";
 
         // Cursor 설정
         SetCursor();
+
+        Managers.Resource.Instantiate("Player/Player");
+        //Managers.UI.ShowSceneUI<UI_Inven>();
     }
 
    
