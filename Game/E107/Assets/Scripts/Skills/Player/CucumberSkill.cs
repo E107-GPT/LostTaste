@@ -12,6 +12,7 @@ public class CucumberSkill : Skill
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
         Debug.Log("ø¿¿Ã ≥»");
+        Managers.Sound.Play("bite1");
 
         yield return new WaitForSeconds(0);
     }
