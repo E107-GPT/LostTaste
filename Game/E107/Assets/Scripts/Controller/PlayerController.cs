@@ -13,6 +13,7 @@ public class PlayerController : BaseController
     int _currentItemNum;
     IPlayerInteractable _detectedInteractable;
     GameObject _righthand;
+    Coroutine _mpRecoverCoroutine;
 
     public PlayerStat Stat { get { return _stat; } }
 
@@ -54,7 +55,12 @@ public class PlayerController : BaseController
 
     public void StartMpRecover()
     {
-        StartCoroutine(MpRecoverCoroutine());
+        _mpRecoverCoroutine = StartCoroutine(MpRecoverCoroutine());
+    }
+
+    public void StopMpRecover()
+    {
+        StopCoroutine(_mpRecoverCoroutine);
     }
 
     IEnumerator MpRecoverCoroutine()
