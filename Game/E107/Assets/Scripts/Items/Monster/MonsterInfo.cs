@@ -28,8 +28,8 @@ public class MonsterInfo : MonoBehaviour
         _unitType = _controller.UnitType;
         _attackDamage = _controller.Stat.AttackDamage;
         _attackRange = _controller.Stat.AttackRange;
+
         _skillList = new List<Skill>();
-        
 
         Debug.Log($"Normal Attack - " + _unitType.ToString());
     }

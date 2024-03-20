@@ -3478,7 +3478,7 @@ GameObject:
   - component: {fileID: 2154674506615639540}
   - component: {fileID: 6063172700869700760}
   - component: {fileID: -7462142561957068251}
-  - component: {fileID: 4255082375085990966}
+  - component: {fileID: 6364260270027733661}
   m_Layer: 0
   m_Name: DrillDuck
   m_TagString: Monster
@@ -3591,11 +3591,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c47a659889bce6479e6c52f517e4bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityName: 
   _unitType: 2
-  _existPlayer: []
+  entityName: 
   _detectPlayer: {fileID: 0}
-  _attackPlayer: {fileID: 0}
   _targetPlayer: {fileID: 0}
 --- !u!136 &-7462142561957068251
 CapsuleCollider:
@@ -3620,7 +3618,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &4255082375085990966
+--- !u!114 &6364260270027733661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3629,12 +3627,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3137786495578628170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6692c66096e2ea743ac19c292a643522, type: 3}
+  m_Script: {fileID: 11500000, guid: bbf8532fa0f3a57448ab825f1068d5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDamage: 0
-  _patternDamage: 0
-  _attackRange: 0
 --- !u!1 &3153326930071574659
 GameObject:
   m_ObjectHideFlags: 0

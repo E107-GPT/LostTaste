@@ -10,7 +10,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class MonsterController : BaseController
 {
     protected MonsterStat _stat;
-    private MonsterInfo _monsterInfo;
+    protected MonsterInfo _monsterInfo;
     private string _curSkillName;           // 현재 공격의 이름 - Info에서 가져옴
     private float _lastDetectTime;
 
@@ -22,6 +22,7 @@ public class MonsterController : BaseController
     protected Ray _ray;                       // Gizmos에 사용
 
     public MonsterStat Stat { get { return _stat; } }
+    public MonsterInfo MonsterInfo { get { return _monsterInfo; } }
     //public Transform AttackPlayer { get { return _attackPlayer; } }
 
     public override void Init()
@@ -99,6 +100,24 @@ public class MonsterController : BaseController
         _detectPlayer = null;
     }
 
+    // Move 상태에서 다른 상태로 바꾸는 조건
+    protected virtual void ChangeStateFromMove()
+    {
+        float distanceToPlayer = (transform.position - _detectPlayer.position).magnitude;
+
+        _agent.SetDestination(_detectPlayer.position);
+
+        if (distanceToPlayer <= _stat.AttackRange)
+        {
+            _statemachine.ChangeState(new SkillState(this));
+        }
+        else if (distanceToPlayer > _stat.DetectRange)
+        {
+            _detectPlayer = null;
+            _statemachine.ChangeState(new IdleState(this));
+        }
+    }
+
     // 공격 범위 내의 플레이어 갱신
     //protected void UpdateAttackPlayer()
     //{
@@ -143,7 +162,7 @@ public class MonsterController : BaseController
     //        yield return new WaitForSeconds(0.3f);
 
     //        UpdateAttackPlayer();
-            
+
     //        if (_attackPlayer != null)
     //        {
     //            if (CurState is SkillState) continue;
@@ -248,23 +267,6 @@ public class MonsterController : BaseController
         ChangeStateFromMove();
     }
 
-    protected virtual void ChangeStateFromMove()
-    {
-        float distanceToPlayer = (transform.position - _detectPlayer.position).magnitude;
-
-        _agent.SetDestination(_detectPlayer.position);
-
-        if (distanceToPlayer <= _stat.AttackRange)
-        {
-            _statemachine.ChangeState(new SkillState(this));
-        }
-        else if (distanceToPlayer > _stat.DetectRange)
-        {
-            _detectPlayer = null;
-            _statemachine.ChangeState(new IdleState(this));
-        }
-    }
-
     public override void ExitMove()
     {
         base.ExitMove();
@@ -283,11 +285,19 @@ public class MonsterController : BaseController
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
 
         // 상속
-        // 각 "Attack" 이름을 _curSkillName으로 저장해서 CrossFade에 전달 및 Excute의 IsName에 전달
         _monsterInfo.SkillList[0].Cast(_stat.AttackDamage, _stat.AttackRange);
         _animator.CrossFade("Attack", 0.3f, -1, 0);
-
     }
+
+    public virtual void SetSkill()
+    {
+        // 각 "Attack" 이름을 _curSkillName으로 저장해서 CrossFade에 전달 및 Excute의 IsName에 전달
+        _curSkillName = _monsterInfo.SkillList[0].SkillName;
+        PrintText("현재 스킬 이름: " + _curSkillName);
+        _monsterInfo.SkillList[0].Cast(_stat.AttackDamage, _stat.AttackRange);
+        _animator.CrossFade(_curSkillName, 0.3f, -1, 0);
+    }
+
     public override void ExcuteSkill()
     {
         base.ExcuteSkill();

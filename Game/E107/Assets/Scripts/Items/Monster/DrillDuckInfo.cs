@@ -9,5 +9,6 @@ public class DrillDuckInfo : MonsterInfo
         base.Init();
         _skillList.Add(gameObject.GetOrAddComponent<DrillDuckAttackSkill>());
         _skillList.Add(gameObject.GetOrAddComponent<DrillDuckSlidePattern>());
+
     }
 }

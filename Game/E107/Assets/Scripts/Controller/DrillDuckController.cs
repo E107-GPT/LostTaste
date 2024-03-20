@@ -57,11 +57,12 @@ public class DrillDuckController : MonsterController
 
         _agent.SetDestination(_detectPlayer.position);
 
-        if (_targetPlayer != null)
-        {
-            _statemachine.ChangeState(_slideState);
-        }
-        else if (distToDetectPlayer <= _stat.AttackRange)
+        // targetPlayer말고 detectPlayer로 할 수 있을 것 같음
+        //if (_targetPlayer != null)
+        //{
+        //    _statemachine.ChangeState(_slideState);
+        //}
+        if (distToDetectPlayer <= _stat.AttackRange)
         {
             _statemachine.ChangeState(new SkillState(this));
         }
@@ -74,16 +75,16 @@ public class DrillDuckController : MonsterController
     }
 
     // Idle
-    public override void EnterIdle()
+    public override void ExcuteIdle()
     {
-        base.EnterIdle();
+        base.ExcuteIdle();
 
         // Hp가 70% 이하라면 일정 시간마다 패턴 공격을 위한 TargetPlayer 세팅
-        if ((Time.time - _lastPatternTime >= _stat.PatternDelay) && _isDonePattern == true && (_stat.Hp <= _stat.MaxHp))
-        {
-            UpdateTargetPlayer();
-            _lastPatternTime = Time.time;
-        }
+        //if ((Time.time - _lastPatternTime >= _stat.PatternDelay) && _isDonePattern == true && (_stat.Hp <= _stat.MaxHp))
+        //{
+        //    UpdateTargetPlayer();
+        //    _lastPatternTime = Time.time;
+        //}
     }
 
     // Move
@@ -107,7 +108,7 @@ public class DrillDuckController : MonsterController
     }
     public override void ExcuteSkill()
     {
-        base.ExcuteMove();
+        base.ExcuteSkill();
     }
     public override void ExitSkill()
     {

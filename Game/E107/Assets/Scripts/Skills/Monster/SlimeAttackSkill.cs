@@ -12,13 +12,13 @@ public class SlimeAttackSkill : Skill
         // Root: Skill의 Start에서 관리
         // Effect: Skill의 Start에서 관리
         SkillCoolDownTime = 0;
-        RequiredMp = 0;
+        // RequiredMp = 0;
         // _particleSystem = Managers.Resource.Instantiate("Effects/SwordSlashThinBlue", Effect.transform);
     }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
-        Debug.Log("Normal Attack");
+        Debug.Log("Slime Attack");
         yield return new WaitForSeconds(0.3f);
 
         // SkillObject에서 관리
