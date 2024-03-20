@@ -1479,6 +1479,7 @@ GameObject:
   - component: {fileID: 471235425}
   - component: {fileID: 471235424}
   - component: {fileID: 471235427}
+  - component: {fileID: 471235428}
   m_Layer: 5
   m_Name: Login Button
   m_TagString: Untagged
@@ -1613,6 +1614,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fingerCursor: {fileID: 2800000, guid: 29c29659f635567459665387c4b75d1f, type: 3}
+--- !u!114 &471235428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471235422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4933804a9a00642aea11d7e7a63770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  submitButton: {fileID: 471235424}
 --- !u!1 &537218613
 GameObject:
   m_ObjectHideFlags: 0
@@ -2653,6 +2667,7 @@ GameObject:
   - component: {fileID: 724554741}
   - component: {fileID: 724554740}
   - component: {fileID: 724554743}
+  - component: {fileID: 724554744}
   m_Layer: 5
   m_Name: SignUp Button
   m_TagString: Untagged
@@ -2787,6 +2802,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fingerCursor: {fileID: 2800000, guid: 29c29659f635567459665387c4b75d1f, type: 3}
+--- !u!114 &724554744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724554738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4933804a9a00642aea11d7e7a63770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  submitButton: {fileID: 724554740}
 --- !u!1 &726303951
 GameObject:
   m_ObjectHideFlags: 0

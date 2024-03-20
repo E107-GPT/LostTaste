@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class TabNavigation : MonoBehaviour
 {
     // 입력 필드 배열
-    [Header("입력 필드 배열")]
+    [Header("[ 입력 필드 배열 ]")]
     public Selectable[] inputs;
 
     void Update()
