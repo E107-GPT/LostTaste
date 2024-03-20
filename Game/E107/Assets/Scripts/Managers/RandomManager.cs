@@ -10,10 +10,10 @@ public class RandomManager
 
     public RandomManager()
     {
-        setSeed(1); // TODO: 최초의 랜덤 시드는 어떻게?
+        SetSeed(1); // TODO: 최초의 랜덤 시드는 어떻게?
     }
 
-    public void setSeed(int seed)
+    public void SetSeed(int seed)
     {
         _randomizer = new KeyedRandomizer(seed);
     }
