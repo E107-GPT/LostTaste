@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StateMachine
-{
-
-    private State _currentState ;
+{ 
+    private State _currentState;
+    
     public State CurState { get { return _currentState; } set { _currentState = value; } }
     public void ChangeState(State newState)
     {

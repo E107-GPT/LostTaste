@@ -58,6 +58,4 @@ public abstract class Skill : MonoBehaviour
     }
 
     protected abstract IEnumerator SkillCoroutine(int _attackDamage, float _attackRange);
-
-
 }
