@@ -18,8 +18,7 @@ public class ItemChest : MonoBehaviour, IPlayerInteractable
         GameObject itemObject = Instantiate(itemPrefab);
         itemObject.transform.position = gameObject.transform.position;
 
-        Item item = itemObject.GetComponent<Item>();
-        item.OnDropped();
+        itemObject.GetComponent<Item>().OnDropped();
 
         Animator animator = GetComponent<Animator>();
         animator.SetBool("Opened", true);
