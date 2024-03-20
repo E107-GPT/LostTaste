@@ -10,8 +10,9 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class MonsterController : BaseController
 {
     protected MonsterStat _stat;
-    private MonsterInfo _monsterInfo;
-    private string _curSkillName;       // 현재 공격의 이름
+    protected MonsterInfo _monsterInfo;
+    private string _curSkillName;           // 현재 공격의 이름 - Info에서 가져옴
+    private float _lastDetectTime;
 
     [SerializeField]
     protected Transform _detectPlayer;        // 이동 타겟팅, 일반 공격 범위를 벗어나면 랜덤한 플레이어에게 이동 -> 지금은 가까운 플레이어에게 이동
@@ -21,6 +22,7 @@ public class MonsterController : BaseController
     protected Ray _ray;                       // Gizmos에 사용
 
     public MonsterStat Stat { get { return _stat; } }
+    public MonsterInfo MonsterInfo { get { return _monsterInfo; } }
     //public Transform AttackPlayer { get { return _attackPlayer; } }
 
     public override void Init()
@@ -34,15 +36,6 @@ public class MonsterController : BaseController
         // Other Class
         _stat = new MonsterStat(_unitType);
         _monsterInfo = GetComponent<MonsterInfo>();
-
-        // Editor Init
-        //_existPlayer = GameObject.FindGameObjectsWithTag("Player");
-        //StartCoroutine(CheckExistPlayer());
-
-        // State
-        //_checkMonsterState = StartCoroutine(CheckMonsterState());
-        //_detectPlayer = _existPlayer[0].transform;
-        //InvokeRepeating("UpdateDectPlayer", 0, 20.0f);
     }
 
     // DrillDuck에서 사용할 때 죽었는지 확인하는 if문에서 Null 에러가 발생한다.
@@ -84,7 +77,7 @@ public class MonsterController : BaseController
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
         if (CurState is IdleState) Gizmos.DrawWireSphere(_ray.origin, _stat.DetectRange);        // 탐색 범위
-        //else if (CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.TargetRange);   // 패턴 공격 범위
+        else if ((_unitType == Define.UnitType.DrillDuck) && CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.TargetRange);   // 패턴 공격 범위
     }
 
     //이동 타겟팅 기능
@@ -105,6 +98,24 @@ public class MonsterController : BaseController
             }
         }
         _detectPlayer = null;
+    }
+
+    // Move 상태에서 다른 상태로 바꾸는 조건
+    protected virtual void ChangeStateFromMove()
+    {
+        float distanceToPlayer = (transform.position - _detectPlayer.position).magnitude;
+
+        _agent.SetDestination(_detectPlayer.position);
+
+        if (distanceToPlayer <= _stat.AttackRange)
+        {
+            _statemachine.ChangeState(new SkillState(this));
+        }
+        else if (distanceToPlayer > _stat.DetectRange)
+        {
+            _detectPlayer = null;
+            _statemachine.ChangeState(new IdleState(this));
+        }
     }
 
     // 공격 범위 내의 플레이어 갱신
@@ -151,7 +162,7 @@ public class MonsterController : BaseController
     //        yield return new WaitForSeconds(0.3f);
 
     //        UpdateAttackPlayer();
-            
+
     //        if (_attackPlayer != null)
     //        {
     //            if (CurState is SkillState) continue;
@@ -209,10 +220,18 @@ public class MonsterController : BaseController
 
         _animator.CrossFade("Idle", 0.5f);      // 기본적으로 base layer의 state를 나타냄
     }
+    
     public override void ExcuteIdle()
     {
         base.ExcuteIdle();
-        UpdateDetectPlayer();
+        // Time.time: 게임이 시작된 후부터 시간(초)을 반환
+        // _lastTime: 마지막으로 호출된 시간(초)을 가진다.
+        // _coolDownTime: 스킬 사용 시간(초)을 나타낸다.
+        if (Time.time - _lastDetectTime >= _stat.DetectTime)
+        {
+            UpdateDetectPlayer();
+            _lastDetectTime = Time.time;
+        }
     }
     public override void ExitIdle()
     {
@@ -245,21 +264,9 @@ public class MonsterController : BaseController
             }
         }
 
-        float distanceToPlayer = (transform.position - _detectPlayer.position).magnitude;
-
-        _agent.SetDestination(_detectPlayer.position);
-
-        if (distanceToPlayer <= _stat.AttackRange)
-        {
-            _statemachine.ChangeState(new SkillState(this));
-        }
-        else if (distanceToPlayer > _stat.DetectRange)
-        {
-            _detectPlayer = null;
-            _statemachine.ChangeState(new IdleState(this));
-
-        }
+        ChangeStateFromMove();
     }
+
     public override void ExitMove()
     {
         base.ExitMove();
@@ -280,8 +287,17 @@ public class MonsterController : BaseController
         // 상속
         _monsterInfo.SkillList[0].Cast(_stat.AttackDamage, _stat.AttackRange);
         _animator.CrossFade("Attack", 0.3f, -1, 0);
-
     }
+
+    public virtual void SetSkill()
+    {
+        // 각 "Attack" 이름을 _curSkillName으로 저장해서 CrossFade에 전달 및 Excute의 IsName에 전달
+        _curSkillName = _monsterInfo.SkillList[0].SkillName;
+        PrintText("현재 스킬 이름: " + _curSkillName);
+        _monsterInfo.SkillList[0].Cast(_stat.AttackDamage, _stat.AttackRange);
+        _animator.CrossFade(_curSkillName, 0.3f, -1, 0);
+    }
+
     public override void ExcuteSkill()
     {
         base.ExcuteSkill();
@@ -291,7 +307,7 @@ public class MonsterController : BaseController
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime % 1 >= 0.95f)
+            if (aniTime >= 1.0f)
             {
                 _statemachine.ChangeState(new IdleState(this));
             }

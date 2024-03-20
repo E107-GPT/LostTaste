@@ -12,6 +12,8 @@ public class DrillDuckSlideState : State
     private MonsterStat _stat;
     private Animator _animator;
 
+    // Loop가 아닌 상태
+    // Excute가 한 번만 실행된다.
     public DrillDuckSlideState(DrillDuckController controller) : base(controller)
     {
         _drillDuckController = controller.GetComponent<DrillDuckController>();
@@ -56,9 +58,12 @@ public class DrillDuckSlideState : State
             else if (aniTime >= 1.0f)
             {
                 // 애니메이션 종료
-                _drillDuckController.StateMachine.ChangeState(new MoveState(_controller));
+                _drillDuckController.StateMachine.ChangeState(new IdleState(_controller));
             }
-            _drillDuckController.Item.PatternAttack();
+
+            // Skill 가져오기
+            _drillDuckController.MonsterInfo.SkillList[1].Cast(_drillDuckController.Stat.AttackDamage, _drillDuckController.Stat.AttackRange);
+            //_drillDuckController.Item.PatternAttack();
         }
         
     }
