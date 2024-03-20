@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -21,23 +20,49 @@ public class CampSpawn : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // 씬이 로드될 때 실행될 메서드
+    // 씬이 로드될 때 플레이어 이동 및 상태 초기화
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Camp")
         {
+            ResetPlayerHP();
             MovePlayerToEntrance();
         }
     }
 
-    // 플레이어를 입구 위치로 이동시키는 메서드
+    // 플레이어를 입구 위치로 이동시키는 함수
     void MovePlayerToEntrance()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player"); // 플레이어 오브젝트 찾기
-        NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
         if (player != null)
         {
-            agent.Warp(entrancePosition); // 플레이어 위치 설정
+            // 플레이어 위치 설정
+            NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
+            if (agent != null)
+            {
+                agent.Warp(entrancePosition);
+            }
+        }
+    }
+
+    void ResetPlayerHP()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            if (playerController != null)
+            {
+                playerController.ResetHP(); // PlayerController 내의 HP 초기화 메서드 호출
+            }
+            else
+            {
+                Debug.LogError("PlayerController component not found on the player!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Player object not found!");
         }
     }
 }

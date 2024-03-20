@@ -16,7 +16,6 @@ public abstract class Skill : MonoBehaviour
     {
         get { return _skillName; } set { _skillName = value; }
     }
-    public float LastCastTime { get { return _lastCastTime; } set { _lastCastTime = value; } }
     public float SkillCoolDownTime
     {
         get { return _skillCoolDownTime; } set { _skillCoolDownTime = value; }
@@ -49,11 +48,13 @@ public abstract class Skill : MonoBehaviour
 
     // 스킬 쿨다운 설정
     protected abstract void Init();
-    public int Cast(int _attackDamage, float _attackRange)
-    {
-        if (Time.time - _lastCastTime < SkillCoolDownTime) return 0;
+    public int Cast(int _attackDamage, float _attackRange) {
+
         StartCoroutine(SkillCoroutine(_attackDamage, _attackRange));
+        _lastCastTime = Time.time;
         return RequiredMp;
+
+
     }
 
     protected abstract IEnumerator SkillCoroutine(int _attackDamage, float _attackRange);

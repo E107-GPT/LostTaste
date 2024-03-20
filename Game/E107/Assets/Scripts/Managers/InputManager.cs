@@ -24,7 +24,7 @@ public class InputManager
 
         if (MouseAction != null)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
             {
                 MouseAction.Invoke(Define.MouseEvent.Press);
                 _pressed = true;

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 193600088710999867}
-  - component: {fileID: 524174533672052160}
+  - component: {fileID: 4487993871161702267}
   m_Layer: 7
   m_Name: Feast
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &524174533672052160
+--- !u!114 &4487993871161702267
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8304934787823657685}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
+  m_Script: {fileID: 11500000, guid: ffe078d78864c494fafe96c5d383009d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDamage: 0
+  _attackDamage: 50
   _attackRange: 8
   isDropped: 0
+  _leftSkill: {fileID: 0}
+  _rightSkill: {fileID: 0}

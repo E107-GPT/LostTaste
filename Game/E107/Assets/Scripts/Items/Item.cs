@@ -18,8 +18,16 @@ public class Item : MonoBehaviour, IPlayerInteractable
     [SerializeField]
     protected Skill _rightSkill;
 
-    // Start is called before the first frame update
-    void Start()
+    public Skill LeftSkill
+    {
+        get { return _leftSkill; } private set { }
+    }
+    public Skill RightSkill
+    {
+        get { return _rightSkill; } private set { }
+    }
+
+    void Awake()
     {
         Init();
     }
@@ -53,9 +61,14 @@ public class Item : MonoBehaviour, IPlayerInteractable
         _itemCollider.enabled = true;
 
     }
-    public void LeftSKill()
+    public int LeftSKillCast()
     {
-        _leftSkill.Cast(_attackDamage, _attackRange);
+        return _leftSkill.Cast(_attackDamage, _attackRange);
+    }
+
+    public int RightSkillCast()
+    {
+        return _rightSkill.Cast(_attackDamage, _attackRange);
     }
 
     public void OnInteracted(GameObject player)
