@@ -608,11 +608,31 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 608788460347967056, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
   m_PrefabInstance: {fileID: 382873389}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &442828824
+--- !u!114 &382873391 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4083940818975335929, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+  m_PrefabInstance: {fileID: 382873389}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &382873392 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3876676641406250296, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+  m_PrefabInstance: {fileID: 382873389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &382873393 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4827992662720445089, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+  m_PrefabInstance: {fileID: 382873389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &578931138 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 657270822439003322, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+  m_PrefabInstance: {fileID: 2069782408799495178}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
@@ -873,6 +893,7 @@ GameObject:
   m_Component:
   - component: {fileID: 818002713}
   - component: {fileID: 818002712}
+  - component: {fileID: 818002714}
   m_Layer: 0
   m_Name: '@Scene'
   m_TagString: Untagged
@@ -907,6 +928,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &818002714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818002711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee003a5ad76151c4d9c7d3817a2973be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeContainerPanel: {fileID: 382873393}
+  goldPanel: {fileID: 382873392}
+  stageText: {fileID: 382873391}
 --- !u!1 &832552832
 GameObject:
   m_ObjectHideFlags: 0
