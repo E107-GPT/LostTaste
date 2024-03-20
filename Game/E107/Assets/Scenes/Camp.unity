@@ -123,16 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 16c9d875bf48d3a4aa2d1467601ef622, type: 2}
---- !u!1 &588253320 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4827992662720445089, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
-  m_PrefabInstance: {fileID: 1472979480}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &654955147 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3876676641406250296, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
-  m_PrefabInstance: {fileID: 1472979480}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &840778235
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,9 +180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70e083b0b7483e4493b63fe43c1cad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeContainerPanel: {fileID: 588253320}
-  goldPanel: {fileID: 654955147}
-  bossStatusPanel: {fileID: 1832251036}
   stageText: {fileID: 1901308584}
 --- !u!1001 &1037803180
 PrefabInstance:
@@ -730,16 +717,84 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1832251036 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2808726442434117270, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
-  m_PrefabInstance: {fileID: 1472979480}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1832868588 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5460575400253774540, guid: 267d538307d3aae45a8a2e109d898ca0, type: 3}
   m_PrefabInstance: {fileID: 4523813570554270582}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1873441091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1873441093}
+  - component: {fileID: 1873441092}
+  m_Layer: 0
+  m_Name: SpawnMonster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1873441092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873441091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7684a90c9b5d5f4a951677028481bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monstersInCurrentMap: []
+  portalTrigger: {fileID: 0}
+  monsterSpawnInfos:
+  - mapName: ForestMonster01
+    monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    spawnPoints:
+    - {fileID: 8822031995614230054, guid: e2d7c53e0d262444da44274d41bfa8a7, type: 3}
+    - {fileID: 4449352096469290721, guid: edaf7a4e954cbc94fb6467f1a813b05b, type: 3}
+    - {fileID: 6866911146979053778, guid: df9263ddb33fe134485535d0041190ca, type: 3}
+    - {fileID: 8093548904307407548, guid: ce2ab83d9f34fad4b86a9bfbccd2ffc9, type: 3}
+    - {fileID: 1065662160265303074, guid: 25ae133531762e44298ef08e12cf300f, type: 3}
+    - {fileID: 2607443397195213054, guid: 165077bddfed13e4ea826c676d590be1, type: 3}
+  - mapName: ForestMonster02
+    monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    spawnPoints:
+    - {fileID: 4701084947166110882, guid: 6fd8a875b2aa6264db2a4cfabbc99408, type: 3}
+    - {fileID: 7518423981987725462, guid: ee36b2fb2f513684a8c9f6d9c0f4a0bf, type: 3}
+    - {fileID: 2460773758422773654, guid: c3b38e3e49b6f18419db466544759706, type: 3}
+    - {fileID: 2688355581427051472, guid: 82c84d49943427642b0e2085cab3c6e6, type: 3}
+    - {fileID: 3623580135063120685, guid: 1a92ff4d8b9b30b42a28d387b0457c81, type: 3}
+    - {fileID: 5140608910063311024, guid: 70538f906035bf641a27b3d6cd4e0e75, type: 3}
+    - {fileID: 5575797440012167498, guid: 71a69f39559da00479452e0fd5493cb8, type: 3}
+    - {fileID: 6219393085478161533, guid: bf58850f30ed2cf4db2e061003cd96f9, type: 3}
+    - {fileID: 2034852674262679320, guid: 69895605890162b408e34246c9bb591c, type: 3}
+    - {fileID: 3485975966184960243, guid: d8a53fb18ac96e942ba1f8b0bf4e72a7, type: 3}
+  - mapName: ForestBoss
+    monsterPrefab: {fileID: 3137786495578628170, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
+    spawnPoints:
+    - {fileID: 2781243537336599303, guid: c3e250b8a1929ee478211bafa5dee84b, type: 3}
+--- !u!4 &1873441093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873441091}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.645163, y: 6.829558, z: 168.86008}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1901308584 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4083940818975335929, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
@@ -1011,3 +1066,4 @@ SceneRoots:
   - {fileID: 3404257822698256022}
   - {fileID: 1762088337}
   - {fileID: 1591421317}
+  - {fileID: 1873441093}
