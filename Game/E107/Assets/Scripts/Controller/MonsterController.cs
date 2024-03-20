@@ -16,14 +16,12 @@ public class MonsterController : BaseController
 
     [SerializeField]
     protected Transform _detectPlayer;        // 이동 타겟팅, 일반 공격 범위를 벗어나면 랜덤한 플레이어에게 이동 -> 지금은 가까운 플레이어에게 이동
-    //protected Transform _attackPlayer;        // 일반 공격 타겟팅
-
-    //private Coroutine _checkMonsterState;
     protected Ray _ray;                       // Gizmos에 사용
 
     public MonsterStat Stat { get { return _stat; } }
     public MonsterInfo MonsterInfo { get { return _monsterInfo; } }
-    //public Transform AttackPlayer { get { return _attackPlayer; } }
+    public Transform DetectPlayer { get { return _detectPlayer; } }
+    
 
     public override void Init()
     {
@@ -107,7 +105,8 @@ public class MonsterController : BaseController
 
         _agent.SetDestination(_detectPlayer.position);
 
-        if (distanceToPlayer <= _stat.AttackRange)
+
+        if (distanceToPlayer <= _monsterInfo.AttackRange)
         {
             _statemachine.ChangeState(new SkillState(this));
         }
@@ -285,17 +284,8 @@ public class MonsterController : BaseController
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
 
         // 상속
-        _monsterInfo.SkillList[0].Cast(_stat.AttackDamage, _stat.AttackRange);
+        _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
         _animator.CrossFade("Attack", 0.3f, -1, 0);
-    }
-
-    public virtual void SetSkill()
-    {
-        // 각 "Attack" 이름을 _curSkillName으로 저장해서 CrossFade에 전달 및 Excute의 IsName에 전달
-        _curSkillName = _monsterInfo.SkillList[0].SkillName;
-        PrintText("현재 스킬 이름: " + _curSkillName);
-        _monsterInfo.SkillList[0].Cast(_stat.AttackDamage, _stat.AttackRange);
-        _animator.CrossFade(_curSkillName, 0.3f, -1, 0);
     }
 
     public override void ExcuteSkill()
@@ -325,6 +315,8 @@ public class MonsterController : BaseController
         base.EnterDie();
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
+        GetComponent<Collider>().enabled = false;
+        _agent.enabled = false;
 
         _animator.CrossFade("Die", 0.5f);
 

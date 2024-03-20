@@ -21,9 +21,9 @@ public class DrillDuckAttackSkill : Skill
         // _particleSystem.GetComponent<ParticleSystem>().Play();
         // Managers.Sound.Play("swing1");
 
-        skillObj.localScale = new Vector3(2.5f, 5.0f, 5.0f);
+        skillObj.localScale = new Vector3(2.5f, 3.0f, _attackRange);    // 5.0f
         skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange / 4));
-        skillObj.position = new Vector3(skillObj.position.x + 1.0f, Root.position.y + 0.5f, skillObj.position.z);
+        skillObj.position = new Vector3(skillObj.position.x + 1.0f, Root.position.y + 1.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 
         yield return new WaitForSeconds(0.3f);

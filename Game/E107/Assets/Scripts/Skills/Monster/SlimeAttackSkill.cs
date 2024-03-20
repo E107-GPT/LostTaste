@@ -25,16 +25,16 @@ public class SlimeAttackSkill : Skill
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
 
-        // _particleSystem.GetComponent<ParticleSystem>().Play();
+        // ParticleSystem ps = Managers.Effect.Play(Define.Effect.NormalAttackEffect, Root);
         // Managers.Sound.Play("swing1");
 
-        skillObj.localScale = new Vector3(1.0f, 5.0f, 1.1f);
+        skillObj.localScale = new Vector3(1.0f, 5.0f, _attackRange);    // 1.1f
         skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 
         yield return new WaitForSeconds(0.3f);
         Managers.Resource.Destroy(skillObj.gameObject);
-        // _particleSystem.GetComponent<ParticleSystem>().Stop();
+        // Managers.Effect.Stop(ps);
     }
 }

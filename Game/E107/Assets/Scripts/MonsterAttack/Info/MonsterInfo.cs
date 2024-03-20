@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 각 몬스터 게임 객체가 각자의 Info를 가진다.
 public class MonsterInfo : MonoBehaviour
 {
     protected MonsterController _controller;
@@ -11,10 +12,14 @@ public class MonsterInfo : MonoBehaviour
     protected int _attackDamage;
     protected float _attackRange;
 
-    protected List<Skill> _skillList;       // 각 몬스터가 가진 공격 기술을 저장
+    protected Skill _skill;             // 각 몬스터가 가진 기본 공격
+    protected List<Pattern> _patterns;   // 각 몬스터가 가진 패턴 공격
+
 
     public Define.UnitType UnitType {  get { return _unitType; } set { _unitType = value; } }
-    public List<Skill> SkillList { get { return _skillList; } }
+    public float AttackRange { get { return _attackRange; } }
+    public Skill Skill { get { return _skill; } set { _skill = value; } }
+    public List<Pattern> Patterns { get { return _patterns; } set { _patterns = value; } }
 
     void Start()
     {
@@ -29,8 +34,9 @@ public class MonsterInfo : MonoBehaviour
         _attackDamage = _controller.Stat.AttackDamage;
         _attackRange = _controller.Stat.AttackRange;
 
-        _skillList = new List<Skill>();
+        _patterns = new List<Pattern>();
 
         Debug.Log($"Normal Attack - " + _unitType.ToString());
     }
+
 }

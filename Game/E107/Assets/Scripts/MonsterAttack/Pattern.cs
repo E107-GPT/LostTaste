@@ -2,30 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Skill : MonoBehaviour
+public abstract class Pattern : MonoBehaviour
 {
     public static int _seq;
     protected string _skillName;
     protected float _lastCastTime;
     protected float _skillCoolDownTime;
-    protected int _requiredMp;
     protected Transform _root;
     protected Transform _effect;
+    protected GameObject _skillObj;
 
     public string SkillName
     {
-        get { return _skillName; } set { _skillName = value; }
+        get { return _skillName; }
+        set { _skillName = value; }
     }
     public float LastCastTime { get { return _lastCastTime; } set { _lastCastTime = value; } }
     public float SkillCoolDownTime
     {
-        get { return _skillCoolDownTime; } set { _skillCoolDownTime = value; }
-    }
-
-    public int RequiredMp
-    {
-        get { return _requiredMp; }
-        set { _requiredMp = value; }
+        get { return _skillCoolDownTime; }
+        set { _skillCoolDownTime = value; }
     }
 
     public Transform Root
@@ -38,23 +34,22 @@ public abstract class Skill : MonoBehaviour
         get { return _effect; }
         set { _effect = value; }
     }
+    public GameObject SkillObj {  get { return _skillObj; } set { _skillObj = value; } }
 
-    private void Start()
+    protected virtual void Init() 
     {
         Root = transform.root;
         Effect = transform.root.Find("Effect");
 
+        _skillObj = Managers.Resource.Instantiate("Skills/SkillObject");
+        _skillObj.SetActive(false);
+    }
+
+    void Start()
+    {
         Init();
     }
 
-    // 스킬 쿨다운 설정
-    protected abstract void Init();
-    public int Cast(int _attackDamage, float _attackRange)
-    {
-        if (Time.time - _lastCastTime < SkillCoolDownTime) return 0;
-        StartCoroutine(SkillCoroutine(_attackDamage, _attackRange));
-        return RequiredMp;
-    }
-
-    protected abstract IEnumerator SkillCoroutine(int _attackDamage, float _attackRange);
+    public abstract void SetCollider(int _attackDamage, float _attackRange);
+    public abstract void DeActiveCollider();
 }
