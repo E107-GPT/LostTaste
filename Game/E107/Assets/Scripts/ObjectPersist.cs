@@ -42,6 +42,9 @@ public class ObjectPersist : MonoBehaviour
                     Destroy(gameObject);
                 }
                 break;
+            case ObjectType.Guest:
+                    DontDestroyOnLoad(gameObject);
+                break;
         }
     }
     public void Init()
@@ -71,5 +74,10 @@ public class ObjectPersist : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void DestroyPlayer()
+    {
+        playerExists = false;
     }
 }

@@ -71,6 +71,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         isConnecting = true;
         //progressLabel.SetActive(true);
         //controlPanel.SetActive(false);
+        Debug.Log("sssssss" + PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime);
+        Debug.Log(PhotonNetwork.IsConnected);
 
 
         // 포톤 네트워크 연결 여부 확인
@@ -81,16 +83,26 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             //controlPanel.SetActive(true);
             //createRoomPanel.SetActive(true);
             Debug.Log("로빙");
+            PhotonNetwork.JoinLobby();
+            PhotonNetwork.JoinRandomOrCreateRoom();
         }
         else
         {
             // 게임 버전 세팅
+            Debug.Log("Connect?  " + PhotonNetwork.IsConnected);
             PhotonNetwork.GameVersion = gameVersion;
             PhotonNetwork.NickName = UserInfo.GetInstance().getId();
             Debug.Log(PhotonNetwork.NickName);
             // 포톤 클라우드에 연결되는 시작 지점
             PhotonNetwork.ConnectUsingSettings();
         }
+    }
+
+    public void DisconnectFromPhoton()
+    {
+
+        GameObject.Find("Player").GetComponent<ObjectPersist>().DestroyPlayer();
+        PhotonNetwork.Disconnect();
     }
 
     public override void OnJoinedLobby()
@@ -189,8 +201,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("OnConnectedToMaster");
             // 마스터에 들어갔을 때 랜덤 방 들어가기
-            PhotonNetwork.JoinRandomOrCreateRoom();
             //PhotonNetwork.JoinLobby();
+
+            PhotonNetwork.JoinRandomOrCreateRoom();
         }
     }
 
@@ -248,11 +261,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
             if (PhotonNetwork.PlayerList[i].IsLocal)
             {
+                Debug.Log("두두등장");
                 Transform spawnpt = GameObject.Find("CampSpawn").GetComponent<Transform>();
                 Debug.Log(i + " : " + PhotonNetwork.PlayerList[i].NickName);
                 GameObject player2 = PhotonNetwork.Instantiate("Player", spawnpt.position, spawnpt.rotation, 0);
+                Debug.Log(player2);
                 player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
-                player2.name = PhotonNetwork.PlayerList[i].NickName;
+                player2.name = "Player";
                 player2.GetComponent<ObjectPersist>().objectType = ObjectPersist.ObjectType.player;
                 player2.GetComponent<ObjectPersist>().Init();
                 player2.GetComponent<PlayerController>().Init();
