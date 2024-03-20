@@ -738,8 +738,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 175549462}
-        m_TargetAssemblyTypeName: GameExit, Assembly-CSharp
-        m_MethodName: ExitGame
+        m_TargetAssemblyTypeName: GameExitController, Assembly-CSharp
+        m_MethodName: GameExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1400,7 +1400,7 @@ GameObject:
   - component: {fileID: 459772718}
   - component: {fileID: 459772717}
   m_Layer: 5
-  m_Name: Login SignUp
+  m_Name: Authentication Panel Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2576,7 +2576,7 @@ GameObject:
   - component: {fileID: 699802118}
   - component: {fileID: 699802117}
   m_Layer: 5
-  m_Name: ConnectingPanel
+  m_Name: Connecting Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2622,8 +2622,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6816,7 +6816,7 @@ GameObject:
   - component: {fileID: 1835834917}
   - component: {fileID: 1835834919}
   m_Layer: 5
-  m_Name: Login SignUp Window
+  m_Name: Authentication Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6902,7 +6902,7 @@ MonoBehaviour:
   signUpButton: {fileID: 724554740}
   showLoginButton: {fileID: 2033042336}
   showSignUpButton: {fileID: 1178309793}
-  popupWindowPanel: {fileID: 1835834915}
+  authenticationPanel: {fileID: 1835834915}
   loginPanel: {fileID: 2069549497}
   signUpPanel: {fileID: 1684117180}
   connectingPanel: {fileID: 699802115}

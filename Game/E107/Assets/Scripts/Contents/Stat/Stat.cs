@@ -13,6 +13,10 @@ public class Stat
     [SerializeField]
     protected int _maxHp;
     [SerializeField]
+    protected int _mp;
+    [SerializeField]
+    protected int _maxMp;
+    [SerializeField]
     protected int _attackDamage;
     [SerializeField]
     protected float _moveSpeed;
@@ -23,6 +27,8 @@ public class Stat
 
     public int Hp { get { return _hp; } set { _hp = value; } }
     public int MaxHp { get { return _maxHp; } set { _maxHp = value; } }
+    public int Mp { get { return _mp; } set { _mp = value; } }
+    public int MaxMp { get { return _maxMp; } set { _maxMp = value; } }
     public int AttackDamage { get { return _attackDamage; } set { _attackDamage = value; } }
     public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
     public float AttackRange { set => _attackRange = value; get => _attackRange; }
@@ -38,6 +44,8 @@ public class Stat
             case Define.UnitType.Player:
                 _hp = 100;
                 _maxHp = 100;
+                _mp = 100;
+                _maxMp = 100;
                 _attackDamage = 10;
                 _moveSpeed = 5.0f;
                 _attackRange = 1.8f;
@@ -59,26 +67,5 @@ public class Stat
         }
     }
 
-    public virtual void OnAttacked(Stat attacker)
-    {
-        int damage = attacker.AttackDamage;
-        Hp -= damage;
-        if (Hp <= 0)
-        {
-            Hp = 0;
-            OnDead(attacker);
-        }
-    }
-
-    protected virtual void OnDead(Stat attacker)
-    {
-        PlayerStat playerStat = attacker as PlayerStat;
-        if (playerStat != null)
-        {
-            
-        }
-
-        //Managers.Game.Despawn(gameObject);
-    }
 
 }

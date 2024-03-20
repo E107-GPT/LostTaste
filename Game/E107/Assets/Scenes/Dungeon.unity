@@ -422,8 +422,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 343134460}
-        m_TargetAssemblyTypeName: GameExit, Assembly-CSharp
-        m_MethodName: ExitGame
+        m_TargetAssemblyTypeName: GameExitController, Assembly-CSharp
+        m_MethodName: GameExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1427,7 +1427,7 @@ GameObject:
   - component: {fileID: 1010032432}
   - component: {fileID: 1010032431}
   m_Layer: 5
-  m_Name: Game Over Popup
+  m_Name: Game Over Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

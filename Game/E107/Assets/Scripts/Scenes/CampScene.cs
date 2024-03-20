@@ -2,17 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
+/// <summary>
+/// 캠프 씬을 관리하는 클래스입니다.
+/// </summary>
 public class CampScene : BaseScene
 {
     public static CampScene Instance { get; private set; }
 
-    // 텍스트
-    public TextMeshProUGUI stageText; // 스테이지 텍스트
+    // 지도 패널
+    [Header("[ 지도 패널 ]")]
+    public TextMeshProUGUI stageText; // 스테이지 이름 텍스트
 
+    // Scene 초기화 시 호출되는 함수
     protected override void Init()
     {
         base.Init();
@@ -22,9 +27,10 @@ public class CampScene : BaseScene
         //Managers.UI.ShowSceneUI<UI_Inven>();
         //Managers.Resource.Instantiate("UnityChan");
 
-        // 스테이지 이름 캠프로 변경
+        // 스테이지 텍스트를 캠프 이름으로 업데이트
         stageText.text = "모험가의 캠프";
 
+        // Scene이 로드될 때 호출될 이벤트 핸들러 등록
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
