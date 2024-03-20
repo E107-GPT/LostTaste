@@ -20,6 +20,9 @@ public class HUDManager : MonoBehaviour
     public PlayerController playerController;
     // public DrillDuckController drillDuckController;
 
+    // 팝업 창
+    public GameObject GameOverWindow;
+
     private float gameTime = 0;
 
     // 시작 시 호출되는 Start 메소드
@@ -73,6 +76,12 @@ public class HUDManager : MonoBehaviour
         int MaxHp = playerController.Stat.MaxHp;
         playerHealthSlider.value = (float)Hp / MaxHp;
         playerHealthText.text = string.Format("{0:00} / {1:00}", Hp, MaxHp);
+
+        if (Hp < 0)
+        {
+            GameOverWindow.SetActive(true);
+            playerHealthText.text = string.Format("0 / {0:00}", MaxHp);
+        }
     }
 
     // 드릴 덕 체력 바를 업데이트 하는 메소드
