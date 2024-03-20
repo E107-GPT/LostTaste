@@ -16,8 +16,6 @@ public class ItemChest : MonoBehaviour, IPlayerInteractable
         GameObject itemPrefab = Managers.Random.Randomizer.Get(ItemTypeRandomKey, items);
 
         GameObject itemObject = Instantiate(itemPrefab);
-        itemObject.transform.parent = Managers.Scene.CurrentScene.transform;
-        itemObject.transform.parent = null;
         itemObject.transform.position = gameObject.transform.position;
 
         Item item = itemObject.GetComponent<Item>();
