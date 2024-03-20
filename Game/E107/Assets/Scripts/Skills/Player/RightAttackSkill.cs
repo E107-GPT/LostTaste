@@ -6,7 +6,7 @@ public class RightAttackSkill :Skill
 {
     protected override void Init()
     {
-        SkillCoolDownTime = 0;
+        SkillCoolDownTime = 1.5f;
         RequiredMp = 0;
 
 
