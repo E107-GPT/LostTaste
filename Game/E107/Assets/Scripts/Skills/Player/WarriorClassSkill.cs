@@ -19,7 +19,8 @@ public class WarriorClassSkill : Skill
         Debug.Log("Class Skill");
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
         yield return new WaitForSeconds(0.3f);
-        //ParticleSystem ps = Managers.Effect.Play(Define.Effect.NormalAttackEffect, Root);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.WarriorClassSkillEffect, Root);
+        ps.transform.parent = Root;
 
         float duration = 5.0f;
         float timer = 0; // 타이머 초기화
@@ -35,7 +36,7 @@ public class WarriorClassSkill : Skill
                 var mon = monster.GetComponent<MonsterController>();
                 mon.DetectPlayer = Root;
                 Vector3 dir = (Root.transform.position - mon.transform.position).normalized;
-                mon.Agent.Move(dir * Time.deltaTime * 3.0f);
+                mon.Agent.Move(dir * Time.deltaTime * 10.0f);
             }
 
             timer += Time.deltaTime; // 타이머를 업데이트합니다.
@@ -43,8 +44,8 @@ public class WarriorClassSkill : Skill
         }
 
         //yield return new WaitForSeconds(0.3f);
-        //Managers.Effect.Stop(ps);
-        
+        Managers.Effect.Stop(ps);
+
 
 
     }
