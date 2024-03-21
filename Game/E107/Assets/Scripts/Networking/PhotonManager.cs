@@ -28,22 +28,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region public fields
-    //[Tooltip("판넬은 이름과 버튼 가짐")]
-    //[SerializeField]
-    //public GameObject controlPanel;
-
-    //[Tooltip("판넬은 이름과 버튼 가짐")]
-    //[SerializeField]
-    //public GameObject progressLabel;
-
-    //[Tooltip("판넬은 이름과 버튼 가짐")]
-    //[SerializeField]
-    //public GameObject createRoomPanel;
-
-
-    //[Tooltip("판넬은 이름과 버튼 가짐")]
-    //[SerializeField]
-    //public GameObject passwordPanel;
 
 
     #endregion
@@ -57,10 +41,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-        //progressLabel.SetActive(false);
-        //controlPanel.SetActive(true);
-        //createRoomPanel.SetActive(false);
-        //passwordPanel.SetActive(false);
+        
     }
     #endregion
 
@@ -100,9 +81,23 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void DisconnectFromPhoton()
     {
-
+        Transform pTrans = GameObject.Find("Player").GetComponent<Transform>();
         GameObject.Find("Player").GetComponent<ObjectPersist>().DestroyPlayer();
+        GameObject player = Resources.Load<GameObject>("Player");
+        player = Instantiate(player);
+        player.name = "Player";
+        player.GetComponent<ObjectPersist>().DestroyPlayer();
+        player.GetComponent<ObjectPersist>().objectType = ObjectPersist.ObjectType.player;
+        player.GetComponent<ObjectPersist>().Init();
+        player.GetComponent<PlayerController>().Init();
+        player.transform.position = pTrans.position;
+        player.transform.rotation = pTrans.rotation;
+
         PhotonNetwork.Disconnect();
+    }
+    public void LoadMasterScene()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnJoinedLobby()
@@ -111,6 +106,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //progressLabel.SetActive(false);
         //createRoomPanel.SetActive(true);
     }
+
 
     //public void makeRoom()
     //{
@@ -229,8 +225,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         isConnecting = false;
-        //progressLabel.SetActive(false);
-        //controlPanel.SetActive(true);
+
         Debug.LogWarningFormat("OnDisconnected {0}", cause);
     }
 
@@ -261,6 +256,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
             if (PhotonNetwork.PlayerList[i].IsLocal)
             {
+                GameObject singlePlayer = GameObject.Find("Player");
+                if(singlePlayer != null)
+                {
+                    singlePlayer.GetComponent<ObjectPersist>().DestroyPlayer();
+                    Destroy(singlePlayer);
+                }
                 Debug.Log("두두등장");
                 Transform spawnpt = GameObject.Find("CampSpawn").GetComponent<Transform>();
                 Debug.Log(i + " : " + PhotonNetwork.PlayerList[i].NickName);
