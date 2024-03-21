@@ -2392,6 +2392,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDamage: 10
   _attackRange: 2
+  isDropped: 0
+  _leftSkill: {fileID: 0}
+  _rightSkill: {fileID: 0}
 --- !u!1 &1055091240182034939
 GameObject:
   m_ObjectHideFlags: 0
@@ -3333,6 +3336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89da44676f860d3418aadcb2121f80c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _unitType: 0
   entityName: 
 --- !u!195 &5171939451755479238
 NavMeshAgent:

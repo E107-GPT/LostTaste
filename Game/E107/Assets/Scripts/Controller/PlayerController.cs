@@ -297,6 +297,7 @@ public class PlayerController : BaseController
 
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 
+
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             if (isConnected)
@@ -318,35 +319,6 @@ public class PlayerController : BaseController
             else
                 _statemachine.ChangeState(new DashState(this));
         }
-
-
-    }
-
-	[PunRPC]
-    void ChangeMoveState()
-    {
-        if (_statemachine.CurState is not MoveState) 
-            _statemachine.ChangeState(new MoveState(this));
-    }
-
-	[PunRPC]
-    void ChangeDashState()
-    {
-        _statemachine.ChangeState(new DashState(this));
-    }
-
-    [PunRPC]
-    void ChangeIDLEState()
-    {
-        _statemachine.ChangeState(new IdleState(this));
-    }
-    void OnHitEvent()
-    {
-      if(isConnected)
-            photonView.RPC("ChangeIDLEState", RpcTarget.All);
-
-      else
-            _statemachine.ChangeState(new IdleState(this));
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
         {
@@ -380,6 +352,37 @@ public class PlayerController : BaseController
             DropCurrentItem();
             ObtainWeapon("0000_Fist");
         }
+
+
+
+    }
+
+	[PunRPC]
+    void ChangeMoveState()
+    {
+        if (_statemachine.CurState is not MoveState) 
+            _statemachine.ChangeState(new MoveState(this));
+    }
+
+	[PunRPC]
+    void ChangeDashState()
+    {
+        _statemachine.ChangeState(new DashState(this));
+    }
+
+    [PunRPC]
+    void ChangeIDLEState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    void OnHitEvent()
+    {
+      if(isConnected)
+            photonView.RPC("ChangeIDLEState", RpcTarget.All);
+
+      else
+            _statemachine.ChangeState(new IdleState(this));
+
     }
 
 

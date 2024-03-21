@@ -16,7 +16,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     #region private fields
     // 클라이언트 번호
-    string gameVersion = "1";
+    string gameVersion = "2";
     bool isConnecting;
 
     // 방 이름으로 룸 정보 관리
@@ -259,7 +259,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 GameObject singlePlayer = GameObject.Find("Player");
                 if(singlePlayer != null)
                 {
-                    singlePlayer.GetComponent<ObjectPersist>().DestroyPlayer();
+                    //singlePlayer.GetComponent<ObjectPersist>().DestroyPlayer();
                     Destroy(singlePlayer);
                 }
                 Debug.Log("두두등장");
