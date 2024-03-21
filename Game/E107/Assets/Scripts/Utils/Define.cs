@@ -47,7 +47,7 @@ public class Define
     public enum Effect
     {
         NormalAttackEffect,
-        RightAttackEffect,
+        BubbleWandSkillEffect,
         DrillDuckBeforeEffect,
         DrillDuckSlideEffect,
         HeroSwordSkillEffect,

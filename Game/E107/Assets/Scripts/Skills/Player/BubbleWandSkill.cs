@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RightAttackSkill :Skill
+public class BubbleWandSkill :Skill
 {
     protected override void Init()
     {
@@ -21,7 +21,7 @@ public class RightAttackSkill :Skill
         dir = new Vector3(dir.x, 0, dir.z);
         
         yield return new WaitForSeconds(0.3f);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.RightAttackEffect, Root);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BubbleWandSkillEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
         //Managers.Sound.Play("swing1");
