@@ -13,6 +13,13 @@ public class PlayerController : BaseController
     int _currentItemNum;
     IPlayerInteractable _detectedInteractable;
     GameObject _righthand;
+    Coroutine _mpRecoverCoroutine;
+
+
+    private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
+    private Color[] _originalColors; // 원래의 머티리얼 색상 저장용 배열
+
+    Color _attackedColor = Color.red;
 
     public PlayerStat Stat { get { return _stat; } }
 
@@ -22,7 +29,16 @@ public class PlayerController : BaseController
 
     public override void Init()
     {
-        
+        // 캐릭터의 모든 Renderer 컴포넌트를 찾음
+        _allRenderers = GetComponentsInChildren<Renderer>();
+        _originalColors = new Color[_allRenderers.Length];
+
+        // 각 Renderer의 원래 머티리얼 색상 저장
+        for (int i = 0; i < _allRenderers.Length; i++)
+        {
+            _originalColors[i] = _allRenderers[i].material.color;
+        }
+
 
         _stat = new PlayerStat(Define.UnitType.Player);
         _stat.InitStat(Define.UnitType.Player);
@@ -54,7 +70,12 @@ public class PlayerController : BaseController
 
     public void StartMpRecover()
     {
-        StartCoroutine(MpRecoverCoroutine());
+        _mpRecoverCoroutine = StartCoroutine(MpRecoverCoroutine());
+    }
+
+    public void StopMpRecover()
+    {
+        StopCoroutine(_mpRecoverCoroutine);
     }
 
     IEnumerator MpRecoverCoroutine()
@@ -66,6 +87,23 @@ public class PlayerController : BaseController
             if (_stat.Mp > _stat.MaxMp) _stat.Mp = _stat.MaxMp;
              yield return new WaitForSeconds(1.0f);
 
+        }
+    }
+    
+    IEnumerator ChangeColorTemporarily()
+    {
+        foreach (Renderer renderer in _allRenderers)
+        {
+            renderer.material.color = _attackedColor;
+        }
+
+        // 지정된 시간만큼 기다림
+        yield return new WaitForSeconds(0.2f);
+
+        // 모든 Renderer의 머티리얼 색상을 원래 색상으로 복구
+        for (int i = 0; i < _allRenderers.Length; i++)
+        {
+            _allRenderers[i].material.color = _originalColors[i];
         }
     }
 
@@ -319,6 +357,9 @@ public class PlayerController : BaseController
             // 쿨다운 중이므로 피해를 주지 않음
             return;
         }
+
+        StartCoroutine(ChangeColorTemporarily());
+        Managers.Sound.Play("Player/Attacked",Define.Sound.Effect, 1.0f);
 
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;

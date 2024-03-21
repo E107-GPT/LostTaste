@@ -6,7 +6,7 @@ public class RightAttackSkill :Skill
 {
     protected override void Init()
     {
-        SkillCoolDownTime = 1.5f;
+        SkillCoolDownTime = 0.5f;
         RequiredMp = 10;
 
     }
@@ -17,20 +17,19 @@ public class RightAttackSkill :Skill
         Root = transform.root;
 
         Vector3 dir = Root.forward;
-        Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
+        Root.GetComponent<Animator>().CrossFade("ATTACK2", 0.1f, -1, 0);
         dir = new Vector3(dir.x, 0, dir.z);
         
         yield return new WaitForSeconds(0.3f);
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.RightAttackEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
-        Managers.Sound.Play("swing1");
+        //Managers.Sound.Play("swing1");
 
-        //ps.transform.position = Root.transform.TransformPoint(dir * (_attackRange / 2));
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 
         skillObj.localScale = new Vector3(0.7f, 0.7f, 0.7f);
-        //skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
+
         skillObj.position = Root.transform.position;
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation.SetLookRotation(dir);

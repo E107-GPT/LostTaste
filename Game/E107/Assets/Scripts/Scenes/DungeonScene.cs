@@ -11,7 +11,7 @@ using TMPro;
 /// </summary>
 public class DungeonScene : BaseScene
 {
-    public static DungeonScene Instance { get; private set; }
+    Vector3 entrancePosition = new Vector3(0.09f, 0, -12.11f);
 
     // 모험 상태 패널
     [Header("[ 모험 상태 패널 ]")]
@@ -27,7 +27,7 @@ public class DungeonScene : BaseScene
     {
         base.Init();
 
-        SceneType = Define.Scene.Game;
+        SceneType = Define.Scene.Dungeon;
 
         //Managers.UI.ShowSceneUI<UI_Inven>();
         //Managers.Resource.Instantiate("UnityChan");
@@ -38,23 +38,32 @@ public class DungeonScene : BaseScene
 
         // 스테이지 텍스트를 현재 스테이지에 맞게 업데이트
         stageText.text = "Stage 1 - 깊은 숲";
+        Managers.Resource.Instantiate("Player/Player");
+        MovePlayerToEntrance();
+
+    }
+
+    void MovePlayerToEntrance()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
+
+        if (agent != null)
+        {
+            Debug.Log("Player found.");
+            //player.transform.position = entrancePosition;
+            agent.Warp(entrancePosition);
+            Debug.Log("Player moved to entrance.");
+        }
+        else
+        {
+            Debug.LogError("Player not found.");
+        }
     }
 
     public override void Clear()
     {
 
-    }
-
-    // 던전 입장
-    public static void EnterDungeon()
-    {
-        SceneManager.LoadScene("Dungeon");
-    }
-
-    // 던전 종료
-    public static void ExitDungeon()
-    {
-        SceneManager.LoadScene("Camp");
     }
 
 }

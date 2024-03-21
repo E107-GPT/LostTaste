@@ -16,14 +16,12 @@ public class MonsterController : BaseController
 
     [SerializeField]
     protected Transform _detectPlayer;        // 이동 타겟팅, 일반 공격 범위를 벗어나면 랜덤한 플레이어에게 이동 -> 지금은 가까운 플레이어에게 이동
-    //protected Transform _attackPlayer;        // 일반 공격 타겟팅
-
-    //private Coroutine _checkMonsterState;
     protected Ray _ray;                       // Gizmos에 사용
 
     public MonsterStat Stat { get { return _stat; } }
     public MonsterInfo MonsterInfo { get { return _monsterInfo; } }
-    //public Transform AttackPlayer { get { return _attackPlayer; } }
+    public Transform DetectPlayer { get { return _detectPlayer; } }
+    
 
     public override void Init()
     {
@@ -37,29 +35,6 @@ public class MonsterController : BaseController
         _stat = new MonsterStat(_unitType);
         _monsterInfo = GetComponent<MonsterInfo>();
     }
-
-    // DrillDuck에서 사용할 때 죽었는지 확인하는 if문에서 Null 에러가 발생한다.
-    // Slime도 확인
-
-    //protected IEnumerator CheckExistPlayer()
-    //{
-    //    yield return new WaitForSeconds(0.3f);
-
-    //    while (_existPlayer.Length != 0)
-    //    {
-    //        PrintText("CheckExistPlayer");
-    //        _existPlayer = GameObject.FindGameObjectsWithTag("Player");
-    //        for (int i = 0; i < _existPlayer.Length; ++i)
-    //        {
-    //            PlayerController playerController = _existPlayer[i].GetComponent<PlayerController>();
-    //            if (playerController.StateMachine.CurState is DieState)
-    //            {
-    //                PrintText("죽었나?");
-    //                _existPlayer[i] = null;
-    //            }
-    //        }
-    //    }
-    //}
 
     private void FixedUpdate()
     {
@@ -76,8 +51,7 @@ public class MonsterController : BaseController
     {
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
-        if (CurState is IdleState) Gizmos.DrawWireSphere(_ray.origin, _stat.DetectRange);        // 탐색 범위
-        else if ((_unitType == Define.UnitType.DrillDuck) && CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.TargetRange);   // 패턴 공격 범위
+        if (CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.DetectRange);        // 탐색 범위
     }
 
     //이동 타겟팅 기능
@@ -107,7 +81,8 @@ public class MonsterController : BaseController
 
         _agent.SetDestination(_detectPlayer.position);
 
-        if (distanceToPlayer <= _stat.AttackRange)
+
+        if (distanceToPlayer <= _monsterInfo.AttackRange)
         {
             _statemachine.ChangeState(new SkillState(this));
         }
@@ -117,76 +92,6 @@ public class MonsterController : BaseController
             _statemachine.ChangeState(new IdleState(this));
         }
     }
-
-    // 공격 범위 내의 플레이어 갱신
-    //protected void UpdateAttackPlayer()
-    //{
-    //    Collider[] attackPlayers = Physics.OverlapSphere(transform.position, _stat.AttackRange, 1 << 7);
-
-    //    foreach (Collider player in attackPlayers)
-    //    {
-    //        _attackPlayer = player.transform;
-    //        _statemachine.ChangeState(new SkillState(this));
-    //        return;
-    //    }
-
-    //    _attackPlayer = null;
-
-    //    //float minDistAttack = _stat.AttackRange;
-    //    PrintText($"공격 범위내의 플레이어: {attackPlayers.Length}");
-    //    if (attackPlayers.Length > 0)
-    //    {
-    //        for (int i = 0; i < attackPlayers.Length; ++i)
-    //        {
-    //            _attackPlayer = attackPlayers[i].gameObject.transform;
-    //            //float dist = Vector3.Distance(transform.position, targetPlayers[i].transform.position);
-    //            //if (minDistAttack > dist)
-    //            //{
-    //            //    minDistAttack = dist;
-    //            //    AttackPlayer = targetPlayers[i].gameObject.transform;
-    //            //}
-    //        }
-    //    }
-    //    else
-    //    {
-    //        _attackPlayer = null;
-    //    }
-
-    //    //minDistAttack = _stat.AttackRange;
-    //}
-
-    //IEnumerator CheckMonsterState()
-    //{
-    //    while (_stat.Hp > 0)
-    //    {
-    //        yield return new WaitForSeconds(0.3f);
-
-    //        UpdateAttackPlayer();
-
-    //        if (_attackPlayer != null)
-    //        {
-    //            if (CurState is SkillState) continue;
-
-    //            _statemachine.ChangeState(new SkillState(this));
-    //        }
-    //        else if (_existPlayer.Length != 0 && _detectPlayer != null)
-    //        {
-    //            if (CurState is MoveState) continue;
-
-    //            _statemachine.ChangeState(new MoveState(this));
-    //        }
-    //        else
-    //        {
-    //            if (CurState is IdleState) continue;
-    //            _detectPlayer = null;
-    //            _attackPlayer = null;
-    //            _statemachine.ChangeState(new IdleState(this));
-    //        }
-    //    }
-
-    //    _statemachine.ChangeState(new DieState(this));
-    //    CancelInvoke("UpdateDectPlayer");
-    //}
 
     public override void TakeDamage(int skillObjectId, int damage)
     {
@@ -286,17 +191,8 @@ public class MonsterController : BaseController
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
 
         // 상속
-        _monsterInfo.SkillList[0].Cast(_stat.AttackDamage, _stat.AttackRange);
+        _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
         _animator.CrossFade("Attack", 0.3f, -1, 0);
-    }
-
-    public virtual void SetSkill()
-    {
-        // 각 "Attack" 이름을 _curSkillName으로 저장해서 CrossFade에 전달 및 Excute의 IsName에 전달
-        _curSkillName = _monsterInfo.SkillList[0].SkillName;
-        PrintText("현재 스킬 이름: " + _curSkillName);
-        _monsterInfo.SkillList[0].Cast(_stat.AttackDamage, _stat.AttackRange);
-        _animator.CrossFade(_curSkillName, 0.3f, -1, 0);
     }
 
     public override void ExcuteSkill()
@@ -326,6 +222,8 @@ public class MonsterController : BaseController
         base.EnterDie();
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
+        GetComponent<Collider>().enabled = false;
+        _agent.enabled = false;
 
         _animator.CrossFade("Die", 0.5f);
 
