@@ -22,12 +22,15 @@ public class HUDManager : MonoBehaviour
     public Slider playerManaSlider; // 플레이어 마나 바 슬라이더
     public PlayerController playerController; // 플레이어 컨트롤러
 
-    // Drill Duck 상태
-    [Header("[ Drill Duck 상태 ]")]
-    public TextMeshProUGUI drillDuckNameText; // Drill Duck 이름 텍스트
-    public TextMeshProUGUI drillDuckHealthText; // Drill Duck 체력 텍스트
-    public Slider drillDuckHealthSlider; // Drill Duck  체력 바 슬라이더
-    public DrillDuckController drillDuckController; // Drill Duck 컨트롤러
+    // 보스 상태
+    [Header("[ 보스 상태 ]")]
+    public TextMeshProUGUI bossNameText; // 보스 이름 텍스트
+    public TextMeshProUGUI bossHealthText; // 보스 체력 텍스트
+    public Slider bossHealthSlider; // 보스 체력 바 슬라이더
+
+    // 보스 컨트롤러
+    [Header("[ 보스 컨트롤러 ]")]
+    public DrillDuckController bossController; // 드릴덕
 
     // 팝업 창
     [Header("[ 팝업 창 ]")]
@@ -39,7 +42,7 @@ public class HUDManager : MonoBehaviour
     // 시작 시 호출되는 Start 메서드
     void Start()
     {
-        // Player GameObject를 찾아서 PlayerController 컴포넌트를 playerController 변수에 할당
+        // 플레이어 GameObject를 찾아서 PlayerController 컴포넌트를 playerController 변수에 할당
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
@@ -52,14 +55,14 @@ public class HUDManager : MonoBehaviour
         // 골드 정보 업데이트
         // UpdateGoldDisplay();
 
-        // 사용자 정보 업데이트
+        // 사용자 정보 업데이트w
         UpdateUserInfoDisplay();
 
         // 플레이어 상태 업데이트
         UpdatePlayerStatus();
 
-        // Drill Duck 상태 업데이트
-        UpdateDrillDuckStatus();
+        // 보스 상태 업데이트
+        UpdateBossStatus();
     }
 
     // 게임 시간을 업데이트하는 메서드
@@ -108,23 +111,23 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    // Drill Duck 상태를 업데이트 하는 메서드
-    void UpdateDrillDuckStatus()
+    // 보스 상태를 업데이트 하는 메서드
+    void UpdateBossStatus()
     {
-        // Drill Duck GameObject가 없는 경우 메서드를 종료
+        // 보스 GameObject가 없는 경우 메서드를 종료
         if (GameObject.Find("DrillDuck(Clone)") == null) return;
 
-        // Drill Duck GameObject를 찾아서 DrillDuckController 컴포넌트를 drillDuckController 변수에 할당
-        drillDuckController = GameObject.Find("DrillDuck(Clone)").GetComponent<DrillDuckController>();
+        // 보스 GameObject를 찾아서 BossController 컴포넌트를 bossController 변수에 할당
+        bossController = GameObject.Find("DrillDuck(Clone)").GetComponent<DrillDuckController>();
 
-        // Drill Duck의 현재 체력을 체력 바에 반영
-        int Hp = drillDuckController.Stat.Hp;
-        int MaxHp = drillDuckController.Stat.MaxHp;
-        drillDuckHealthSlider.value = (float)Hp / MaxHp;
-        drillDuckHealthText.text = string.Format("{0:0} / {1:0}", Hp, MaxHp);
+        // 보스의 이름 정보를 TextMeshProUGUI에 적용
+        bossNameText.text = "Drill Duck";
 
-        // Drill Duck의 이름 정보를 TextMeshProUGUI에 적용
-        drillDuckNameText.text = "Drill Duck";
+        // 보스의 현재 체력을 체력 바에 반영
+        int Hp = bossController.Stat.Hp;
+        int MaxHp = bossController.Stat.MaxHp;
+        bossHealthSlider.value = (float)Hp / MaxHp;
+        bossHealthText.text = string.Format("{0:0} / {1:0}", Hp, MaxHp);
     }
 }
 
