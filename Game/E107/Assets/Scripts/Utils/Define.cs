@@ -17,6 +17,8 @@ public class Define
         Login,
         Lobby,
         Game,
+        Camp,
+        Dungeon
     }
     public enum UIEvent
     {
@@ -38,5 +40,12 @@ public class Define
         Player = 0,
         Slime,
         DrillDuck,
+    }
+
+    public enum Effect
+    {
+        NormalAttackEffect,
+        RightAttackEffect,
+        MaxCount
     }
 }

@@ -12,13 +12,26 @@ public class PortalTrigger : MonoBehaviour
     private HashSet<GameObject> playersInPortal = new HashSet<GameObject>();
     public int totalPlayers = 1;    // 필요한 플레이어 수, 게임 설정에 따라 조정 (지금은 1명)
 
+    public string targetMapName;
+
+    public GameObject portal;
+
+
+    public void ActivatePortal(bool isActive)
+    {
+        portal.SetActive(isActive);
+        Debug.Log("ActivatePortal called with " + isActive);
+    }
+
     // 트리거 범위안에 들어오면 인원수 체크
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            MonsterManager.Instance.portalTrigger = this;
             playersInPortal.Add(other.gameObject);
             CheckAllPlayersInPortal();
+            MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
         }
     }
 
@@ -49,7 +62,7 @@ public class PortalTrigger : MonoBehaviour
                     player.transform.position = targetPortalLocation.position;
                 }
             }
-            
+            portal.SetActive(false);
         }
     }
 }

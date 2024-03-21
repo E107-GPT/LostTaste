@@ -428,9 +428,10 @@ GameObject:
   - component: {fileID: 1368761961356705468}
   - component: {fileID: 4570821363590635892}
   - component: {fileID: 6460675293105636987}
+  - component: {fileID: 8373458413617673407}
   m_Layer: 0
   m_Name: Slime
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -485,12 +486,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65ba56f44d098946b5baec8654925b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _unitType: 1
+  entityName: 
   _detectPlayer: {fileID: 0}
-  _attackPlayer: {fileID: 0}
-  _hp: 0
-  _moveSpeed: 0
-  _attackRange: 0
-  _detectRange: 0
 --- !u!54 &1368761961356705468
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -555,9 +553,21 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &8373458413617673407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931298151966786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 244b2d20d490d57448d26259fd7f0e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

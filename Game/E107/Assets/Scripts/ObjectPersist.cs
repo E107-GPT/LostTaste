@@ -30,7 +30,7 @@ public class ObjectPersist : MonoBehaviour
                 {
                     Destroy(gameObject);
                 }
-                break;  
+                break;
             case ObjectType.MainCamera:
                 if (!maincameraExists)
                 {

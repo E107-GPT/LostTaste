@@ -16,7 +16,8 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -27,7 +28,7 @@ public class CameraController : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(_player.transform.position, _delta, out hit, _delta.magnitude, LayerMask.GetMask("Wall")))
             {
-                Debug.Log($"??? : {hit.point}");
+                //Debug.Log($"??? : {hit.point}");
 
                 float dist = (hit.point - _player.transform.position).magnitude * 0.8f;
                 transform.position = _player.transform.position + _delta.normalized * dist;

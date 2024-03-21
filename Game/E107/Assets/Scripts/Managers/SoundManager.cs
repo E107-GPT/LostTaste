@@ -94,9 +94,8 @@ public class SoundManager
                 _audioClips.Add(path, audioClip);
             }
 
-
-
         }
+
         if (audioClip == null)
             Debug.Log($"AudioClip Missing {path}");
 

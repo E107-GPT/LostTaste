@@ -8,26 +8,32 @@ using Photon.Realtime;
 
 public abstract class BaseController : MonoBehaviour
 {
+	[SerializeField]
+	protected Define.UnitType _unitType;	// Setting the Unity Editor
+
 	protected Animator _animator;
 	protected Rigidbody _rigidbody;
 	protected NavMeshAgent _agent;
-	// °ø°ÝÀÚÀÇ ¸¶Áö¸· °ø°Ý ½Ã°£À» ÀúÀåÇÏ´Â »çÀü
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
 	protected Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
-	protected float damageCooldown = 0.3f; // ÇÇÇØ¸¦ ´Ù½Ã ¹Þ±â±îÁöÀÇ ´ë±â ½Ã°£(ÃÊ)
+	protected float damageCooldown = 0.3f; // ï¿½ï¿½ï¿½Ø¸ï¿½ ï¿½Ù½ï¿½ ï¿½Þ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½(ï¿½ï¿½)
 	
 	
-	// Æ÷Åæ ³×Æ®¿öÅ©
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½Å©
 	protected bool isConnected = false;
 	protected PhotonView photonView;
 
 
 	protected StateMachine _statemachine;
 
-	public State CurState
+    public State CurState
     {
         get { return _statemachine.CurState; }
 		set { CurState = value; }
     }
+	public NavMeshAgent Agent { get { return _agent; } }
+	public StateMachine StateMachine { get { return _statemachine; } }
+	public Define.UnitType UnitType { get { return _unitType; } }	
 
     private static long entity_ID = 0;
 	private long id;
@@ -73,10 +79,10 @@ public abstract class BaseController : MonoBehaviour
 		_statemachine.Execute();
 	}
 
-	//public abstract void Updated();
-	public virtual void Setup(string name)
+    //public abstract void Updated();
+    public virtual void Setup(string name)
 	{
-		// id, ÀÌ¸§, »ö»ó ¼³Á¤
+		// id, ï¿½Ì¸ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		ID = entity_ID;
         entityName = name;
 		int color = Random.Range(0, 1000000);
@@ -87,33 +93,51 @@ public abstract class BaseController : MonoBehaviour
 		Debug.Log($"<color={personalColor}><b>{entityName}</b></color> : {text}");
 	}
 
+
 	public abstract void Init();
 
-	public virtual void TakeDamage(int skillObjectId, int damage) {
+	public virtual void TakeDamage(int skillObjectId, int damage) 
+	{
 		Debug.Log($"{gameObject.name} is damaged {damage} by {skillObjectId}");
-	
 	}
 
+	// IDLE
 	public virtual void EnterIdle() { }
-
 	public virtual void ExcuteIdle() { }
-
 	public virtual void ExitIdle() { }
 
+	// DIE
 	public virtual void EnterDie() { }
 	public virtual void ExcuteDie() { }
 	public virtual void ExitDie() { }
+
+	// SKILL
 	public virtual void EnterSkill() { }
 	public virtual void ExcuteSkill() { }
-
 	public virtual void ExitSkill() { }
+
+	// MOVE
 	public virtual void EnterMove() { }
 	public virtual void ExcuteMove() { }
-
 	public virtual void ExitMove() { }
+
+	// DASH
 	public virtual void EnterDash() { }
 	public virtual void ExcuteDash() { }
-
 	public virtual void ExitDash() { }
 
+    // DrillDuckReadyState - not loop
+    public virtual void EnterDrillDuckReadyState() { }
+	public virtual void ExcuteDrillDuckReadyState() { }
+	public virtual void ExitDrillDuckReadyState() { }
+
+    // DrillDuckSlideState - not loop
+    public virtual void EnterDrillDuckSlideState() { }
+    public virtual void ExcuteDrillDuckSlideState() { }
+    public virtual void ExitDrillDuckSlideState() { }
+
+    void OnHitEvent()
+	{
+		_statemachine.ChangeState(new IdleState(this));
+	}
 }

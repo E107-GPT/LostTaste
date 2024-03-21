@@ -6,53 +6,81 @@ using UnityEngine;
 
 public class MonsterManager : MonoBehaviour
 {
-    // TYPE이 늘어나면 이러한 배열과 prefab 변수를 추가한다.
-    [SerializeField]
-    private string[] monsterNames;     // monster 이름 배열, Inspector view에서 직접 입력
-    [SerializeField]
-    private GameObject monsterPrefab;   // monster TYPE prefab
+    public static MonsterManager Instance { get; private set; }
 
-    private List<MonsterController> entitys;  // Monster entity를 담는다
+    // 각 맵에 소환된 몬스터 리스트
+    public List<GameObject> monstersInCurrentMap = new List<GameObject>();
+
+    public PortalTrigger portalTrigger;
+
+    [System.Serializable]
+    public class MonsterSpawnInfo
+    {
+        public string mapName;
+        public GameObject monsterPrefab;
+        public Transform[] spawnPoints;
+    }
+
+    public List<MonsterSpawnInfo> monsterSpawnInfos;
 
     private void Awake()
     {
-        entitys = new List<MonsterController>();
-
-        for (int i = 0; i < monsterNames.Length; i++)
+        if (Instance == null)
         {
-            Vector3 pos = new Vector3(0, 0);
-            GameObject clone = Instantiate(monsterPrefab, pos, Quaternion.identity);
-            MonsterController monsterController = clone.GetComponent<MonsterController>();
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
-            monsterController.Setup(Define.UnitType.DrillDuck.ToString());         // BaseController에서 각 객체의 이름을 부여
-            monsterController.name = $"{monsterController.ID:D2}_Monster_{monsterController.name}";    // 00_Monster_name 으로 hierarchy 창에서 보임
+        StartCoroutine(CheckMonstersCoroutine());
+    }
 
-            entitys.Add(monsterController);
+    IEnumerator CheckMonstersCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            monstersInCurrentMap.RemoveAll(monster => monster == null);
+            Debug.Log(monstersInCurrentMap.Count);
+            
+            if (monstersInCurrentMap.Count == 0)
+            {
+                Debug.Log("카운트 0되서 활성화 되야함");
+                if (portalTrigger != null)
+                {
+                    portalTrigger.ActivatePortal(true);
+                }
+            }
+            else
+            {
+                Debug.Log("카운트 0아니여서 비활성화 되야함");
+                if (portalTrigger != null)
+                {
+                    portalTrigger.ActivatePortal(false);
+                }
+            }
         }
     }
 
-    private void Update()
+    // 특정 맵에 몬스터 소환
+    public void SpawnMonstersForMap(string mapName)
     {
-        // Monster 동작은 BaseController에서 Update() 중
-        // 여기서도 MonsterController를 Init()하면 애니메이션이 동작하지 않는다.
-
-        //for (int i = 0; i < entitys.Count; ++i)
-        //{
-        //    //if (entitys[i].GetComponent<Monster>().Hp < 0)
-        //    //{
-        //    //    Destroy(entitys[i], 3.0f);
-        //    //    entitys[i] = null;
-        //    //    continue;
-        //    //}
-        //    entitys[i].Init();
-        //}
+        foreach (MonsterSpawnInfo info in monsterSpawnInfos)
+        {
+            if (info.mapName == mapName)
+            {
+                foreach (Transform spawnPoint in info.spawnPoints)
+                {
+                    GameObject clone = Instantiate(info.monsterPrefab, spawnPoint.position, spawnPoint.rotation);
+                    monstersInCurrentMap.Add(clone);
+                }
+                break;
+            }
+        }
     }
 
-    //private void FixedUpdate()
-    //{
-    //    for (int i = 0; i < entitys.Count; ++i)
-    //    {
-    //        entitys[i].GetComponent<MonsterController>().FreezeVelocity();
-    //    }
-    //}
 }
