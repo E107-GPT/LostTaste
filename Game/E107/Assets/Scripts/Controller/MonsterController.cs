@@ -20,7 +20,7 @@ public class MonsterController : BaseController
 
     public MonsterStat Stat { get { return _stat; } }
     public MonsterInfo MonsterInfo { get { return _monsterInfo; } }
-    public Transform DetectPlayer { get { return _detectPlayer; } }
+    public Transform DetectPlayer { get { return _detectPlayer; } set { _detectPlayer = value; } }
     
 
     public override void Init()
