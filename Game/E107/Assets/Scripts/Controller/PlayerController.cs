@@ -296,15 +296,7 @@ public class PlayerController : BaseController
     {
 
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
-        if (Input.GetKey(KeyCode.Space))
-        {
-            if (isConnected)
-            {
-                photonView.RPC("ChangeDashState", RpcTarget.All);
-            }
-            else
-                _statemachine.ChangeState(new DashState(this));
-        }
+
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
@@ -317,6 +309,15 @@ public class PlayerController : BaseController
                 if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
             }
 
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (isConnected)
+            {
+                photonView.RPC("ChangeDashState", RpcTarget.All);
+            }
+            else
+                _statemachine.ChangeState(new DashState(this));
         }
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
