@@ -18,6 +18,8 @@ public class HUDManager : MonoBehaviour
     [Header("[ 플레이어 상태 ]")]
     public TextMeshProUGUI playerHealthText; // 플레이어 체력 텍스트
     public Slider playerHealthSlider; // 플레이어 체력 바 슬라이더
+    public TextMeshProUGUI playerManaText; // 플레이어 마나 텍스트
+    public Slider playerManaSlider; // 플레이어 마나 바 슬라이더
     public PlayerController playerController; // 플레이어 컨트롤러
 
     // Drill Duck 상태
@@ -93,11 +95,16 @@ public class HUDManager : MonoBehaviour
         playerHealthSlider.value = (float)Hp / MaxHp;
         playerHealthText.text = string.Format("{0:0} / {1:0}", Hp, MaxHp);
 
-        // 플레이어가 사망할 경우 게임 오버 창을 활성화하고 체력을 0으로 고정
+        // 플레이어의 현재 마나를 마나 바에 반영
+        int Mp = playerController.Stat.Mp;
+        int MaxMp = playerController.Stat.MaxMp;
+        playerManaSlider.value = (float)Mp / MaxMp;
+        playerManaText.text = string.Format("{0:0} / {1:0}", Mp, MaxMp);
+
+        // 플레이어가 사망할 경우 게임 오버 창을 활성화
         if (Hp < 0)
         {
             GameOverWindow.SetActive(true);
-            playerHealthText.text = string.Format("0 / {0:0}", MaxHp);
         }
     }
 
@@ -118,12 +125,6 @@ public class HUDManager : MonoBehaviour
 
         // Drill Duck의 이름 정보를 TextMeshProUGUI에 적용
         drillDuckNameText.text = "Drill Duck";
-
-        // Drill Duck이 사망할 경우 체력을 0으로 고정
-        if (Hp < 0)
-        {
-            drillDuckHealthText.text = string.Format("0 / {0:0}", MaxHp);
-        }
     }
 }
 
