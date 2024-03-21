@@ -24,7 +24,6 @@ public class HeroSwordSkill : Skill
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.HeroSwordSkillEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, DAMAGE, _seq);
-        Managers.Sound.Play("swing1", Define.Sound.Effect, 0.5f);
 
         Vector3 offset = Root.forward.normalized * 1.5f;
         ps.transform.position += offset;
