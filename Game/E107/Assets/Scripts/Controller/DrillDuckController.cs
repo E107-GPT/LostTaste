@@ -96,8 +96,9 @@ public class DrillDuckController : MonsterController
         Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
         _agent.SetDestination(destPos);
 
+        _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("BeforeSlide", 0.2f, -1, 0);
-        _animator.speed = _animator.speed / 2;
+        _animator.speed = _animator.speed / 2.5f;
     }
     public override void ExcuteDrillDuckSlideBeforeState()
     {
@@ -107,13 +108,14 @@ public class DrillDuckController : MonsterController
 
             if (aniTime >= 1.0f)
             {
+                _monsterInfo.Patterns[1].DeActiveCollider();
                 _statemachine.ChangeState(new DrillDuckSlideState(this));
             }
         }
     }
     public override void ExitDrillDuckSlideBeforeState()
     {
-        _animator.speed *= 2;
+        _animator.speed *= 2.5f;
     }
 
     // Silde

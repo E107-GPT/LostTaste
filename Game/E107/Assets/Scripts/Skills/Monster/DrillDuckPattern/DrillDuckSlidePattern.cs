@@ -7,12 +7,11 @@ using UnityEngine;
 public class DrillDuckSlidePattern : Pattern
 {
     private DrillDuckController _controller;
-    private float _colliderRange;
+    private ParticleSystem _particleSystem;
 
     protected override void Init()
     {
         PatternName = "Slide";
-        _colliderRange = 2.0f;
         _controller = GetComponent<DrillDuckController>();
 
         SkillObj = Managers.Resource.Instantiate("Skills/SkillObject");
@@ -26,12 +25,18 @@ public class DrillDuckSlidePattern : Pattern
 
         // SkillObject에서 관리
         Root = transform.root;
-        Debug.Log("Root: " + Root);
         SkillObj.SetActive(true);
 
-        SlideEffect = Managers.Effect.Play(Define.Effect.DrillDuckSlideEffect, Root);
-        SkillObj.GetComponent<SkillObject>().SetUp(Root, attackDamage, _seq);
-        SkillObj.transform.localScale = new Vector3(2.0f, 5.0f, _colliderRange);
+        // scale: 10.0f, 2.5f, 5f: 
+        // position: 0, 1.5, -1.5
+        _particleSystem = Managers.Effect.Play(Define.Effect.DrillDuckSlideEffect, Root);
+        _particleSystem.transform.parent = _controller.transform;
+        _particleSystem.transform.localScale = new Vector3(10.0f, 2.5f, 5.0f);
+        _particleSystem.transform.localPosition = new Vector3(0, 1.5f, -1.5f);
+
+        
+        SkillObj.GetComponent<SkillObject>().SetUp(Root, attackDamage, _seq);           
+        SkillObj.transform.localScale = new Vector3(1.5f, 5.0f, 1.5f);          // 2.0f, 5.0f, 2.0f
         SkillObj.transform.position = Root.transform.TransformPoint(Vector3.forward * 0.8f);
         SkillObj.transform.position = new Vector3(SkillObj.transform.position.x, Root.position.y + 0.5f, SkillObj.transform.position.z);
         SkillObj.transform.rotation = Root.rotation;
@@ -39,7 +44,7 @@ public class DrillDuckSlidePattern : Pattern
 
     public override void DeActiveCollider()
     {
-        Managers.Resource.Destroy(SlideEffect.gameObject);
+        Managers.Resource.Destroy(_particleSystem.gameObject);
         SkillObj.SetActive(false);
     }
 }

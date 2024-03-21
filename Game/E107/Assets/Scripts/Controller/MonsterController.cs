@@ -58,20 +58,28 @@ public class MonsterController : BaseController
     //가장 큰 데미지를 넣은 플레이어를 추격하는 기능을 넣을 수 있다.
     protected void UpdateDetectPlayer()
     {
+        _detectPlayer = null;
+
         Collider[] detectedPlayers = Physics.OverlapSphere(transform.position, _stat.DetectRange, 1 << 7);
 
-        int rand = -1;
+        //int rand = -1;
+        float closeDist = Mathf.Infinity;
         foreach (var player in detectedPlayers)
         {
-            rand = Random.Range(0, 2);     // 0 또는 1
-            if (rand == 0)
+            float distToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            //rand = Random.Range(0, 2);     // 0 또는 1
+            //if (rand == 0)
+            if (distToPlayer < closeDist)
             {
+                closeDist = distToPlayer;
                 _detectPlayer = player.transform;
-                _statemachine.ChangeState(new MoveState(this));
-                return;
-            }
+            }   
         }
-        _detectPlayer = null;
+
+        if (_detectPlayer != null)
+        {
+            _statemachine.ChangeState(new MoveState(this));
+        }
     }
 
     // Move 상태에서 다른 상태로 바꾸는 조건
@@ -228,7 +236,7 @@ public class MonsterController : BaseController
         _animator.CrossFade("Die", 0.5f);
 
         // 스폰에서 몬스터 배열을 통해 null 처리 또는 destroy
-        Destroy(gameObject, 5.0f);
+        Destroy(gameObject, 3.0f);
     }
     public override void ExcuteDie()
     {

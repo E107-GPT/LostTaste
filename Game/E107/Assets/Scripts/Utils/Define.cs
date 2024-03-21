@@ -46,6 +46,7 @@ public class Define
     {
         NormalAttackEffect,
         RightAttackEffect,
+        DrillDuckBeforeEffect,
         DrillDuckSlideEffect,
         MaxCount
     }
