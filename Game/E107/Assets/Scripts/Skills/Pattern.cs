@@ -9,7 +9,8 @@ public abstract class Pattern : MonoBehaviour
     protected float _lastCastTime;
     protected float _patternCoolDownTime;
     protected Transform _root;
-    protected Transform _effect;
+    // protected Transform _effect;
+    protected ParticleSystem _slideEffect;
     protected GameObject _skillObj;
 
     public string PatternName
@@ -29,17 +30,18 @@ public abstract class Pattern : MonoBehaviour
         get { return _root; }
         set { _root = value; }
     }
-    public Transform Effect
-    {
-        get { return _effect; }
-        set { _effect = value; }
-    }
+    //public Transform Effect
+    //{
+    //    get { return _effect; }
+    //    set { _effect = value; }
+    //}
+    public ParticleSystem SlideEffect { get { return _slideEffect; } set { _slideEffect = value; } }
     public GameObject SkillObj {  get { return _skillObj; } set { _skillObj = value; } }
 
     protected virtual void Init() 
     {
         Root = transform.root;
-        Effect = transform.root.Find("Effect");
+        // Effect = transform.root.Find("Effect");
     }
 
     void Start()

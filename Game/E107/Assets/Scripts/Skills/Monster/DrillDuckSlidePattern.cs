@@ -13,8 +13,8 @@ public class DrillDuckSlidePattern : Pattern
     {
         PatternName = "Slide";
         _colliderRange = 2.0f;
-
         _controller = GetComponent<DrillDuckController>();
+
         SkillObj = Managers.Resource.Instantiate("Skills/SkillObject");
         SkillObj.transform.parent = _controller.transform;
         SkillObj.SetActive(false);
@@ -29,6 +29,7 @@ public class DrillDuckSlidePattern : Pattern
         Debug.Log("Root: " + Root);
         SkillObj.SetActive(true);
 
+        SlideEffect = Managers.Effect.Play(Define.Effect.DrillDuckSlideEffect, Root);
         SkillObj.GetComponent<SkillObject>().SetUp(Root, attackDamage, _seq);
         SkillObj.transform.localScale = new Vector3(2.0f, 5.0f, _colliderRange);
         SkillObj.transform.position = Root.transform.TransformPoint(Vector3.forward * 0.8f);
@@ -38,6 +39,7 @@ public class DrillDuckSlidePattern : Pattern
 
     public override void DeActiveCollider()
     {
+        Managers.Resource.Destroy(SlideEffect.gameObject);
         SkillObj.SetActive(false);
     }
 }
