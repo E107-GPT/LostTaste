@@ -245,7 +245,10 @@ public class PlayerController : BaseController
     {
         base.EnterDie();
         _animator.CrossFade("DIE", 0.1f);
-        
+
+        // 추가한 부분
+        GetComponent<Collider>().enabled = false;
+        _agent.enabled = false;
     }
 
 

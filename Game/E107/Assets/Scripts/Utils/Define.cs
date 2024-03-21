@@ -48,6 +48,8 @@ public class Define
     {
         NormalAttackEffect,
         RightAttackEffect,
+        DrillDuckBeforeEffect,
+        DrillDuckSlideEffect,
         HeroSwordSkillEffect,
         GalaxyZzzSkillEffect,
         MaxCount
