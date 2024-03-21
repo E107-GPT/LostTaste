@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +33,18 @@ public class PortalTrigger : MonoBehaviour
             playersInPortal.Add(other.gameObject);
             CheckAllPlayersInPortal();
             MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+
+            // "PortalToCamp" 포탈을 통과할 때만 플레이어의 HP를 초기화
+            if (portal.name == "PortalToCamp")
+            {
+                // 플레이어의 HP를 초기화하는 로직
+                PlayerController playerController = other.GetComponent<PlayerController>();
+                if (playerController != null)
+                {
+                    playerController.ResetHP(); // PlayerController 내의 HP 초기화 메서드 호출
+                }
+
+            }
         }
     }
 
