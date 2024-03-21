@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using Photon.Realtime;
 using Photon.Pun;
 
-public class PlayerController : BaseController
+public class ppcontroller : BaseController
 {
     //Stat
     PlayerStat _stat;
@@ -57,13 +57,15 @@ public class PlayerController : BaseController
         _currentItemNum = 1;
 
         second.gameObject.SetActive(false);
-        
+
         ///
-    
-        Managers.Input.KeyAction -= OnKeyboard;
-        Managers.Input.KeyAction += OnKeyboard;
-        Managers.Input.MouseAction -= OnMouseClicked;
-        Managers.Input.MouseAction += OnMouseClicked;
+        if (photonView.IsMine)
+        {
+            Managers.Input.KeyAction -= OnKeyboard;
+            Managers.Input.KeyAction += OnKeyboard;
+            Managers.Input.MouseAction -= OnMouseClicked;
+            Managers.Input.MouseAction += OnMouseClicked;
+        }
         StartMpRecover();
 
         _statemachine.ChangeState(new IdleState(this));
@@ -196,10 +198,22 @@ public class PlayerController : BaseController
     }
 
     [PunRPC]
+
+    private void ChangeLeftState()
+    {
+        _inventory[_currentItemNum].LeftSKillCast();
+    }
+    [PunRPC]
+
+    private void ChangeRightState()
+    {
+        _inventory[_currentItemNum].RightSkillCast();
+
+    }
     public override void EnterSkill()
     {
         base.EnterSkill();
-
+        Debug.Log("이거 이상함");
         // TODO: animation도 어떻게 해줘야겠지?
 
 
@@ -211,19 +225,20 @@ public class PlayerController : BaseController
         {
             _inventory[_currentItemNum].LeftSKillCast();
 
+            photonView.RPC("ChangeLeftState", RpcTarget.Others);
 
         }
         else if (Input.GetMouseButton(1))
         {
 
             _inventory[_currentItemNum].RightSkillCast();
+            photonView.RPC("ChangeRightState", RpcTarget.Others);
             _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
             Debug.Log(_stat.Mp);
             _lastRightSkillCastTime = Time.time;
 
 
         }
-
 
 
     }
@@ -283,13 +298,11 @@ public class PlayerController : BaseController
 
                         _statemachine.ChangeState(new SkillState(this));
                     }
-
                 }
-
-            }
-            
+            }            
         }
-        if(isConnected) photonView.RPC("EnterSkill", RpcTarget.All);
+        EnterSkill();
+        if (isConnected) photonView.RPC("EnterSkill", RpcTarget.Others);
     }
 
     void OnKeyboard()
@@ -302,26 +315,24 @@ public class PlayerController : BaseController
         {
             if (isConnected)
             {
-                photonView.RPC("ChangeMoveState", RpcTarget.All);
+                photonView.RPC("ChangeMoveState", RpcTarget.Others);
             }
-            else
-            {
-                if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
-            }
+            if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
+            
 
         }
         if (Input.GetKey(KeyCode.Space))
         {
             if (isConnected)
             {
-                photonView.RPC("ChangeDashState", RpcTarget.All);
+                photonView.RPC("ChangeDashState", RpcTarget.Others);
             }
-            else
                 _statemachine.ChangeState(new DashState(this));
         }
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
         {
+            Debug.Log("1버어어어어ㅓ어어어어언" + _inventory[1]);
             if (_currentItemNum == 1) return; // 이미 1번 무기일 경우
             if (_inventory[1] != null) _inventory[1].gameObject.SetActive(true);
             if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
@@ -330,6 +341,7 @@ public class PlayerController : BaseController
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
+            Debug.Log("2번어어어어어어어어ㅓ언 : " + _inventory[2] + " " + _inventory[_currentItemNum]);
             if (_currentItemNum == 2) return; // 이미 2번 무기일 경우
             if (_inventory[2] != null) _inventory[2].gameObject.SetActive(true);
             if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
@@ -377,6 +389,10 @@ public class PlayerController : BaseController
     }
     void OnHitEvent()
     {
+      if(isConnected)
+            photonView.RPC("ChangeIDLEState", RpcTarget.Others);
+
+      
             _statemachine.ChangeState(new IdleState(this));
 
     }
@@ -385,8 +401,8 @@ public class PlayerController : BaseController
     void OnDashFinishedEvent()
     {
         if (isConnected)
-            photonView.RPC("ChangeIDLEState", RpcTarget.All);
-        else
+            photonView.RPC("ChangeIDLEState", RpcTarget.Others);
+        
         _statemachine.ChangeState(new IdleState(this));
     }
 
