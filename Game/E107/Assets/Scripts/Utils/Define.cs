@@ -51,4 +51,9 @@ public class Define
         HeroSwordSkillEffect,
         MaxCount
     }
+
+    public enum NPCType
+    {
+        Normal,
+    }
 }

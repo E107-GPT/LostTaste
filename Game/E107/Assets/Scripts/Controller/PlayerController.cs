@@ -341,6 +341,7 @@ public class PlayerController : BaseController
         if (_detectedInteractable != null && Input.GetKeyDown(KeyCode.E))
         {
             _detectedInteractable.OnInteracted(this.gameObject);
+
         }
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -436,7 +437,7 @@ public class PlayerController : BaseController
 
     public void DetectInteractable()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item") | LayerMask.GetMask("NPC"));
         float closestSqrDistance = Mathf.Infinity;
         Collider closestCollider = null;
 
