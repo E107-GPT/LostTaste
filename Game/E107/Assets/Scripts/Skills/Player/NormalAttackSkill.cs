@@ -22,7 +22,6 @@ public class NormalAttackSkill : Skill
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.NormalAttackEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
-        Managers.Sound.Play("swing1");
 
         
 

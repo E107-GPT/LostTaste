@@ -11,7 +11,7 @@ using TMPro;
 /// </summary>
 public class DungeonScene : BaseScene
 {
-    Vector3 entrancePosition = new Vector3(0.09f, 0, -12.11f);
+    Vector3 entrancePosition = new Vector3(-100, 0, 0);
 
     // 모험 상태 패널
     [Header("[ 모험 상태 패널 ]")]
