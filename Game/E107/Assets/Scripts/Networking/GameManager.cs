@@ -36,8 +36,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         }   
     }
 
-    
+    public override void OnJoinedRoom()
+    {
+        Transform spawnpt = GameObject.Find("CampSpawn").transform;
 
+        PhotonNetwork.Instantiate("", spawnpt.position, spawnpt.rotation, 0);
+    }
     #endregion
 
     #region public method
@@ -74,10 +78,17 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         Debug.Log(PhotonNetwork.CurrentRoom.Players.Keys);
 
-        foreach(var playerId in PhotonNetwork.CurrentRoom.Players.Values)
+        List<Player> player = new List<Player>();
+        foreach(Player playerId in PhotonNetwork.CurrentRoom.Players.Values)
         {
-            string name = playerId.NickName;
-            if (playerId.IsLocal) name += " its me!";
+            player.Add(playerId);
+            Debug.Log(playerId.ToString());
+        }
+
+        for(int i = 0; i<PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        {
+            string name = player[i].NickName;
+            if (player[i].IsLocal) name += " its me!";
             Debug.Log(name);
         }
     }
