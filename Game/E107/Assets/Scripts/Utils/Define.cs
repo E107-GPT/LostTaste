@@ -49,6 +49,7 @@ public class Define
         NormalAttackEffect,
         RightAttackEffect,
         HeroSwordSkillEffect,
+        GalaxyZzzSkillEffect,
         MaxCount
     }
 
