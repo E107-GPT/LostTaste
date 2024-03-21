@@ -3253,7 +3253,6 @@ GameObject:
   - component: {fileID: 5171939451755479238}
   - component: {fileID: 8839550860657987544}
   - component: {fileID: 822551231851464871}
-  - component: {fileID: 6449608822714545066}
   - component: {fileID: 3513274756310638750}
   - component: {fileID: -6438838075291189861}
   m_Layer: 7
@@ -3319,7 +3318,10 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'head'\n\tTransform 'head'\n\tFrom animation
+    clip 'Die02'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -3410,19 +3412,6 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6449608822714545066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1229300052826786551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8591e61fa06fdd44f8f4ab7de74ab90f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectType: 2
 --- !u!114 &3513274756310638750
 MonoBehaviour:
   m_ObjectHideFlags: 0

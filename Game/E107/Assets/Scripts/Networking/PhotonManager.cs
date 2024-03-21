@@ -82,13 +82,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void DisconnectFromPhoton()
     {
         Transform pTrans = GameObject.Find("Player").GetComponent<Transform>();
-        GameObject.Find("Player").GetComponent<ObjectPersist>().DestroyPlayer();
         GameObject player = Resources.Load<GameObject>("Player");
         player = Instantiate(player);
         player.name = "Player";
-        player.GetComponent<ObjectPersist>().DestroyPlayer();
-        player.GetComponent<ObjectPersist>().objectType = ObjectPersist.ObjectType.player;
-        player.GetComponent<ObjectPersist>().Init();
         player.GetComponent<PlayerController>().Init();
         player.transform.position = pTrans.position;
         player.transform.rotation = pTrans.rotation;
@@ -259,7 +255,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 GameObject singlePlayer = GameObject.Find("Player");
                 if(singlePlayer != null)
                 {
-                    //singlePlayer.GetComponent<ObjectPersist>().DestroyPlayer();
                     Destroy(singlePlayer);
                 }
                 Debug.Log("두두등장");
@@ -269,8 +264,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 Debug.Log(player2);
                 player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
                 player2.name = "Player";
-                player2.GetComponent<ObjectPersist>().objectType = ObjectPersist.ObjectType.player;
-                player2.GetComponent<ObjectPersist>().Init();
                 player2.GetComponent<PlayerController>().Init();
                 GameObject.Find("MainCamera").GetComponent<CameraController>()._player = player2;
             }
