@@ -45,6 +45,10 @@ public class MonsterStat : Stat
                 _level = 1;
                 _detectRange = 10.0f;
                 break;
+            case UnitType.ToxicFlower:
+                _level = 1;
+                _detectRange = 10.0f;
+                break;
         }
     }
 }

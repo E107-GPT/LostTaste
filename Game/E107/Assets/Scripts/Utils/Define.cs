@@ -41,6 +41,7 @@ public class Define
         Slime,
         DrillDuck,
         TurtleSlime,
+        ToxicFlower,
     }
 
     public enum Effect
