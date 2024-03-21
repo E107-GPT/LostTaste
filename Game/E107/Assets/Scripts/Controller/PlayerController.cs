@@ -332,7 +332,7 @@ public class PlayerController : BaseController
             if (currentItem.gameObject.name == "Feast") return;
 
             DropCurrentItem();
-            ObtainFist();
+            ObtainWeapon("Feast");
         }
     }
 
@@ -456,8 +456,8 @@ public class PlayerController : BaseController
         transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
     }
 
-    public void ObtainFist()
+    public void ObtainWeapon(string weaponName)
     {
-        _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/Feast", _righthand.transform).GetComponent<Item>();
+        _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/" + weaponName, _righthand.transform).GetComponent<Item>();
     }
 }
