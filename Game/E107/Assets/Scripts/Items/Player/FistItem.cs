@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FeastItem : Item
+public class FistItem : Item
 {
     protected override void Init()
     {
