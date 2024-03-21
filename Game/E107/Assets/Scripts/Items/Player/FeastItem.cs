@@ -8,5 +8,6 @@ public class FeastItem : Item
     {
         base.Init();
         _leftSkill = gameObject.GetOrAddComponent<NormalAttackSkill>();
+        _rightSkill = gameObject.GetOrAddComponent<EmptySkill>();
     }
 }

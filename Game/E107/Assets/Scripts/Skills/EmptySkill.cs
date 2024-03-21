@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CucumberSkill : Skill
+/// <summary>
+/// 아무 것도 안 하는 스킬입니다.
+/// </summary>
+public class EmptySkill : Skill
 {
     protected override void Init()
     {
-        RequiredMp = 0;
-        SkillCoolDownTime = 1.0f;
+        SkillCoolDownTime = Mathf.Infinity;
     }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
@@ -16,13 +18,6 @@ public class CucumberSkill : Skill
         PlayerController playerController = player.GetComponent<PlayerController>();
 
         yield return null;
-
-        Destroy(this.gameObject);
-        Debug.Log("오이 냠");
-        Managers.Sound.Play("bite1");
-        playerController.ObtainFist();
-
-        playerController.Stat.Mp = 100;
         playerController.StateMachine.ChangeState(new IdleState(playerController));
     }
 }
