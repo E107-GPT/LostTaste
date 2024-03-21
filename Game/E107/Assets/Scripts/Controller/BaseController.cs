@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
+using Photon.Realtime;
 
 public abstract class BaseController : MonoBehaviour
 {
@@ -15,6 +17,11 @@ public abstract class BaseController : MonoBehaviour
 	// �������� ������ ���� �ð��� �����ϴ� ����
 	protected Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
 	protected float damageCooldown = 0.3f; // ���ظ� �ٽ� �ޱ������ ��� �ð�(��)
+	
+	
+	// ���� ��Ʈ��ũ
+	protected bool isConnected = false;
+	protected PhotonView photonView;
 
 
 	protected StateMachine _statemachine;
@@ -53,15 +60,22 @@ public abstract class BaseController : MonoBehaviour
 		_animator = GetComponent<Animator>();
 		_rigidbody = GetComponent<Rigidbody>();
 		_agent = GetComponent<NavMeshAgent>();
+		photonView = GetComponent<PhotonView>();
 		Init();
 	}
 
     private void Start()
     {
-		
-    }
+		isConnected = PhotonNetwork.IsConnected;
+
+
+	}
     void Update()
 	{
+		if(isConnected!= PhotonNetwork.IsConnected)
+        {
+			isConnected = PhotonNetwork.IsConnected;
+		}
 		_statemachine.Execute();
 	}
 

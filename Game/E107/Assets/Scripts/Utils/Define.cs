@@ -40,6 +40,8 @@ public class Define
         Player = 0,
         Slime,
         DrillDuck,
+        TurtleSlime,
+        ToxicFlower,
     }
 
     public enum Effect
@@ -48,6 +50,13 @@ public class Define
         RightAttackEffect,
         DrillDuckBeforeEffect,
         DrillDuckSlideEffect,
+        HeroSwordSkillEffect,
+        GalaxyZzzSkillEffect,
         MaxCount
+    }
+
+    public enum NPCType
+    {
+        Normal,
     }
 }

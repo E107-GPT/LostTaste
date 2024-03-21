@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Realtime;
+using Photon.Pun;
 
 public class PlayerController : BaseController
 {
@@ -48,7 +50,7 @@ public class PlayerController : BaseController
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
         Item first = Managers.Resource.Instantiate("Weapons/OHS01_Stick", _righthand.transform).GetComponent<Item>();
-        Item second = Managers.Resource.Instantiate("Weapons/Feast", _righthand.transform).GetComponent<Item>();
+        Item second = Managers.Resource.Instantiate("Weapons/0000_Fist", _righthand.transform).GetComponent<Item>();
         _inventory[1] = first;
         _inventory[2] = second;
 
@@ -57,12 +59,11 @@ public class PlayerController : BaseController
         second.gameObject.SetActive(false);
         
         ///
-
+    
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
-
         StartMpRecover();
 
         _statemachine.ChangeState(new IdleState(this));
@@ -106,7 +107,6 @@ public class PlayerController : BaseController
             _allRenderers[i].material.color = _originalColors[i];
         }
     }
-
     public override void EnterIdle()
     {
         base.EnterIdle();
@@ -190,9 +190,12 @@ public class PlayerController : BaseController
     public override void ExcuteDash()
     {
         base.ExcuteDash();
+        Debug.Log(_stat);
         _agent.Move(transform.forward * Time.deltaTime * _stat.MoveSpeed * 2);
         //transform.position += transform.forward * Time.deltaTime * _stat.MoveSpeed * 2;
     }
+
+    [PunRPC]
     public override void EnterSkill()
     {
         base.EnterSkill();
@@ -289,7 +292,7 @@ public class PlayerController : BaseController
             }
             
         }
-
+        if(isConnected) photonView.RPC("EnterSkill", RpcTarget.All);
     }
 
     void OnKeyboard()
@@ -297,13 +300,28 @@ public class PlayerController : BaseController
 
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 
+
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
+            if (isConnected)
+            {
+                photonView.RPC("ChangeMoveState", RpcTarget.All);
+            }
+            else
+            {
+                if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
+            }
+
         }
-        if (Input.GetKey(KeyCode.Space)) _statemachine.ChangeState(new DashState(this));
-
-
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (isConnected)
+            {
+                photonView.RPC("ChangeDashState", RpcTarget.All);
+            }
+            else
+                _statemachine.ChangeState(new DashState(this));
+        }
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
         {
@@ -326,22 +344,57 @@ public class PlayerController : BaseController
         if (_detectedInteractable != null && Input.GetKeyDown(KeyCode.E))
         {
             _detectedInteractable.OnInteracted(this.gameObject);
+
         }
 
         if (Input.GetKeyDown(KeyCode.B))
         {
             Item currentItem = _inventory[_currentItemNum];
             // 맨손이면 못버린다.
-            if (currentItem.gameObject.name == "Feast") return;
+            if (currentItem.gameObject.name == "0000_Fist") return;
 
             DropCurrentItem();
-            _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/Feast", _righthand.transform).GetComponent<Item>();
+            ObtainWeapon("0000_Fist");
         }
+
+
+
+    }
+
+	[PunRPC]
+    void ChangeMoveState()
+    {
+        if (_statemachine.CurState is not MoveState) 
+            _statemachine.ChangeState(new MoveState(this));
+    }
+
+	[PunRPC]
+    void ChangeDashState()
+    {
+        _statemachine.ChangeState(new DashState(this));
+    }
+
+    [PunRPC]
+    void ChangeIDLEState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    void OnHitEvent()
+    {
+      if(isConnected)
+            photonView.RPC("ChangeIDLEState", RpcTarget.All);
+
+      else
+            _statemachine.ChangeState(new IdleState(this));
+
     }
 
 
     void OnDashFinishedEvent()
     {
+        if (isConnected)
+            photonView.RPC("ChangeIDLEState", RpcTarget.All);
+        else
         _statemachine.ChangeState(new IdleState(this));
     }
 
@@ -387,7 +440,7 @@ public class PlayerController : BaseController
 
     public void DetectInteractable()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item") | LayerMask.GetMask("NPC"));
         float closestSqrDistance = Mathf.Infinity;
         Collider closestCollider = null;
 
@@ -419,7 +472,7 @@ public class PlayerController : BaseController
 
         Item currentItem = _inventory[_currentItemNum];
 
-        if (currentItem.gameObject.name == "Feast")
+        if (currentItem.gameObject.name == "0000_Fist")
         {
             Destroy(currentItem);
         }
@@ -457,5 +510,10 @@ public class PlayerController : BaseController
         Quaternion quat = Quaternion.LookRotation(dir);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, quat, 1.0f);
+    }
+
+    public void ObtainWeapon(string weaponName)
+    {
+        _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/" + weaponName, _righthand.transform).GetComponent<Item>();
     }
 }

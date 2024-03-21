@@ -51,18 +51,32 @@ public class Stat
                 _attackRange = 1.8f;
                 break;
             case Define.UnitType.Slime:
-                _hp = 100;
+                _hp = 200;
                 _maxHp = 100;
-                _attackDamage = 1;
-                _moveSpeed = 5.0f;
+                _attackDamage = 5;
+                _moveSpeed = 6.0f;
                 _attackRange = 1.4f;
                 break;
             case Define.UnitType.DrillDuck:
-                _hp = 500;
-                _maxHp = 500;
-                _attackDamage = 5;
+                _hp = 1000;
+                _maxHp = 1000;
+                _attackDamage = 15;
                 _moveSpeed = 8.0f;
                 _attackRange = 3.0f;
+                break;
+            case Define.UnitType.TurtleSlime:
+                _hp = 300;
+                _maxHp = 300;
+                _attackDamage = 10;
+                _moveSpeed = 5.0f;
+                _attackRange = 1.8f;
+                break;
+            case Define.UnitType.ToxicFlower:
+                _hp = 500;
+                _maxHp = 500;
+                _attackDamage = 15;
+                _moveSpeed = 7.0f;
+                _attackRange = 2.0f;
                 break;
         }
     }

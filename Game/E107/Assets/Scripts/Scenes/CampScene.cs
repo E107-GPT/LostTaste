@@ -11,24 +11,22 @@ using TMPro;
 /// </summary>
 public class CampScene : BaseScene
 {
-    // 지도 패널
-    [Header("[ 지도 패널 ]")]
-    public TextMeshProUGUI stageText; // 스테이지 이름 텍스트
-    Vector3 entrancePosition = new Vector3(0, 0, 0);
+    
+    Vector3 entrancePosition = new Vector3(-100, 0, 0);
 
     // Scene 초기화 시 호출되는 함수
     protected override void Init()
     {
         base.Init();
         SceneType = Define.Scene.Camp;
-        // 스테이지 텍스트를 캠프 이름으로 업데이트
-        stageText.text = "모험가의 캠프";
 
         // Cursor 설정
         SetCursor();
 
         Managers.Resource.Instantiate("Player/Player");
+
         //Managers.UI.ShowSceneUI<UI_Inven>();
+        MovePlayerToEntrance();
     }
 
    

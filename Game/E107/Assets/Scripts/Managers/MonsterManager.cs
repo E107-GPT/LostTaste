@@ -17,8 +17,14 @@ public class MonsterManager : MonoBehaviour
     public class MonsterSpawnInfo
     {
         public string mapName;
-        public GameObject monsterPrefab;
-        public Transform[] spawnPoints;
+        public SpawnPointInfo[] spawnPoints;
+    }
+
+    [System.Serializable]
+    public class SpawnPointInfo
+    {
+        public Transform spawnPoint;
+        public GameObject monsterPrefab; // 각 스폰 포인트별로 몬스터 프리팹 지정
     }
 
     public List<MonsterSpawnInfo> monsterSpawnInfos;
@@ -45,11 +51,11 @@ public class MonsterManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
 
             monstersInCurrentMap.RemoveAll(monster => monster == null);
-            Debug.Log(monstersInCurrentMap.Count);
-            
+            //Debug.Log(monstersInCurrentMap.Count);
+
             if (monstersInCurrentMap.Count == 0)
             {
-                Debug.Log("카운트 0되서 활성화 되야함");
+                //Debug.Log("카운트 0되서 활성화 되야함");
                 if (portalTrigger != null)
                 {
                     portalTrigger.ActivatePortal(true);
@@ -73,9 +79,10 @@ public class MonsterManager : MonoBehaviour
         {
             if (info.mapName == mapName)
             {
-                foreach (Transform spawnPoint in info.spawnPoints)
+                foreach (SpawnPointInfo spawnInfo in info.spawnPoints)
                 {
-                    GameObject clone = Instantiate(info.monsterPrefab, spawnPoint.position, spawnPoint.rotation);
+                    // 각 스폰 포인트별로 지정된 몬스터 프리팹으로 몬스터를 소환
+                    GameObject clone = Instantiate(spawnInfo.monsterPrefab, spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
                     monstersInCurrentMap.Add(clone);
                 }
                 break;

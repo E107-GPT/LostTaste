@@ -14,13 +14,14 @@ public class NormalAttackSkill : Skill
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
+        Root = transform.root;
+
         Debug.Log("Normal Attack");
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
         yield return new WaitForSeconds(0.3f);
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.NormalAttackEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
-        Managers.Sound.Play("swing1");
 
         
 
