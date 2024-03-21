@@ -42,6 +42,9 @@ public class Define
         DrillDuck,
         TurtleSlime,
         ToxicFlower,
+        Crab,
+        Fishman,
+        NagaWizard,
     }
 
     public enum Effect
