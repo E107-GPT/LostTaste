@@ -71,6 +71,13 @@ public class Stat
                 _moveSpeed = 4.0f;
                 _attackRange = 1.8f;
                 break;
+            case Define.UnitType.ToxicFlower:
+                _hp = 500;
+                _maxHp = 500;
+                _attackDamage = 10;
+                _moveSpeed = 5.2f;
+                _attackRange = 2.0f;
+                break;
         }
     }
 
