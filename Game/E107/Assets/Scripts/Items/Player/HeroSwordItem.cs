@@ -13,5 +13,6 @@ public class HeroSwordItem : Item
 
         _attackDamage = 50;
         _leftSkill = gameObject.GetOrAddComponent<NormalAttackSkill>();
+        _rightSkill = gameObject.GetOrAddComponent<HeroSwordSkill>();
     }
 }
