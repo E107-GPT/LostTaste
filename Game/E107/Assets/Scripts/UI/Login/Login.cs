@@ -6,51 +6,51 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 /// <summary>
-/// ����� ������ ������ Ŭ�����Դϴ�.
+/// 로그인 및 회원가입을 관리하는 클래스입니다.
 /// </summary>
 public class Login : MonoBehaviour
 {
-    // �α��� �Է� �ʵ�
-    [Header("[ �α��� �Է� �ʵ� ]")]
-    public TMP_InputField loginInputID; // �α��� ���̵� �Է� �ʵ�
-    public TMP_InputField loginInputPW; // �α��� ��й�ȣ �Է� �ʵ�
+    // 로그인 입력 필드
+    [Header("[ 로그인 입력 필드 ]")]
+    public TMP_InputField loginInputID; // 로그인 아이디 입력 필드
+    public TMP_InputField loginInputPW; // 로그인 비밀번호 입력 필드
 
-    // ȸ������ �Է� �ʵ�
-    [Header("[ ȸ������ �Է� �ʵ� ]")]
-    public TMP_InputField signUpInputID; // ȸ������ ���̵� �Է� �ʵ�
-    public TMP_InputField signUpInputNickname; // ȸ������ �г��� �Է� �ʵ�
-    public TMP_InputField signUpInputPW; // ȸ������ ��й�ȣ �Է� �ʵ�
-    public TMP_InputField signUpInputPWConfirm; // ȸ������ ��й�ȣ Ȯ�� �Է� �ʵ�
+    // 회원가입 입력 필드
+    [Header("[ 회원가입 입력 필드 ]")]
+    public TMP_InputField signUpInputID; // 회원가입 아이디 입력 필드
+    public TMP_InputField signUpInputNickname; // 회원가입 닉네임 입력 필드
+    public TMP_InputField signUpInputPW; // 회원가입 비밀번호 입력 필드
+    public TMP_InputField signUpInputPWConfirm; // 회원가입 비밀번호 확인 입력 필드
 
-    // ���� ��ư
-    [Header("[ ���� ��ư ]")]
-    public Button loginButton; // �α��� ��ư
-    public Button signUpButton; // ȸ������ ��ư
+    // 인증 버튼
+    [Header("[ 인증 버튼 ]")]
+    public Button loginButton; // 로그인 버튼
+    public Button signUpButton; // 회원가입 버튼
 
-    // �г� ��ü ��ư
-    [Header("[ �г� ��ü ��ư ]")]
-    public Button showLoginButton; // �α��� �г� Ȱ��ȭ ��ư
-    public Button showSignUpButton; // ȸ������ �г� Ȱ��ȭ ��ư
+    // 패널 버튼
+    [Header("[ 패널 버튼 ]")]
+    public Button showLoginButton; // 로그인 패널 표시 버튼
+    public Button showSignUpButton; // 회원가입 패널 표시 버튼
 
-    // �г�
-    [Header("[ �г� ]")]
-    public GameObject authenticationPanel; // ���� �г�
-    public GameObject loginPanel; // �α��� �г�
-    public GameObject signUpPanel; // ȸ������ �г�
-    public GameObject connectingPanel; // ���� �� �г�
+    // 패널
+    [Header("[ 패널 ]")]
+    public GameObject authenticationPanel; // 인증 패널
+    public GameObject loginPanel; // 로그인 패널
+    public GameObject signUpPanel; // 회원가입 패널
+    public GameObject connectingPanel; // 연결 중 패널
     // public GameObject nicknamePanel; // �г��� �г�
 
-    // �ؽ�Ʈ
-    [Header("[ �ؽ�Ʈ ]")]
-    public TextMeshProUGUI warningText; // ��� �ؽ�Ʈ
+    // 텍스트
+    [Header("[ 텍스트 ]")]
+    public TextMeshProUGUI warningText; // 경고 텍스트
     // public TextMeshProUGUI nicknameText; // �г��� �ؽ�Ʈ
 
     HTTPRequest request;
 
-    // ��ũ��Ʈ�� Ȱ��ȭ�Ǿ��� �� ȣ��Ǵ� �޼���
+    // 객체가 초기화될 때 호출되는 메서드
     private void Awake()
     {
-        // ��ư�� Ŭ�� �̺�Ʈ�� �߰�
+        // 버튼에 이벤트 추가
         if (loginButton != null)
             this.loginButton.onClick.AddListener(HandleLoginButtonClick);
 
@@ -63,52 +63,52 @@ public class Login : MonoBehaviour
         if (showSignUpButton != null)
             this.showSignUpButton.onClick.AddListener(ShowSignupPanel);
 
-        // ���� �� �г��� Ȱ��ȭ ������ ���, �ش� �г��� ��Ȱ��ȭ
+        // 연결 중 패널 숨기기, 해당 패널은 나중에 표시됨
         if (connectingPanel != null)
             connectingPanel.SetActive(false);
 
-        // ���� �Ŵ������� HTTPRequest ������Ʈ�� ã�� ������
+        // HTTPRequest 컴포넌트를 찾아서 할당
         request = GameObject.Find("GameManager").GetComponent<HTTPRequest>();        
     }
 
-    // �α��� ��ư Ŭ�� �� ȣ��Ǵ� �޼���
+    // 로그인 버튼 클릭시 호출되는 메서드
     public void HandleLoginButtonClick()
     {
-        // �Էµ� ���̵�� ��й�ȣ�� ������
+        // 입력된 아이디와 비밀번호 가져오기
         string id = loginInputID.text;
         string pw = loginInputPW.text;
 
-        // �α��� ������ ����� �α׷� ���
-        // Debug.LogFormat("�α��� ����: id: {0}, pw={1}", id, pw);
+        // 인증 정보 출력
+        // Debug.LogFormat("인증 정보: id: {0}, pw={1}", id, pw);
 
-        // ������ �α��� ��û�� ����
+        // 로그인 요청 보내기
         Dictionary<string, string> requestParam = new Dictionary<string, string>();
         requestParam.Add("accountId", id);
         requestParam.Add("password", pw);
         request.POSTCall("auth/login", requestParam);
     }
 
-    // ȸ������ ��ư Ŭ�� �� ȣ��Ǵ� �޼���
+    // 회원가입 버튼 클릭시 호출되는 메서드
     public void HandleSignUpButtonClick()
     {
-        // �Էµ� ���̵�, �г���, ��й�ȣ, ��й�ȣ Ȯ���� ������
+        // 입력된 정보 가져오기
         string id = signUpInputID.text;
         string nickname = signUpInputNickname.text;
         string pw = signUpInputPW.text;
         string pwConfirm = signUpInputPWConfirm.text;
 
-        // ��й�ȣ�� ��й�ȣ Ȯ���� ��ġ���� �ʴ� ���
+        // 비밀번호와 비밀번호 확인이 일치하는지 확인
         if (pw != pwConfirm)
         {
-            warningText.text = "��й�ȣ�� ��ġ���� �ʽ��ϴ�.";
-            warningText.gameObject.SetActive(true); // ��� ���� Ȱ��ȭ
+            warningText.text = "비밀번호가 일치하지 않습니다.";
+            warningText.gameObject.SetActive(true); // 경고 텍스트 표시
             return;
         }
 
-        // ȸ������ ������ ����� �α׷� ���
-        // Debug.LogFormat("ȸ������ ����: id={0}, nickname={1}, pw={2}", id, nickname, pw);
+        // 회원가입 정보 출력
+        // Debug.LogFormat("회원가입 정보: id={0}, nickname={1}, pw={2}", id, nickname, pw);
 
-        // ȸ������ ������ ������ ����
+        // 회원가입 요청 보내기
         Dictionary<string, string> requestParam = new Dictionary<string, string>();
         requestParam.Add("accountId", id);
         requestParam.Add("password", pw);
@@ -116,67 +116,67 @@ public class Login : MonoBehaviour
         request.POSTCall("user", requestParam);
     }
 
-    // �α��� ���� �� ȣ��Ǵ� �޼���
+    // 로그인 실패시 호출되는 메서드
     public void LoginFailure()
     {
-        warningText.text = "���̵�� ��й�ȣ�� Ȯ�����ּ���.";
-        warningText.gameObject.SetActive(true); // ��� ���� Ȱ��ȭ
+        warningText.text = "아이디 또는 비밀번호를 확인해주세요.";
+        warningText.gameObject.SetActive(true); // 경고 텍스트 표시
         return;
     }
 
-    // ȸ������ ���� �� ȣ��Ǵ� �޼���
+    // 회원가입 실패시 호출되는 메서드
     public void SignupFailure()
     {
-        warningText.text = "ȸ�����Կ� �����߽��ϴ�.";
-        warningText.gameObject.SetActive(true); // ��� ���� Ȱ��ȭ
+        warningText.text = "회원가입에 실패했습니다.";
+        warningText.gameObject.SetActive(true); // 경고 텍스트 표시
         return;
     }
 
-    // �α��� �г��� Ȱ��ȭ�ϰ� ȸ������ �г��� ��Ȱ��ȭ�ϴ� �޼���
+    // 로그인 패널 표시 및 회원가입 패널 숨기는 메서드
     public void ShowLoginPanel()
     {
-        // �Է� �ʵ� �ʱ�ȭ
+        // 입력 필드 초기화
         loginInputID.text = "";
         loginInputPW.text = "";
 
-        // �г� ����
+        // 패널 표시
         loginPanel.SetActive(true);
         signUpPanel.SetActive(false);
 
-        // ��� ���� ��Ȱ��ȭ
+        // 경고 텍스트 숨기기
         warningText.gameObject.SetActive(false);
     }
 
-    // ȸ������ �г��� Ȱ��ȭ�ϰ� �α��� �г��� ��Ȱ��ȭ�ϴ� �޼���
+    // 회원가입 패널 표시 및 로그인 패널 숨기는 메서드
     public void ShowSignupPanel()
     {
-        // �Է� �ʵ� �ʱ�ȭ
+        // 입력 필드 초기화
         signUpInputID.text = "";
         signUpInputNickname.text = "";
         signUpInputPW.text = "";
         signUpInputPWConfirm.text = "";
 
-        // �г� ����
+        // 패널 표시
         signUpPanel.SetActive(true);
         loginPanel.SetActive(false);
 
-        // ��� ���� ��Ȱ��ȭ
+        // 경고 텍스트 숨기기
         warningText.gameObject.SetActive(false);
     }
 
-    // ���� �� �г��� Ȱ��ȭ�ϴ� �޼���
+    // 연결 중 패널 표시하는 메서드
     public void ShowConnecting()
     {
         connectingPanel.SetActive(true);
     }
 
-    // ���� �� �г��� ��Ȱ��ȭ�ϴ� �޼���
+    // 연결 중 패널 숨기는 메서드
     public void CloseConnecting()
     {
         connectingPanel.SetActive(false);
     }
 
-    // ��� �޼����� ǥ���ϴ� �޼���
+    // 경고 메시지를 표시하는 메서드
     public void ShowWarnMessage(string message)
     {
         // Debug.Log(message);
@@ -184,10 +184,10 @@ public class Login : MonoBehaviour
         if (message.Length > 0)
             warningText.text = message;
         else
-            warningText.text = "�Է� ������ �߻��߽��ϴ�.";
+            warningText.text = "입력에 문제가 발생했습니다.";
     }
 
-    // �α��� �� ���� �г��� �ݴ� �޼���
+    // 인증 패널을 닫는 메서드
     public void CloseAuthenticationPanel()
     {
         connectingPanel.SetActive(false);

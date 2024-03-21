@@ -24,6 +24,7 @@ public class HUDManager : MonoBehaviour
 
     // 보스 상태
     [Header("[ 보스 상태 ]")]
+    public GameObject bossStatus;
     public TextMeshProUGUI bossNameText; // 보스 이름 텍스트
     public TextMeshProUGUI bossHealthText; // 보스 체력 텍스트
     public Slider bossHealthSlider; // 보스 체력 바 슬라이더
@@ -105,7 +106,7 @@ public class HUDManager : MonoBehaviour
         playerManaText.text = string.Format("{0:0} / {1:0}", Mp, MaxMp);
 
         // 플레이어가 사망할 경우 게임 오버 창을 활성화
-        if (Hp < 0)
+        if (Hp <= 0)
         {
             GameOverWindow.SetActive(true);
         }
@@ -128,6 +129,12 @@ public class HUDManager : MonoBehaviour
         int MaxHp = bossController.Stat.MaxHp;
         bossHealthSlider.value = (float)Hp / MaxHp;
         bossHealthText.text = string.Format("{0:0} / {1:0}", Hp, MaxHp);
+
+        // 보스가 사망할 경우 보스 상태 창을 비활성화
+        if (Hp <= 0)
+        {
+            bossStatus.SetActive(false);
+        }
     }
 }
 
