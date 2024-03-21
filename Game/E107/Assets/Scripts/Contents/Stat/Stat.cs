@@ -42,6 +42,7 @@ public class Stat
         switch (_unitType)
         {
             case Define.UnitType.Player:
+                // 100으로 돌려야함
                 _hp = 100;
                 _maxHp = 100;
                 _mp = 100;

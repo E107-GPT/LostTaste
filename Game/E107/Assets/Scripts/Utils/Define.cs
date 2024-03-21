@@ -55,6 +55,7 @@ public class Define
         DrillDuckSlideEffect,
         HeroSwordSkillEffect,
         GalaxyZzzSkillEffect,
+        WarriorClassSkillEffect,
         MaxCount
     }
 

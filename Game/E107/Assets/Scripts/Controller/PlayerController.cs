@@ -171,7 +171,8 @@ public class PlayerController : BaseController
 
         }
 
-        
+
+
         if (Input.anyKey == false) _statemachine.ChangeState(new IdleState(this));
 
     }
@@ -222,6 +223,11 @@ public class PlayerController : BaseController
             _lastRightSkillCastTime = Time.time;
 
 
+        }
+        else if (Input.GetKey(KeyCode.Q))
+        {
+            Debug.Log("QQQQQQQQ");
+            gameObject.GetOrAddComponent<WarriorClassSkill>().Cast(_stat.AttackDamage, 10.0f);
         }
 
 
@@ -290,6 +296,7 @@ public class PlayerController : BaseController
                 }
 
             }
+
             
         }
         if(isConnected) photonView.RPC("EnterSkill", RpcTarget.All);
@@ -355,6 +362,11 @@ public class PlayerController : BaseController
 
             DropCurrentItem();
             ObtainWeapon("0000_Fist");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            _statemachine.ChangeState(new SkillState(this));
         }
 
 
