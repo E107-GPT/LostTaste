@@ -60,9 +60,16 @@ public class Stat
             case Define.UnitType.DrillDuck:
                 _hp = 500;
                 _maxHp = 500;
-                _attackDamage = 5;
+                _attackDamage = 10;
                 _moveSpeed = 8.0f;
                 _attackRange = 3.0f;
+                break;
+            case Define.UnitType.TurtleSlime:
+                _hp = 300;
+                _maxHp = 300;
+                _attackDamage = 5;
+                _moveSpeed = 4.0f;
+                _attackRange = 1.8f;
                 break;
         }
     }
