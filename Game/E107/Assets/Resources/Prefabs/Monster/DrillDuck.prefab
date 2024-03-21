@@ -3594,7 +3594,7 @@ MonoBehaviour:
   _unitType: 2
   entityName: 
   _detectPlayer: {fileID: 0}
-  _targetPlayer: {fileID: 0}
+  _lastPatternTime: 0
 --- !u!136 &-7462142561957068251
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3630,6 +3630,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbf8532fa0f3a57448ab825f1068d5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skill: {fileID: 0}
+  _patterns: []
 --- !u!1 &3153326930071574659
 GameObject:
   m_ObjectHideFlags: 0
