@@ -17,10 +17,14 @@ public class MonsterController : BaseController
     [SerializeField]
     protected Transform _detectPlayer;        // 이동 타겟팅, 일반 공격 범위를 벗어나면 랜덤한 플레이어에게 이동 -> 지금은 가까운 플레이어에게 이동
     protected Ray _ray;                       // Gizmos에 사용
+    private Renderer[] _allRenderers;         // 캐릭터의 모든 Renderer 컴포넌트 -> 모든 render의 색을 변경!
+    private Color[] _originalColors;          // 원래의 머티리얼 색상 저장용 배열
+    private AudioSource _audioSource;         // MainCamera의 Audio Listener가 필요
 
     public MonsterStat Stat { get { return _stat; } }
     public MonsterInfo MonsterInfo { get { return _monsterInfo; } }
     public Transform DetectPlayer { get { return _detectPlayer; } }
+    public AudioSource Audio {  get { return _audioSource; } }
     
 
     public override void Init()
@@ -34,6 +38,18 @@ public class MonsterController : BaseController
         // Other Class
         _stat = new MonsterStat(_unitType);
         _monsterInfo = GetComponent<MonsterInfo>();
+
+        // 현재 몬스터의 모든 Renderer 컴포넌트를 찾는다.
+        // 각 Renderer의 원래 머티리얼 색상 저장
+        _allRenderers = GetComponentsInChildren<Renderer>();
+        _originalColors = new Color[_allRenderers.Length];
+        for (int i = 0; i < _allRenderers.Length; i++)
+        {
+            _originalColors[i] = _allRenderers[i].material.color;
+        }
+
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.playOnAwake = false;
     }
 
     private void FixedUpdate()
@@ -114,6 +130,9 @@ public class MonsterController : BaseController
             return;
         }
 
+        StartCoroutine(ChangeColorFromDamage());
+        _audioSource.Play();
+
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;
         lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
@@ -122,6 +141,23 @@ public class MonsterController : BaseController
         if (_stat.Hp <= 0)
         {
             _statemachine.ChangeState(new DieState(this));
+        }
+    }
+
+    IEnumerator ChangeColorFromDamage()
+    {
+        foreach (Renderer renderer in _allRenderers)
+        {
+            renderer.material.color = Color.red;
+        }
+
+        // 지정된 시간만큼 기다림
+        yield return new WaitForSeconds(0.2f);
+
+        // 모든 Renderer의 머티리얼 색상을 원래 색상으로 복구
+        for (int i = 0; i < _allRenderers.Length; i++)
+        {
+            _allRenderers[i].material.color = _originalColors[i];
         }
     }
 

@@ -53,7 +53,7 @@ public class Stat
             case Define.UnitType.Slime:
                 _hp = 100;
                 _maxHp = 100;
-                _attackDamage = 10;
+                _attackDamage = 1;
                 _moveSpeed = 5.0f;
                 _attackRange = 1.4f;
                 break;
