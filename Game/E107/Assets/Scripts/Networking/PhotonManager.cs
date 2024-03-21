@@ -83,7 +83,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Transform pTrans = GameObject.Find("Player").GetComponent<Transform>();
         GameObject player = Resources.Load<GameObject>("Player");
-        player = Instantiate(player);
+        player = Managers.Resource.Instantiate("Player/Player");
         player.name = "Player";
         player.GetComponent<PlayerController>().Init();
         player.transform.position = pTrans.position;
@@ -258,17 +258,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                     Destroy(singlePlayer);
                 }
                 Debug.Log("두두등장");
-                Transform spawnpt = GameObject.Find("CampSpawn").GetComponent<Transform>();
                 Debug.Log(i + " : " + PhotonNetwork.PlayerList[i].NickName);
-                GameObject player2 = PhotonNetwork.Instantiate("Player", spawnpt.position, spawnpt.rotation, 0);
+
+                GameObject player2 = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
+                
                 Debug.Log(player2);
-                player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
                 player2.name = "Player";
-                player2.GetComponent<PlayerController>().Init();
-                GameObject.Find("MainCamera").GetComponent<CameraController>()._player = player2;
+                player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
+                
+                GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player2;
             }
         }
     }
+    
 
     #endregion
 
