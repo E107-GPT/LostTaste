@@ -45,11 +45,11 @@ public class MonsterManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
 
             monstersInCurrentMap.RemoveAll(monster => monster == null);
-            Debug.Log(monstersInCurrentMap.Count);
+            //Debug.Log(monstersInCurrentMap.Count);
             
             if (monstersInCurrentMap.Count == 0)
             {
-                Debug.Log("카운트 0되서 활성화 되야함");
+                //Debug.Log("카운트 0되서 활성화 되야함");
                 if (portalTrigger != null)
                 {
                     portalTrigger.ActivatePortal(true);
