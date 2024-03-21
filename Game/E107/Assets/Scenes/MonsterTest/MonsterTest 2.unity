@@ -535,7 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterPrefab:
-  - {fileID: 3137786495578628170, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
+  - {fileID: 2512359250700414682, guid: 41d19f088bd30a94195cf37453a5229c, type: 3}
   spawnerPos:
   - {fileID: 1162841310}
 --- !u!1 &1644855953 stripped
@@ -555,6 +555,7 @@ GameObject:
   - component: {fileID: 1770046921}
   - component: {fileID: 1770046924}
   - component: {fileID: 1770046923}
+  - component: {fileID: 1770046925}
   m_Layer: 0
   m_Name: NavMeshSurface
   m_TagString: Untagged
@@ -669,6 +670,37 @@ MonoBehaviour:
   m_VoxelSize: 0.086666666
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 1745e4367c49c724eb5eb059751a70a5, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!114 &1770046925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770046920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 287145453
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 5bfbb6560b3a5524d98581114aca1b47, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &2011002276
 GameObject:

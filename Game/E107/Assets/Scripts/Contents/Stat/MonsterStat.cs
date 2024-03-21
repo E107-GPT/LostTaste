@@ -41,6 +41,10 @@ public class MonsterStat : Stat
                 _patternkDelay = 10.0f;     // 수정 필요
                 _patternDamage = 40;
                 break;
+            case UnitType.TurtleSlime:
+                _level = 1;
+                _detectRange = 10.0f;
+                break;
         }
     }
 }

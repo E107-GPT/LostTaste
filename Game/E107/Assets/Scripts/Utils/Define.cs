@@ -40,6 +40,7 @@ public class Define
         Player = 0,
         Slime,
         DrillDuck,
+        TurtleSlime,
     }
 
     public enum Effect
