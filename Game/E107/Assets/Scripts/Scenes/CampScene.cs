@@ -28,6 +28,7 @@ public class CampScene : BaseScene
         SetCursor();
 
         Managers.Resource.Instantiate("Player/Player");
+
         //Managers.UI.ShowSceneUI<UI_Inven>();
     }
 
