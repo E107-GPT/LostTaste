@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Realtime;
+using Photon.Pun;
 
 public class PlayerController : BaseController
 {
@@ -57,12 +59,11 @@ public class PlayerController : BaseController
         second.gameObject.SetActive(false);
         
         ///
-
+    
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
-
         StartMpRecover();
 
         _statemachine.ChangeState(new IdleState(this));
@@ -106,7 +107,6 @@ public class PlayerController : BaseController
             _allRenderers[i].material.color = _originalColors[i];
         }
     }
-
     public override void EnterIdle()
     {
         base.EnterIdle();
@@ -190,9 +190,12 @@ public class PlayerController : BaseController
     public override void ExcuteDash()
     {
         base.ExcuteDash();
+        Debug.Log(_stat);
         _agent.Move(transform.forward * Time.deltaTime * _stat.MoveSpeed * 2);
         //transform.position += transform.forward * Time.deltaTime * _stat.MoveSpeed * 2;
     }
+
+    [PunRPC]
     public override void EnterSkill()
     {
         base.EnterSkill();
@@ -286,7 +289,7 @@ public class PlayerController : BaseController
             }
             
         }
-
+        if(isConnected) photonView.RPC("EnterSkill", RpcTarget.All);
     }
 
     void OnKeyboard()
@@ -296,11 +299,54 @@ public class PlayerController : BaseController
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
+            if (isConnected)
+            {
+                photonView.RPC("ChangeMoveState", RpcTarget.All);
+            }
+            else
+            {
+                if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
+            }
+
         }
-        if (Input.GetKey(KeyCode.Space)) _statemachine.ChangeState(new DashState(this));
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (isConnected)
+            {
+                photonView.RPC("ChangeDashState", RpcTarget.All);
+            }
+            else
+                _statemachine.ChangeState(new DashState(this));
+        }
 
 
+    }
+
+	[PunRPC]
+    void ChangeMoveState()
+    {
+        if (_statemachine.CurState is not MoveState) 
+            _statemachine.ChangeState(new MoveState(this));
+    }
+
+	[PunRPC]
+    void ChangeDashState()
+    {
+        _statemachine.ChangeState(new DashState(this));
+    }
+
+    [PunRPC]
+    void ChangeIDLEState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    void OnHitEvent()
+    {
+      if(isConnected)
+            photonView.RPC("ChangeIDLEState", RpcTarget.All);
+
+      else
+            _statemachine.ChangeState(new IdleState(this));
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
         {
@@ -339,6 +385,9 @@ public class PlayerController : BaseController
 
     void OnDashFinishedEvent()
     {
+        if (isConnected)
+            photonView.RPC("ChangeIDLEState", RpcTarget.All);
+        else
         _statemachine.ChangeState(new IdleState(this));
     }
 
