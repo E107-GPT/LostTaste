@@ -50,7 +50,7 @@ public class PlayerController : BaseController
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
         Item first = Managers.Resource.Instantiate("Weapons/OHS01_Stick", _righthand.transform).GetComponent<Item>();
-        Item second = Managers.Resource.Instantiate("Weapons/Feast", _righthand.transform).GetComponent<Item>();
+        Item second = Managers.Resource.Instantiate("Weapons/0000_Fist", _righthand.transform).GetComponent<Item>();
         _inventory[1] = first;
         _inventory[2] = second;
 
@@ -375,10 +375,10 @@ public class PlayerController : BaseController
         {
             Item currentItem = _inventory[_currentItemNum];
             // 맨손이면 못버린다.
-            if (currentItem.gameObject.name == "Feast") return;
+            if (currentItem.gameObject.name == "0000_Fist") return;
 
             DropCurrentItem();
-            ObtainWeapon("Feast");
+            ObtainWeapon("0000_Fist");
         }
     }
 
@@ -465,7 +465,7 @@ public class PlayerController : BaseController
 
         Item currentItem = _inventory[_currentItemNum];
 
-        if (currentItem.gameObject.name == "Feast")
+        if (currentItem.gameObject.name == "0000_Fist")
         {
             Destroy(currentItem);
         }

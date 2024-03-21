@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public abstract class ConsumingSkill : Skill
 {
-    private string _weaponName = "Feast";
+    private string _weaponName = "0000_Fist";
 
     public string WeaponName { get { return _weaponName; } set { _weaponName = value; } }
 
