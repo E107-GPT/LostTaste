@@ -1177,6 +1177,8 @@ GameObject:
   - component: {fileID: 650889547}
   - component: {fileID: 650889546}
   - component: {fileID: 650889548}
+  - component: {fileID: 650889550}
+  - component: {fileID: 650889549}
   m_Layer: 0
   m_Name: NavMeshSurface
   m_TagString: Untagged
@@ -1260,6 +1262,68 @@ MonoBehaviour:
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 0173efdcfda088f4e9e637f917ed0b4f, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!114 &650889549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650889545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 658490984
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 901bf525b1bde584d8e2124464df60c3, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!114 &650889550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650889545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 287145453
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 3a8e6a012819225408b79744fd80baf7, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &680069399
 GameObject:
@@ -1633,62 +1697,43 @@ MonoBehaviour:
   portalTrigger: {fileID: 0}
   monsterSpawnInfos:
   - mapName: ForestMonster01
-    monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
     spawnPoints:
-    - {fileID: 8822031995614230054, guid: e2d7c53e0d262444da44274d41bfa8a7, type: 3}
-    - {fileID: 4449352096469290721, guid: edaf7a4e954cbc94fb6467f1a813b05b, type: 3}
-    - {fileID: 6866911146979053778, guid: df9263ddb33fe134485535d0041190ca, type: 3}
-    - {fileID: 8093548904307407548, guid: ce2ab83d9f34fad4b86a9bfbccd2ffc9, type: 3}
-    - {fileID: 1065662160265303074, guid: 25ae133531762e44298ef08e12cf300f, type: 3}
-    - {fileID: 2607443397195213054, guid: 165077bddfed13e4ea826c676d590be1, type: 3}
-  - mapName: ForestMonster02
-    monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    - spawnPoint: {fileID: 8294042441177810916, guid: 18101adc387701041b1201c3b88eeb85, type: 3}
+      monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    - spawnPoint: {fileID: 2561482555801139492, guid: 2926c11cfc327bf4b99d37e3727e241f, type: 3}
+      monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    - spawnPoint: {fileID: 2595191005960950320, guid: 4dadafc671d0b7a4ab70fb330d494633, type: 3}
+      monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    - spawnPoint: {fileID: 8773125294167077555, guid: cc8c389769e481e429691bfe2f994618, type: 3}
+      monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    - spawnPoint: {fileID: 2963190985794339483, guid: 1f77a33d12fab2742ae1de149eb8ad1d, type: 3}
+      monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    - spawnPoint: {fileID: 2663680801370949971, guid: 081b747a2c4bcba41a08c47d8a7c66d0, type: 3}
+      monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    - spawnPoint: {fileID: 7042399332715519347, guid: 4dc5b01f3adbc8e42895cd0caced978b, type: 3}
+      monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    - spawnPoint: {fileID: 3515846394936418485, guid: a292a02a18109544797aa0a3c27b4f95, type: 3}
+      monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
+    - spawnPoint: {fileID: 1697541426958405383, guid: fc19583de5fb291459d2ed66b7de0063, type: 3}
+      monsterPrefab: {fileID: 1004188656550069818, guid: 84ca3a68c4f7680459a01c512f104057, type: 3}
+    - spawnPoint: {fileID: 5106175034766119011, guid: 42c1dd8abb727a84086cd79dbcf183f1, type: 3}
+      monsterPrefab: {fileID: 2512359250700414682, guid: 41d19f088bd30a94195cf37453a5229c, type: 3}
+    - spawnPoint: {fileID: 3880570577322865881, guid: a6746700bc071c6449b488de301becbc, type: 3}
+      monsterPrefab: {fileID: 2512359250700414682, guid: 41d19f088bd30a94195cf37453a5229c, type: 3}
+    - spawnPoint: {fileID: 6285891704805672438, guid: 2bcb2a615f15e41419e77e9ecbbf3ed5, type: 3}
+      monsterPrefab: {fileID: 2512359250700414682, guid: 41d19f088bd30a94195cf37453a5229c, type: 3}
+  - mapName: ForestMonster01
     spawnPoints:
-    - {fileID: 4701084947166110882, guid: 6fd8a875b2aa6264db2a4cfabbc99408, type: 3}
-    - {fileID: 7518423981987725462, guid: ee36b2fb2f513684a8c9f6d9c0f4a0bf, type: 3}
-    - {fileID: 2460773758422773654, guid: c3b38e3e49b6f18419db466544759706, type: 3}
-    - {fileID: 2688355581427051472, guid: 82c84d49943427642b0e2085cab3c6e6, type: 3}
-    - {fileID: 3623580135063120685, guid: 1a92ff4d8b9b30b42a28d387b0457c81, type: 3}
-    - {fileID: 5140608910063311024, guid: 70538f906035bf641a27b3d6cd4e0e75, type: 3}
-    - {fileID: 5575797440012167498, guid: 71a69f39559da00479452e0fd5493cb8, type: 3}
-    - {fileID: 6219393085478161533, guid: bf58850f30ed2cf4db2e061003cd96f9, type: 3}
-    - {fileID: 2034852674262679320, guid: 69895605890162b408e34246c9bb591c, type: 3}
-    - {fileID: 3485975966184960243, guid: d8a53fb18ac96e942ba1f8b0bf4e72a7, type: 3}
-  - mapName: ForestBoss
-    monsterPrefab: {fileID: 3137786495578628170, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
+    - spawnPoint: {fileID: 0}
+      monsterPrefab: {fileID: 0}
+    - spawnPoint: {fileID: 0}
+      monsterPrefab: {fileID: 0}
+    - spawnPoint: {fileID: 0}
+      monsterPrefab: {fileID: 0}
+  - mapName: ForestMonster01
     spawnPoints:
-    - {fileID: 2781243537336599303, guid: c3e250b8a1929ee478211bafa5dee84b, type: 3}
-  - mapName: CoastMonster01
-    monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
-    spawnPoints:
-    - {fileID: 4346980023194657185, guid: 7a670bce7f2892a499f0e27da33c0f2b, type: 3}
-    - {fileID: 1199213804929143150, guid: 94009383cfe6e2e4bb26c51d0bf4c357, type: 3}
-    - {fileID: 132078578676268218, guid: 846ddf7cf5d3ee84e8aeaaa41be625b2, type: 3}
-    - {fileID: 429271471191934918, guid: 6788b83d1f61e80428d7405bca94112f, type: 3}
-    - {fileID: 6215532291108508236, guid: f695365b39694244ba1d63049c0ead01, type: 3}
-    - {fileID: 3155765404979487397, guid: 60b64d21e91356d4ebd00db36f76b5bf, type: 3}
-    - {fileID: 7274738422198754816, guid: 8780a3150e4121142a6eaea7de64afd9, type: 3}
-    - {fileID: 8555827413944132467, guid: 71fd2032757e40e4ba20ffd56d27199b, type: 3}
-    - {fileID: 7987354692941985352, guid: f7878c122f6db7345abec103a04a24e0, type: 3}
-  - mapName: CoastMonster02
-    monsterPrefab: {fileID: 1931298151966786, guid: 5435479cd1e14544c86f00c058fa8170, type: 3}
-    spawnPoints:
-    - {fileID: 2098218449190753442, guid: af46b4a81b10d31479a05e34c98e0acf, type: 3}
-    - {fileID: 1507536054698286473, guid: c0ce111af3c76434e9545d5bd504ade1, type: 3}
-    - {fileID: 7730226692261367218, guid: 00705c7e7bfb1a04d9d7a0c718f5cec6, type: 3}
-    - {fileID: 3858920230850002222, guid: cd95c3a70092bc54eafe295f2293391c, type: 3}
-    - {fileID: 6800997926308197134, guid: 1a682b75e0fe55f40a9a14c21e507059, type: 3}
-    - {fileID: 964504853504419909, guid: eb3516c59ee5b0646aba3ba420caaee6, type: 3}
-    - {fileID: 5568180798216139468, guid: 24cfe5d35280be84996efd10bc874047, type: 3}
-    - {fileID: 7300262513783260342, guid: 96b7feb8f6bb73e4a9f3e602f27e2e4c, type: 3}
-    - {fileID: 8787960243771640428, guid: e1e1567f324b690488551d825d49fe83, type: 3}
-    - {fileID: 439734452911901575, guid: 753a5bb4e3ef5e247bf243dc73d26ccd, type: 3}
-    - {fileID: 1100001515562206460, guid: e1bf85b593437c9459d42ed5d7920aae, type: 3}
-    - {fileID: 3641571236778964420, guid: 5ae3f268ff6f9994f8a2c9ea382c2a30, type: 3}
-  - mapName: CoastBoss
-    monsterPrefab: {fileID: 3137786495578628170, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
-    spawnPoints:
-    - {fileID: 921948570720335219, guid: 00b0bfb3efd600f4085c37f93a590e5f, type: 3}
+    - spawnPoint: {fileID: 0}
+      monsterPrefab: {fileID: 0}
 --- !u!4 &1064457669
 Transform:
   m_ObjectHideFlags: 0
@@ -1698,7 +1743,7 @@ Transform:
   m_GameObject: {fileID: 1064457667}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.645163, y: 6.829558, z: 168.86008}
+  m_LocalPosition: {x: 13.645163, y: 6.829558, z: 147.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
