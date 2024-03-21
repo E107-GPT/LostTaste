@@ -14,6 +14,7 @@ public class RightAttackSkill :Skill
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
         Debug.Log("Right Skill");
+        Root = transform.root;
 
         Vector3 dir = Root.forward;
         Root.GetComponent<Animator>().CrossFade("ATTACK2", 0.1f, -1, 0);

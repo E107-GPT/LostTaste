@@ -8,7 +8,7 @@ using UnityEngine;
 public class ItemDropTables
 {
     public static readonly GameObject[] COMMON_ITEMS = new GameObject[] {
-        Load("OHS01_Stick"),    // test
+        Load("0001_Cucumber"),
     };
 
     public static readonly GameObject[] UNCOMMON_ITEMS = new GameObject[] {
