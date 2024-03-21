@@ -126,10 +126,10 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void ExcuteDash() { }
 	public virtual void ExitDash() { }
 
-    // DrillDuckReadyState - not loop
-    public virtual void EnterDrillDuckReadyState() { }
-	public virtual void ExcuteDrillDuckReadyState() { }
-	public virtual void ExitDrillDuckReadyState() { }
+    // DrillDuckSlideBeforeState - not loop
+    public virtual void EnterDrillDuckSlideBeforeState() { }
+	public virtual void ExcuteDrillDuckSlideBeforeState() { }
+	public virtual void ExitDrillDuckSlideBeforeState() { }
 
     // DrillDuckSlideState - not loop
     public virtual void EnterDrillDuckSlideState() { }

@@ -47,7 +47,8 @@ public class DrillDuckController : MonsterController
         int rand = Random.Range(0, 101);
         if (rand <= 30)
         {
-            _statemachine.ChangeState(new DrillDuckSlideState(this));
+            _statemachine.ChangeState(new DrillDuckSlideBeforeState(this));
+            //_statemachine.ChangeState(new DrillDuckSlideState(this));
         }
         else if (rand <= 100)
         {
@@ -84,14 +85,45 @@ public class DrillDuckController : MonsterController
         base.ExitSkill();
     }
 
-    // Silde
-    public override void EnterDrillDuckSlideState()
+
+    // Before Slide
+    public override void EnterDrillDuckSlideBeforeState()
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
-
         Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
         Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
+        _agent.SetDestination(destPos);
+
+        _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
+        _animator.CrossFade("BeforeSlide", 0.2f, -1, 0);
+        _animator.speed = _animator.speed / 2.5f;
+    }
+    public override void ExcuteDrillDuckSlideBeforeState()
+    {
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("BeforeSlide"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+            if (aniTime >= 1.0f)
+            {
+                _monsterInfo.Patterns[1].DeActiveCollider();
+                _statemachine.ChangeState(new DrillDuckSlideState(this));
+            }
+        }
+    }
+    public override void ExitDrillDuckSlideBeforeState()
+    {
+        _animator.speed *= 2.5f;
+    }
+
+    // Silde
+    public override void EnterDrillDuckSlideState()
+    {
+        //_agent.velocity = Vector3.zero;
+        //_agent.speed = 0;
+        //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+        //Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
 
         // 경로상의 플레이어를 밀쳐내면서 돌진
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
@@ -100,20 +132,19 @@ public class DrillDuckController : MonsterController
 
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
 
-        _agent.SetDestination(destPos);
+        //_agent.SetDestination(destPos);
         _animator.CrossFade("Slide", 0.2f, -1, 0);
     }
     public override void ExcuteDrillDuckSlideState()
     {
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
-            
-
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime <= 0.1f)
+            if (aniTime <= 0.2f)
             {
                 _agent.speed = _stat.MoveSpeed;
+                //Managers.Effect.Play
             }
             else if (aniTime <= 0.5f)
             {

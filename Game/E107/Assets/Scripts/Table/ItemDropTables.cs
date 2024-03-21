@@ -13,10 +13,11 @@ public class ItemDropTables
 
     public static readonly GameObject[] UNCOMMON_ITEMS = new GameObject[] {
         Load("0012_HeroSword"),
+        Load("0028_BubbleWand"),
     };
 
     public static readonly GameObject[] RARE_ITEMS = new GameObject[] {
-        Load("OHS03_Sword"),    // test
+        Load("0014_GalaxyZzz"),
     };
 
     public static readonly GameObject[] EPIC_ITEMS = new GameObject[] {

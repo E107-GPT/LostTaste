@@ -41,13 +41,22 @@ public class Define
         Slime,
         DrillDuck,
         TurtleSlime,
+        ToxicFlower,
     }
 
     public enum Effect
     {
         NormalAttackEffect,
-        RightAttackEffect,
+        BubbleWandSkillEffect,
+        DrillDuckBeforeEffect,
+        DrillDuckSlideEffect,
         HeroSwordSkillEffect,
+        GalaxyZzzSkillEffect,
         MaxCount
+    }
+
+    public enum NPCType
+    {
+        Normal,
     }
 }

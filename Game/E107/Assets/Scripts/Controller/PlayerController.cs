@@ -49,7 +49,7 @@ public class PlayerController : BaseController
         _inventory = new Item[3];
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
-        Item first = Managers.Resource.Instantiate("Weapons/OHS01_Stick", _righthand.transform).GetComponent<Item>();
+        Item first = Managers.Resource.Instantiate("Weapons/0028_BubbleWand", _righthand.transform).GetComponent<Item>();
         Item second = Managers.Resource.Instantiate("Weapons/0000_Fist", _righthand.transform).GetComponent<Item>();
         _inventory[1] = first;
         _inventory[2] = second;
@@ -245,7 +245,10 @@ public class PlayerController : BaseController
     {
         base.EnterDie();
         _animator.CrossFade("DIE", 0.1f);
-        
+
+        // 추가한 부분
+        GetComponent<Collider>().enabled = false;
+        _agent.enabled = false;
     }
 
 
@@ -341,6 +344,7 @@ public class PlayerController : BaseController
         if (_detectedInteractable != null && Input.GetKeyDown(KeyCode.E))
         {
             _detectedInteractable.OnInteracted(this.gameObject);
+
         }
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -432,7 +436,7 @@ public class PlayerController : BaseController
 
     public void DetectInteractable()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item") | LayerMask.GetMask("NPC"));
         float closestSqrDistance = Mathf.Infinity;
         Collider closestCollider = null;
 
