@@ -31,15 +31,15 @@ public class MonsterStat : Stat
 
         switch (unitType)
         {
-            case UnitType.Slime:
-                _level = 1;
-                _detectRange = 10.0f;
-                break;
             case UnitType.DrillDuck:
                 _level = 1;
                 _detectRange = 20.0f;
                 _patternkDelay = 10.0f;     // 수정 필요
                 _patternDamage = 40;
+                break;
+            case UnitType.Slime:
+                _level = 1;
+                _detectRange = 10.0f;
                 break;
             case UnitType.TurtleSlime:
                 _level = 1;
@@ -48,6 +48,18 @@ public class MonsterStat : Stat
             case UnitType.ToxicFlower:
                 _level = 1;
                 _detectRange = 10.0f;
+                break;
+            case UnitType.Crab:
+                _level = 1;
+                _detectRange = 10.0f;
+                break;
+            case UnitType.Fishman:
+                _level = 1;
+                _detectRange = 13.0f;
+                break;
+            case UnitType.NagaWizard:
+                _level = 1;
+                _detectRange = 13.0f;
                 break;
         }
     }
