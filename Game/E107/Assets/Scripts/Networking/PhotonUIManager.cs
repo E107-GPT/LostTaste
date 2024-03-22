@@ -7,8 +7,9 @@ public class PhotonUIManager : MonoBehaviour
 {
     #region private constants
     string roomName = "Room Name";
-    int password = 0;
+    string password;
     bool ispassword = false;
+    string description;
 
     [SerializeField]
     string userName = "player";
@@ -24,6 +25,14 @@ public class PhotonUIManager : MonoBehaviour
     public void SetName(string uname)
     {
         userName = uname;
+    }
+    public void SetDescription(string description)
+    {
+        this.description = description;
+    }
+    public string GetDescription()
+    {
+        return description;
     }
 
     public string GetName()
@@ -45,10 +54,11 @@ public class PhotonUIManager : MonoBehaviour
     public void SetPassword(string pw)
     {
         if (pw.Length <= 0) return;
-        password = int.Parse(pw);
+        //password = int.Parse(pw);
+        password = pw;
         ispassword = true;
     }
-    public int GetPassword()
+    public string GetPassword()
     {
         return password;
     }
@@ -60,7 +70,7 @@ public class PhotonUIManager : MonoBehaviour
     public void SetEnterPassword()
     {
         Debug.Log((password));
-        GameObject.Find("GameManager").GetComponent<PhotonManager>().PasswordValidation(password);
+        GameObject.Find("GameManager").GetComponent<PhotonManager>().PasswordValidation();
     }
 
 

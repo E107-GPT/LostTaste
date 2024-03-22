@@ -12675,9 +12675,9 @@ GameObject:
   - component: {fileID: 9092953402134175917}
   - component: {fileID: 6886580020052053487}
   - component: {fileID: 6849146749108825002}
-  - component: {fileID: 8435311582101382974}
-  - component: {fileID: -7408511348713307785}
-  - component: {fileID: -5328946596131718810}
+  - component: {fileID: -2222246906417925215}
+  - component: {fileID: -1502292895877167693}
+  - component: {fileID: 5754516753356815874}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -12821,21 +12821,7 @@ CapsuleCollider:
   m_Height: 1.8645765
   m_Direction: 1
   m_Center: {x: 0, y: 0.43228823, z: 0}
---- !u!114 &8435311582101382974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5460575400253774540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62e4fa9aa1508ad439676f69635cdb4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitType: 0
-  entityName: 
---- !u!114 &-7408511348713307785
+--- !u!114 &-2222246906417925215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12854,11 +12840,11 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: -5328946596131718810}
+  - {fileID: -1502292895877167693}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-5328946596131718810
+--- !u!114 &-1502292895877167693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12874,6 +12860,20 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &5754516753356815874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460575400253774540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89da44676f860d3418aadcb2121f80c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitType: 0
+  entityName: 
 --- !u!1 &5484749937077794716
 GameObject:
   m_ObjectHideFlags: 0
