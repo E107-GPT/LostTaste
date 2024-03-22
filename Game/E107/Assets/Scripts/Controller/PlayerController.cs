@@ -51,8 +51,10 @@ public class PlayerController : BaseController
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
         Item first = Managers.Resource.Instantiate("Weapons/0028_BubbleWand", _righthand.transform).GetComponent<Item>();
+
         first.OnEquipped();
-        Item second = Managers.Resource.Instantiate("Weapons/0000_Fist", _righthand.transform).GetComponent<Item>();
+        Item second = Managers.Resource.Instantiate("Weapons/0012_HeroSword", _righthand.transform).GetComponent<Item>();
+
         second.OnEquipped();
         _inventory[1] = first;
         _inventory[2] = second;
@@ -92,6 +94,12 @@ public class PlayerController : BaseController
     {
         base.ExcuteIdle();
         DetectInteractable();
+    }
+
+    public override void ExitIdle()
+    {
+        base.ExitIdle();
+        //_detectedInteractable = null;
     }
 
     public override void EnterMove()
@@ -312,14 +320,6 @@ public class PlayerController : BaseController
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            //if (isConnected)
-            //{
-            //    photonView.RPC("ChangeMoveState", RpcTarget.All);
-            //}
-            //else
-            //{
-            //    if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
-            //}
             if (_statemachine.CurState is not MoveState)
             {
                 _statemachine.ChangeState(new MoveState(this));
@@ -329,13 +329,6 @@ public class PlayerController : BaseController
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            //if (isConnected)
-            //{
-            //    photonView.RPC("ChangeDashState", RpcTarget.All);
-            //}
-            //else
-            //    _statemachine.ChangeState(new DashState(this));
-
             _statemachine.ChangeState(new DashState(this));
             if (isConnected) photonView.RPC("ChangeDashState", RpcTarget.Others);
         }
@@ -352,7 +345,7 @@ public class PlayerController : BaseController
             if (photonView.IsMine) photonView.RPC("ChangeSecondItem", RpcTarget.Others);
         }
 
-        // 무기 줍기
+        // 상호작용
         if (_detectedInteractable != null && Input.GetKeyDown(KeyCode.E))
         {
             _detectedInteractable.OnInteracted(this.gameObject);
@@ -410,6 +403,11 @@ public class PlayerController : BaseController
         _statemachine.ChangeState(new SkillState(this));
     }
     [PunRPC]
+    void ChageDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
+    [PunRPC]
     void ChangeFirstItem()
     {
         ChangeToItem(1);
@@ -418,6 +416,29 @@ public class PlayerController : BaseController
     void ChangeSecondItem()
     {
         ChangeToItem(2);
+    }
+    [PunRPC]
+    void EquipItemRPC(string itemName)
+    {
+
+        //ObtainWeapon(itemName);
+        _detectedInteractable.OnInteracted(this.gameObject);
+        //GameObject go = Managers.Resource.Instantiate($"Weapons/{itemName}", _righthand.transform);
+
+
+    }
+    [PunRPC]
+    void DropCurrentItemRPC()
+    {
+        Item currentItem = _inventory[_currentItemNum];
+        ObtainWeapon("0000_Fist");
+        GameObject go = Managers.Resource.Instantiate($"Weapons/{currentItem.gameObject.name}", gameObject.transform);
+        go.transform.position = gameObject.transform.position;
+        go.transform.SetParent(null);
+        go.transform.rotation = new Quaternion();
+        go.GetComponent<Item>().OnDropped();
+
+        Managers.Resource.Destroy(currentItem.gameObject);
     }
 
     #endregion
@@ -456,6 +477,7 @@ public class PlayerController : BaseController
         if (_stat.Hp <= 0)
         {
             _statemachine.ChangeState(new DieState(this));
+            if (photonView.IsMine) photonView.RPC("ChageDieState", RpcTarget.Others);
         }
 
     }
@@ -503,6 +525,9 @@ public class PlayerController : BaseController
     public void EquipItem(Item item)
     {
         item.transform.parent = _righthand.transform;
+        item.transform.SetParent(_righthand.transform);
+
+        Debug.Log(_righthand.transform.root.name);
 
         Item currentItem = _inventory[_currentItemNum];
 
@@ -518,6 +543,7 @@ public class PlayerController : BaseController
         _inventory[_currentItemNum] = item;
         item.OnEquipped();
         Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
+        if (photonView.IsMine) photonView.RPC("EquipItemRPC", RpcTarget.Others, item.gameObject.name);
     }
 
     public void DropCurrentItem()
@@ -526,8 +552,11 @@ public class PlayerController : BaseController
 
         currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
         currentItem.gameObject.transform.parent = null;
-        currentItem.gameObject.transform.position = gameObject.transform.position;
+        currentItem.gameObject.transform.position = gameObject.transform.root.position;
+        currentItem.gameObject.transform.rotation = new Quaternion();
         currentItem.OnDropped();
+
+        if (photonView.IsMine) photonView.RPC("DropCurrentItemRPC", RpcTarget.Others);
     }
 
     public void LookMousePosition()
@@ -549,6 +578,7 @@ public class PlayerController : BaseController
     public void ObtainWeapon(string weaponName)
     {
         _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/" + weaponName, _righthand.transform).GetComponent<Item>();
+        _inventory[_currentItemNum].OnEquipped();
     }
 
     public void StartMpRecover()

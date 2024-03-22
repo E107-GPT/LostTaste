@@ -37,6 +37,7 @@ public class Item : MonoBehaviour, IPlayerInteractable
 
     protected virtual void Init()
     {
+
         _itemCollider = gameObject.AddComponent<CapsuleCollider>();
         if (isDropped)
         {
