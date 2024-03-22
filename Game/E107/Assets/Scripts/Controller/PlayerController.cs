@@ -216,18 +216,18 @@ public class PlayerController : BaseController
         {
             case Define.SkillType.LeftSkill:
                 _inventory[_currentItemNum].LeftSKillCast();
-                if(photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.LeftSkill);
+                if(photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.LeftSkill, gameObject.transform.rotation);
                 break;
             case Define.SkillType.RightSkill:
                 _inventory[_currentItemNum].RightSkillCast();
                 _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
-                if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.RightSkill);
+                if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.RightSkill, gameObject.transform.rotation);
                 Debug.Log(_stat.Mp);
                 _lastRightSkillCastTime = Time.time;
                 break;
             case Define.SkillType.ClassSkill:
                 gameObject.GetOrAddComponent<WarriorClassSkill>().Cast(_stat.AttackDamage, 10.0f);
-                if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.ClassSkill);
+                if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.ClassSkill, gameObject.transform.rotation);
                 break;
         }
 
@@ -433,8 +433,9 @@ public class PlayerController : BaseController
     }
 
     [PunRPC]
-    void ChageSkillState(Define.SkillType skillType)
+    void ChageSkillState(Define.SkillType skillType, Quaternion _rotation)
     {
+        gameObject.transform.rotation = _rotation;
         _curSkill = skillType;
         _statemachine.ChangeState(new SkillState(this));
     }
