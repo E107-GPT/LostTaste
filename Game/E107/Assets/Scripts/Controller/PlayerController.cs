@@ -16,6 +16,7 @@ public class PlayerController : BaseController
     IPlayerInteractable _detectedInteractable;
     GameObject _righthand;
     Coroutine _mpRecoverCoroutine;
+    Define.SkillType _curSkill = Define.SkillType.None;
 
 
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
@@ -50,7 +51,9 @@ public class PlayerController : BaseController
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
         Item first = Managers.Resource.Instantiate("Weapons/0028_BubbleWand", _righthand.transform).GetComponent<Item>();
+        first.OnEquipped();
         Item second = Managers.Resource.Instantiate("Weapons/0000_Fist", _righthand.transform).GetComponent<Item>();
+        second.OnEquipped();
         _inventory[1] = first;
         _inventory[2] = second;
 
@@ -202,33 +205,50 @@ public class PlayerController : BaseController
 
     public override void EnterSkill()
     {
+        //if (isConnected && photonView.IsMine == false) return;
         base.EnterSkill();
 
-        LookMousePosition();
+        if (photonView.IsMine) LookMousePosition();
 
         // 왼쪽클릭
 
-        if (Input.GetMouseButton(0))
+        switch (_curSkill)
         {
-            _inventory[_currentItemNum].LeftSKillCast();
-
-
+            case Define.SkillType.LeftSkill:
+                _inventory[_currentItemNum].LeftSKillCast();
+                if(photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.LeftSkill);
+                break;
+            case Define.SkillType.RightSkill:
+                _inventory[_currentItemNum].RightSkillCast();
+                _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
+                if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.RightSkill);
+                Debug.Log(_stat.Mp);
+                _lastRightSkillCastTime = Time.time;
+                break;
+            case Define.SkillType.ClassSkill:
+                gameObject.GetOrAddComponent<WarriorClassSkill>().Cast(_stat.AttackDamage, 10.0f);
+                if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.ClassSkill);
+                break;
         }
-        else if (Input.GetMouseButton(1))
-        {
 
-            _inventory[_currentItemNum].RightSkillCast();
-            _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
-            Debug.Log(_stat.Mp);
-            _lastRightSkillCastTime = Time.time;
+        //if (Input.GetMouseButton(0))
+        //{
+            
 
 
-        }
-        else if (Input.GetKey(KeyCode.Q))
-        {
-            Debug.Log("QQQQQQQQ");
-            gameObject.GetOrAddComponent<WarriorClassSkill>().Cast(_stat.AttackDamage, 10.0f);
-        }
+        //}
+        //else if (Input.GetMouseButton(1))
+        //{
+
+
+
+
+        //}
+        //else if (Input.GetKey(KeyCode.Q))
+        //{
+        //    Debug.Log("QQQQQQQQ");
+            
+        //}
 
 
 
@@ -280,8 +300,10 @@ public class PlayerController : BaseController
         {
             if (Input.GetMouseButton(0))
             {
+                _curSkill = Define.SkillType.LeftSkill;
                 _statemachine.ChangeState(new SkillState(this));
-                if(isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
+                
+                //if(isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
 
             }
             else if (Input.GetMouseButton(1))
@@ -291,9 +313,11 @@ public class PlayerController : BaseController
                     Debug.Log($"Rquired Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
                     if(_lastRightSkillCastTime == 0 || Time.time - _lastRightSkillCastTime >= _inventory[_currentItemNum].RightSkill.SkillCoolDownTime)
                     {
-
+                        _curSkill = Define.SkillType.RightSkill;
                         _statemachine.ChangeState(new SkillState(this));
-                        if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
+                        
+
+                        //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
                     }
 
                 }
@@ -379,8 +403,9 @@ public class PlayerController : BaseController
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            _curSkill = Define.SkillType.ClassSkill;
             _statemachine.ChangeState(new SkillState(this));
-            if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
+            //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
         }
 
 
@@ -405,6 +430,13 @@ public class PlayerController : BaseController
     {
         Debug.Log("STOP PLZ");
         _statemachine.ChangeState(new IdleState(this));
+    }
+
+    [PunRPC]
+    void ChageSkillState(Define.SkillType skillType)
+    {
+        _curSkill = skillType;
+        _statemachine.ChangeState(new SkillState(this));
     }
 
 
@@ -540,7 +572,9 @@ public class PlayerController : BaseController
         Managers.Input.KeyAction -= OnKeyboard;
         
         Managers.Input.MouseAction -= OnMouseClicked;
-        
+        StopMpRecover();
+
+
     }
 
 }
