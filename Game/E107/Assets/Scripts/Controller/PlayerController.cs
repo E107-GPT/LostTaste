@@ -494,7 +494,7 @@ public class PlayerController : BaseController
         Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
     }
 
-    public void DropCurrentItem()
+    public Item DropCurrentItem()
     {
         Item currentItem = _inventory[_currentItemNum];
 
@@ -502,6 +502,8 @@ public class PlayerController : BaseController
         currentItem.gameObject.transform.parent = null;
         currentItem.gameObject.transform.position = gameObject.transform.position;
         currentItem.OnDropped();
+
+        return currentItem;
     }
 
     public void LookMousePosition()
