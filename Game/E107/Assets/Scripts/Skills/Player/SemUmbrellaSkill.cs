@@ -9,31 +9,29 @@ public class SemUmbrellaSkill : Skill
 
     protected override void Init()
     {
-        SkillCoolDownTime = 12.0f;
-        RequiredMp = 30;
+        SkillCoolDownTime = 1.0f;
+        RequiredMp = 0;
     }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
-        Root = transform.root;
+        GameObject player = transform.root.gameObject;
+        PlayerController playerController = player.GetComponent<PlayerController>();
 
         Debug.Log("SEM Umbrella Attack");
         yield return new WaitForSeconds(0.5f);
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.StrongSwingEffect, Root);
+        playerController.StateMachine.ChangeState(new IdleState(playerController));
+
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SemUmbrellaSkillEffect, player.transform);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, DAMAGE, _seq);
 
-        Vector3 offset = Root.forward.normalized * 1.5f;
-        ps.transform.position += offset;
-        skillObj.position += offset;
-
-        skillObj.localScale = SCALE;
         skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(4.0f);
         Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
     }

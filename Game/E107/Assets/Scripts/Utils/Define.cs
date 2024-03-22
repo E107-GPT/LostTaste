@@ -56,6 +56,7 @@ public class Define
         StrongSwingEffect,
         GalaxyZzzSkillEffect,
         WarriorClassSkillEffect,
+        SemUmbrellaSkillEffect,
         MaxCount
     }
 
