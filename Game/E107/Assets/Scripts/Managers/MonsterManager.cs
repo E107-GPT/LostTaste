@@ -55,7 +55,7 @@ public class MonsterManager : MonoBehaviour
 
             if (monstersInCurrentMap.Count == 0)
             {
-                //Debug.Log("카운트 0되서 활성화 되야함");
+                // 몬스터가 모두 제거되면 포탈 활성화
                 if (portalTrigger != null)
                 {
                     portalTrigger.ActivatePortal(true);
