@@ -49,7 +49,7 @@ public class ppcontroller : BaseController
         _inventory = new Item[3];
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
-        Item first = Managers.Resource.Instantiate("Weapons/OHS01_Stick", _righthand.transform).GetComponent<Item>();
+        Item first = Managers.Resource.Instantiate("Weapons/0028_BubbleWand", _righthand.transform).GetComponent<Item>();
         Item second = Managers.Resource.Instantiate("Weapons/0000_Fist", _righthand.transform).GetComponent<Item>();
         _inventory[1] = first;
         _inventory[2] = second;
@@ -59,7 +59,7 @@ public class ppcontroller : BaseController
         second.gameObject.SetActive(false);
 
         ///
-        if (photonView.IsMine)
+        if (!isConnected || photonView.IsMine)
         {
             Managers.Input.KeyAction -= OnKeyboard;
             Managers.Input.KeyAction += OnKeyboard;
@@ -213,7 +213,6 @@ public class ppcontroller : BaseController
     public override void EnterSkill()
     {
         base.EnterSkill();
-        Debug.Log("이거 이상함");
         // TODO: animation도 어떻게 해줘야겠지?
 
 
