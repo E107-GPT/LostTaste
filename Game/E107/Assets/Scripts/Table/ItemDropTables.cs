@@ -9,6 +9,7 @@ public class ItemDropTables
 {
     public static readonly GameObject[] COMMON_ITEMS = new GameObject[] {
         Load("0001_Cucumber"),
+        Load("0027_Log"),
     };
 
     public static readonly GameObject[] UNCOMMON_ITEMS = new GameObject[] {
