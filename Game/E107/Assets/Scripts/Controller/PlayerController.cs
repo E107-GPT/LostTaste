@@ -126,6 +126,7 @@ public class PlayerController : BaseController
     }
     public override void ExcuteMove()
     {
+        if (isConnected && photonView.IsMine == false) return;
         base.ExcuteMove();
         if (Input.GetKey(KeyCode.W))
         {
@@ -173,7 +174,11 @@ public class PlayerController : BaseController
 
 
 
-        if (Input.anyKey == false) _statemachine.ChangeState(new IdleState(this));
+        if (Input.anyKey == false)
+        {
+            _statemachine.ChangeState(new IdleState(this));
+            if (isConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
+        }
 
     }
 
@@ -191,18 +196,13 @@ public class PlayerController : BaseController
     public override void ExcuteDash()
     {
         base.ExcuteDash();
-        Debug.Log(_stat);
         _agent.Move(transform.forward * Time.deltaTime * _stat.MoveSpeed * 2);
         //transform.position += transform.forward * Time.deltaTime * _stat.MoveSpeed * 2;
     }
 
-    [PunRPC]
     public override void EnterSkill()
     {
         base.EnterSkill();
-
-        // TODO: animation도 어떻게 해줘야겠지?
-
 
         LookMousePosition();
 
@@ -260,6 +260,7 @@ public class PlayerController : BaseController
 
     void OnMouseClicked(Define.MouseEvent evt)
     {
+        if (isConnected && photonView.IsMine == false) return;
         //Debug.Log($"{CurState?.ToString()}");
         if (_statemachine.CurState is DieState || _statemachine.CurState is SkillState || CurState is DashState) return;
 
@@ -280,6 +281,7 @@ public class PlayerController : BaseController
             if (Input.GetMouseButton(0))
             {
                 _statemachine.ChangeState(new SkillState(this));
+                if(isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
 
             }
             else if (Input.GetMouseButton(1))
@@ -291,6 +293,7 @@ public class PlayerController : BaseController
                     {
 
                         _statemachine.ChangeState(new SkillState(this));
+                        if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
                     }
 
                 }
@@ -299,35 +302,45 @@ public class PlayerController : BaseController
 
             
         }
-        if(isConnected) photonView.RPC("EnterSkill", RpcTarget.All);
+        //if(isConnected) photonView.RPC("EnterSkill", RpcTarget.All);
     }
 
     void OnKeyboard()
     {
+        Debug.Log($"{gameObject.name} {isConnected}, {photonView != null}");
+        if (isConnected && photonView.IsMine == false) return;
 
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            if (isConnected)
+            //if (isConnected)
+            //{
+            //    photonView.RPC("ChangeMoveState", RpcTarget.All);
+            //}
+            //else
+            //{
+            //    if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
+            //}
+            if (_statemachine.CurState is not MoveState)
             {
-                photonView.RPC("ChangeMoveState", RpcTarget.All);
-            }
-            else
-            {
-                if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
+                _statemachine.ChangeState(new MoveState(this));
+                if(isConnected) photonView.RPC("ChangeMoveState", RpcTarget.Others);
             }
 
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            if (isConnected)
-            {
-                photonView.RPC("ChangeDashState", RpcTarget.All);
-            }
-            else
-                _statemachine.ChangeState(new DashState(this));
+            //if (isConnected)
+            //{
+            //    photonView.RPC("ChangeDashState", RpcTarget.All);
+            //}
+            //else
+            //    _statemachine.ChangeState(new DashState(this));
+
+            _statemachine.ChangeState(new DashState(this));
+            if(isConnected) photonView.RPC("ChangeDashState", RpcTarget.Others);
         }
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
@@ -367,6 +380,7 @@ public class PlayerController : BaseController
         if (Input.GetKeyDown(KeyCode.Q))
         {
             _statemachine.ChangeState(new SkillState(this));
+            if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
         }
 
 
@@ -387,23 +401,19 @@ public class PlayerController : BaseController
     }
 
     [PunRPC]
-    void ChangeIDLEState()
+    void ChangeIdleState()
     {
+        Debug.Log("STOP PLZ");
         _statemachine.ChangeState(new IdleState(this));
-    }
-    void OnHitEvent()
-    {
-            _statemachine.ChangeState(new IdleState(this));
-
     }
 
 
     void OnDashFinishedEvent()
     {
-        if (isConnected)
-            photonView.RPC("ChangeIDLEState", RpcTarget.All);
-        else
+        
+
         _statemachine.ChangeState(new IdleState(this));
+        if (isConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
     }
 
     public override void TakeDamage(int skillObjectId, int damage)
@@ -465,7 +475,7 @@ public class PlayerController : BaseController
         if (closestCollider != null)
         {
             // 가장 가까운 오브젝트를 처리합니다. 예: 로그 출력
-            Debug.Log("Closest Object: " + closestCollider.gameObject.name);
+            //Debug.Log("Closest Object: " + closestCollider.gameObject.name);
             _detectedInteractable = closestCollider.GetComponent<IPlayerInteractable>();
         }
         else
@@ -524,4 +534,13 @@ public class PlayerController : BaseController
     {
         _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/" + weaponName, _righthand.transform).GetComponent<Item>();
     }
+
+    private void OnDestroy()
+    {
+        Managers.Input.KeyAction -= OnKeyboard;
+        
+        Managers.Input.MouseAction -= OnMouseClicked;
+        
+    }
+
 }

@@ -64,13 +64,13 @@ public class Item : MonoBehaviour, IPlayerInteractable
         _itemCollider.enabled = true;
 
     }
-    [PunRPC]
     public int LeftSKillCast()
     {
+
         return _leftSkill.Cast(_attackDamage, _attackRange);
     }
 
-    [PunRPC]
+
     public int RightSkillCast()
     {
         return _rightSkill.Cast(_attackDamage, _attackRange);
