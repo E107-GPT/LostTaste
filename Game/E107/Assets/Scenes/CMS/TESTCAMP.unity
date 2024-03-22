@@ -839,11 +839,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6192065674169401566, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
   m_PrefabInstance: {fileID: 1840857730}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &627347949 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7223984692470007912, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
-  m_PrefabInstance: {fileID: 5776572977031128706}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &650889545
 GameObject:
   m_ObjectHideFlags: 0
@@ -3676,7 +3671,7 @@ PrefabInstance:
     - target: {fileID: 3261322981069576534, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 2085543782127943334}
+      objectReference: {fileID: 0}
     - target: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -100
@@ -3780,7 +3775,7 @@ PrefabInstance:
     - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: portal
       value: 
-      objectReference: {fileID: 5776572977031128708}
+      objectReference: {fileID: 0}
     - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: targetMapName
       value: ForestMonster01
@@ -3788,7 +3783,7 @@ PrefabInstance:
     - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 627347949}
+      objectReference: {fileID: 0}
     - target: {fileID: 3893414538572191801, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: m_Name
       value: ForestEntrance
@@ -3806,16 +3801,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
---- !u!4 &2085543782127943334 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4090675966857388374, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
-  m_PrefabInstance: {fileID: 2085543782127943333}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2886495432859477713 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6112978426738044116, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
-  m_PrefabInstance: {fileID: 7116547915656775850}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2934768898421763854 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2325297787950883524, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
@@ -4273,7 +4258,7 @@ PrefabInstance:
     - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: portal
       value: 
-      objectReference: {fileID: 7116547915656775852}
+      objectReference: {fileID: 0}
     - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: monstersCheck
       value: 3
@@ -4285,7 +4270,7 @@ PrefabInstance:
     - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 2886495432859477713}
+      objectReference: {fileID: 0}
     - target: {fileID: 3150282959977391736, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4364,11 +4349,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
---- !u!1 &5776572977031128708 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6707192551937478374, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
-  m_PrefabInstance: {fileID: 5776572977031128706}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5883243648110296604
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4678,11 +4658,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
---- !u!1 &7116547915656775852 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8154480885681472294, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
-  m_PrefabInstance: {fileID: 7116547915656775850}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7594156803111747413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4694,7 +4669,7 @@ PrefabInstance:
     - target: {fileID: 425021996493363833, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
       propertyPath: portal
       value: 
-      objectReference: {fileID: 5776572977031128708}
+      objectReference: {fileID: 0}
     - target: {fileID: 425021996493363833, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
       propertyPath: targetPortalLocation
       value: 

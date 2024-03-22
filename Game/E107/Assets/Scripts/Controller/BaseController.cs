@@ -141,6 +141,8 @@ public abstract class BaseController : MonoBehaviour
     void OnHitEvent()
 	{
 		_statemachine.ChangeState(new IdleState(this));
+		if (photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
+
 	}
 
     private void FixedUpdate()

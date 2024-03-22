@@ -9,7 +9,7 @@ public class PlayerController : BaseController
 {
     //Stat
     PlayerStat _stat;
-    
+
     // Item 관련 변수
     Item[] _inventory;
     int _currentItemNum;
@@ -60,9 +60,9 @@ public class PlayerController : BaseController
         _currentItemNum = 1;
 
         second.gameObject.SetActive(false);
-        
+
         ///
-    
+
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
         Managers.Input.MouseAction -= OnMouseClicked;
@@ -71,45 +71,17 @@ public class PlayerController : BaseController
 
         _statemachine.ChangeState(new IdleState(this));
     }
-
-    public void StartMpRecover()
+    private void OnDestroy()
     {
-        _mpRecoverCoroutine = StartCoroutine(MpRecoverCoroutine());
+        Managers.Input.KeyAction -= OnKeyboard;
+
+        Managers.Input.MouseAction -= OnMouseClicked;
+        StopMpRecover();
+
+
     }
 
-    public void StopMpRecover()
-    {
-        StopCoroutine(_mpRecoverCoroutine);
-    }
-
-    IEnumerator MpRecoverCoroutine()
-    {
-        while(_stat.Hp > 0)
-        {
-            
-            _stat.Mp += 5;
-            if (_stat.Mp > _stat.MaxMp) _stat.Mp = _stat.MaxMp;
-             yield return new WaitForSeconds(1.0f);
-
-        }
-    }
-    
-    IEnumerator ChangeColorTemporarily()
-    {
-        foreach (Renderer renderer in _allRenderers)
-        {
-            renderer.material.color = _attackedColor;
-        }
-
-        // 지정된 시간만큼 기다림
-        yield return new WaitForSeconds(0.2f);
-
-        // 모든 Renderer의 머티리얼 색상을 원래 색상으로 복구
-        for (int i = 0; i < _allRenderers.Length; i++)
-        {
-            _allRenderers[i].material.color = _originalColors[i];
-        }
-    }
+    #region StateMethod
     public override void EnterIdle()
     {
         base.EnterIdle();
@@ -118,7 +90,7 @@ public class PlayerController : BaseController
 
     public override void ExcuteIdle()
     {
-        base.ExcuteIdle();  
+        base.ExcuteIdle();
         DetectInteractable();
     }
 
@@ -149,7 +121,7 @@ public class PlayerController : BaseController
             //transform.Translate(Vector3.forward * Time.deltaTime * _stat.MoveSpeed);
             //transform.position += dirTo6 * Time.deltaTime * _stat.MoveSpeed;
             Vector3 dirTo6 = new Vector3(1.0f, 0.0f, -1.0f).normalized;
-            
+
             _agent.Move(dirTo6 * Time.deltaTime * _stat.MoveSpeed);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTo6), 0.5f);
 
@@ -216,7 +188,7 @@ public class PlayerController : BaseController
         {
             case Define.SkillType.LeftSkill:
                 _inventory[_currentItemNum].LeftSKillCast();
-                if(photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.LeftSkill, gameObject.transform.rotation);
+                if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.LeftSkill, gameObject.transform.rotation);
                 break;
             case Define.SkillType.RightSkill:
                 _inventory[_currentItemNum].RightSkillCast();
@@ -233,7 +205,7 @@ public class PlayerController : BaseController
 
         //if (Input.GetMouseButton(0))
         //{
-            
+
 
 
         //}
@@ -247,7 +219,7 @@ public class PlayerController : BaseController
         //else if (Input.GetKey(KeyCode.Q))
         //{
         //    Debug.Log("QQQQQQQQ");
-            
+
         //}
 
 
@@ -276,8 +248,9 @@ public class PlayerController : BaseController
         GetComponent<Collider>().enabled = false;
         _agent.enabled = false;
     }
+    #endregion
 
-
+    #region InputMethod
     void OnMouseClicked(Define.MouseEvent evt)
     {
         if (isConnected && photonView.IsMine == false) return;
@@ -302,20 +275,20 @@ public class PlayerController : BaseController
             {
                 _curSkill = Define.SkillType.LeftSkill;
                 _statemachine.ChangeState(new SkillState(this));
-                
+
                 //if(isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
 
             }
             else if (Input.GetMouseButton(1))
             {
-                if(_stat.Mp >= _inventory[_currentItemNum].RightSkill.RequiredMp)
+                if (_stat.Mp >= _inventory[_currentItemNum].RightSkill.RequiredMp)
                 {
                     Debug.Log($"Rquired Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
-                    if(_lastRightSkillCastTime == 0 || Time.time - _lastRightSkillCastTime >= _inventory[_currentItemNum].RightSkill.SkillCoolDownTime)
+                    if (_lastRightSkillCastTime == 0 || Time.time - _lastRightSkillCastTime >= _inventory[_currentItemNum].RightSkill.SkillCoolDownTime)
                     {
                         _curSkill = Define.SkillType.RightSkill;
                         _statemachine.ChangeState(new SkillState(this));
-                        
+
 
                         //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
                     }
@@ -324,7 +297,7 @@ public class PlayerController : BaseController
 
             }
 
-            
+
         }
         //if(isConnected) photonView.RPC("EnterSkill", RpcTarget.All);
     }
@@ -350,7 +323,7 @@ public class PlayerController : BaseController
             if (_statemachine.CurState is not MoveState)
             {
                 _statemachine.ChangeState(new MoveState(this));
-                if(isConnected) photonView.RPC("ChangeMoveState", RpcTarget.Others);
+                if (isConnected) photonView.RPC("ChangeMoveState", RpcTarget.Others);
             }
 
         }
@@ -364,24 +337,19 @@ public class PlayerController : BaseController
             //    _statemachine.ChangeState(new DashState(this));
 
             _statemachine.ChangeState(new DashState(this));
-            if(isConnected) photonView.RPC("ChangeDashState", RpcTarget.Others);
+            if (isConnected) photonView.RPC("ChangeDashState", RpcTarget.Others);
         }
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
         {
-            if (_currentItemNum == 1) return; // 이미 1번 무기일 경우
-            if (_inventory[1] != null) _inventory[1].gameObject.SetActive(true);
-            if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
+            ChangeToItem(1);
 
-            _currentItemNum = 1;
+            if (photonView.IsMine) photonView.RPC("ChangeFirstItem", RpcTarget.Others);
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
-            if (_currentItemNum == 2) return; // 이미 2번 무기일 경우
-            if (_inventory[2] != null) _inventory[2].gameObject.SetActive(true);
-            if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
-
-            _currentItemNum = 2;
+            ChangeToItem(2);
+            if (photonView.IsMine) photonView.RPC("ChangeSecondItem", RpcTarget.Others);
         }
 
         // 무기 줍기
@@ -399,6 +367,7 @@ public class PlayerController : BaseController
 
             DropCurrentItem();
             ObtainWeapon("0000_Fist");
+
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -411,15 +380,16 @@ public class PlayerController : BaseController
 
 
     }
-
-	[PunRPC]
+    #endregion
+    #region PunRPC
+    [PunRPC]
     void ChangeMoveState()
     {
-        if (_statemachine.CurState is not MoveState) 
+        if (_statemachine.CurState is not MoveState)
             _statemachine.ChangeState(new MoveState(this));
     }
 
-	[PunRPC]
+    [PunRPC]
     void ChangeDashState()
     {
         _statemachine.ChangeState(new DashState(this));
@@ -439,8 +409,18 @@ public class PlayerController : BaseController
         _curSkill = skillType;
         _statemachine.ChangeState(new SkillState(this));
     }
+    [PunRPC]
+    void ChangeFirstItem()
+    {
+        ChangeToItem(1);
+    }
+    [PunRPC]
+    void ChangeSecondItem()
+    {
+        ChangeToItem(2);
+    }
 
-
+    #endregion
     void OnDashFinishedEvent()
     {
         
@@ -480,13 +460,6 @@ public class PlayerController : BaseController
 
     }
 
-    public void ResetHP()
-    {
-        if (_stat != null)
-        {
-            _stat.Hp = _stat.MaxHp; // HP를 최대 HP로 초기화
-        }
-    }
 
 
     public void DetectInteractable()
@@ -515,6 +488,16 @@ public class PlayerController : BaseController
         {
             _detectedInteractable = null;
         }
+    }
+
+
+    public void ChangeToItem(int num)
+    {
+        if (_currentItemNum == num) return; // 이미 num번 무기일경우
+        if (_inventory[num] != null) _inventory[num].gameObject.SetActive(true);
+        if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
+
+        _currentItemNum = num;
     }
 
     public void EquipItem(Item item)
@@ -568,14 +551,44 @@ public class PlayerController : BaseController
         _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/" + weaponName, _righthand.transform).GetComponent<Item>();
     }
 
-    private void OnDestroy()
+    public void StartMpRecover()
     {
-        Managers.Input.KeyAction -= OnKeyboard;
-        
-        Managers.Input.MouseAction -= OnMouseClicked;
-        StopMpRecover();
-
-
+        _mpRecoverCoroutine = StartCoroutine(MpRecoverCoroutine());
     }
+
+    public void StopMpRecover()
+    {
+        StopCoroutine(_mpRecoverCoroutine);
+    }
+
+    IEnumerator MpRecoverCoroutine()
+    {
+        while (_stat.Hp > 0)
+        {
+
+            _stat.Mp += 5;
+            if (_stat.Mp > _stat.MaxMp) _stat.Mp = _stat.MaxMp;
+            yield return new WaitForSeconds(1.0f);
+
+        }
+    }
+
+    IEnumerator ChangeColorTemporarily()
+    {
+        foreach (Renderer renderer in _allRenderers)
+        {
+            renderer.material.color = _attackedColor;
+        }
+
+        // 지정된 시간만큼 기다림
+        yield return new WaitForSeconds(0.2f);
+
+        // 모든 Renderer의 머티리얼 색상을 원래 색상으로 복구
+        for (int i = 0; i < _allRenderers.Length; i++)
+        {
+            _allRenderers[i].material.color = _originalColors[i];
+        }
+    }
+    
 
 }

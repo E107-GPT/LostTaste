@@ -66,7 +66,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             partySelectButton[i].SetActive(false);
             //Debug.Log($"???? : {i}, {partyName}, {party}");
             Button partyConnect = party.GetComponent<Button>();
-            Debug.Log($"???? : {i}, {partyName}, {party}, {partyConnect}");
             int index = i;
             partyConnect.onClick.AddListener(() => roomEnter(index) );
         }
@@ -90,6 +89,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected)
         {
             // 리스트 출력하기
+            Debug.Log(PhotonNetwork.CountOfRooms);
+            Debug.Log(roomlist.ToArray().ToString());
         }
         else
         {
@@ -98,6 +99,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             PhotonNetwork.GameVersion = gameVersion;
             PhotonNetwork.NickName = UserInfo.GetInstance().getId();
             Debug.Log(PhotonNetwork.NickName);
+            PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "kr";
             // 포톤 클라우드에 연결되는 시작 지점
             PhotonNetwork.ConnectUsingSettings();
         }
@@ -122,7 +124,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("JoinLobby");
+        Debug.Log($"JoinLobby   {PhotonNetwork.CurrentLobby}");
+        
         //progressLabel.SetActive(false);
         //createRoomPanel.SetActive(true);
     }
@@ -164,6 +167,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         
         roomMakePanel.SetActive(false);
         PhotonNetwork.CreateRoom(roomName, room);
+        
+        
     }
 
     public void roomEnter(int roomNumber)
@@ -211,6 +216,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
 
         int idx = 0;
+        Debug.Log(roomlist.ToArray());
         foreach (RoomInfo room in roomlist)
         {
             partySelectButton[idx].SetActive(true);
@@ -219,12 +225,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             partyDescription[idx].text = room.Name;
             partyLeader[idx].text = (string)has["captain"];
             partyMember[idx].text = room.PlayerCount + " / 4";
+
             idx ++;
 
 
             //string roomInfo = "room : " + room.Value.Name + " \n" + room.Value.PlayerCount + " / " + room.Value.MaxPlayers + "\n" + "isvisible : " + room.Value.IsVisible + "\n" + "isopen : " + room.Value.IsOpen
             //    + "\n captain : " + has["captain"] + "\n" + has["ispassword"] + " / " + has["password"];
-            
+            Debug.Log(room);
+
         }
     }
     #endregion
@@ -235,9 +243,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if (isConnecting)
         {
             Debug.Log("OnConnectedToMaster");
-            // 마스터에 들어갔을 때 랜덤 방 들어가기
-            if(PhotonNetwork.CurrentRoom!= null)
-            Debug.Log("asdasdliqjwd : " + PhotonNetwork.CurrentRoom.IsOpen);
             PhotonNetwork.JoinLobby();
             
         }
@@ -245,9 +250,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        Debug.Log(roomList);
         foreach (RoomInfo rooom in roomList)
         {
-
+            Debug.Log(rooom);
             bool change = false;
             for(int i = 0; i< roomlist.Count; i++)
             {
@@ -266,7 +272,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             {
                 Debug.Log(rooom);
                 // 새로운 룸 추가
-                       roomlist.Add(rooom);
+                roomlist.Add(rooom);
                 //for(int i = 0; i<roomlist.Count; i++)
                 //{
                 //    if (roomlist[i] == null)
