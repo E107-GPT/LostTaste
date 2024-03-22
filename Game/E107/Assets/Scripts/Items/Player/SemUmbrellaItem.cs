@@ -1,17 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SemUmbrellaItem : Item
 {
+    private GameObject _openUmbrella, _closedUmbrella;
+
     protected override void Init()
     {
         base.Init();
 
-        Name = "(»ï¼º)Àü±â ¿ì»ê";
-        FlavorText = "¿ì»ê °¡Áö°í ¹Û¿¡ ³ª°¡Áö ¸¶¼¼¿ä.";
+        Name = "(ì‚¼ì„±)ì „ê¸° ìš°ì‚°";
+        FlavorText = "ìš°ì‚° ê°€ì§€ê³  ë°–ì— ë‚˜ê°€ì§€ ë§ˆì„¸ìš”.";
 
         _leftSkill = gameObject.GetOrAddComponent<NormalAttackSkill>();
         _rightSkill = gameObject.GetOrAddComponent<SemUmbrellaSkill>();
+
+        _openUmbrella = gameObject.transform.Find("Umbrella_Open").gameObject;
+        _closedUmbrella = gameObject.transform.Find("Umbrella_Closed").gameObject;
+
+        SetUmbrellaOpen(false);
+    }
+
+    public void SetUmbrellaOpen(bool isOpen)
+    {
+        _openUmbrella.SetActive(isOpen);
+        _closedUmbrella.SetActive(!isOpen);
     }
 }
