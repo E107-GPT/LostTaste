@@ -1,10 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class SemUmbrellaItem : Item
 {
+    public bool IsOpen
+    {
+        get { return _openUmbrella.activeSelf; }
+        set
+        {
+            _openUmbrella.SetActive(value);
+            _closedUmbrella.SetActive(!value);
+        }
+    }
+
     private GameObject _openUmbrella, _closedUmbrella;
 
     protected override void Init()
@@ -20,12 +31,6 @@ public class SemUmbrellaItem : Item
         _openUmbrella = gameObject.transform.Find("Umbrella_Open").gameObject;
         _closedUmbrella = gameObject.transform.Find("Umbrella_Closed").gameObject;
 
-        SetUmbrellaOpen(false);
-    }
-
-    public void SetUmbrellaOpen(bool isOpen)
-    {
-        _openUmbrella.SetActive(isOpen);
-        _closedUmbrella.SetActive(!isOpen);
+        IsOpen = false;
     }
 }
