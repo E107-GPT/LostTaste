@@ -22,7 +22,7 @@ public class ItemDropTables
     };
 
     public static readonly GameObject[] EPIC_ITEMS = new GameObject[] {
-        Load("OHS04_Sword"),    // test
+        Load("0008_SemUmbrella"),
     };
 
     public static readonly GameObject[] LEGENDARY_ITEMS = new GameObject[] {
