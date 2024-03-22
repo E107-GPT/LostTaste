@@ -446,7 +446,7 @@ public class PlayerController : BaseController
         
 
         _statemachine.ChangeState(new IdleState(this));
-        if (isConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
+        if (photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
     }
 
     public override void TakeDamage(int skillObjectId, int damage)
