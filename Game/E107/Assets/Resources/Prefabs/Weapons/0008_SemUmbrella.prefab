@@ -221,7 +221,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2449983969949929974}
-  m_Layer: 0
+  - component: {fileID: 6731236161261678251}
+  m_Layer: 9
   m_Name: 0008_SemUmbrella
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,3 +246,20 @@ Transform:
   - {fileID: 5596305193997759183}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6731236161261678251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3108341071753901014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 739d5ba1c2ea1da45a7f30784d328348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackDamage: 50
+  _attackRange: 8
+  isDropped: 1
+  _leftSkill: {fileID: 0}
+  _rightSkill: {fileID: 0}
