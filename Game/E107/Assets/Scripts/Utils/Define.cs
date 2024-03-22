@@ -53,7 +53,7 @@ public class Define
         BubbleWandSkillEffect,
         DrillDuckBeforeEffect,
         DrillDuckSlideEffect,
-        HeroSwordSkillEffect,
+        StrongSwingEffect,
         GalaxyZzzSkillEffect,
         WarriorClassSkillEffect,
         MaxCount

@@ -21,7 +21,7 @@ public class HeroSwordSkill : Skill
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0, 0.7f);
         yield return new WaitForSeconds(0.5f);
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.HeroSwordSkillEffect, Root);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.StrongSwingEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, DAMAGE, _seq);
 
