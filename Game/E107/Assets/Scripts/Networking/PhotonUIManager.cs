@@ -70,7 +70,7 @@ public class PhotonUIManager : MonoBehaviour
     public void SetEnterPassword()
     {
         Debug.Log((password));
-        GameObject.Find("GameManager").GetComponent<PhotonManager>().PasswordValidation(password);
+        GameObject.Find("GameManager").GetComponent<PhotonManager>().PasswordValidation();
     }
 
 

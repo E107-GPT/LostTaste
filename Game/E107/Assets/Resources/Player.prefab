@@ -12672,12 +12672,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3697585401772845368}
   - component: {fileID: 8829017087054960485}
-  - component: {fileID: 365334001431943717}
   - component: {fileID: 9092953402134175917}
   - component: {fileID: 6886580020052053487}
   - component: {fileID: 6849146749108825002}
   - component: {fileID: -2222246906417925215}
   - component: {fileID: -1502292895877167693}
+  - component: {fileID: 5754516753356815874}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -12749,20 +12749,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &365334001431943717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5460575400253774540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89da44676f860d3418aadcb2121f80c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitType: 0
-  entityName: 
 --- !u!195 &9092953402134175917
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12874,6 +12860,20 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &5754516753356815874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460575400253774540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89da44676f860d3418aadcb2121f80c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitType: 0
+  entityName: 
 --- !u!1 &5484749937077794716
 GameObject:
   m_ObjectHideFlags: 0
