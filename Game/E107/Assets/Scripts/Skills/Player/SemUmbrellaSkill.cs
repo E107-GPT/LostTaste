@@ -9,16 +9,15 @@ public class SemUmbrellaSkill : Skill
 
     protected override void Init()
     {
-        SkillCoolDownTime = 5.0f;
-        RequiredMp = 20;
+        SkillCoolDownTime = 12.0f;
+        RequiredMp = 30;
     }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
         Root = transform.root;
 
-        Debug.Log("Hero Sword Attack");
-        Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0, 0.7f);
+        Debug.Log("SEM Umbrella Attack");
         yield return new WaitForSeconds(0.5f);
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.StrongSwingEffect, Root);
@@ -37,8 +36,5 @@ public class SemUmbrellaSkill : Skill
         yield return new WaitForSeconds(0.3f);
         Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
-
-
-
     }
 }
