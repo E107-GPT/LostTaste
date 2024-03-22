@@ -332,7 +332,6 @@ public class ppcontroller : BaseController
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
         {
-            Debug.Log("1버어어어어ㅓ어어어어언" + _inventory[1]);
             if (_currentItemNum == 1) return; // 이미 1번 무기일 경우
             if (_inventory[1] != null) _inventory[1].gameObject.SetActive(true);
             if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
@@ -341,7 +340,6 @@ public class ppcontroller : BaseController
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
-            Debug.Log("2번어어어어어어어어ㅓ언 : " + _inventory[2] + " " + _inventory[_currentItemNum]);
             if (_currentItemNum == 2) return; // 이미 2번 무기일 경우
             if (_inventory[2] != null) _inventory[2].gameObject.SetActive(true);
             if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
