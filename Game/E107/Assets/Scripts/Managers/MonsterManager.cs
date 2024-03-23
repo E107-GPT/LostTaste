@@ -13,6 +13,8 @@ public class MonsterManager : MonoBehaviour
 
     public PortalTrigger portalTrigger;
 
+    //public string targetMapName;
+
     [System.Serializable]
     public class MonsterSpawnInfo
     {
@@ -29,6 +31,8 @@ public class MonsterManager : MonoBehaviour
 
     public List<MonsterSpawnInfo> monsterSpawnInfos;
 
+    private bool continueCheckingMonsters = true;
+
     private void Awake()
     {
         if (Instance == null)
@@ -41,17 +45,18 @@ public class MonsterManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        StartCoroutine(CheckMonstersCoroutine());
+        //StartCoroutine(CheckMonstersCoroutine());
     }
 
     IEnumerator CheckMonstersCoroutine()
     {
-        while (true)
+        bool monstersCleared = false;
+
+        while (!monstersCleared)
         {
             yield return new WaitForSeconds(0.5f);
 
             monstersInCurrentMap.RemoveAll(monster => monster == null);
-            //Debug.Log(monstersInCurrentMap.Count);
 
             if (monstersInCurrentMap.Count == 0)
             {
@@ -59,6 +64,8 @@ public class MonsterManager : MonoBehaviour
                 if (portalTrigger != null)
                 {
                     portalTrigger.ActivatePortal(true);
+                    monstersCleared = true;
+                    StopCoroutine("CheckMonstersCoroutine");
                 }
             }
             else
@@ -69,7 +76,7 @@ public class MonsterManager : MonoBehaviour
                     portalTrigger.ActivatePortal(false);
                 }
             }
-        }
+        } 
     }
 
     // 특정 맵에 몬스터 소환
@@ -90,4 +97,8 @@ public class MonsterManager : MonoBehaviour
         }
     }
 
+    public void RestartCheckMonstersCoroutine(string newMapName)
+    {
+        StartCoroutine(CheckMonstersCoroutine());
+    }
 }

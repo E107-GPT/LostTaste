@@ -45,6 +45,10 @@ public class Define
         Crab,
         Fishman,
         NagaWizard,
+        Demon,
+        Salamander,
+        Specter,
+        Skeleton,
     }
 
     public enum Effect
@@ -56,6 +60,7 @@ public class Define
         StrongSwingEffect,
         GalaxyZzzSkillEffect,
         WarriorClassSkillEffect,
+        SemUmbrellaSkillEffect,
         MaxCount
     }
 

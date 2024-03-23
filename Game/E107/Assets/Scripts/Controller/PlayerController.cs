@@ -51,10 +51,8 @@ public class PlayerController : BaseController
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
         Item first = Managers.Resource.Instantiate("Weapons/0028_BubbleWand", _righthand.transform).GetComponent<Item>();
-
         first.OnEquipped();
-        Item second = Managers.Resource.Instantiate("Weapons/0012_HeroSword", _righthand.transform).GetComponent<Item>();
-
+        Item second = Managers.Resource.Instantiate("Weapons/0000_Fist", _righthand.transform).GetComponent<Item>();
         second.OnEquipped();
         _inventory[1] = first;
         _inventory[2] = second;
