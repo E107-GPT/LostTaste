@@ -397,7 +397,7 @@ public class PlayerController : BaseController
     [PunRPC]
     void ChangeIdleState()
     {
-        Debug.Log("STOP PLZ");
+        //Debug.Log("STOP PLZ");
         _statemachine.ChangeState(new IdleState(this));
     }
 

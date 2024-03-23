@@ -138,6 +138,7 @@ public class PortalTrigger : MonoBehaviour
                 {
                     player.transform.position = targetPortalLocation.position;
                 }
+                Debug.Log(player.gameObject.name);
             }
             portal.SetActive(false);
         }

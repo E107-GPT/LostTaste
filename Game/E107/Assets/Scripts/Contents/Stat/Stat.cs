@@ -43,8 +43,8 @@ public class Stat
         {
             case Define.UnitType.Player:
                 // 100으로 돌려야함
-                _hp = 100;
-                _maxHp = 100;
+                _hp = 1000;
+                _maxHp = 1000;
                 _mp = 100;
                 _maxMp = 100;
                 _attackDamage = 10;
