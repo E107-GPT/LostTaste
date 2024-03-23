@@ -86,6 +86,7 @@ public class PlayerController : BaseController
     {
         base.EnterIdle();
         _animator.CrossFade("WAIT", 0.1f);
+        if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
     }
 
     public override void ExcuteIdle()
@@ -104,6 +105,7 @@ public class PlayerController : BaseController
     {
         base.EnterMove();
         _animator.CrossFade("RUN", 0.1f);
+        if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeMoveState", RpcTarget.Others);
     }
     public override void ExcuteMove()
     {
@@ -168,9 +170,10 @@ public class PlayerController : BaseController
     public override void EnterDash()
     {
         base.EnterDash();
-        LookMousePosition();
+        if (photonView.IsMine) LookMousePosition();
 
         _animator.CrossFade("DASH", 0.1f, -1, 0);
+        if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDashState", RpcTarget.Others);
 
     }
 
@@ -249,17 +252,21 @@ public class PlayerController : BaseController
     {
         base.EnterDie();
         _animator.CrossFade("DIE", 0.1f);
+        if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDieState", RpcTarget.Others);
 
         // 추가한 부분
         GetComponent<Collider>().enabled = false;
         _agent.enabled = false;
+
+        
+
     }
     #endregion
 
     #region InputMethod
     void OnMouseClicked(Define.MouseEvent evt)
     {
-        if (isConnected && photonView.IsMine == false) return;
+        if (PhotonNetwork.IsConnected && photonView.IsMine == false) return;
         //Debug.Log($"{CurState?.ToString()}");
         if (_statemachine.CurState is DieState || _statemachine.CurState is SkillState || CurState is DashState) return;
 
@@ -321,14 +328,14 @@ public class PlayerController : BaseController
             if (_statemachine.CurState is not MoveState)
             {
                 _statemachine.ChangeState(new MoveState(this));
-                if (isConnected) photonView.RPC("ChangeMoveState", RpcTarget.Others);
+                //if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeMoveState", RpcTarget.Others);
             }
 
         }
         if (Input.GetKey(KeyCode.Space))
         {
             _statemachine.ChangeState(new DashState(this));
-            if (isConnected) photonView.RPC("ChangeDashState", RpcTarget.Others);
+            //if (isConnected) photonView.RPC("ChangeDashState", RpcTarget.Others);
         }
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
@@ -372,6 +379,7 @@ public class PlayerController : BaseController
 
     }
     #endregion
+
     #region PunRPC
     [PunRPC]
     void ChangeMoveState()
@@ -401,7 +409,7 @@ public class PlayerController : BaseController
         _statemachine.ChangeState(new SkillState(this));
     }
     [PunRPC]
-    void ChageDieState()
+    void ChangeDieState()
     {
         _statemachine.ChangeState(new DieState(this));
     }
@@ -440,12 +448,13 @@ public class PlayerController : BaseController
     }
 
     #endregion
+
     void OnDashFinishedEvent()
     {
         
 
         _statemachine.ChangeState(new IdleState(this));
-        if (photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
+        //if (photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
     }
 
     public override void TakeDamage(int skillObjectId, int damage)
@@ -475,7 +484,7 @@ public class PlayerController : BaseController
         if (_stat.Hp <= 0)
         {
             _statemachine.ChangeState(new DieState(this));
-            if (photonView.IsMine) photonView.RPC("ChageDieState", RpcTarget.Others);
+            //if (photonView.IsMine) photonView.RPC("ChageDieState", RpcTarget.Others);
         }
 
     }

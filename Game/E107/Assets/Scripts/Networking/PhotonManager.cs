@@ -69,7 +69,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             partySelectButton[i].SetActive(false);
 
             Button partyConnect = partySelectButton[i].GetComponent<Button>();
-            partyConnect.onClick.AddListener(()=>roomEnter(i));
+            int index = i;
+            partyConnect.onClick.AddListener(()=>roomEnter(index));
         }
 
         roomListPanel.SetActive(false);
@@ -172,8 +173,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void roomEnter(int roomNumber)
     {
-        if (roomNumber >= 20) return;
-        if (roomlist.Count < 1) return;
+        Debug.Log(roomNumber);
         string nickname = GameObject.Find("gm").GetComponent<PhotonUIManager>().GetName();
         if (nickname == null) return;
         PhotonNetwork.NickName = nickname;
@@ -245,8 +245,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.Log("OnConnectedToMaster");
 
             // �濡 �ִ°� �ƴϸ� �κ��
-            if(!isConnectRoom)
-                PhotonNetwork.JoinLobby();
+          
+            PhotonNetwork.JoinLobby();
             
         }
     }

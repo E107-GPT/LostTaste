@@ -251,6 +251,8 @@ MonoBehaviour:
   totalPlayers: 1
   targetMapName: Camp
   portal: {fileID: 274316244}
+  itemBoxes: []
+  isBossRoom: 0
 --- !u!1 &332660167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6001604393595099217, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
@@ -1089,6 +1091,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &928298543 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 627735487383994714, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+  m_PrefabInstance: {fileID: 2085543782127943333}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &930650319 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6544592511613437182, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
@@ -1560,6 +1567,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1951471119}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1318568910 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2662503810719042968, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+  m_PrefabInstance: {fileID: 5776572977031128706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1338576788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3669,9 +3681,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 332660167}
     - target: {fileID: 3261322981069576534, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: totalPlayers
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261322981069576534, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 928298543}
     - target: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -100
@@ -3788,6 +3804,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForestEntrance
       objectReference: {fileID: 0}
+    - target: {fileID: 5247430748439453695, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 5776572977031128707}
+    - target: {fileID: 5247430748439453695, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: totalPlayers
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247430748439453695, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: targetPortalLocation
+      value: 
+      objectReference: {fileID: 1318568910}
     - target: {fileID: 7011782734232886834, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: m_Name
       value: Portal-ForestEntrance-N
@@ -4349,6 +4377,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+--- !u!1 &5776572977031128707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4460379619246032231, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+  m_PrefabInstance: {fileID: 5776572977031128706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5883243648110296604
 PrefabInstance:
   m_ObjectHideFlags: 0
