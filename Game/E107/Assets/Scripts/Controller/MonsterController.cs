@@ -81,14 +81,14 @@ public class MonsterController : BaseController
         _animator.CrossFade("Idle", 0.5f);      // 기본적으로 base layer의 state를 나타냄
         
         // 마스터 클래스에서만 전송
-        if (PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeIdleState", RpcTarget.Others);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeIdleState", RpcTarget.Others);
     }
     
     public override void ExcuteIdle()
     {
         base.ExcuteIdle();
 
-        if (PhotonNetwork.IsMasterClient == false) return;
+        if (PhotonNetwork.IsConnected &&PhotonNetwork.IsMasterClient == false) return;
         // Time.time: 게임이 시작된 후부터 시간(초)을 반환
         // _lastTime: 마지막으로 호출된 시간(초)을 가진다.
         // _coolDownTime: 스킬 사용 시간(초)을 나타낸다.
@@ -112,11 +112,11 @@ public class MonsterController : BaseController
 
         // -1: 이진수 11111 모든 layer를 선택
         _animator.CrossFade("Move", 1.0f, -1, 0);
-        if (PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeMoveState", RpcTarget.Others);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeMoveState", RpcTarget.Others);
     }
     public override void ExcuteMove()
     {
-        if (PhotonNetwork.IsMasterClient == false) return;
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
         base.ExcuteMove();
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Move"))
         {
@@ -203,7 +203,7 @@ public class MonsterController : BaseController
 
         // 스폰에서 몬스터 배열을 통해 null 처리 또는 destroy
         Destroy(gameObject, 3.0f);
-        if (PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDieState", RpcTarget.Others);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDieState", RpcTarget.Others);
     }
     public override void ExcuteDie()
     {

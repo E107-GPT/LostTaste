@@ -98,7 +98,7 @@ public class PlayerController : BaseController
     public override void ExitIdle()
     {
         base.ExitIdle();
-        //_detectedInteractable = null;
+        _detectedInteractable = null;
     }
 
     public override void EnterMove()
@@ -170,7 +170,7 @@ public class PlayerController : BaseController
     public override void EnterDash()
     {
         base.EnterDash();
-        if (photonView.IsMine) LookMousePosition();
+        if (photonView.IsMine || !PhotonNetwork.IsConnected) LookMousePosition();
 
         _animator.CrossFade("DASH", 0.1f, -1, 0);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDashState", RpcTarget.Others);
@@ -189,7 +189,7 @@ public class PlayerController : BaseController
         //if (isConnected && photonView.IsMine == false) return;
         base.EnterSkill();
 
-        if (photonView.IsMine) LookMousePosition();
+        if (photonView.IsMine || !PhotonNetwork.IsConnected) LookMousePosition();
 
         // 왼쪽클릭
 
