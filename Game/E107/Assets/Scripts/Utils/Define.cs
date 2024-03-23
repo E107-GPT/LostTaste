@@ -45,6 +45,10 @@ public class Define
         Crab,
         Fishman,
         NagaWizard,
+        Demon,
+        Salamander,
+        Specter,
+        Skeleton,
     }
 
     public enum Effect
