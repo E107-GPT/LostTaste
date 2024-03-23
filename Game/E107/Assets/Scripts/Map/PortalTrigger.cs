@@ -109,17 +109,6 @@ public class PortalTrigger : MonoBehaviour
             MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
             MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
 
-            // "PortalToCamp" 포탈을 통과할 때만 플레이어의 HP를 초기화
-            if (portal.name == "PortalToCamp")
-            {
-                // 플레이어의 HP를 초기화하는 로직
-                PlayerController playerController = other.GetComponent<PlayerController>();
-                if (playerController != null)
-                {
-                    playerController.ResetHP(); // PlayerController 내의 HP 초기화 메서드 호출
-                }
-
-            }
         }
     }
 
@@ -149,6 +138,7 @@ public class PortalTrigger : MonoBehaviour
                 {
                     player.transform.position = targetPortalLocation.position;
                 }
+                Debug.Log(player.gameObject.name);
             }
             portal.SetActive(false);
         }

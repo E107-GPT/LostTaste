@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,7 +15,7 @@ public class BossRoomBlock : MonoBehaviour
         if (bossRoomWall != null)
         {
             bossRoomWall.SetActive(false); // 초기에는 벽을 비활성화 상태로 둡니다.
-            Debug.Log("Boss room wall is deactivated");
+            //Debug.Log("Boss room wall is deactivated");
         }
     }
 

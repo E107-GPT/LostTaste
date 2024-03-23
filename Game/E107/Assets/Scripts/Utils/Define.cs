@@ -68,4 +68,12 @@ public class Define
     {
         Normal,
     }
+
+    public enum SkillType
+    {
+        None,
+        LeftSkill,
+        RightSkill,
+        ClassSkill
+    }
 }

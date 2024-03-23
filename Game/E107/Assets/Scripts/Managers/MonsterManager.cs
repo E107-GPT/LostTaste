@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -89,7 +90,9 @@ public class MonsterManager : MonoBehaviour
                 foreach (SpawnPointInfo spawnInfo in info.spawnPoints)
                 {
                     // 각 스폰 포인트별로 지정된 몬스터 프리팹으로 몬스터를 소환
-                    GameObject clone = Instantiate(spawnInfo.monsterPrefab, spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
+                    GameObject clone = null;
+                    if (!PhotonNetwork.IsConnected) clone = Instantiate(spawnInfo.monsterPrefab, spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
+                    else if (PhotonNetwork.IsMasterClient) clone = PhotonNetwork.Instantiate($"Prefabs/Monster/{spawnInfo.monsterPrefab.name}", spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
                     monstersInCurrentMap.Add(clone);
                 }
                 break;
