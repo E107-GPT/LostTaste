@@ -62,6 +62,7 @@ public class Define
         WarriorClassSkillEffect,
         SemUmbrellaSkillEffect,
         BoomerangSkillEffect,
+        ToxicFlowerMissileEffect,
         MaxCount
     }
 

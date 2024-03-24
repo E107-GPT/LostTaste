@@ -5,8 +5,9 @@ using UnityEngine.AI;
 
 public class DrillDuckController : MonsterController
 {
-    [SerializeField]
-    private float _lastPatternTime;
+    // 평타
+    // 내려찍기
+    private float _slideCoolTime;   // 쿨타임 추가
 
 
     public override void Init()
@@ -16,14 +17,17 @@ public class DrillDuckController : MonsterController
 
         // Other Class
         _stat = new MonsterStat(_unitType);
+
+        // 슬라이드 쿨타임 추가
     }
 
-    private void FixedUpdate()
-    {
-        FreezeVelocity();
-    }
+    //private void FixedUpdate()
+    //{
+    //    FreezeVelocity();
+    //}
 
 
+    // DectPlayer 유지
     protected override void ChangeStateFromMove()
     {
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;

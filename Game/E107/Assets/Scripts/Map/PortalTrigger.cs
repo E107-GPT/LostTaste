@@ -11,6 +11,7 @@ public class PortalTrigger : MonoBehaviour
     public Transform targetPortalLocation;  // 이동할 포탈 위치
 
     private HashSet<GameObject> playersInPortal = new HashSet<GameObject>();
+
     public int totalPlayers = 1;    // 필요한 플레이어 수, 게임 설정에 따라 조정 (지금은 1명)
 
     public string targetMapName;
