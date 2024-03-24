@@ -10,7 +10,7 @@ using TMPro;
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
     #region private serializable fields
-    [Tooltip("¹æ ÃÖ´ë ÀÔÀå ¼ö")]
+    [Tooltip("ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½")]
     [SerializeField]
     private byte maxplayersPerRoom = 4;
 
@@ -18,16 +18,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region private fields
-    // Å¬¶óÀÌ¾ðÆ® ¹øÈ£
+    // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½È£
     string gameVersion = "2";
     bool isConnecting;
     bool isConnectRoom;
 
-    // ¹æ ÀÌ¸§À¸·Î ·ë Á¤º¸ °ü¸®
-    // Áßº¹ ºÒ°¡
+    // ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ßºï¿½ ï¿½Ò°ï¿½
     List<RoomInfo> roomlist = new List<RoomInfo>();
 
-    // ¼±ÅÃÇÑ ¹æ Á¤º¸
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private RoomInfo selectRoom;
     #endregion
 
@@ -47,9 +47,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #region MonoBehaviour Callbacks
     private void Awake()
     {
-        // ¸¶½ºÅÍ°¡ Àå¸éÀ» ·ÎµåÇÏ¸é °°Àº ¹æ¿¡ ÀÖ´Â ¸ðµç Å¬¶óÀÌ¾ðÆ®°¡ ÀÚµ¿À¸·Î ·¹º§À» µ¿±âÈ­ÇÏµµ·Ï ÇÔ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½æ¿¡ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½
         PhotonNetwork.AutomaticallySyncScene = true;
-        // °°Àº ¹öÀüÀÇ À¯Àúµé¸¸ Á¢¼Ó Çã¿ë
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½é¸¸ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     }
     void Start()
     {
@@ -61,6 +61,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             string partyName = "Party " + (i+1);
             GameObject party = GameObject.Find(partyName);
+
             partySelectButton[i] = party;
             partyDescription[i] = party.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             partyLeader[i] = party.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
@@ -68,32 +69,37 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             partySelectButton[i].SetActive(false);
 
             Button partyConnect = partySelectButton[i].GetComponent<Button>();
-            partyConnect.onClick.AddListener(()=>roomEnter(i));
+            int index = i;
+            partyConnect.onClick.AddListener(()=>roomEnter(index));
         }
+
         roomListPanel.SetActive(false);
     }
     #endregion
 
     #region public Methods
-    // Connect ¿¬°á °úÁ¤À» ½ÃÀÛÇÏ´Â ¸Þ¼Òµå
+    // Connect ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼Òµï¿½
     public void Connect()
     {
         isConnecting = true;
 
 
-        // Æ÷Åæ ³×Æ®¿öÅ© ¿¬°á ¿©ºÎ È®ÀÎ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (PhotonNetwork.IsConnected)
         {
-            // ¸®½ºÆ® Ãâ·ÂÇÏ±â
+            // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+            Debug.Log(PhotonNetwork.CountOfRooms);
+            Debug.Log(roomlist.ToArray().ToString());
         }
         else
         {
-            // °ÔÀÓ ¹öÀü ¼¼ÆÃ
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Debug.Log("Connect?  " + PhotonNetwork.IsConnected);
             PhotonNetwork.GameVersion = gameVersion;
             PhotonNetwork.NickName = UserInfo.GetInstance().getId();
             Debug.Log(PhotonNetwork.NickName);
-            // Æ÷Åæ Å¬¶ó¿ìµå¿¡ ¿¬°áµÇ´Â ½ÃÀÛ ÁöÁ¡
+            PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "kr";
+            // ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -118,7 +124,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("JoinLobby");
+        Debug.Log($"JoinLobby   {PhotonNetwork.CurrentLobby}");
+        
         //progressLabel.SetActive(false);
         //createRoomPanel.SetActive(true);
     }
@@ -160,12 +167,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         
         roomMakePanel.SetActive(false);
         PhotonNetwork.CreateRoom(roomName, room);
+        
+        
     }
 
     public void roomEnter(int roomNumber)
     {
-        if (roomNumber >= 20) return;
-        if (roomlist.Count < 1) return;
+        Debug.Log(roomNumber);
         string nickname = GameObject.Find("gm").GetComponent<PhotonUIManager>().GetName();
         if (nickname == null) return;
         PhotonNetwork.NickName = nickname;
@@ -178,13 +186,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if ((bool)curRoom.CustomProperties["ispassword"])
         {
             //password panel open
-            // ºñ¹ø °ËÁõ ÈÄ ÀÔÀå
+            // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             selectRoom = curRoom;
             passwordPanel.SetActive(true);
         }
         else
         {
-            // no password ¹Ù·Î ÀÔÀå
+            // no password ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½
             PhotonNetwork.JoinRoom(roomlist[roomNumber].Name);
         }
     }
@@ -192,7 +200,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void PasswordValidation()
     {
         string pw = gameObject.GetComponent<PhotonUIManager>().GetPassword();
-        // ºñ¹Ð¹øÈ£ ¸ÂÀ¸¸é ÀÔÀå
+        // ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if ((string)selectRoom.CustomProperties["password"] == pw)
         {
             PhotonNetwork.JoinRoom(selectRoom.Name);
@@ -208,6 +216,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
 
         int idx = 0;
+        Debug.Log(roomlist.ToArray());
         foreach (RoomInfo room in roomlist)
         {
             partySelectButton[idx].SetActive(true);
@@ -216,12 +225,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             partyDescription[idx].text = room.Name;
             partyLeader[idx].text = (string)has["captain"];
             partyMember[idx].text = room.PlayerCount + " / 4";
+
             idx ++;
 
 
             //string roomInfo = "room : " + room.Value.Name + " \n" + room.Value.PlayerCount + " / " + room.Value.MaxPlayers + "\n" + "isvisible : " + room.Value.IsVisible + "\n" + "isopen : " + room.Value.IsOpen
             //    + "\n captain : " + has["captain"] + "\n" + has["ispassword"] + " / " + has["password"];
-            
+            Debug.Log(room);
+
         }
     }
     #endregion
@@ -233,8 +244,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("OnConnectedToMaster");
 
-            // ¹æ¿¡ ÀÖ´Â°Ô ¾Æ´Ï¸é ·Îºñ·Î
-            if(!isConnectRoom)
+            // ï¿½æ¿¡ ï¿½Ö´Â°ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½Îºï¿½ï¿½
+          
             PhotonNetwork.JoinLobby();
             
         }
@@ -242,8 +253,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        Debug.Log(roomList);
         foreach (RoomInfo rooom in roomList)
         {
+            Debug.Log(rooom);
             bool change = false;
             for(int i = 0; i< roomlist.Count; i++)
             {
@@ -251,7 +264,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 {
                     if (rooom.PlayerCount != 0)
                         roomlist[i] = rooom;
-                    else // À¯Àú°¡ ¾øÀ¸¸é ¹æ »èÁ¦
+                    else // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         roomlist.Remove(roomlist[i]);
                     change = true;
                 }
@@ -261,7 +274,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             if (!change)
             {
                 Debug.Log(rooom);
-                // »õ·Î¿î ·ë Ãß°¡
+                // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½
                 roomlist.Add(rooom);
             }
         }
@@ -279,12 +292,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("¹æ µé¾î°¡±â ½ÇÆÐ");
+        Debug.Log("ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
     }
 
     public override void OnCreatedRoom()
     {
-        // ¹æÀÌ ¸¸µé¾îÁö¸é
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     }
 
@@ -299,41 +312,43 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {            
             player.Add(playerId.Value);
         }
-
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
-            //ÇöÀç À¯Àú°¡ ¾Æ´Ï¸é ¼ÒÈ¯
-
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½ï¿½È¯
+            Debug.Log($"{PhotonNetwork.PlayerList[i].IsLocal}");
             if (PhotonNetwork.PlayerList[i].IsLocal)
             {
+                Debug.Log($"{PhotonNetwork.PlayerList[i].ActorNumber}");
                 GameObject singlePlayer = GameObject.Find("Player");
                 Vector3 position = Vector3.zero;
                 Quaternion rotate = Quaternion.identity;
 
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    position = singlePlayer.transform.position;
-                    rotate = singlePlayer.transform.rotation;
-                }
-                else
-                {
-                    GameObject spawnPoint = GameObject.Find("CampSpawn");
-                    position = spawnPoint.transform.position;
-                    rotate = spawnPoint.transform.rotation;
-                }
+                //if (PhotonNetwork.IsMasterClient)
+                //{
+                //    position = singlePlayer.transform.position;
+                //    rotate = singlePlayer.transform.rotation;
+                //}
+                //else
+                //{
+                GameObject spawnPoint = GameObject.Find("CampSpawn");
+                position = spawnPoint.transform.position;
+                rotate = spawnPoint.transform.rotation;
+                //}
 
-                if(singlePlayer != null)
+                if (singlePlayer != null)
                 {
                     Destroy(singlePlayer);
                 }
 
 
                 GameObject player2 = PhotonNetwork.Instantiate("Player", position, rotate, 0);
+
                 
+                player2.name = "MyCharacter";
                 Debug.Log(player2);
-                player2.name = "Player";
                 player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
-                
+                //player2.GetCo   photonView = GetComponent<PhotonView>();
+
                 GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player2;
             }
         }

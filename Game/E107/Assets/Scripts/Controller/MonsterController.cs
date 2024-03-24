@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.EventSystems.EventTrigger;
+using Photon.Pun;
 
 // 일반 몬스터
 public class MonsterController : BaseController
@@ -52,16 +53,11 @@ public class MonsterController : BaseController
         _audioSource.playOnAwake = false;
     }
 
-    //private void FixedUpdate()
-    //{
-    //    FreezeVelocity();
-    //}
+    private void OnDestroy()
+    {
+        
+    }
 
-    //// 캐릭터에게 물리력을 받아도 밀려나는 가속도로 인해 이동에 방해받지 않는다.
-    //protected void FreezeVelocity()
-    //{
-    //    _rigidbody.velocity = Vector3.zero;
-    //}
 
     protected void OnDrawGizmos()
     {
@@ -72,6 +68,179 @@ public class MonsterController : BaseController
 
     //이동 타겟팅 기능
     //가장 큰 데미지를 넣은 플레이어를 추격하는 기능을 넣을 수 있다.
+    
+
+    #region State Method
+    // IDLE
+    public override void EnterIdle()
+    {
+        base.EnterIdle();
+        _agent.speed = 0;
+        _agent.velocity = Vector3.zero;
+
+        _animator.CrossFade("Idle", 0.5f);      // 기본적으로 base layer의 state를 나타냄
+        
+        // 마스터 클래스에서만 전송
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeIdleState", RpcTarget.Others);
+    }
+    
+    public override void ExcuteIdle()
+    {
+        base.ExcuteIdle();
+
+        if (PhotonNetwork.IsConnected &&PhotonNetwork.IsMasterClient == false) return;
+        // Time.time: 게임이 시작된 후부터 시간(초)을 반환
+        // _lastTime: 마지막으로 호출된 시간(초)을 가진다.
+        // _coolDownTime: 스킬 사용 시간(초)을 나타낸다.
+        if (Time.time - _lastDetectTime >= _stat.DetectTime)
+        {
+            UpdateDetectPlayer();
+            _lastDetectTime = Time.time;
+        }
+    }
+    public override void ExitIdle()
+    {
+        base.ExitIdle();
+    }
+
+    // MOVE
+    public override void EnterMove()
+    {
+        base.EnterMove();
+        _agent.speed = _stat.MoveSpeed;
+        _agent.velocity = Vector3.zero;
+
+        // -1: 이진수 11111 모든 layer를 선택
+        _animator.CrossFade("Move", 1.0f, -1, 0);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeMoveState", RpcTarget.Others);
+    }
+    public override void ExcuteMove()
+    {
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
+        base.ExcuteMove();
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Move"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (aniTime <= 0.1f)
+            {
+                _agent.speed = _stat.MoveSpeed * 2.0f;
+            }
+            else if (aniTime <= 1.0f)
+            {
+                _agent.speed = _stat.MoveSpeed;
+            }
+        }
+
+        ChangeStateFromMove();
+    }
+
+    public override void ExitMove()
+    {
+        base.ExitMove();
+    }
+
+    // SKILL
+    public override void EnterSkill()
+    {
+        base.EnterSkill();
+        
+        _agent.speed = 0;
+        _agent.velocity = Vector3.zero;
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
+            Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
+            // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
+
+            // 상속
+
+            photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
+        }
+        else
+        {
+            // 회전이 필요할까?
+
+        }
+        _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
+        _animator.CrossFade("Attack", 0.3f, -1, 0);
+
+
+
+    }
+
+    public override void ExcuteSkill()
+    {
+        base.ExcuteSkill();
+
+        // 상태 전환이 완벽하게 이뤄졌을 때 "Attack" 애니메이션이 끝났는지 확인
+        //if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        //{
+        //    float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+        //    if (aniTime >= 1.0f)
+        //    {
+        //        _statemachine.ChangeState(new IdleState(this));
+        //    }
+        //}
+
+    }
+    public override void ExitSkill()
+    {
+        base.ExitSkill();
+    }
+
+    // DIE
+    public override void EnterDie()
+    {
+        base.EnterDie();
+        _agent.speed = 0;
+        _agent.velocity = Vector3.zero;
+        GetComponent<Collider>().enabled = false;
+        _agent.enabled = false;
+
+        _animator.CrossFade("Die", 0.5f);
+
+        // 스폰에서 몬스터 배열을 통해 null 처리 또는 destroy
+        Destroy(gameObject, 3.0f);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDieState", RpcTarget.Others);
+    }
+    public override void ExcuteDie()
+    {
+        base.ExcuteDie();
+    }
+    public override void ExitDie()
+    {
+        base.ExitDie();
+    }
+    #endregion
+
+    #region RPC Method
+
+    [PunRPC]
+    void RPC_ChangeIdleState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMoveState()
+    {
+        _statemachine.ChangeState(new MoveState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeSkillState()
+    {
+        // ???바꿔야 할지도
+        _statemachine.ChangeState(new SkillState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
+
+    #endregion
+
     protected void UpdateDetectPlayer()
     {
         _detectPlayer = null;
@@ -89,7 +258,7 @@ public class MonsterController : BaseController
             {
                 closeDist = distToPlayer;
                 _detectPlayer = player.transform;
-            }   
+            }
         }
 
         if (_detectPlayer != null)
@@ -109,6 +278,7 @@ public class MonsterController : BaseController
         if (distanceToPlayer <= _monsterInfo.AttackRange)
         {
             _statemachine.ChangeState(new SkillState(this));
+            
         }
         else if (distanceToPlayer > _stat.DetectRange)
         {
@@ -161,126 +331,5 @@ public class MonsterController : BaseController
         }
     }
 
-    // IDLE
-    public override void EnterIdle()
-    {
-        base.EnterIdle();
-        _agent.speed = 0;
-        _agent.velocity = Vector3.zero;
-
-        _animator.CrossFade("Idle", 0.5f);      // 기본적으로 base layer의 state를 나타냄
-    }
-    
-    public override void ExcuteIdle()
-    {
-        base.ExcuteIdle();
-        // Time.time: 게임이 시작된 후부터 시간(초)을 반환
-        // _lastTime: 마지막으로 호출된 시간(초)을 가진다.
-        // _coolDownTime: 스킬 사용 시간(초)을 나타낸다.
-        if (Time.time - _lastDetectTime >= _stat.DetectTime)
-        {
-            UpdateDetectPlayer();
-            _lastDetectTime = Time.time;
-        }
-    }
-    public override void ExitIdle()
-    {
-        base.ExitIdle();
-    }
-
-    // MOVE
-    public override void EnterMove()
-    {
-        base.EnterMove();
-        _agent.speed = _stat.MoveSpeed;
-        _agent.velocity = Vector3.zero;
-
-        // -1: 이진수 11111 모든 layer를 선택
-        _animator.CrossFade("Move", 1.0f, -1, 0);
-    }
-    public override void ExcuteMove()
-    {
-        base.ExcuteMove();
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Move"))
-        {
-            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            if (aniTime <= 0.1f)
-            {
-                _agent.speed = _stat.MoveSpeed * 2.0f;
-            }
-            else if (aniTime <= 1.0f)
-            {
-                _agent.speed = _stat.MoveSpeed;
-            }
-        }
-
-        ChangeStateFromMove();
-    }
-
-    public override void ExitMove()
-    {
-        base.ExitMove();
-    }
-
-    // SKILL
-    public override void EnterSkill()
-    {
-        base.EnterSkill();
-        _agent.speed = 0;
-        _agent.velocity = Vector3.zero;
-
-        Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
-        Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
-        // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
-
-        // 상속
-        _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
-        _animator.CrossFade("Attack", 0.3f, -1, 0);
-    }
-
-    public override void ExcuteSkill()
-    {
-        base.ExcuteSkill();
-
-        // 상태 전환이 완벽하게 이뤄졌을 때 "Attack" 애니메이션이 끝났는지 확인
-        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-        {
-            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-
-            if (aniTime >= 1.0f)
-            {
-                _statemachine.ChangeState(new IdleState(this));
-            }
-        }
-
-    }
-    public override void ExitSkill()
-    {
-        base.ExitSkill();
-    }
-
-    // DIE
-    public override void EnterDie()
-    {
-        base.EnterDie();
-        _agent.speed = 0;
-        _agent.velocity = Vector3.zero;
-        GetComponent<Collider>().enabled = false;
-        _agent.enabled = false;
-
-        _animator.CrossFade("Die", 0.5f);
-
-        // 스폰에서 몬스터 배열을 통해 null 처리 또는 destroy
-        Destroy(gameObject, 3.0f);
-    }
-    public override void ExcuteDie()
-    {
-        base.ExcuteDie();
-    }
-    public override void ExitDie()
-    {
-        base.ExitDie();
-    }
 }
 
