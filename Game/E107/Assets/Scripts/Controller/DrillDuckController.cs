@@ -21,10 +21,10 @@ public class DrillDuckController : MonsterController
         // 슬라이드 쿨타임 추가
     }
 
-    private void FixedUpdate()
-    {
-        FreezeVelocity();
-    }
+    //private void FixedUpdate()
+    //{
+    //    FreezeVelocity();
+    //}
 
 
     // DectPlayer 유지

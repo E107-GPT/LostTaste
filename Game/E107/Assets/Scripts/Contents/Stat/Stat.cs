@@ -77,7 +77,7 @@ public class Stat
                 _maxHp = 500;
                 _attackDamage = 15;
                 _moveSpeed = 6.5f;
-                _attackRange = 2.0f;
+                _attackRange = 10.0f;
                 break;
             case Define.UnitType.Crab:
                 _hp = 300;
