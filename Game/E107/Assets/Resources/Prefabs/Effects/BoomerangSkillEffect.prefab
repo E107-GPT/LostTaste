@@ -19471,6 +19471,7 @@ GameObject:
   - component: {fileID: 8066499495287631677}
   - component: {fileID: 293702958642322703}
   - component: {fileID: 6242743659011467910}
+  - component: {fileID: 7481907503424246077}
   m_Layer: 0
   m_Name: Boomerang
   m_TagString: Untagged
@@ -19571,3 +19572,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 170a90e2e30b9f14b97d4a6e57798454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7481907503424246077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8426528462546865896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 293702958642322703}
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

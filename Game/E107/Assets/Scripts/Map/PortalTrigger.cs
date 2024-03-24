@@ -104,11 +104,11 @@ public class PortalTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            MonsterManager.Instance.portalTrigger = this;
             playersInPortal.Add(other.gameObject);
             CheckAllPlayersInPortal();
-            MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
-            MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
+            //MonsterManager.Instance.portalTrigger = this;
+            //MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+            //MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
 
         }
     }
@@ -142,6 +142,9 @@ public class PortalTrigger : MonoBehaviour
                 Debug.Log(player.gameObject.name);
             }
             portal.SetActive(false);
+            MonsterManager.Instance.portalTrigger = this;
+            MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+            MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
         }
     }
 }
