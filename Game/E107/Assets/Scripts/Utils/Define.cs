@@ -45,6 +45,10 @@ public class Define
         Crab,
         Fishman,
         NagaWizard,
+        Demon,
+        Salamander,
+        Specter,
+        Skeleton,
     }
 
     public enum Effect
@@ -63,5 +67,13 @@ public class Define
     public enum NPCType
     {
         Normal,
+    }
+
+    public enum SkillType
+    {
+        None,
+        LeftSkill,
+        RightSkill,
+        ClassSkill
     }
 }

@@ -19,7 +19,7 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: kr
     Server: 
     Port: 0
     ProxyServer: 
@@ -48,6 +48,18 @@ MonoBehaviour:
   - ChangeRightState
   - LeftSKillCast
   - RightSkillCast
+  - ChangeIdleState
+  - ChageSkillState
+  - ChangeFirstItem
+  - ChangeSecondItem
+  - DropCurrentItemRPC
+  - EquipItemRPC
+  - ChageDieState
+  - RPC_ChangeIdleState
+  - RPC_ChangeDieState
+  - RPC_ChangeMoveState
+  - RPC_ChangeSkillState
+  - ChangeDieState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

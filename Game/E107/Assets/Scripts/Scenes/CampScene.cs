@@ -55,26 +55,5 @@ public class CampScene : BaseScene
         }
     }
 
-    void ResetPlayerHP()
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            PlayerController playerController = player.GetComponent<PlayerController>();
-            if (playerController != null)
-            {
-                playerController.ResetHP(); // PlayerController 내의 HP 초기화 메서드 호출
-            }
-            else
-            {
-                Debug.LogError("PlayerController component not found on the player!");
-            }
-        }
-        else
-        {
-            Debug.LogError("Player object not found!");
-        }
-    }
-
 
 }
