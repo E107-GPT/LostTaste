@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,9 @@ using UnityEngine.AI;
 
 public class DrillDuckController : MonsterController
 {
-    // ÆòÅ¸
-    // ³»·ÁÂï±â
-    private float _slideCoolTime;   // ÄğÅ¸ÀÓ Ãß°¡
+    // í‰íƒ€
+    // ë‚´ë ¤ì°ê¸°
+    private float _slideCoolTime;   // ì¿¨íƒ€ì„ ì¶”ê°€
 
 
     public override void Init()
@@ -17,7 +18,7 @@ public class DrillDuckController : MonsterController
         // Other Class
         _stat = new MonsterStat(_unitType);
 
-        // ½½¶óÀÌµå ÄğÅ¸ÀÓ Ãß°¡
+        // ìŠ¬ë¼ì´ë“œ ì¿¨íƒ€ì„ ì¶”ê°€
     }
 
     //private void FixedUpdate()
@@ -26,7 +27,7 @@ public class DrillDuckController : MonsterController
     //}
 
 
-    // DectPlayer À¯Áö
+    // DectPlayer ìœ ì§€
     protected override void ChangeStateFromMove()
     {
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
@@ -65,13 +66,18 @@ public class DrillDuckController : MonsterController
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
-        Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
-        _agent.SetDestination(destPos);
 
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
+            _agent.SetDestination(destPos);
+            photonView.RPC("RPC_ChangeDrillDuckSlideBeforeState", RpcTarget.Others);
+        }
         _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("BeforeSlide", 0.2f, -1, 0);
         _animator.speed = _animator.speed / 2.5f;
+
     }
     public override void ExcuteDrillDuckSlideBeforeState()
     {
@@ -99,7 +105,7 @@ public class DrillDuckController : MonsterController
         //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
         //Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
 
-        // °æ·Î»óÀÇ ÇÃ·¹ÀÌ¾î¸¦ ¹ĞÃÄ³»¸é¼­ µ¹Áø
+        // ê²½ë¡œìƒì˜ í”Œë ˆì´ì–´ë¥¼ ë°€ì³ë‚´ë©´ì„œ ëŒì§„
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         _agent.radius *= 2;
         _agent.avoidancePriority = 0;
@@ -108,6 +114,8 @@ public class DrillDuckController : MonsterController
 
         //_agent.SetDestination(destPos);
         _animator.CrossFade("Slide", 0.2f, -1, 0);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDrillDuckSlideState", RpcTarget.Others);
+
     }
     public override void ExcuteDrillDuckSlideState()
     {
@@ -141,5 +149,38 @@ public class DrillDuckController : MonsterController
         _agent.avoidancePriority = 50;
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
+    [PunRPC]
+    void RPC_ChangeDrillDuckSlideBeforeState()
+    {
+        _statemachine.ChangeState(new DrillDuckSlideBeforeState(this));
+    }
 
+    [PunRPC]
+    void RPC_ChangeDrillDuckSlideState()
+    {
+        _statemachine.ChangeState(new DrillDuckSlideState(this));
+    }
+
+
+    [PunRPC]
+    void RPC_ChangeIdleState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMoveState()
+    {
+        _statemachine.ChangeState(new MoveState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeSkillState()
+    {
+        // ???ï¿½Ù²ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        _statemachine.ChangeState(new SkillState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
 }

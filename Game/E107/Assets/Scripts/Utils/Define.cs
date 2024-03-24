@@ -62,6 +62,7 @@ public class Define
         GalaxyZzzSkillEffect,
         WarriorClassSkillEffect,
         SemUmbrellaSkillEffect,
+        BoomerangSkillEffect,
         ToxicFlowerMissileEffect,
         CrocodileSwordEffect,
         MaxCount
