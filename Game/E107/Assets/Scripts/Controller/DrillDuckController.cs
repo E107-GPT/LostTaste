@@ -6,20 +6,21 @@ using UnityEngine.AI;
 
 public class DrillDuckController : MonsterController
 {
-    [SerializeField]
-    private float _lastPatternTime;
+    // ï¿½ï¿½Å¸
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private float _slideCoolTime;   // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ß°ï¿½
 
 
     public override void Init()
     {
-        // MonsterController Init()ÀÎÁö È®ÀÎ ÇÊ¿ä
+        // MonsterController Init()ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½Ê¿ï¿½
         base.Init();
 
         // Other Class
         _stat = new MonsterStat(_unitType);
-    }
 
 
+    // DectPlayer ï¿½ï¿½ï¿½ï¿½
     protected override void ChangeStateFromMove()
     {
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
@@ -143,7 +144,7 @@ public class DrillDuckController : MonsterController
         //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
         //Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
 
-        // °æ·Î»óÀÇ ÇÃ·¹ÀÌ¾î¸¦ ¹ÐÃÄ³»¸é¼­ µ¹Áø
+        // ï¿½ï¿½Î»ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½Ä³ï¿½ï¿½é¼­ ï¿½ï¿½ï¿½ï¿½
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         _agent.radius *= 2;
         _agent.avoidancePriority = 0;
@@ -213,7 +214,7 @@ public class DrillDuckController : MonsterController
     [PunRPC]
     void RPC_ChangeSkillState()
     {
-        // ???¹Ù²ã¾ß ÇÒÁöµµ
+        // ???ï¿½Ù²ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         _statemachine.ChangeState(new SkillState(this));
     }
     [PunRPC]

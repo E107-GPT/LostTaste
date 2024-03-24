@@ -61,6 +61,7 @@ public class Define
         GalaxyZzzSkillEffect,
         WarriorClassSkillEffect,
         SemUmbrellaSkillEffect,
+        ToxicFlowerMissileEffect,
         MaxCount
     }
 
