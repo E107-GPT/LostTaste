@@ -12,7 +12,6 @@ public class DrillDuckController : MonsterController
 
     public override void Init()
     {
-        // MonsterController Init()인지 확인 필요
         base.Init();
 
         // Other Class
@@ -58,35 +57,6 @@ public class DrillDuckController : MonsterController
         {
             _statemachine.ChangeState(new SkillState(this));
         }
-    }
-
-    // Move
-    public override void EnterMove()
-    {
-        base.EnterMove();
-    }
-    public override void ExcuteMove()
-    {
-        base.ExcuteMove();
-    }
-    public override void ExitMove()
-    {
-        base.ExitMove();
-    }
-
-    // Normal Attack
-    public override void EnterSkill()
-    {
-        base.EnterSkill();
-
-    }
-    public override void ExcuteSkill()
-    {
-        base.ExcuteSkill();
-    }
-    public override void ExitSkill()
-    {
-        base.ExitSkill();
     }
 
 
@@ -141,7 +111,7 @@ public class DrillDuckController : MonsterController
     }
     public override void ExcuteDrillDuckSlideState()
     {
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
