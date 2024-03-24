@@ -9,8 +9,8 @@ public class BoomerangSkill : Skill
 
     protected override void Init()
     {
-        SkillCoolDownTime = 1.0f;
-        RequiredMp = 0;
+        SkillCoolDownTime = 8.0f;
+        RequiredMp = 10;
     }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
