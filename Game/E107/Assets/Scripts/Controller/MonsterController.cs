@@ -165,7 +165,7 @@ public class MonsterController : BaseController
         Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
         Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
         // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.8f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.2f);
 
         _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
         _animator.CrossFade("Attack", 0.3f, -1, 0);
@@ -180,7 +180,13 @@ public class MonsterController : BaseController
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime >= 1.0f)
+            if (aniTime < 0.9f)
+            {
+                Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
+                Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.15f);
+            }
+            else if (aniTime >= 1.0f)
             {
                 PrintText("공격 -> IDLE");
                 _statemachine.ChangeState(new IdleState(this));

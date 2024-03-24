@@ -56,7 +56,14 @@ public class Stat
                 _maxHp = 1000;
                 _attackDamage = 15;
                 _moveSpeed = 8.0f;
-                _attackRange = 3.0f;
+                _attackRange = 3.0f;        // skill collider와 상관있음
+                break;
+            case Define.UnitType.Crocodile:
+                _hp = 1500;
+                _maxHp = 1500;
+                _attackDamage = 15;
+                _moveSpeed = 8.0f;
+                _attackRange = 6.0f;
                 break;
             case Define.UnitType.Slime:
                 _hp = 200;
