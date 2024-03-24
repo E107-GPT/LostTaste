@@ -123,6 +123,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: bc6a42dc298632e46bf5e77e1a6a5aae, type: 2}
+--- !u!1 &23475710 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4292557977277153459, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+  m_PrefabInstance: {fileID: 3521618124361187960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &151555166 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3766009960464441697, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+  m_PrefabInstance: {fileID: 3521618124361187960}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &264837356 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2550732372176524372, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
@@ -256,6 +266,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6001604393595099217, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
   m_PrefabInstance: {fileID: 1467173001412813957}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &332660173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332660167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c527b18c51cbfa4d857e9e16b9cf5fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &343134458
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +453,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 387115533948124294, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 387115533948124294, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2581,7 +2603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8413321355004073540, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DisconnectFromPhoton
+      value: ConnectLobby
       objectReference: {fileID: 0}
     - target: {fileID: 8413321355004073540, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -3832,7 +3854,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1260946086}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6001604393595099217, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 332660173}
   m_SourcePrefab: {fileID: 100100000, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
 --- !u!1001 &2085543782127943333
 PrefabInstance:
@@ -4717,7 +4742,7 @@ PrefabInstance:
     - target: {fileID: 324861400119088957, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: portal
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 23475710}
     - target: {fileID: 324861400119088957, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: monstersCheck
       value: 4
@@ -4729,7 +4754,7 @@ PrefabInstance:
     - target: {fileID: 324861400119088957, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 151555166}
     - target: {fileID: 463902982113330353, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

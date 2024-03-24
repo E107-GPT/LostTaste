@@ -50,16 +50,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 마스터가 장면을 로드하면 같은 방에 있는 모든 클라이언트가 자동으로 레벨을 동기화하도록 함
         PhotonNetwork.AutomaticallySyncScene = true;
         // 같은 버전의 유저들만 접속 허용
-    }
-    void Start()
-    {
+        PhotonNetwork.ConnectUsingSettings();
+
         isConnectRoom = false;
         partyDescription = new TextMeshProUGUI[20];
         partyLeader = new TextMeshProUGUI[20];
         partyMember = new TextMeshProUGUI[20];
-        for (int i = 0; i<20; i++)
+        roomDescription.text = UserInfo.GetInstance().getNickName() + "의 방";
+        for (int i = 0; i < 20; i++)
         {
-            string partyName = "Party " + (i+1);
+            string partyName = "Party " + (i + 1);
             GameObject party = GameObject.Find(partyName);
             partySelectButton[i] = party;
             partyDescription[i] = party.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -68,9 +68,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             partySelectButton[i].SetActive(false);
 
             Button partyConnect = partySelectButton[i].GetComponent<Button>();
-            partyConnect.onClick.AddListener(()=>roomEnter(i));
+            int idx = i;
+            partyConnect.onClick.AddListener(() => roomEnter(idx));
         }
         roomListPanel.SetActive(false);
+    }
+    void Start()
+    {
+        Connect();
     }
     #endregion
 
@@ -98,6 +103,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void ConnectLobby()
+    {
+        if (PhotonNetwork.InRoom)
+            PhotonNetwork.JoinLobby();
+    }
+
     public void DisconnectFromPhoton()
     {
         GameObject player = Managers.Resource.Instantiate("Player/Player");
@@ -121,6 +132,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log("JoinLobby");
         //progressLabel.SetActive(false);
         //createRoomPanel.SetActive(true);
+
+        
     }
 
 
@@ -231,10 +244,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (isConnecting)
         {
-            Debug.Log("OnConnectedToMaster");
+            Debug.Log("OnConnectedToMaster"); 
 
-            // 방에 있는게 아니면 로비로
-            if(!isConnectRoom)
+            //GameObject.Find("HUD").GetComponent<HUDManager>().playerController = player.GetComponent<PlayerController>();
+            //로비 이동
             PhotonNetwork.JoinLobby();
             
         }
@@ -251,11 +264,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 {
                     if (rooom.PlayerCount != 0)
                         roomlist[i] = rooom;
-                    else // 유저가 없으면 방 삭제
+                    // 유저가 없거나 게임중이거나 솔플중일땐 보이지 않아야 함
+                    else if (rooom.PlayerCount == 0 || !(rooom.IsOpen && rooom.IsVisible))
+                    {
                         roomlist.Remove(roomlist[i]);
+                    }
                     change = true;
                 }
-                
             }
 
             if (!change)
@@ -302,7 +317,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
-            //현재 유저가 아니면 소환
+            //현재 유저면 소환
 
             if (PhotonNetwork.PlayerList[i].IsLocal)
             {
@@ -322,18 +337,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                     rotate = spawnPoint.transform.rotation;
                 }
 
-                if(singlePlayer != null)
+                if (singlePlayer != null)
                 {
                     Destroy(singlePlayer);
                 }
 
 
-                GameObject player2 = PhotonNetwork.Instantiate("Player", position, rotate, 0);
-                
+                GameObject player2 = PhotonNetwork.Instantiate("Prefabs/Player/Player", position, rotate, 0);
+                //Assets/Resources/Prefabs/Player/Player.prefab
                 Debug.Log(player2);
                 player2.name = "Player";
                 player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
-                
+                HUDManager hud = GameObject.Find("HUD").GetComponent<HUDManager>();
+                hud.playerController = player2.GetComponent<PlayerController>();
+                player2.GetComponent<PlayerController>().entityName = "palworld";
                 GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player2;
             }
         }

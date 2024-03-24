@@ -1,8 +1,11 @@
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
+
 
 // 방 이동 포탈 
 
@@ -10,7 +13,7 @@ public class PortalTrigger : MonoBehaviour
 {
     public Transform targetPortalLocation;  // 이동할 포탈 위치
 
-    private HashSet<GameObject> playersInPortal = new HashSet<GameObject>();
+    private Dictionary<string, GameObject> playersInPortal = new Dictionary<string, GameObject>();
     public int totalPlayers = 1;    // 필요한 플레이어 수, 게임 설정에 따라 조정 (지금은 1명)
 
     public string targetMapName;
@@ -28,9 +31,13 @@ public class PortalTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-        {
+        {           
+            if(totalPlayers != PhotonNetwork.CurrentRoom.PlayerCount)
+                totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+            Debug.Log(totalPlayers);
+
             MonsterManager.Instance.portalTrigger = this;
-            playersInPortal.Add(other.gameObject);
+            playersInPortal.Add(other.GetComponent<PlayerController>().entityName, other.gameObject);
             CheckAllPlayersInPortal();
             MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
 
@@ -53,7 +60,7 @@ public class PortalTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            playersInPortal.Remove(other.gameObject);
+            playersInPortal.Remove(other.gameObject.GetComponent<PlayerController>().entityName);
         }
     }
 
@@ -62,17 +69,21 @@ public class PortalTrigger : MonoBehaviour
     {
         if (playersInPortal.Count == totalPlayers)
         {
+            Debug.Log(playersInPortal.Count + " / " + totalPlayers);
+
             // 모든 플레이어를 목표 포탈 위치로 이동
-            foreach (GameObject player in playersInPortal)
+            foreach (KeyValuePair<string, GameObject> player in playersInPortal)
             {
-                NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
+                NavMeshAgent agent = player.Value.GetComponent<NavMeshAgent>();
                 if (agent != null)
                 {
-                    agent.Warp(targetPortalLocation.position);
+                    Debug.Log("정상적으로 가는거같아");
+                    agent.Warp(targetPortalLocation.position);  
                 }
                 else
                 {
-                    player.transform.position = targetPortalLocation.position;
+                    Debug.Log("이상한데로 가는거같아");
+                    player.Value.transform.position = targetPortalLocation.position;
                 }
             }
             portal.SetActive(false);
