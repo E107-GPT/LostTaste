@@ -18,6 +18,7 @@ public class DrillDuckController : MonsterController
 
         // Other Class
         _stat = new MonsterStat(_unitType);
+    }
 
 
     // DectPlayer ����
