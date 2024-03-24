@@ -13,6 +13,7 @@ public class ItemDropTables
     };
 
     public static readonly GameObject[] UNCOMMON_ITEMS = new GameObject[] {
+        Load("0004_Boomerang"),
         Load("0012_HeroSword"),
         Load("0028_BubbleWand"),
     };

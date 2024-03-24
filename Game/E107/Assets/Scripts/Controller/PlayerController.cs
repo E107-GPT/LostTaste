@@ -553,7 +553,7 @@ public class PlayerController : BaseController
         if (photonView.IsMine) photonView.RPC("EquipItemRPC", RpcTarget.Others, item.gameObject.name);
     }
 
-    public void DropCurrentItem()
+    public Item DropCurrentItem()
     {
         Item currentItem = _inventory[_currentItemNum];
 
@@ -564,6 +564,7 @@ public class PlayerController : BaseController
         currentItem.OnDropped();
 
         if (photonView.IsMine) photonView.RPC("DropCurrentItemRPC", RpcTarget.Others);
+        return currentItem;
     }
 
     public void LookMousePosition()
