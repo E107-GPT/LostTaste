@@ -84,14 +84,14 @@ public class Stat
                 _maxHp = 300;
                 _attackDamage = 15;
                 _moveSpeed = 6.0f;
-                _attackRange = 2.0f;
+                _attackRange = 2.3f;
                 break;
             case Define.UnitType.Fishman:
                 _hp = 500;
                 _maxHp = 500;
                 _attackDamage = 20;
                 _moveSpeed = 6.0f;
-                _attackRange = 2.0f;
+                _attackRange = 2.3f;
                 break;
             case Define.UnitType.NagaWizard:
                 _hp = 700;

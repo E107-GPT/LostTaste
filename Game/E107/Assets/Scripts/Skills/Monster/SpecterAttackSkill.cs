@@ -27,7 +27,7 @@ public class SpecterAttackSkill : Skill
         // ParticleSystem ps = Managers.Effect.Play(Define.Effect.NormalAttackEffect, Root);
         // Managers.Sound.Play("swing1");
 
-        skillObj.localScale = new Vector3(1.0f, 5.0f, _attackRange);    // 1.1f
+        skillObj.localScale = new Vector3(3.0f, 5.0f, _attackRange);    // 1.1f
         skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
