@@ -94,6 +94,7 @@ public class MonsterManager : MonoBehaviour
                     if (!PhotonNetwork.IsConnected) clone = Instantiate(spawnInfo.monsterPrefab, spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
                     else if (PhotonNetwork.IsMasterClient) clone = PhotonNetwork.Instantiate($"Prefabs/Monster/{spawnInfo.monsterPrefab.name}", spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
                     monstersInCurrentMap.Add(clone);
+                    
                 }
                 break;
             }
