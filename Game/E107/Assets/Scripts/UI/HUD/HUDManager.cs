@@ -56,7 +56,7 @@ public class HUDManager : MonoBehaviour
         // 골드 정보 업데이트
         // UpdateGoldDisplay();
 
-        // 사용자 정보 업데이트w
+        // 사용자 정보 업데이트
         UpdateUserInfoDisplay();
 
         // 플레이어 상태 업데이트
