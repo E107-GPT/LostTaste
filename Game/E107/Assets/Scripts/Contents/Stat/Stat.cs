@@ -43,8 +43,8 @@ public class Stat
         {
             case Define.UnitType.Player:
                 // 100으로 돌려야함
-                _hp = 100;
-                _maxHp = 100;
+                _hp = 1000;
+                _maxHp = 1000;
                 _mp = 100;
                 _maxMp = 100;
                 _attackDamage = 10;
@@ -76,28 +76,56 @@ public class Stat
                 _hp = 500;
                 _maxHp = 500;
                 _attackDamage = 15;
-                _moveSpeed = 7.0f;
+                _moveSpeed = 6.5f;
                 _attackRange = 2.0f;
                 break;
             case Define.UnitType.Crab:
                 _hp = 300;
                 _maxHp = 300;
                 _attackDamage = 15;
-                _moveSpeed = 7.0f;
-                _attackRange = 2.0f;
+                _moveSpeed = 6.0f;
+                _attackRange = 2.3f;
                 break;
             case Define.UnitType.Fishman:
                 _hp = 500;
                 _maxHp = 500;
                 _attackDamage = 20;
-                _moveSpeed = 7.0f;
-                _attackRange = 2.0f;
+                _moveSpeed = 6.0f;
+                _attackRange = 2.3f;
                 break;
             case Define.UnitType.NagaWizard:
                 _hp = 700;
                 _maxHp = 700;
                 _attackDamage = 30;
+                _moveSpeed = 5.5f;
+                _attackRange = 2.5f;
+                break;
+            case Define.UnitType.Demon:
+                _hp = 800;
+                _maxHp = 800;
+                _attackDamage = 30;
+                _moveSpeed = 5.5f;
+                _attackRange = 2.5f;
+                break;
+            case Define.UnitType.Salamander:
+                _hp = 400;
+                _maxHp = 400;
+                _attackDamage = 15;
+                _moveSpeed = 5.5f;
+                _attackRange = 2.0f;
+                break;
+            case Define.UnitType.Specter:
+                _hp = 500;
+                _maxHp = 500;
+                _attackDamage = 25;
                 _moveSpeed = 6.5f;
+                _attackRange = 2.5f;
+                break;
+            case Define.UnitType.Skeleton:
+                _hp = 500;
+                _maxHp = 500;
+                _attackDamage = 25;
+                _moveSpeed = 5.5f;
                 _attackRange = 2.5f;
                 break;
         }

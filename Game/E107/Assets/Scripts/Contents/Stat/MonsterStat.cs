@@ -39,27 +39,43 @@ public class MonsterStat : Stat
                 break;
             case UnitType.Slime:
                 _level = 1;
-                _detectRange = 10.0f;
+                _detectRange = 15.0f;
                 break;
             case UnitType.TurtleSlime:
                 _level = 1;
-                _detectRange = 10.0f;
+                _detectRange = 15.0f;
                 break;
             case UnitType.ToxicFlower:
                 _level = 1;
-                _detectRange = 10.0f;
+                _detectRange = 15.0f;
                 break;
             case UnitType.Crab:
                 _level = 1;
-                _detectRange = 10.0f;
+                _detectRange = 15.0f;
                 break;
             case UnitType.Fishman:
                 _level = 1;
-                _detectRange = 13.0f;
+                _detectRange = 15.0f;
                 break;
             case UnitType.NagaWizard:
                 _level = 1;
-                _detectRange = 13.0f;
+                _detectRange = 15.0f;
+                break;
+            case UnitType.Demon:
+                _level = 1;
+                _detectRange = 15.0f;
+                break;
+            case UnitType.Salamander:
+                _level = 1;
+                _detectRange = 15.0f;
+                break;
+            case UnitType.Specter:
+                _level = 1;
+                _detectRange = 15.0f;
+                break;
+            case UnitType.Skeleton:
+                _level = 1;
+                _detectRange = 15.0f;
                 break;
         }
     }

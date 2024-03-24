@@ -7,27 +7,101 @@ using Photon.Realtime;
 using System.Collections;
 
 
-// ¹æ ÀÌµ¿ Æ÷Å» 
+// ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½Å» 
 
 public class PortalTrigger : MonoBehaviour
 {
-    public Transform targetPortalLocation;  // ÀÌµ¿ÇÒ Æ÷Å» À§Ä¡
+    public Transform targetPortalLocation;  // ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½Å» ï¿½ï¿½Ä¡
 
     private Dictionary<string, GameObject> playersInPortal = new Dictionary<string, GameObject>();
-    public int totalPlayers = 1;    // ÇÊ¿äÇÑ ÇÃ·¹ÀÌ¾î ¼ö, °ÔÀÓ ¼³Á¤¿¡ µû¶ó Á¶Á¤ (Áö±ÝÀº 1¸í)
+    public int totalPlayers = 1;    // ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½)
 
     public string targetMapName;
 
     public GameObject portal;
 
+    public GameObject[] itemBoxes;
+
+    public bool isBossRoom = false;
+
+
+    // ï¿½ï¿½Å» È°ï¿½ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
+    public void ActivateItemBox()
+    {
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+        foreach (var box in itemBoxes)
+        {
+            box.SetActive(false);
+        }
+
+        if (isBossRoom) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        {
+            var goldenBox = GetItemBoxByName("Golden");
+            if (goldenBox != null)
+            {
+                goldenBox.SetActive(true); // Golden ï¿½ï¿½ï¿½Ú¸ï¿½ È°ï¿½ï¿½È­
+            }
+        }
+
+        else // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        {
+            float chance = Random.Range(0f, 100f); // 0ï¿½ï¿½ï¿½ï¿½ 100 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            GameObject boxToActivate = null; // È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+            if (chance <= 5f) // Golden ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ 5%
+            {
+                boxToActivate = GetItemBoxByName("Golden");
+            }
+            else if (chance <= 45f) // Better ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ 25%
+            {
+                boxToActivate = GetItemBoxByName("Better");
+            }
+            else // Wooden ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ 70%
+            {
+                boxToActivate = GetItemBoxByName("Wooden");
+            }
+
+            if (boxToActivate != null)
+            {
+                boxToActivate.SetActive(true);
+            }
+        }
+    }
+
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ GameObjectï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
+    GameObject GetItemBoxByName(string boxName)
+    {
+        foreach (var box in itemBoxes)
+        {
+            if (box.name.Contains(boxName)) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+            {
+                return box;
+            }
+        }
+        return null; // ï¿½Ø´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    }
 
     public void ActivatePortal(bool isActive)
     {
         portal.SetActive(isActive);
         Debug.Log("ActivatePortal called with " + isActive);
+
+        // ï¿½ï¿½Å»ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½Ô²ï¿½ Ã³ï¿½ï¿½
+        if (isActive)
+        {
+            ActivateItemBox(); // ï¿½ï¿½Å» È°ï¿½ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
+        }
+        else
+        {
+            // ï¿½ï¿½Å»ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+            foreach (var box in itemBoxes)
+            {
+                box.SetActive(false);
+            }
+        }
     }
 
-    // Æ®¸®°Å ¹üÀ§¾È¿¡ µé¾î¿À¸é ÀÎ¿ø¼ö Ã¼Å©
+    // Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ï¿½ï¿½ Ã¼Å©
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -40,22 +114,12 @@ public class PortalTrigger : MonoBehaviour
             playersInPortal.Add(other.GetComponent<PlayerController>().entityName, other.gameObject);
             CheckAllPlayersInPortal();
             MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+            MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
 
-            // "PortalToCamp" Æ÷Å»À» Åë°úÇÒ ¶§¸¸ ÇÃ·¹ÀÌ¾îÀÇ HP¸¦ ÃÊ±âÈ­
-            if (portal.name == "PortalToCamp")
-            {
-                // ÇÃ·¹ÀÌ¾îÀÇ HP¸¦ ÃÊ±âÈ­ÇÏ´Â ·ÎÁ÷
-                PlayerController playerController = other.GetComponent<PlayerController>();
-                if (playerController != null)
-                {
-                    playerController.ResetHP(); // PlayerController ³»ÀÇ HP ÃÊ±âÈ­ ¸Þ¼­µå È£Ãâ
-                }
-
-            }
         }
     }
 
-    // Æ®¸®°Å ¹üÀ§ ¹ÛÀ¸·Î ³ª°¡¸é ÀÎ¿ø¼ö Ã¼Å©
+    // Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ï¿½ï¿½ Ã¼Å©
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -64,27 +128,28 @@ public class PortalTrigger : MonoBehaviour
         }
     }
 
-    // ¸ðµç ÇÃ·¹ÀÌ¾î°¡ Æ÷Å» ±ÙÃ³¿¡ ÀÖÀ»¶§ ½ÇÇà
+    // ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½Å» ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void CheckAllPlayersInPortal()
     {
         if (playersInPortal.Count == totalPlayers)
         {
             Debug.Log(playersInPortal.Count + " / " + totalPlayers);
 
-            // ¸ðµç ÇÃ·¹ÀÌ¾î¸¦ ¸ñÇ¥ Æ÷Å» À§Ä¡·Î ÀÌµ¿
+            // ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½Ç¥ ï¿½ï¿½Å» ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½
             foreach (KeyValuePair<string, GameObject> player in playersInPortal)
             {
                 NavMeshAgent agent = player.Value.GetComponent<NavMeshAgent>();
                 if (agent != null)
                 {
-                    Debug.Log("Á¤»óÀûÀ¸·Î °¡´Â°Å°°¾Æ");
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°Å°ï¿½ï¿½ï¿½");
                     agent.Warp(targetPortalLocation.position);  
                 }
                 else
                 {
-                    Debug.Log("ÀÌ»óÇÑµ¥·Î °¡´Â°Å°°¾Æ");
+                    Debug.Log("ï¿½Ì»ï¿½ï¿½Ñµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°Å°ï¿½ï¿½ï¿½");
                     player.Value.transform.position = targetPortalLocation.position;
                 }
+                Debug.Log(player.gameObject.name);
             }
             portal.SetActive(false);
         }

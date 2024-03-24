@@ -9,13 +9,14 @@ public class PlayerController : BaseController
 {
     //Stat
     PlayerStat _stat;
-    
+
     // Item 관련 변수
     Item[] _inventory;
     int _currentItemNum;
     IPlayerInteractable _detectedInteractable;
     GameObject _righthand;
     Coroutine _mpRecoverCoroutine;
+    Define.SkillType _curSkill = Define.SkillType.None;
 
 
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
@@ -50,16 +51,18 @@ public class PlayerController : BaseController
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
         Item first = Managers.Resource.Instantiate("Weapons/0028_BubbleWand", _righthand.transform).GetComponent<Item>();
+        first.OnEquipped();
         Item second = Managers.Resource.Instantiate("Weapons/0000_Fist", _righthand.transform).GetComponent<Item>();
+        second.OnEquipped();
         _inventory[1] = first;
         _inventory[2] = second;
 
         _currentItemNum = 1;
 
         second.gameObject.SetActive(false);
-        
+
         ///
-    
+
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
         Managers.Input.MouseAction -= OnMouseClicked;
@@ -68,64 +71,45 @@ public class PlayerController : BaseController
 
         _statemachine.ChangeState(new IdleState(this));
     }
-
-    public void StartMpRecover()
+    private void OnDestroy()
     {
-        _mpRecoverCoroutine = StartCoroutine(MpRecoverCoroutine());
+        Managers.Input.KeyAction -= OnKeyboard;
+
+        Managers.Input.MouseAction -= OnMouseClicked;
+        StopMpRecover();
+
+
     }
 
-    public void StopMpRecover()
-    {
-        StopCoroutine(_mpRecoverCoroutine);
-    }
-
-    IEnumerator MpRecoverCoroutine()
-    {
-        while(_stat.Hp > 0)
-        {
-            
-            _stat.Mp += 5;
-            if (_stat.Mp > _stat.MaxMp) _stat.Mp = _stat.MaxMp;
-             yield return new WaitForSeconds(1.0f);
-
-        }
-    }
-    
-    IEnumerator ChangeColorTemporarily()
-    {
-        foreach (Renderer renderer in _allRenderers)
-        {
-            renderer.material.color = _attackedColor;
-        }
-
-        // 지정된 시간만큼 기다림
-        yield return new WaitForSeconds(0.2f);
-
-        // 모든 Renderer의 머티리얼 색상을 원래 색상으로 복구
-        for (int i = 0; i < _allRenderers.Length; i++)
-        {
-            _allRenderers[i].material.color = _originalColors[i];
-        }
-    }
+    #region StateMethod
     public override void EnterIdle()
     {
         base.EnterIdle();
         _animator.CrossFade("WAIT", 0.1f);
+        if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
     }
 
     public override void ExcuteIdle()
     {
-        base.ExcuteIdle();  
+        base.ExcuteIdle();
         DetectInteractable();
+    }
+
+    public override void ExitIdle()
+    {
+        base.ExitIdle();
+        _detectedInteractable = null;
     }
 
     public override void EnterMove()
     {
         base.EnterMove();
         _animator.CrossFade("RUN", 0.1f);
+        if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeMoveState", RpcTarget.Others);
     }
     public override void ExcuteMove()
     {
+        if (isConnected && photonView.IsMine == false) return;
         base.ExcuteMove();
         if (Input.GetKey(KeyCode.W))
         {
@@ -145,7 +129,7 @@ public class PlayerController : BaseController
             //transform.Translate(Vector3.forward * Time.deltaTime * _stat.MoveSpeed);
             //transform.position += dirTo6 * Time.deltaTime * _stat.MoveSpeed;
             Vector3 dirTo6 = new Vector3(1.0f, 0.0f, -1.0f).normalized;
-            
+
             _agent.Move(dirTo6 * Time.deltaTime * _stat.MoveSpeed);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTo6), 0.5f);
 
@@ -173,7 +157,11 @@ public class PlayerController : BaseController
 
 
 
-        if (Input.anyKey == false) _statemachine.ChangeState(new IdleState(this));
+        if (Input.anyKey == false)
+        {
+            _statemachine.ChangeState(new IdleState(this));
+            if (isConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
+        }
 
     }
 
@@ -182,53 +170,66 @@ public class PlayerController : BaseController
     public override void EnterDash()
     {
         base.EnterDash();
-        LookMousePosition();
+        if (photonView.IsMine || !PhotonNetwork.IsConnected) LookMousePosition();
 
         _animator.CrossFade("DASH", 0.1f, -1, 0);
+        if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDashState", RpcTarget.Others);
 
     }
 
     public override void ExcuteDash()
     {
         base.ExcuteDash();
-        Debug.Log(_stat);
         _agent.Move(transform.forward * Time.deltaTime * _stat.MoveSpeed * 2);
         //transform.position += transform.forward * Time.deltaTime * _stat.MoveSpeed * 2;
     }
 
-    [PunRPC]
     public override void EnterSkill()
     {
+        //if (isConnected && photonView.IsMine == false) return;
         base.EnterSkill();
 
-        // TODO: animation도 어떻게 해줘야겠지?
-
-
-        LookMousePosition();
+        if (photonView.IsMine || !PhotonNetwork.IsConnected) LookMousePosition();
 
         // 왼쪽클릭
 
-        if (Input.GetMouseButton(0))
+        switch (_curSkill)
         {
-            _inventory[_currentItemNum].LeftSKillCast();
-
-
+            case Define.SkillType.LeftSkill:
+                _inventory[_currentItemNum].LeftSKillCast();
+                if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.LeftSkill, gameObject.transform.rotation);
+                break;
+            case Define.SkillType.RightSkill:
+                _inventory[_currentItemNum].RightSkillCast();
+                _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
+                if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.RightSkill, gameObject.transform.rotation);
+                Debug.Log(_stat.Mp);
+                _lastRightSkillCastTime = Time.time;
+                break;
+            case Define.SkillType.ClassSkill:
+                gameObject.GetOrAddComponent<WarriorClassSkill>().Cast(_stat.AttackDamage, 10.0f);
+                if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.ClassSkill, gameObject.transform.rotation);
+                break;
         }
-        else if (Input.GetMouseButton(1))
-        {
 
-            _inventory[_currentItemNum].RightSkillCast();
-            _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
-            Debug.Log(_stat.Mp);
-            _lastRightSkillCastTime = Time.time;
+        //if (Input.GetMouseButton(0))
+        //{
 
 
-        }
-        else if (Input.GetKey(KeyCode.Q))
-        {
-            Debug.Log("QQQQQQQQ");
-            gameObject.GetOrAddComponent<WarriorClassSkill>().Cast(_stat.AttackDamage, 10.0f);
-        }
+
+        //}
+        //else if (Input.GetMouseButton(1))
+        //{
+
+
+
+
+        //}
+        //else if (Input.GetKey(KeyCode.Q))
+        //{
+        //    Debug.Log("QQQQQQQQ");
+
+        //}
 
 
 
@@ -251,15 +252,21 @@ public class PlayerController : BaseController
     {
         base.EnterDie();
         _animator.CrossFade("DIE", 0.1f);
+        if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDieState", RpcTarget.Others);
 
         // 추가한 부분
         GetComponent<Collider>().enabled = false;
         _agent.enabled = false;
+
+        
+
     }
+    #endregion
 
-
+    #region InputMethod
     void OnMouseClicked(Define.MouseEvent evt)
     {
+        if (PhotonNetwork.IsConnected && photonView.IsMine == false) return;
         //Debug.Log($"{CurState?.ToString()}");
         if (_statemachine.CurState is DieState || _statemachine.CurState is SkillState || CurState is DashState) return;
 
@@ -279,75 +286,71 @@ public class PlayerController : BaseController
         {
             if (Input.GetMouseButton(0))
             {
+                _curSkill = Define.SkillType.LeftSkill;
                 _statemachine.ChangeState(new SkillState(this));
+
+                //if(isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
 
             }
             else if (Input.GetMouseButton(1))
             {
-                if(_stat.Mp >= _inventory[_currentItemNum].RightSkill.RequiredMp)
+                if (_stat.Mp >= _inventory[_currentItemNum].RightSkill.RequiredMp)
                 {
                     Debug.Log($"Rquired Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
-                    if(_lastRightSkillCastTime == 0 || Time.time - _lastRightSkillCastTime >= _inventory[_currentItemNum].RightSkill.SkillCoolDownTime)
+                    if (_lastRightSkillCastTime == 0 || Time.time - _lastRightSkillCastTime >= _inventory[_currentItemNum].RightSkill.SkillCoolDownTime)
                     {
-
+                        _curSkill = Define.SkillType.RightSkill;
                         _statemachine.ChangeState(new SkillState(this));
+
+
+                        //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
                     }
 
                 }
 
             }
 
-            
+
         }
-        if(isConnected) photonView.RPC("EnterSkill", RpcTarget.All);
+        //if(isConnected) photonView.RPC("EnterSkill", RpcTarget.All);
     }
 
     void OnKeyboard()
     {
+        Debug.Log($"{gameObject.name} {isConnected}, {photonView != null}");
+        if (isConnected && photonView.IsMine == false) return;
 
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            if (isConnected)
+            if (_statemachine.CurState is not MoveState)
             {
-                photonView.RPC("ChangeMoveState", RpcTarget.All);
-            }
-            else
-            {
-                if (_statemachine.CurState is not MoveState) _statemachine.ChangeState(new MoveState(this));
+                _statemachine.ChangeState(new MoveState(this));
+                //if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeMoveState", RpcTarget.Others);
             }
 
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            if (isConnected)
-            {
-                photonView.RPC("ChangeDashState", RpcTarget.All);
-            }
-            else
-                _statemachine.ChangeState(new DashState(this));
+            _statemachine.ChangeState(new DashState(this));
+            //if (isConnected) photonView.RPC("ChangeDashState", RpcTarget.Others);
         }
         // 무기 교체
         if (Input.GetKey(KeyCode.Alpha1))
         {
-            if (_currentItemNum == 1) return; // 이미 1번 무기일 경우
-            if (_inventory[1] != null) _inventory[1].gameObject.SetActive(true);
-            if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
+            ChangeToItem(1);
 
-            _currentItemNum = 1;
+            if (photonView.IsMine) photonView.RPC("ChangeFirstItem", RpcTarget.Others);
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
-            if (_currentItemNum == 2) return; // 이미 2번 무기일 경우
-            if (_inventory[2] != null) _inventory[2].gameObject.SetActive(true);
-            if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
-
-            _currentItemNum = 2;
+            ChangeToItem(2);
+            if (photonView.IsMine) photonView.RPC("ChangeSecondItem", RpcTarget.Others);
         }
 
-        // 무기 줍기
+        // 상호작용
         if (_detectedInteractable != null && Input.GetKeyDown(KeyCode.E))
         {
             _detectedInteractable.OnInteracted(this.gameObject);
@@ -362,48 +365,96 @@ public class PlayerController : BaseController
 
             DropCurrentItem();
             ObtainWeapon("0000_Fist");
+
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            _curSkill = Define.SkillType.ClassSkill;
             _statemachine.ChangeState(new SkillState(this));
+            //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
         }
 
 
 
     }
+    #endregion
 
-	[PunRPC]
+    #region PunRPC
+    [PunRPC]
     void ChangeMoveState()
     {
-        if (_statemachine.CurState is not MoveState) 
+        if (_statemachine.CurState is not MoveState)
             _statemachine.ChangeState(new MoveState(this));
     }
 
-	[PunRPC]
+    [PunRPC]
     void ChangeDashState()
     {
         _statemachine.ChangeState(new DashState(this));
     }
 
     [PunRPC]
-    void ChangeIDLEState()
+    void ChangeIdleState()
     {
+        //Debug.Log("STOP PLZ");
         _statemachine.ChangeState(new IdleState(this));
     }
-    void OnHitEvent()
+
+    [PunRPC]
+    void ChageSkillState(Define.SkillType skillType, Quaternion _rotation)
     {
-            _statemachine.ChangeState(new IdleState(this));
+        gameObject.transform.rotation = _rotation;
+        _curSkill = skillType;
+        _statemachine.ChangeState(new SkillState(this));
+    }
+    [PunRPC]
+    void ChangeDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
+    [PunRPC]
+    void ChangeFirstItem()
+    {
+        ChangeToItem(1);
+    }
+    [PunRPC]
+    void ChangeSecondItem()
+    {
+        ChangeToItem(2);
+    }
+    [PunRPC]
+    void EquipItemRPC(string itemName)
+    {
+
+        //ObtainWeapon(itemName);
+        _detectedInteractable.OnInteracted(this.gameObject);
+        //GameObject go = Managers.Resource.Instantiate($"Weapons/{itemName}", _righthand.transform);
+
 
     }
+    [PunRPC]
+    void DropCurrentItemRPC()
+    {
+        Item currentItem = _inventory[_currentItemNum];
+        ObtainWeapon("0000_Fist");
+        GameObject go = Managers.Resource.Instantiate($"Weapons/{currentItem.gameObject.name}", gameObject.transform);
+        go.transform.position = gameObject.transform.position;
+        go.transform.SetParent(null);
+        go.transform.rotation = new Quaternion();
+        go.GetComponent<Item>().OnDropped();
 
+        Managers.Resource.Destroy(currentItem.gameObject);
+    }
+
+    #endregion
 
     void OnDashFinishedEvent()
     {
-        if (isConnected)
-            photonView.RPC("ChangeIDLEState", RpcTarget.All);
-        else
+        
+
         _statemachine.ChangeState(new IdleState(this));
+        //if (photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
     }
 
     public override void TakeDamage(int skillObjectId, int damage)
@@ -433,17 +484,11 @@ public class PlayerController : BaseController
         if (_stat.Hp <= 0)
         {
             _statemachine.ChangeState(new DieState(this));
+            //if (photonView.IsMine) photonView.RPC("ChageDieState", RpcTarget.Others);
         }
 
     }
 
-    public void ResetHP()
-    {
-        if (_stat != null)
-        {
-            _stat.Hp = _stat.MaxHp; // HP를 최대 HP로 초기화
-        }
-    }
 
 
     public void DetectInteractable()
@@ -465,7 +510,7 @@ public class PlayerController : BaseController
         if (closestCollider != null)
         {
             // 가장 가까운 오브젝트를 처리합니다. 예: 로그 출력
-            Debug.Log("Closest Object: " + closestCollider.gameObject.name);
+            //Debug.Log("Closest Object: " + closestCollider.gameObject.name);
             _detectedInteractable = closestCollider.GetComponent<IPlayerInteractable>();
         }
         else
@@ -474,9 +519,22 @@ public class PlayerController : BaseController
         }
     }
 
+
+    public void ChangeToItem(int num)
+    {
+        if (_currentItemNum == num) return; // 이미 num번 무기일경우
+        if (_inventory[num] != null) _inventory[num].gameObject.SetActive(true);
+        if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
+
+        _currentItemNum = num;
+    }
+
     public void EquipItem(Item item)
     {
         item.transform.parent = _righthand.transform;
+        item.transform.SetParent(_righthand.transform);
+
+        Debug.Log(_righthand.transform.root.name);
 
         Item currentItem = _inventory[_currentItemNum];
 
@@ -492,6 +550,7 @@ public class PlayerController : BaseController
         _inventory[_currentItemNum] = item;
         item.OnEquipped();
         Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
+        if (photonView.IsMine) photonView.RPC("EquipItemRPC", RpcTarget.Others, item.gameObject.name);
     }
 
     public void DropCurrentItem()
@@ -500,8 +559,11 @@ public class PlayerController : BaseController
 
         currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
         currentItem.gameObject.transform.parent = null;
-        currentItem.gameObject.transform.position = gameObject.transform.position;
+        currentItem.gameObject.transform.position = gameObject.transform.root.position;
+        currentItem.gameObject.transform.rotation = new Quaternion();
         currentItem.OnDropped();
+
+        if (photonView.IsMine) photonView.RPC("DropCurrentItemRPC", RpcTarget.Others);
     }
 
     public void LookMousePosition()
@@ -523,5 +585,47 @@ public class PlayerController : BaseController
     public void ObtainWeapon(string weaponName)
     {
         _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/" + weaponName, _righthand.transform).GetComponent<Item>();
+        _inventory[_currentItemNum].OnEquipped();
     }
+
+    public void StartMpRecover()
+    {
+        _mpRecoverCoroutine = StartCoroutine(MpRecoverCoroutine());
+    }
+
+    public void StopMpRecover()
+    {
+        StopCoroutine(_mpRecoverCoroutine);
+    }
+
+    IEnumerator MpRecoverCoroutine()
+    {
+        while (_stat.Hp > 0)
+        {
+
+            _stat.Mp += 5;
+            if (_stat.Mp > _stat.MaxMp) _stat.Mp = _stat.MaxMp;
+            yield return new WaitForSeconds(1.0f);
+
+        }
+    }
+
+    IEnumerator ChangeColorTemporarily()
+    {
+        foreach (Renderer renderer in _allRenderers)
+        {
+            renderer.material.color = _attackedColor;
+        }
+
+        // 지정된 시간만큼 기다림
+        yield return new WaitForSeconds(0.2f);
+
+        // 모든 Renderer의 머티리얼 색상을 원래 색상으로 복구
+        for (int i = 0; i < _allRenderers.Length; i++)
+        {
+            _allRenderers[i].material.color = _originalColors[i];
+        }
+    }
+    
+
 }

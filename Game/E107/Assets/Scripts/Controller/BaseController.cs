@@ -20,8 +20,9 @@ public abstract class BaseController : MonoBehaviour
 	
 	
 	// ���� ��Ʈ��ũ
+	[SerializeField]
 	protected bool isConnected = false;
-	protected PhotonView photonView;
+	public PhotonView photonView;
 
 
 	protected StateMachine _statemachine;
@@ -56,6 +57,7 @@ public abstract class BaseController : MonoBehaviour
 
 	private void Awake()
 	{
+		Debug.Log("AWAKE!!!");
 		_statemachine = new StateMachine();
 		_animator = GetComponent<Animator>();
 		_rigidbody = GetComponent<Rigidbody>();
@@ -72,11 +74,11 @@ public abstract class BaseController : MonoBehaviour
 	}
     void Update()
 	{
-		if(isConnected!= PhotonNetwork.IsConnected)
-        {
-			isConnected = PhotonNetwork.IsConnected;
-		}
-		_statemachine.Execute();
+        //if (isConnected != PhotonNetwork.IsConnected)
+        //{
+        //    isConnected = PhotonNetwork.IsConnected;
+        //}
+        _statemachine.Execute();
 	}
 
     //public abstract void Updated();
@@ -139,6 +141,7 @@ public abstract class BaseController : MonoBehaviour
     void OnHitEvent()
 	{
 		_statemachine.ChangeState(new IdleState(this));
+
 	}
 
     private void FixedUpdate()
