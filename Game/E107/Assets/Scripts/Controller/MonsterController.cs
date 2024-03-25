@@ -151,7 +151,23 @@ public class MonsterController : BaseController
         //// 테스트를 위함
         //ToDetectPlayer(0.8f);
 
-        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
+            Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
+            // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
+            transform.rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
+            photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
+        }
+        else if(!PhotonNetwork.IsConnected)
+        {
+            Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
+            Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
+            // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.2f);
+            transform.rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
+        }
 
         //if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         //{
@@ -177,7 +193,7 @@ public class MonsterController : BaseController
 
         //}
 
-        
+
 
         _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
         _animator.CrossFade("Attack", 0.3f, -1, 0);
@@ -246,6 +262,7 @@ public class MonsterController : BaseController
     void RPC_ChangeSkillState()
     {
         // ???바꿔야 할지도
+        //gameObject.transform.rotation = rotation;
         _statemachine.ChangeState(new SkillState(this));
     }
     [PunRPC]
