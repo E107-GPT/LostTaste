@@ -6,22 +6,29 @@ using UnityEngine.AI;
 
 public class DrillDuckController : MonsterController
 {
-    // ��Ÿ
-    // �������
-    private float _slideCoolTime;   // ��Ÿ�� �߰�
+    // 평타
+    // 내려찍기
+    private float _slideCoolTime;   // 쿨타임 추가
 
 
     public override void Init()
     {
-        // MonsterController Init()���� Ȯ�� �ʿ�
         base.Init();
 
         // Other Class
         _stat = new MonsterStat(_unitType);
     }
 
+        // 슬라이드 쿨타임 추가
+    }
 
-    // DectPlayer ����
+    //private void FixedUpdate()
+    //{
+    //    FreezeVelocity();
+    //}
+
+
+    // DectPlayer 유지
     protected override void ChangeStateFromMove()
     {
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
@@ -52,52 +59,6 @@ public class DrillDuckController : MonsterController
         {
             _statemachine.ChangeState(new SkillState(this));
         }
-    }
-
-    // Idle
-    public override void EnterIdle()
-    {
-        base.EnterIdle();
-    }
-
-    public override void ExcuteIdle()
-    {
-        base.ExcuteIdle();
-    }
-
-    public override void ExitIdle()
-    {
-        base.ExitIdle();
-    }
-
-    // Move
-    public override void EnterMove()
-    {
-        base.EnterMove();
-    }
-    public override void ExcuteMove()
-    {
-        base.ExcuteMove();
-    }
-    public override void ExitMove()
-    {
-        base.ExitMove();
-    }
-
-
-    // Normal Attack
-    public override void EnterSkill()
-    {
-        base.EnterSkill();
-
-    }
-    public override void ExcuteSkill()
-    {
-        base.ExcuteSkill();
-    }
-    public override void ExitSkill()
-    {
-        base.ExitSkill();
     }
 
 
@@ -145,7 +106,7 @@ public class DrillDuckController : MonsterController
         //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
         //Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
 
-        // ��λ��� �÷��̾ ���ĳ��鼭 ����
+        // 경로상의 플레이어를 밀쳐내면서 돌진
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         _agent.radius *= 2;
         _agent.avoidancePriority = 0;
@@ -159,7 +120,7 @@ public class DrillDuckController : MonsterController
     }
     public override void ExcuteDrillDuckSlideState()
     {
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
