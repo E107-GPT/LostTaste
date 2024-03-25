@@ -17,8 +17,6 @@ public class DrillDuckController : MonsterController
 
         // Other Class
         _stat = new MonsterStat(_unitType);
-
-        // 슬라이드 쿨타임 추가
     }
 
 
@@ -47,7 +45,6 @@ public class DrillDuckController : MonsterController
         if (rand <= 30)
         {
             _statemachine.ChangeState(new DrillDuckSlideBeforeState(this));
-            //_statemachine.ChangeState(new DrillDuckSlideState(this));
         }
         else if (rand <= 100)
         {

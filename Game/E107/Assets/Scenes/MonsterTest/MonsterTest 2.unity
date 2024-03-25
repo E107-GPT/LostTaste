@@ -539,7 +539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterPrefab:
-  - {fileID: 6128315377525838514, guid: 55ab4b2de0b25a54e9f9feb1386f20d5, type: 3}
+  - {fileID: 674914689742802137, guid: a99d6d883ca059748b00a826a8e5cb5f, type: 3}
   spawnerPos:
   - {fileID: 1162841310}
 --- !u!1 &1770046920
@@ -1063,6 +1063,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4869742007661013916
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 425606087886862097, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5831472
+      objectReference: {fileID: 0}
+    - target: {fileID: 425606087886862097, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.7695596
+      objectReference: {fileID: 0}
+    - target: {fileID: 425606087886862097, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.63482225
+      objectReference: {fileID: 0}
+    - target: {fileID: 425606087886862097, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 425606087886862097, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425606087886862097, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425606087886862097, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425606087886862097, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425606087886862097, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 425606087886862097, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856079193851121222, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
+      propertyPath: m_Name
+      value: CrocodileAttackEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e96ddfabcafc5734585af2e44febeee8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1074,3 +1131,4 @@ SceneRoots:
   - {fileID: 1570167619}
   - {fileID: 477516437}
   - {fileID: 1076890673}
+  - {fileID: 4869742007661013916}

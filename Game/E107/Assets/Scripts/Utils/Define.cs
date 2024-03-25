@@ -50,6 +50,7 @@ public class Define
         Specter,
         Skeleton,
         Crocodile,
+        MonsterKing,
     }
 
     public enum Effect
@@ -68,7 +69,14 @@ public class Define
         SalamanderFlameEffect,
         NagaWizardLightningEffect,
         DemonFireballEffect,
+        CrabAttackEffect,
+        FishmanAttackEffect,
+        SkeletonAttackEffect,
+        SpecterAttackEffect,
         CrocodileSwordEffect,
+        CrocodileAttackEffect, 
+        HitDownEndEffect,
+        HitDownStartEffect,
         MaxCount
     }
 

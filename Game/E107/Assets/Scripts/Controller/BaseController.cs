@@ -25,7 +25,8 @@ public abstract class BaseController : MonoBehaviour
 	public PhotonView photonView;
 
 
-	protected StateMachine _statemachine;
+    // protected bool _isDie;
+    protected StateMachine _statemachine;
 
     public State CurState
     {
@@ -130,18 +131,40 @@ public abstract class BaseController : MonoBehaviour
 
     // DrillDuckSlideBeforeState - not loop
     public virtual void EnterDrillDuckSlideBeforeState() { }
-	public virtual void ExcuteDrillDuckSlideBeforeState() { }
-	public virtual void ExitDrillDuckSlideBeforeState() { }
+    public virtual void ExcuteDrillDuckSlideBeforeState() { }
+    public virtual void ExitDrillDuckSlideBeforeState() { }
 
     // DrillDuckSlideState - not loop
     public virtual void EnterDrillDuckSlideState() { }
     public virtual void ExcuteDrillDuckSlideState() { }
     public virtual void ExitDrillDuckSlideState() { }
 
-	// CrocodileSwordState - not loop
-	public virtual void EnterCrocodileSwordState() { }
-	public virtual void ExcuteCrocodileSwordState() { }
-	public virtual void ExitCrocodileSwordState() { }
+    // CrocodileSwordState - not loop
+    public virtual void EnterCrocodileSwordState() { }
+    public virtual void ExcuteCrocodileSwordState() { }
+    public virtual void ExitCrocodileSwordState() { }
+
+    // MonsterKing - not loop
+    public virtual void EnterMonsterKingHitDownState() { }		// HitDown
+	public virtual void ExecuteMonsterKingHitDownState() { }
+	public virtual void ExitMonsterKingHitDownState() { }
+	public virtual void EnterMonsterKingSlashState() { }		// Slash
+	public virtual void ExecuteMonsterKingSlashState() { }
+	public virtual void ExitMonsterKingSlashState() { }
+	public virtual void EnterMonsterKingStabState() { }			// Stab
+	public virtual void ExecuteMonsterKingStabState() { }
+	public virtual void ExitMonsterKingStabState() { }
+	public virtual void EnterMonsterKingJumpStartState() { }	// JumpStart
+	public virtual void ExecuteMonsterKingJumpStartState() { }
+	public virtual void ExitMonsterKingJumpStartState() { }
+	public virtual void EnterMonsterKingJumpAirState() { }		// JumpAir
+	public virtual void ExecuteMonsterKingJumpAirState() { }
+	public virtual void ExitMonsterKingJumpAirState() { }
+	public virtual void EnterMonsterKingJumpEndState() { }		// JumpEnd
+	public virtual void ExecuteMonsterKingJumpEndState() { }
+	public virtual void ExitMonsterKingJumpEndState() { }
+
+
 
 
     void OnHitEvent()

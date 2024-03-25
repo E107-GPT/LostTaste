@@ -18,10 +18,16 @@ public class CrabAttackSkill : Skill
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
+        Root = transform.root;
+
         Debug.Log("Slime Attack");
+
+        Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
+
         yield return new WaitForSeconds(0.3f);
 
         // SkillObject에서 관리
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.CrabAttackEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
 
@@ -35,6 +41,6 @@ public class CrabAttackSkill : Skill
 
         yield return new WaitForSeconds(0.3f);
         Managers.Resource.Destroy(skillObj.gameObject);
-        // Managers.Effect.Stop(ps);
+        Managers.Effect.Stop(ps);
     }
 }
