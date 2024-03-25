@@ -58,6 +58,7 @@ public class Define
         BubbleWandSkillEffect,
         DrillDuckBeforeEffect,
         DrillDuckSlideEffect,
+        DrillDuckAttackEffect,
         StrongSwingEffect,
         GalaxyZzzSkillEffect,
         WarriorClassSkillEffect,
