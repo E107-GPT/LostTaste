@@ -48,7 +48,7 @@ public abstract class Skill : MonoBehaviour
     )]
     public int Cast(int attackDamage, float attackRange)
     {
-        return Cast(1, 1.0f);
+        return Cast();
     }
     public int Cast()
     {
