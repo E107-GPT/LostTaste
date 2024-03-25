@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class SemUmbrellaSkill : Skill
 {
-    private const int DAMAGE = 300;
-    private readonly Vector3 SCALE = new Vector3(5.0f, 5.0f, 5.0f);
+    [SerializeField]
+    private int Damage = 300;
+
+    [field: SerializeField]
+    private Vector3 Scale = new Vector3(5.0f, 5.0f, 5.0f);
 
     protected override void Init()
     {
@@ -13,7 +16,7 @@ public class SemUmbrellaSkill : Skill
         RequiredMp = 30;
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    protected override IEnumerator SkillCoroutine()
     {
         Root = transform.root;
         GameObject player = transform.root.gameObject;
@@ -30,9 +33,9 @@ public class SemUmbrellaSkill : Skill
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.SemUmbrellaSkillEffect, player.transform);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, DAMAGE, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
-        skillObj.localScale = SCALE;
+        skillObj.localScale = Scale;
         skillObj.position = Root.position;
 
         Washout(player, Color.black);

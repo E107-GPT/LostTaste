@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
@@ -8,11 +9,22 @@ public abstract class Skill : MonoBehaviour
     public static int _seq;
     protected float _lastCastTime;
 
+    [field: SerializeField]
+    [ReadOnly(false)]
     public string Name { get; set; }
+
+    [field: SerializeField]
+    [ReadOnly(false)]
     public string Description { get; set; }
+
+    [field: SerializeField]
+    [ReadOnly(false)]
     public Sprite Sprite { get; set; }
+
+    [field: SerializeField]
     public float SkillCoolDownTime { get; set; }
 
+    [field: SerializeField]
     public int RequiredMp { get; set; }
 
     public Transform Root { get; set; }
@@ -36,14 +48,25 @@ public abstract class Skill : MonoBehaviour
     )]
     public int Cast(int attackDamage, float attackRange)
     {
-        StartCoroutine(SkillCoroutine(attackDamage, attackRange));   // TODO: 의미없는 파라미터 제거
-        _lastCastTime = Time.time;
-        return RequiredMp;
+        return Cast(1, 1.0f);
     }
     public int Cast()
     {
-        return Cast(1, 1.0f);
+        StartCoroutine(SkillCoroutine());   // TODO: 의미없는 파라미터 제거
+        _lastCastTime = Time.time;
+        return RequiredMp;
     }
 
-    protected abstract IEnumerator SkillCoroutine(int _attackDamage, float _attackRange);
+    [Obsolete("\n====================\n" +
+        "이 메소드 대신 인자가 없는 SkillCoroutine()을 구현해주세요."
+    )]
+    protected virtual IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    {
+        yield return null;
+    }
+
+    protected virtual IEnumerator SkillCoroutine()
+    {
+        return SkillCoroutine(1, 1.0f);
+    }
 }
