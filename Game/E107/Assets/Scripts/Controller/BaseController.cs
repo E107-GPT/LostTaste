@@ -68,16 +68,16 @@ public abstract class BaseController : MonoBehaviour
 
     private void Start()
     {
-		isConnected = PhotonNetwork.IsConnected;
+		isConnected = PhotonNetwork.InRoom;
 
 
 	}
     void Update()
 	{
-        //if (isConnected != PhotonNetwork.IsConnected)
-        //{
-        //    isConnected = PhotonNetwork.IsConnected;
-        //}
+        if (isConnected != PhotonNetwork.InRoom)
+        {
+            isConnected = PhotonNetwork.InRoom;
+        }
         _statemachine.Execute();
 	}
 

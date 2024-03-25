@@ -142,7 +142,28 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         
     }
 
+    public void MakePersonalRoom()
+    {
+        Debug.Log("CreateRoom");
+        PhotonManager manager = GameObject.Find("gm").GetComponent<PhotonManager>();
 
+        string roomName = UserInfo.GetInstance().getNickName() + "의 방";
+        string captainName = UserInfo.GetInstance().getNickName();
+        Debug.Log(captainName + " + " + roomName);
+
+
+        RoomOptions room = new RoomOptions();
+        room.MaxPlayers = 4;
+        room.IsVisible = false;
+        room.IsOpen = false;
+        PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
+        Debug.Log(room);
+
+        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", false } };
+        room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword" };
+
+        PhotonNetwork.CreateRoom(roomName, room);
+    }
     public void makeRoom()
     {
         Debug.Log("makeroom");

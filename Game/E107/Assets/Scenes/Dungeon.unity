@@ -175,9 +175,10 @@ MonoBehaviour:
   targetPortalLocation: {fileID: 7327418171561036777}
   totalPlayers: 1
   targetMapName: ForestBoss
-  portal: {fileID: 70918478}
-  itemBoxes: []
-  isBossRoom: 0
+  portal: {fileID: 7665562689311894075}
+  itemBoxes:
+  - {fileID: 1904544593}
+  isBossRoom: 1
 --- !u!65 &70918481
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2466,7 +2467,7 @@ MonoBehaviour:
   - mapName: ForestBoss
     spawnPoints:
     - spawnPoint: {fileID: 2781243537336599303, guid: c3e250b8a1929ee478211bafa5dee84b, type: 3}
-      monsterPrefab: {fileID: 3137786495578628170, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
+      monsterPrefab: {fileID: 3137786495578628170, guid: 30c6bee0f3960f84c9f404df0f979108, type: 3}
   - mapName: CoastMonster01
     spawnPoints:
     - spawnPoint: {fileID: 5498935422872468966, guid: 2291c0399149f964196128f5727cd711, type: 3}
@@ -2526,7 +2527,7 @@ MonoBehaviour:
   - mapName: CoastBoss
     spawnPoints:
     - spawnPoint: {fileID: 2496632392919484941, guid: 8993b535a28e61e47bde7a233d9e2ee8, type: 3}
-      monsterPrefab: {fileID: 3137786495578628170, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
+      monsterPrefab: {fileID: 674914689742802137, guid: a99d6d883ca059748b00a826a8e5cb5f, type: 3}
   - mapName: IceMonster01
     spawnPoints:
     - spawnPoint: {fileID: 3863771171955175257, guid: 310644f6be303f14d9336f1cd4c1947f, type: 3}
@@ -2608,7 +2609,7 @@ MonoBehaviour:
   - mapName: IceBoss
     spawnPoints:
     - spawnPoint: {fileID: 6971215902062380226, guid: 1497d5610dd8b4f4989b5b50a9743c8d, type: 3}
-      monsterPrefab: {fileID: 3137786495578628170, guid: 1b3cc4e8c78cbc24eba6541224bc80ee, type: 3}
+      monsterPrefab: {fileID: 3137786495578628170, guid: 30c6bee0f3960f84c9f404df0f979108, type: 3}
 --- !u!4 &1064457669
 Transform:
   m_ObjectHideFlags: 0
@@ -2830,9 +2831,10 @@ MonoBehaviour:
   targetPortalLocation: {fileID: 9125919969398674273}
   totalPlayers: 1
   targetMapName: IceBoss
-  portal: {fileID: 1393057190}
-  itemBoxes: []
-  isBossRoom: 0
+  portal: {fileID: 7165430978414144583}
+  itemBoxes:
+  - {fileID: 1057252411}
+  isBossRoom: 1
 --- !u!65 &1393057193
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3558,9 +3560,10 @@ MonoBehaviour:
   targetPortalLocation: {fileID: 6856393969819206689}
   totalPlayers: 1
   targetMapName: CoastBoss
-  portal: {fileID: 1657801456}
-  itemBoxes: []
-  isBossRoom: 0
+  portal: {fileID: 121994419942028236}
+  itemBoxes:
+  - {fileID: 1545108930}
+  isBossRoom: 1
 --- !u!65 &1657801459
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14370,16 +14373,16 @@ PrefabInstance:
       addedObject: {fileID: 70918479}
     - targetCorrespondingSourceObject: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       insertIndex: 9
-      addedObject: {fileID: 1415685790}
-    - targetCorrespondingSourceObject: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
-      insertIndex: 10
       addedObject: {fileID: 1657801457}
     - targetCorrespondingSourceObject: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      insertIndex: 10
+      addedObject: {fileID: 1393057191}
+    - targetCorrespondingSourceObject: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       insertIndex: 11
-      addedObject: {fileID: 466547808}
+      addedObject: {fileID: 1415685790}
     - targetCorrespondingSourceObject: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       insertIndex: 12
-      addedObject: {fileID: 1393057191}
+      addedObject: {fileID: 466547808}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2557262211921270612, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       insertIndex: -1
