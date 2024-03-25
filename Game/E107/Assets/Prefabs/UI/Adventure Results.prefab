@@ -306,6 +306,8 @@ GameObject:
   - component: {fileID: 7832882478292874597}
   - component: {fileID: 6717946542172541506}
   - component: {fileID: 101984110899749719}
+  - component: {fileID: 7331348031185272824}
+  - component: {fileID: 3564357522134954199}
   m_Layer: 5
   m_Name: Return To Camp Button
   m_TagString: Untagged
@@ -440,6 +442,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fingerCursor: {fileID: 2800000, guid: 29c29659f635567459665387c4b75d1f, type: 3}
+--- !u!114 &7331348031185272824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895757988801123002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bafca7a61d798a242b13cb7184c5827c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  campLocation: {fileID: 0}
+  confirmButton: {fileID: 6717946542172541506}
+--- !u!114 &3564357522134954199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895757988801123002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f174c173dab79bb448a0ae9ea8f80c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 6717946542172541506}
+  popupWindow: {fileID: 1059631116928291522}
+  inputs: []
 --- !u!1 &1059631116928291522
 GameObject:
   m_ObjectHideFlags: 0

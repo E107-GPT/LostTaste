@@ -288,6 +288,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5850820834642858252, guid: d7b8627a236348642adf238f6f97c972, type: 3}
+      propertyPath: campLocation
+      value: 
+      objectReference: {fileID: 3851254366259994452}
+    - target: {fileID: 8500948300971262365, guid: d7b8627a236348642adf238f6f97c972, type: 3}
+      propertyPath: campLocation
+      value: 
+      objectReference: {fileID: 3851254366259994452}
     - target: {fileID: 8736963729061956148, guid: d7b8627a236348642adf238f6f97c972, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3344,6 +3352,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -40
       objectReference: {fileID: 0}
+    - target: {fileID: 6717946542172541506, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1659580829}
+    - target: {fileID: 6717946542172541506, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016636998347836897, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+      propertyPath: campLocation
+      value: 
+      objectReference: {fileID: 3851254366259994452}
     - target: {fileID: 7309232162040084727, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -3360,6 +3380,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -40
       objectReference: {fileID: 0}
+    - target: {fileID: 7331348031185272824, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+      propertyPath: campLocation
+      value: 
+      objectReference: {fileID: 3851254366259994452}
     - target: {fileID: 7473987848001038152, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -3672,6 +3696,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c527b18c51cbfa4d857e9e16b9cf5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1659580829 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 895757988801123002, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1717510399
 GameObject:
   m_ObjectHideFlags: 0
@@ -14687,6 +14716,8 @@ MonoBehaviour:
   stageText: {fileID: 382873391}
   campGameMenu: {fileID: 255383712}
   dungeonGameMenu: {fileID: 255383711}
+  drillDuckStatus: {fileID: 382873394}
+  crocodileStatus: {fileID: 484040979}
 --- !u!4 &3897487118630134910 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7882428009851098038, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}

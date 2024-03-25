@@ -23,16 +23,21 @@ public class CampEntrance : MonoBehaviour
     public GameObject campGameMenu; // 캠프 게임 메뉴
     public GameObject dungeonGameMenu; // 던전 게임 메뉴
 
+    // 보스 상태
+    [Header("[ 보스 상태 ]")]
+    public GameObject drillDuckStatus; // 드릴덕 상태 패널
+    public GameObject crocodileStatus; // 크로커다일 상태 패널
+
     // 플레이어가 캠프에 진입할 때 호출되는 메서드
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            timeContainerPanel.SetActive(false); // 게임 시간 UI 비활성화
-            stageText.text = "모험가의 캠프"; // 스테이지 텍스트를 캠프에 맞게 업데이트
+        timeContainerPanel.SetActive(false); // 게임 시간 UI 비활성화
+        stageText.text = "모험가의 캠프"; // 스테이지 텍스트를 캠프에 맞게 업데이트
 
-            campGameMenu.SetActive(true); // 캠프 게임 메뉴 활성화
-            dungeonGameMenu.SetActive(false); // 던전 게임 메뉴 비활성화
-        }
+        campGameMenu.SetActive(true); // 캠프 게임 메뉴 활성화
+        dungeonGameMenu.SetActive(false); // 던전 게임 메뉴 비활성화
+
+        drillDuckStatus.SetActive(false); // 드릴덕 상태 패널 비활성화
+        crocodileStatus.SetActive(false); // 크로커다일 상태 패널 비활성화
     }
 }
