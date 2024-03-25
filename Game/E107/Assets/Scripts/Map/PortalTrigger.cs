@@ -1,18 +1,20 @@
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
 
-// ¹æ ÀÌµ¿ Æ÷Å» 
+
+// ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½Å» 
 
 public class PortalTrigger : MonoBehaviour
 {
-    public Transform targetPortalLocation;  // ÀÌµ¿ÇÒ Æ÷Å» À§Ä¡
+    public Transform targetPortalLocation;  // ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½Å» ï¿½ï¿½Ä¡
 
-    private HashSet<GameObject> playersInPortal = new HashSet<GameObject>();
-
-    public int totalPlayers = 1;    // ÇÊ¿äÇÑ ÇÃ·¹ÀÌ¾î ¼ö, °ÔÀÓ ¼³Á¤¿¡ µû¶ó Á¶Á¤ (Áö±ÝÀº 1¸í)
+    private Dictionary<string, GameObject> playersInPortal = new Dictionary<string, GameObject>();
+    public int totalPlayers = 1;    // ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½)
 
     public string targetMapName;
 
@@ -23,38 +25,38 @@ public class PortalTrigger : MonoBehaviour
     public bool isBossRoom = false;
 
 
-    // Æ÷Å» È°¼ºÈ­ ½Ã ¾ÆÀÌÅÛ »óÀÚ È°¼ºÈ­
+    // ï¿½ï¿½Å» È°ï¿½ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
     public void ActivateItemBox()
     {
-        // ¸ðµç ¾ÆÀÌÅÛ »óÀÚ¸¦ ¸ÕÀú ºñÈ°¼ºÈ­
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
         foreach (var box in itemBoxes)
         {
             box.SetActive(false);
         }
 
-        if (isBossRoom) // º¸½º¹æÀÎ °æ¿ì
+        if (isBossRoom) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         {
             var goldenBox = GetItemBoxByName("Golden");
             if (goldenBox != null)
             {
-                goldenBox.SetActive(true); // Golden »óÀÚ¸¸ È°¼ºÈ­
+                goldenBox.SetActive(true); // Golden ï¿½ï¿½ï¿½Ú¸ï¿½ È°ï¿½ï¿½È­
             }
         }
 
-        else // º¸½º¹æÀÌ ¾Æ´Ñ °æ¿ì ±âÁ¸ È®·ü ·ÎÁ÷À» µû¸§
+        else // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
-            float chance = Random.Range(0f, 100f); // 0¿¡¼­ 100 »çÀÌÀÇ ·£´ý ¼ýÀÚ
-            GameObject boxToActivate = null; // È°¼ºÈ­ÇÒ »óÀÚ
+            float chance = Random.Range(0f, 100f); // 0ï¿½ï¿½ï¿½ï¿½ 100 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            GameObject boxToActivate = null; // È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-            if (chance <= 5f) // Golden »óÀÚ È®·ü 5%
+            if (chance <= 5f) // Golden ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ 5%
             {
                 boxToActivate = GetItemBoxByName("Golden");
             }
-            else if (chance <= 45f) // Better »óÀÚ È®·ü 25%
+            else if (chance <= 45f) // Better ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ 25%
             {
                 boxToActivate = GetItemBoxByName("Better");
             }
-            else // Wooden »óÀÚ È®·ü 70%
+            else // Wooden ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ 70%
             {
                 boxToActivate = GetItemBoxByName("Wooden");
             }
@@ -66,17 +68,17 @@ public class PortalTrigger : MonoBehaviour
         }
     }
 
-    // »óÀÚ ÀÌ¸§À¸·Î »óÀÚ GameObject¸¦ Ã£´Â ¸Þ¼­µå
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ GameObjectï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
     GameObject GetItemBoxByName(string boxName)
     {
         foreach (var box in itemBoxes)
         {
-            if (box.name.Contains(boxName)) // »óÀÚ ÀÌ¸§À» È®ÀÎ
+            if (box.name.Contains(boxName)) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             {
                 return box;
             }
         }
-        return null; // ÇØ´ç ÀÌ¸§À» °¡Áø »óÀÚ°¡ ¾ø´Â °æ¿ì
+        return null; // ï¿½Ø´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     }
 
     public void ActivatePortal(bool isActive)
@@ -84,14 +86,14 @@ public class PortalTrigger : MonoBehaviour
         portal.SetActive(isActive);
         Debug.Log("ActivatePortal called with " + isActive);
 
-        // Æ÷Å»À» È°¼ºÈ­ÇÒ ¶§ ¾ÆÀÌÅÛ »óÀÚµµ ÇÔ²² Ã³¸®
+        // ï¿½ï¿½Å»ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½Ô²ï¿½ Ã³ï¿½ï¿½
         if (isActive)
         {
-            ActivateItemBox(); // Æ÷Å» È°¼ºÈ­ ½Ã ¾ÆÀÌÅÛ »óÀÚ È°¼ºÈ­
+            ActivateItemBox(); // ï¿½ï¿½Å» È°ï¿½ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
         }
         else
         {
-            // Æ÷Å»À» ºñÈ°¼ºÈ­ÇÒ ¶§ ¸ðµç ¾ÆÀÌÅÛ »óÀÚ¸¦ ºñÈ°¼ºÈ­
+            // ï¿½ï¿½Å»ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
             foreach (var box in itemBoxes)
             {
                 box.SetActive(false);
@@ -99,12 +101,20 @@ public class PortalTrigger : MonoBehaviour
         }
     }
 
-    // Æ®¸®°Å ¹üÀ§¾È¿¡ µé¾î¿À¸é ÀÎ¿ø¼ö Ã¼Å©
+    // Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ï¿½ï¿½ Ã¼Å©
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            playersInPortal.Add(other.gameObject);
+            if (PhotonNetwork.InRoom)
+            {
+                if(totalPlayers != PhotonNetwork.CurrentRoom.PlayerCount)
+                    totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+            }
+            Debug.Log(totalPlayers);
+            Debug.Log("xdlkfs : "+ other.gameObject.name);
+            MonsterManager.Instance.portalTrigger = this;
+            playersInPortal.Add(other.gameObject.name, other.gameObject);
             CheckAllPlayersInPortal();
             //MonsterManager.Instance.portalTrigger = this;
             //MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
@@ -113,33 +123,37 @@ public class PortalTrigger : MonoBehaviour
         }
     }
 
-    // Æ®¸®°Å ¹üÀ§ ¹ÛÀ¸·Î ³ª°¡¸é ÀÎ¿ø¼ö Ã¼Å©
+    // Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ï¿½ï¿½ Ã¼Å©
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            playersInPortal.Remove(other.gameObject);
+            playersInPortal.Remove(other.gameObject.name);
         }
     }
 
-    // ¸ðµç ÇÃ·¹ÀÌ¾î°¡ Æ÷Å» ±ÙÃ³¿¡ ÀÖÀ»¶§ ½ÇÇà
+    // ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½Å» ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void CheckAllPlayersInPortal()
     {
         if (playersInPortal.Count == totalPlayers)
         {
-            // ¸ðµç ÇÃ·¹ÀÌ¾î¸¦ ¸ñÇ¥ Æ÷Å» À§Ä¡·Î ÀÌµ¿
-            foreach (GameObject player in playersInPortal)
+            Debug.Log(playersInPortal.Count + " / " + totalPlayers);
+
+            // ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½Ç¥ ï¿½ï¿½Å» ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½
+            foreach (KeyValuePair<string, GameObject> player in playersInPortal)
             {
-                NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
+                NavMeshAgent agent = player.Value.GetComponent<NavMeshAgent>();
                 if (agent != null)
                 {
-                    agent.Warp(targetPortalLocation.position);
+                    Debug.Log("ìžˆëŠ”ê°€?" + player.Value.GetComponent<NavMeshAgent>());
+
+                    agent.Warp(targetPortalLocation.position);  
                 }
                 else
                 {
-                    player.transform.position = targetPortalLocation.position;
+                    Debug.Log("ì™œ ì—†ì§€?" + player.Value.GetComponent<NavMeshAgent>());
+                    player.Value.transform.position = targetPortalLocation.position;
                 }
-                Debug.Log(player.gameObject.name);
             }
             portal.SetActive(false);
             MonsterManager.Instance.portalTrigger = this;
