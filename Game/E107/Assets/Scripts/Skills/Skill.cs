@@ -19,7 +19,7 @@ public abstract class Skill : MonoBehaviour
 
     [field: SerializeField]
     [ReadOnly(false)]
-    public Sprite Sprite { get; set; }
+    public Sprite Icon { get; set; }
 
     [field: SerializeField]
     public float SkillCoolDownTime { get; set; }
@@ -62,11 +62,11 @@ public abstract class Skill : MonoBehaviour
     )]
     protected virtual IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
-        yield return null;
+        return SkillCoroutine();
     }
 
     protected virtual IEnumerator SkillCoroutine()
     {
-        return SkillCoroutine(1, 1.0f);
+        throw new NotImplementedException();
     }
 }

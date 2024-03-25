@@ -13,7 +13,7 @@ public class Item : MonoBehaviour, IPlayerInteractable
     [field: SerializeField]
     public string FlavorText { get; set; }
     [field: SerializeField]
-    public Sprite Sprite { get; set; }
+    public Sprite Icon { get; set; }
 
     [field: SerializeField]
     public Skill LeftSkill { get; protected set; }
