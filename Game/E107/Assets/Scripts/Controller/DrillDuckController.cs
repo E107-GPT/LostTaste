@@ -21,11 +21,6 @@ public class DrillDuckController : MonsterController
         // 슬라이드 쿨타임 추가
     }
 
-    //private void FixedUpdate()
-    //{
-    //    FreezeVelocity();
-    //}
-
 
     // DectPlayer 유지
     protected override void ChangeStateFromMove()
@@ -60,6 +55,22 @@ public class DrillDuckController : MonsterController
         }
     }
 
+    protected override void ToDetectPlayer(float turnSpeed)
+    {
+        base.ToDetectPlayer(turnSpeed);
+    }
+
+    // Normal Attack
+    public override void EnterSkill()
+    {
+        base.EnterSkill();
+
+    }
+
+    public override void ExcuteSkill()
+    {
+        base.ExcuteSkill();
+    }
 
     // Before Slide
     public override void EnterDrillDuckSlideBeforeState()

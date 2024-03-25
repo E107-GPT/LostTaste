@@ -39,7 +39,7 @@ public class CrocodileController : MonsterController
     private void RandomPatternSelector()
     {
         int rand = Random.Range(0, 101);
-        if (rand <= 90)
+        if (rand <= 30)
         {
             _statemachine.ChangeState(new CrocodileSwordState(this));
         }
@@ -70,9 +70,10 @@ public class CrocodileController : MonsterController
 
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
-        Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        Vector3 destPos = new Vector3(dirTarget.x, 0, dirTarget.z);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
+        ToDetectPlayer(0.8f);
+        //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+        //Vector3 destPos = new Vector3(dirTarget.x, 0, dirTarget.z);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
 
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("Sword", 0.2f, -1, 0);
@@ -83,19 +84,19 @@ public class CrocodileController : MonsterController
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Sword"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-            Vector3 destPos = new Vector3(dirTarget.x, 0, dirTarget.z);
+            //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            //Vector3 destPos = new Vector3(dirTarget.x, 0, dirTarget.z);
             
             if (aniTime <= 0.2f)
             {
                 _animator.speed = 0.2f;
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
                 //Managers.Effect.Play
             }
             else if (aniTime <= 0.23f)
             {
                 _animator.speed = 0.06f;
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
             }
             else if (aniTime < 1.0f)
             {
