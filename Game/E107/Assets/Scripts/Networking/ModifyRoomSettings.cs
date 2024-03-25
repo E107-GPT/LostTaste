@@ -59,7 +59,6 @@ public class ModifyRoomSettings : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("여기 들어오냐");
         if (!makeRoom)
         {
             makeRoom = true;

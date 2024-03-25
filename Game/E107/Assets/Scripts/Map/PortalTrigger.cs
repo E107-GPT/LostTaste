@@ -109,9 +109,10 @@ public class PortalTrigger : MonoBehaviour
             if(totalPlayers != PhotonNetwork.CurrentRoom.PlayerCount)
                 totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
             Debug.Log(totalPlayers);
+            Debug.Log("xdlkfs : "+ other.gameObject.name);
 
             MonsterManager.Instance.portalTrigger = this;
-            playersInPortal.Add(other.GetComponent<PlayerController>().entityName, other.gameObject);
+            playersInPortal.Add(other.gameObject.name, other.gameObject);
             CheckAllPlayersInPortal();
             MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
             MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
@@ -124,7 +125,7 @@ public class PortalTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            playersInPortal.Remove(other.gameObject.GetComponent<PlayerController>().entityName);
+            playersInPortal.Remove(other.gameObject.name);
         }
     }
 
@@ -141,15 +142,15 @@ public class PortalTrigger : MonoBehaviour
                 NavMeshAgent agent = player.Value.GetComponent<NavMeshAgent>();
                 if (agent != null)
                 {
-                    Debug.Log("���������� ���°Ű���");
+                    Debug.Log("있는가?" + player.Value.GetComponent<NavMeshAgent>());
+
                     agent.Warp(targetPortalLocation.position);  
                 }
                 else
                 {
-                    Debug.Log("�̻��ѵ��� ���°Ű���");
+                    Debug.Log("왜 없지?" + player.Value.GetComponent<NavMeshAgent>());
                     player.Value.transform.position = targetPortalLocation.position;
                 }
-                Debug.Log(player.gameObject.name);
             }
             portal.SetActive(false);
         }

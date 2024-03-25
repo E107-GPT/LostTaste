@@ -49,10 +49,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         // �����Ͱ� ����� �ε��ϸ� ���� �濡 �ִ� ��� Ŭ���̾�Ʈ�� �ڵ����� ������ ����ȭ�ϵ��� ��
         PhotonNetwork.AutomaticallySyncScene = true;
-        // ���� ������ �����鸸 ���� ���
-        PhotonNetwork.ConnectUsingSettings();
 
-        // ���� ������ �����鸸 ���� ���
+        Connect();
     }
     void Start()
     {
@@ -79,10 +77,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         roomListPanel.SetActive(false);
     }
-    void Start()
-    {
-        Connect();
-    }
+
     #endregion
 
     #region public Methods
@@ -269,7 +264,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log(roomList);
+        Debug.Log("asdasdadas" + roomList);
         foreach (RoomInfo rooom in roomList)
         {
             Debug.Log(rooom);
@@ -281,7 +276,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                     if (rooom.PlayerCount != 0)
                         roomlist[i] = rooom;
                     // ������ ���ų� �������̰ų� �������϶� ������ �ʾƾ� ��
-                    else if (rooom.PlayerCount == 0 || !(rooom.IsOpen && rooom.IsVisible))
+                    else if (rooom.PlayerCount == 0 || !rooom.IsOpen || !rooom.IsVisible)
                     {
                     //else // ������ ������ �� ����
                         roomlist.Remove(roomlist[i]);
@@ -360,13 +355,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 }
 
 
-                GameObject player2 = PhotonNetwork.Instantiate("Prefabs/Player/Player", position, rotate, 0);
+                GameObject player2 = PhotonNetwork.Instantiate("Player", position, rotate, 0);
                 //Assets/Resources/Prefabs/Player/Player.prefab
                 Debug.Log(player2);
                 player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
                 HUDManager hud = GameObject.Find("HUD").GetComponent<HUDManager>();
                 hud.playerController = player2.GetComponent<PlayerController>();
-                player2.GetComponent<PlayerController>().entityName = "palworld";
+                player2.name = "Player";
                 GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player2;
             }
         }
