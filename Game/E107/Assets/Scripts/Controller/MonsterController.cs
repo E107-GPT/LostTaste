@@ -87,6 +87,8 @@ public class MonsterController : BaseController
     {
         base.ExcuteIdle();
 
+        Debug.Log("MONSTER IDEL");
+
         if (PhotonNetwork.IsConnected &&PhotonNetwork.IsMasterClient == false) return;
         // Time.time: 게임이 시작된 후부터 시간(초)을 반환
         // _lastTime: 마지막으로 호출된 시간(초)을 가진다.
@@ -144,10 +146,10 @@ public class MonsterController : BaseController
         
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
-        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
+        //if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
 
-        // 테스트를 위함
-        ToDetectPlayer(0.8f);
+        //// 테스트를 위함
+        //ToDetectPlayer(0.8f);
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
 
@@ -327,7 +329,7 @@ public class MonsterController : BaseController
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;
         lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
-        PrintText($"{_stat.Hp}!!!");
+        //PrintText($"{_stat.Hp}!!!");
 
         if (_stat.Hp <= 0)
         {
