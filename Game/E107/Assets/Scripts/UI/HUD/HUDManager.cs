@@ -9,9 +9,8 @@ public class HUDManager : MonoBehaviour
 {
     // 모험 상태
     [Header("[ 모험 상태 ]")]
-    public TextMeshProUGUI gameTimeText; // 게임 시간 텍스트
     // public TextMeshProUGUI goldText;
-    public TextMeshProUGUI jellyText; // 젤리 텍스트
+    // public TextMeshProUGUI jellyText;
     public TextMeshProUGUI nicknameText; // 닉네임 텍스트
 
     // 플레이어 상태
@@ -37,9 +36,6 @@ public class HUDManager : MonoBehaviour
     [Header("[ 팝업 창 ]")]
     public GameObject GameOverWindow; // 게임 오버 창
 
-    // 게임 시작 시간 초기화
-    private float gameTime = 0;
-
     // 시작 시 호출되는 Start 메서드
     void Start()
     {
@@ -50,9 +46,6 @@ public class HUDManager : MonoBehaviour
     // 매 프레임마다 호출되는 Update 메서드
     void Update()
     {
-        // 게임 시간 업데이트
-        UpdateGameTime();
-
         // 골드 정보 업데이트
         // UpdateGoldDisplay();
 
@@ -66,15 +59,6 @@ public class HUDManager : MonoBehaviour
         UpdateBossStatus();
     }
 
-    // 게임 시간을 업데이트하는 메서드
-    void UpdateGameTime()
-    {
-        gameTime += Time.deltaTime;
-        int minutes = Mathf.FloorToInt(gameTime / 60);
-        int seconds = Mathf.FloorToInt(gameTime % 60);
-        gameTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-    }
-
     // 사용자 정보(닉네임, 젤리 수)를 UI에 업데이트하는 메서드
     void UpdateUserInfoDisplay()
     {
@@ -83,11 +67,11 @@ public class HUDManager : MonoBehaviour
 
         // 닉네임과 젤리 정보 가져오기
         string nickname = userInfo.getNickName();
-        int jelly = userInfo.getJelly();
+        // int jelly = userInfo.getJelly();
 
         // 가져온 정보를 TextMeshProUGUI에 적용
         nicknameText.text = nickname;
-        jellyText.text = jelly.ToString();
+        // jellyText.text = jelly.ToString();
     }
 
     // 플레이어 상태를 업데이트 하는 메서드

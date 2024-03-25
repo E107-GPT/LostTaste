@@ -10,10 +10,10 @@ using TMPro;
 /// </summary>
 public class CampEntrance : MonoBehaviour
 {
-    // 모험 상태 패널
-    [Header("[ 모험 상태 패널 ]")]
+    // 게임 시간
+    [Header("[ 게임 시간 ]")]
     public GameObject timeContainerPanel; // 게임 시간 패널
-    public GameObject goldPanel; // 골드 패널
+    // public GameObject goldPanel; // 골드 패널
 
     // 지도 패널
     [Header("[ 지도 패널 ]")]
@@ -25,7 +25,7 @@ public class CampEntrance : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             timeContainerPanel.SetActive(false); // 게임 시간 UI 비활성화
-            goldPanel.SetActive(false); // 골드 UI 비활성화
+            // goldPanel.SetActive(false); // 골드 UI 비활성화
             stageText.text = "모험가의 캠프"; // 스테이지 텍스트를 캠프에 맞게 업데이트
         }
     }
