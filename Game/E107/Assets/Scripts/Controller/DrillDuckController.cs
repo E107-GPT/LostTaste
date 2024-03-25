@@ -6,11 +6,6 @@ using UnityEngine.AI;
 
 public class DrillDuckController : MonsterController
 {
-    // 평타
-    // 내려찍기
-    private float _slideCoolTime;   // 쿨타임 추가
-
-
     public override void Init()
     {
         base.Init();
