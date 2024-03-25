@@ -729,6 +729,10 @@ PrefabInstance:
       propertyPath: GameOverWindow
       value: 
       objectReference: {fileID: 1507488862}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: AdventureResultWindow
+      value: 
+      objectReference: {fileID: 1507488862}
     - target: {fileID: 5431882730462413913, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -996,6 +1000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageText: {fileID: 382873391}
+  stage2Icon: {fileID: 1507488863}
 --- !u!1 &424757079 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6547030978406437475, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
@@ -3384,6 +3389,21 @@ RectTransform:
 --- !u!1 &1507488862 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1059631116928291522, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1507488863 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8916558406600750871, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1507488864 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5304436688945963397, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1507488865 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4040882340218279505, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
   m_PrefabInstance: {fileID: 1507488860}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1545108930 stripped
@@ -8505,6 +8525,27 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1748719415 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4914329809719984900, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1748719416 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5818303435025375560, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1748719417 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7885422961896448982, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1751538443 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7623268775536314131, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
@@ -15403,6 +15444,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageText: {fileID: 382873391}
+  stageXIcon: {fileID: 1507488865}
+  stage1Icon: {fileID: 1507488864}
+  stageClearText: {fileID: 1748719415}
 --- !u!4 &7119989599540773618 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 242895207311107201, guid: ad5b15d1531efb84d835d74b463b73f6, type: 3}
@@ -15543,6 +15587,12 @@ MonoBehaviour:
   stageText: {fileID: 382873391}
   campGameMenu: {fileID: 255383712}
   dungeonGameMenu: {fileID: 255383711}
+  stageXIcon: {fileID: 1507488865}
+  stage1Icon: {fileID: 1507488864}
+  stage2Icon: {fileID: 1507488863}
+  stage3Icon: {fileID: 1748719417}
+  finalStageIcon: {fileID: 1748719416}
+  stageClearText: {fileID: 1748719415}
 --- !u!1001 &7578815113489133580
 PrefabInstance:
   m_ObjectHideFlags: 0

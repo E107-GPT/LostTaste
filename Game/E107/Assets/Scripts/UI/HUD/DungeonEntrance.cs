@@ -10,7 +10,11 @@ using TMPro;
 /// </summary>
 public class DungeonEntrance : MonoBehaviour
 {
+    public static DungeonEntrance Instance { get; private set; }
+
     private float gameTime = 0f;
+    public float GameTime => gameTime; // 외부에서 접근 가능하도록 게터 추가
+
     private bool isInCamp = true;
 
     // 게임 시간
@@ -26,6 +30,28 @@ public class DungeonEntrance : MonoBehaviour
     [Header("[ 게임 메뉴 ]")]
     public GameObject campGameMenu; // 캠프 게임 메뉴
     public GameObject dungeonGameMenu; // 던전 게임 메뉴
+
+    // 클리어 한 스테이지
+    [Header("[ 클리어 한 스테이지 ]")]
+    public GameObject stageXIcon; // 클리어 한 스테이지 없음 아이콘
+    public GameObject stage1Icon; // Stage 1 클리어 아이콘
+    public GameObject stage2Icon; // Stage 2 클리어 아이콘
+    public GameObject stage3Icon; // Stage 3 클리어 아이콘
+    public GameObject finalStageIcon; // Final Stage 클리어 아이콘
+    public TextMeshProUGUI stageClearText; // 스테이지 클리어 텍스트
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 선택적
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Update()
     {
@@ -56,6 +82,13 @@ public class DungeonEntrance : MonoBehaviour
 
             campGameMenu.SetActive(false); // 캠프 게임 메뉴 비활성화
             dungeonGameMenu.SetActive(true); // 던전 게임 메뉴 활성화
+
+            stageXIcon.SetActive(true); // 클리어 한 스테이지 없음 아이콘 활성화
+            stage1Icon.SetActive(false); // Stage 1 클리어 아이콘 비활성화
+            stage2Icon.SetActive(false); // Stage 2 클리어 아이콘 비활성화
+            stage3Icon.SetActive(false); // Stage 3 클리어 아이콘 비활성화
+            finalStageIcon.SetActive(false); // Final Stage 클리어 아이콘 비활성화
+            stageClearText.text = "클리어한 스테이지가 없습니다.";
         }
     }
 }

@@ -21,7 +21,7 @@ public class HUDManager : MonoBehaviour
 
     // 팝업 창
     [Header("[ 팝업 창 ]")]
-    public GameObject GameOverWindow; // 게임 오버 창
+    public GameObject AdventureResultWindow; // 모험 결과 창
 
     // 시작 시 호출되는 Start 메서드
     void Start()
@@ -71,7 +71,7 @@ public class HUDManager : MonoBehaviour
         // 플레이어가 사망할 경우 게임 오버 창을 활성화
         if (Hp <= 0)
         {
-            GameOverWindow.SetActive(true);
+            AdventureResultWindow.SetActive(true);
         }
     }
 }
