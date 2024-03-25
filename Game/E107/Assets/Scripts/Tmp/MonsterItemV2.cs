@@ -8,6 +8,6 @@ public class MonsterItemV2 : Item
     protected override void Init()
     {
         base.Init();
-        _leftSkill = gameObject.GetOrAddComponent<NormalAttackSkill>();
+        LeftSkill = gameObject.GetOrAddComponent<NormalAttackSkill>();
     }
 }

@@ -92,7 +92,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6437546287180896591}
-  - component: {fileID: 5455809686216293145}
+  - component: {fileID: 187512872418184853}
+  - component: {fileID: 4208725828119770345}
   m_Layer: 9
   m_Name: 0004_Boomerang
   m_TagString: Untagged
@@ -109,14 +110,14 @@ Transform:
   m_GameObject: {fileID: 3570330387622359733}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.348, y: -0.225, z: 0.222}
+  m_LocalPosition: {x: 0.3, y: -0.225, z: -1.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 335969492048752518}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5455809686216293145
+--- !u!114 &187512872418184853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,11 +126,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 3570330387622359733}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46c16308bec04df428e40039999430c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDamage: 50
-  _attackRange: 8
+  <Name>k__BackingField: "\uBD80\uBA54\uB791"
+  <Tier>k__BackingField: 1
+  <FlavorText>k__BackingField: "\uC0AC\uB791\uC740 \uB3CC\uC544\uC624\uB294 \uAC70\uC57C!"
+  <Icon>k__BackingField: {fileID: 21300000, guid: 7d9c2548a1041cb41b8f2d75385c6a16, type: 3}
+  <LeftSkill>k__BackingField: {fileID: 0}
+  <RightSkill>k__BackingField: {fileID: 4208725828119770345}
   isDropped: 1
-  _leftSkill: {fileID: 0}
-  _rightSkill: {fileID: 0}
+--- !u!114 &4208725828119770345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3570330387622359733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33bf88a483d8e1a42a55046a2a38de81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uBD80\uBA54\uB791 \uB358\uC9C0\uAE30"
+  <Description>k__BackingField: "\uC81C\uC790\uB9AC\uB85C \uB3CC\uC544\uC624\uB294
+    \uBD80\uBA54\uB791\uC744 \uB358\uC9D1\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 21300000, guid: 7d9c2548a1041cb41b8f2d75385c6a16, type: 3}
+  <SkillCoolDownTime>k__BackingField: 8
+  <RequiredMp>k__BackingField: 10
+  <Damage>k__BackingField: 0
+  StartVelocity: 10
+  Acceleration: -10

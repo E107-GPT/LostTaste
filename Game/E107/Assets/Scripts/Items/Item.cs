@@ -4,34 +4,34 @@ using UnityEngine;
 using Photon.Pun;
 public class Item : MonoBehaviour, IPlayerInteractable
 {
-    [SerializeField]
-    protected int _attackDamage = 50;
-    [SerializeField]
-    protected float _attackRange = 8.0f;
-    [SerializeField]
-    protected bool isDropped = false;
     protected CapsuleCollider _itemCollider;
 
+    [field: SerializeField]
     public string Name { get; set; }
+    [field: SerializeField]
+    public ItemTier Tier { get; set; }
+    [field: SerializeField]
     public string FlavorText { get; set; }
+    [field: SerializeField]
+    public Sprite Icon { get; set; }
 
+    [field: SerializeField]
+    public Skill LeftSkill { get; protected set; }
+    [field: SerializeField]
+    public Skill RightSkill { get; protected set; }
 
     [SerializeField]
-    protected Skill _leftSkill;
-    [SerializeField]
-    protected Skill _rightSkill;
-
-    public Skill LeftSkill
-    {
-        get { return _leftSkill; } private set { }
-    }
-    public Skill RightSkill
-    {
-        get { return _rightSkill; } private set { }
-    }
+    protected bool isDropped = false;
 
     void Awake()
     {
+        if (LeftSkill == null) {
+            LeftSkill = gameObject.GetOrAddComponent<NormalAttackSkill>();
+        }
+        if (RightSkill == null) {
+            RightSkill = gameObject.GetOrAddComponent<EmptySkill>();
+        }
+
         Init();
     }
 
@@ -65,17 +65,9 @@ public class Item : MonoBehaviour, IPlayerInteractable
         _itemCollider.enabled = true;
 
     }
-    public int LeftSKillCast()
-    {
+    public int CastLeftSkill() { return LeftSkill.Cast(); }
 
-        return _leftSkill.Cast(_attackDamage, _attackRange);
-    }
-
-
-    public int RightSkillCast()
-    {
-        return _rightSkill.Cast(_attackDamage, _attackRange);
-    }
+    public int CastRightSkill() { return RightSkill.Cast(); }
 
     public void OnInteracted(GameObject player)
     {

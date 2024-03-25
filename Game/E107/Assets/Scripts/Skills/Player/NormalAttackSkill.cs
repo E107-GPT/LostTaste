@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class NormalAttackSkill : Skill
 {
+    [SerializeField]
+    private int Damage = 50;
+
+    [field: SerializeField]
+    private Vector3 Scale = new Vector3(3.0f, 2.0f, 3.0f);
+
     protected override void Init()
     {
         SkillCoolDownTime = 0;
@@ -12,7 +18,7 @@ public class NormalAttackSkill : Skill
 
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    protected override IEnumerator SkillCoroutine()
     {
         Root = transform.root;
 
@@ -21,12 +27,12 @@ public class NormalAttackSkill : Skill
         yield return new WaitForSeconds(0.3f);
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.NormalAttackEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
-        
 
-        skillObj.localScale = new Vector3(1.0f, 1.0f, _attackRange);
-        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
+
+        skillObj.localScale = Scale;
+        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (Scale.z / 2));
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 

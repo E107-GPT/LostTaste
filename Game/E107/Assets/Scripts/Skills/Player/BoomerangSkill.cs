@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class BoomerangSkill : Skill
 {
-    private const float VELOCITY_START = 10.0f;  // per seconds
-    private const float ACCELERATION = -10.0f;   // per seconds^2
+    [field: SerializeField]
+    public int Damage { get; set; }
+
+    [SerializeField]
+    private float StartVelocity = 10.0f;  // per seconds
+
+    [SerializeField]
+    private float Acceleration = -10.0f;   // per seconds^2
 
     protected override void Init()
     {
@@ -13,7 +19,7 @@ public class BoomerangSkill : Skill
         RequiredMp = 10;
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    protected override IEnumerator SkillCoroutine()
     {
         GameObject player = transform.root.gameObject;
         PlayerController playerController = player.GetComponent<PlayerController>();
@@ -33,21 +39,21 @@ public class BoomerangSkill : Skill
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BoomerangSkillEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         
-        skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
         ps.transform.eulerAngles = Vector3.zero;
         skillObj.position = ps.transform.position;
 
-        float vel = VELOCITY_START;
-        while (vel > -VELOCITY_START)
+        float vel = StartVelocity;
+        while (vel > -StartVelocity)
         {
             // 투사체와 파티클 시스템을 앞으로 움직입니다.
             Vector3 moveStep = Time.deltaTime * vel * dir;
             skillObj.position += moveStep;
             ps.transform.position += moveStep;
 
-            vel += ACCELERATION * Time.deltaTime;   // 속도를 변화시킵니다.
+            vel += Acceleration * Time.deltaTime;   // 속도를 변화시킵니다.
             yield return null; // 다음 프레임까지 대기합니다.
         }
         Managers.Resource.Destroy(skillObj.gameObject);

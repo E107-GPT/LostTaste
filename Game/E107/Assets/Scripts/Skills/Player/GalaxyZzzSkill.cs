@@ -5,7 +5,8 @@ using UnityEngine.UIElements;
 
 public class GalaxyZzzSkill : Skill
 {
-    private const int DAMAGE = 150;
+    [field: SerializeField]
+    public int Damage { get; set; }
 
     protected override void Init()
     {
@@ -13,7 +14,7 @@ public class GalaxyZzzSkill : Skill
         RequiredMp = 20;
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    protected override IEnumerator SkillCoroutine()
     {
         Debug.Log("GalaxyZZZ Attack");
         Root = RaycastGround();
@@ -27,7 +28,7 @@ public class GalaxyZzzSkill : Skill
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.GalaxyZzzSkillEffect, Root);
         GameObject skillObj = Managers.Resource.Instantiate("Skills/SkillObject");
-        skillObj.GetComponent<SkillObject>().SetUp(Root, DAMAGE, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
         skillObj.transform.position = Root.position;
         skillObj.transform.rotation = Root.rotation;

@@ -12,7 +12,7 @@ public class EmptySkill : Skill
         SkillCoolDownTime = Mathf.Infinity;
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    protected override IEnumerator SkillCoroutine()
     {
         GameObject player = transform.root.gameObject;
         PlayerController playerController = player.GetComponent<PlayerController>();
