@@ -22,6 +22,11 @@ public class DungeonEntrance : MonoBehaviour
     [Header("[ 지도 패널 ]")]
     public TextMeshProUGUI stageText; // 스테이지 이름 텍스트
 
+    // 게임 메뉴
+    [Header("[ 게임 메뉴 ]")]
+    public GameObject campGameMenu; // 캠프 게임 메뉴
+    public GameObject dungeonGameMenu; // 던전 게임 메뉴
+
     void Update()
     {
         if (isInCamp)
@@ -46,10 +51,11 @@ public class DungeonEntrance : MonoBehaviour
         {
 
             isInCamp = false;
-
-            // 게임 시간 패널 활성화 및 시간 초기화
             timeContainerPanel.SetActive(true); // 게임 시간 UI 활성화
             stageText.text = "Stage 1 - 깊은 숲"; // 스테이지 텍스트를 캠프에 맞게 업데이트
+
+            campGameMenu.SetActive(false); // 캠프 게임 메뉴 비활성화
+            dungeonGameMenu.SetActive(true); // 던전 게임 메뉴 활성화
         }
     }
 }
