@@ -48,11 +48,13 @@ public abstract class Skill : MonoBehaviour
     )]
     public int Cast(int attackDamage, float attackRange)
     {
-        return Cast();
+        StartCoroutine(SkillCoroutine(attackDamage, attackRange));   // TODO: 의미없는 파라미터 제거
+        _lastCastTime = Time.time;
+        return RequiredMp;
     }
     public int Cast()
     {
-        StartCoroutine(SkillCoroutine());   // TODO: 의미없는 파라미터 제거
+        StartCoroutine(SkillCoroutine());
         _lastCastTime = Time.time;
         return RequiredMp;
     }
@@ -67,8 +69,6 @@ public abstract class Skill : MonoBehaviour
 
     protected virtual IEnumerator SkillCoroutine()
     {
-#pragma warning disable 0618
-        return SkillCoroutine(1, 1.0f);
-#pragma warning restore 0618
+        throw new NotImplementedException("SkillCoroutine(void) 함수를 구현해주세요!");
     }
 }
