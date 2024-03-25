@@ -105,21 +105,21 @@ public class Stat
                 _maxHp = 700;
                 _attackDamage = 30;
                 _moveSpeed = 5.5f;
-                _attackRange = 2.5f;
+                _attackRange = 10.0f;
                 break;
             case Define.UnitType.Demon:
                 _hp = 800;
                 _maxHp = 800;
                 _attackDamage = 30;
                 _moveSpeed = 5.5f;
-                _attackRange = 2.5f;
+                _attackRange = 10.0f;
                 break;
             case Define.UnitType.Salamander:
                 _hp = 400;
                 _maxHp = 400;
                 _attackDamage = 15;
                 _moveSpeed = 5.5f;
-                _attackRange = 2.0f;
+                _attackRange = 10.0f;
                 break;
             case Define.UnitType.Specter:
                 _hp = 500;

@@ -22,7 +22,7 @@ public class ToxicFlowerAttackSkill : Skill
         
         Root = transform.root;
         Vector3 dir = Root.forward;
-        Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
+        // Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
         dir = new Vector3(dir.x, 0, dir.z);
 
         yield return new WaitForSeconds(0.3f);
@@ -35,7 +35,7 @@ public class ToxicFlowerAttackSkill : Skill
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
         // Managers.Sound.Play("swing1");
 
-        skillObj.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
         skillObj.position = Root.transform.position;
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation.SetLookRotation(dir);

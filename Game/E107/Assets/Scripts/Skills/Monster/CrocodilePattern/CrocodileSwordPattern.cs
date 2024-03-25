@@ -51,7 +51,7 @@ public class CrocodileSwordPattern : Pattern
         }
 
         Managers.Resource.Destroy(skillObj.gameObject);
-        Managers.Resource.Destroy(_particleSystem.gameObject);
+        Managers.Resource.Destroy(_particleSystem.gameObject);      // 이거 왜 있지
         Managers.Effect.Stop(_particleSystem);
     }
 

@@ -87,6 +87,8 @@ public class MonsterController : BaseController
     {
         base.ExcuteIdle();
 
+        Debug.Log("MONSTER IDEL");
+
         if (PhotonNetwork.IsConnected &&PhotonNetwork.IsMasterClient == false) return;
         // Time.time: 게임이 시작된 후부터 시간(초)을 반환
         // _lastTime: 마지막으로 호출된 시간(초)을 가진다.
@@ -144,15 +146,12 @@ public class MonsterController : BaseController
         
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
+        //if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
 
-        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
+        //// 테스트를 위함
+        //ToDetectPlayer(0.8f);
 
-        Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
-        Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
-        // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.2f);
-
-        if(PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
 
         //if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         //{
@@ -178,8 +177,7 @@ public class MonsterController : BaseController
 
         //}
 
-        // 테스트를 위함
-
+        
 
         _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
         _animator.CrossFade("Attack", 0.3f, -1, 0);
@@ -194,13 +192,7 @@ public class MonsterController : BaseController
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime < 0.9f)
-            {
-                Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
-                Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.15f);
-            }
-            else if (aniTime >= 1.0f)
+            if (aniTime >= 1.0f)
             {
                 PrintText("공격 -> IDLE");
                 _statemachine.ChangeState(new IdleState(this));
@@ -220,7 +212,7 @@ public class MonsterController : BaseController
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
         GetComponent<Collider>().enabled = false;
-        _agent.enabled = false;
+        //_agent.enabled = false;
 
         _animator.CrossFade("Die", 0.5f);
 
@@ -290,6 +282,14 @@ public class MonsterController : BaseController
         }
     }
 
+    // DetectPlayer를 바라보는 코드
+    protected virtual void ToDetectPlayer(float turnSpeed)
+    {
+        Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+        Vector3 destPos = new Vector3(dirTarget.x, 0, dirTarget.z);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), turnSpeed);
+    }
+
     // Move 상태에서 다른 상태로 바꾸는 조건
     protected virtual void ChangeStateFromMove()
     {
@@ -329,7 +329,7 @@ public class MonsterController : BaseController
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;
         lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
-        PrintText($"{_stat.Hp}!!!");
+        //PrintText($"{_stat.Hp}!!!");
 
         if (_stat.Hp <= 0)
         {

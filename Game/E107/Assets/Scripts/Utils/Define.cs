@@ -58,12 +58,16 @@ public class Define
         BubbleWandSkillEffect,
         DrillDuckBeforeEffect,
         DrillDuckSlideEffect,
+        DrillDuckAttackEffect,
         StrongSwingEffect,
         GalaxyZzzSkillEffect,
         WarriorClassSkillEffect,
         SemUmbrellaSkillEffect,
         BoomerangSkillEffect,
         ToxicFlowerMissileEffect,
+        SalamanderFlameEffect,
+        NagaWizardLightningEffect,
+        DemonFireballEffect,
         CrocodileSwordEffect,
         MaxCount
     }

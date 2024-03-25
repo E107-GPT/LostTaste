@@ -109,7 +109,10 @@ public class PlayerController : BaseController
     }
     public override void ExcuteMove()
     {
-        if (isConnected && photonView.IsMine == false) return;
+        if (isConnected && PhotonNetwork.InRoom)
+        {
+            if ((isConnected && photonView.IsMine == false)) return;
+        }
         base.ExcuteMove();
         if (Input.GetKey(KeyCode.W))
         {
@@ -170,7 +173,7 @@ public class PlayerController : BaseController
     public override void EnterDash()
     {
         base.EnterDash();
-        if (photonView.IsMine || !PhotonNetwork.IsConnected) LookMousePosition();
+        if (photonView.IsMine || !PhotonNetwork.IsConnected || PhotonNetwork.InLobby) LookMousePosition();
 
         _animator.CrossFade("DASH", 0.1f, -1, 0);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDashState", RpcTarget.Others);
@@ -189,7 +192,7 @@ public class PlayerController : BaseController
         //if (isConnected && photonView.IsMine == false) return;
         base.EnterSkill();
 
-        if (photonView.IsMine || !PhotonNetwork.IsConnected) LookMousePosition();
+        if (photonView.IsMine || !PhotonNetwork.IsConnected || PhotonNetwork.InLobby) LookMousePosition();
 
         // 왼쪽클릭
 
@@ -256,7 +259,7 @@ public class PlayerController : BaseController
 
         // 추가한 부분
         GetComponent<Collider>().enabled = false;
-        _agent.enabled = false;
+        //_agent.enabled = false;
 
         
 
@@ -266,7 +269,10 @@ public class PlayerController : BaseController
     #region InputMethod
     void OnMouseClicked(Define.MouseEvent evt)
     {
-        if (PhotonNetwork.IsConnected && photonView.IsMine == false) return;
+        if (isConnected && PhotonNetwork.InRoom)
+        {
+            if ((isConnected && photonView.IsMine == false)) return;
+        }
         //Debug.Log($"{CurState?.ToString()}");
         if (_statemachine.CurState is DieState || _statemachine.CurState is SkillState || CurState is DashState) return;
 
@@ -317,8 +323,10 @@ public class PlayerController : BaseController
 
     void OnKeyboard()
     {
-        Debug.Log($"{gameObject.name} {isConnected}, {photonView != null}");
-        if (isConnected && photonView.IsMine == false) return;
+        //Debug.Log($"{gameObject.name} {isConnected}, {photonView != null}");
+        if (isConnected && PhotonNetwork.InRoom) {
+            if ((isConnected && photonView.IsMine == false)) return;
+        }
 
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 
@@ -479,7 +487,7 @@ public class PlayerController : BaseController
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;
         lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
-        Debug.Log($"{_stat.Hp}!!!");
+        //Debug.Log($"{_stat.Hp}!!!");
 
         if (_stat.Hp <= 0)
         {
