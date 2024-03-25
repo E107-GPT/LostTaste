@@ -201,13 +201,13 @@ public class ppcontroller : BaseController
 
     private void ChangeLeftState()
     {
-        _inventory[_currentItemNum].LeftSKillCast();
+        _inventory[_currentItemNum].CastLeftSkill();
     }
     [PunRPC]
 
     private void ChangeRightState()
     {
-        _inventory[_currentItemNum].RightSkillCast();
+        _inventory[_currentItemNum].CastRightSkill();
 
     }
     public override void EnterSkill()
@@ -222,7 +222,7 @@ public class ppcontroller : BaseController
 
         if (Input.GetMouseButton(0))
         {
-            _inventory[_currentItemNum].LeftSKillCast();
+            _inventory[_currentItemNum].CastLeftSkill();
 
             photonView.RPC("ChangeLeftState", RpcTarget.Others);
 
@@ -230,7 +230,7 @@ public class ppcontroller : BaseController
         else if (Input.GetMouseButton(1))
         {
 
-            _inventory[_currentItemNum].RightSkillCast();
+            _inventory[_currentItemNum].CastRightSkill();
             photonView.RPC("ChangeRightState", RpcTarget.Others);
             _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
             Debug.Log(_stat.Mp);

@@ -17,7 +17,7 @@ public abstract class ConsumingSkill : Skill
         SkillCoolDownTime = 1.0f;
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    protected override IEnumerator SkillCoroutine()
     {
         GameObject player = transform.root.gameObject;
         PlayerController playerController = player.GetComponent<PlayerController>();

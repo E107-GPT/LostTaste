@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8238176857895836407}
   - component: {fileID: 1548180429087051806}
   - component: {fileID: 2764375739349614856}
-  - component: {fileID: 4991063488817945498}
+  - component: {fileID: 8333941215165070119}
+  - component: {fileID: 3865485588989575498}
   m_Layer: 9
   m_Name: 0014_GalaxyZzz
   m_TagString: Untagged
@@ -109,7 +110,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: ba819586f1b38eb4e9f9fe40388861f2, type: 3}
---- !u!114 &4991063488817945498
+--- !u!114 &8333941215165070119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,11 +119,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 3079891268728935740}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a18b7259918c74d4a81068627aa88592, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDamage: 50
-  _attackRange: 8
+  <Name>k__BackingField: "\uAC24\uB7ED\uC2DC ZZZ"
+  <Tier>k__BackingField: 2
+  <FlavorText>k__BackingField: "\uC774\uAC78\uB85C \uC885\uC774\uC811\uAE30\uB3C4
+    \uD560 \uC218 \uC788\uC5B4\uC694."
+  <Icon>k__BackingField: {fileID: 21300000, guid: 4cd0a2001968e9147a55984ecb8216d4, type: 3}
+  <LeftSkill>k__BackingField: {fileID: 0}
+  <RightSkill>k__BackingField: {fileID: 3865485588989575498}
   isDropped: 1
-  _leftSkill: {fileID: 0}
-  _rightSkill: {fileID: 0}
+--- !u!114 &3865485588989575498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079891268728935740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d804e49567ab104c98933b82d97753d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uC804\uAE30\uC790\uC11D\uD30C"
+  <Description>k__BackingField: "\uB9C8\uC6B0\uC2A4\uAC00 \uAC00\uB9AC\uD0A4\uACE0
+    \uC788\uB294 \uD0C0\uC77C\uC5D0 \uC804\uAE30\uB97C \uC3D8\uC544 \uD53C\uD574\uB97C
+    \uC785\uD799\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 21300000, guid: 9902aa858793f294ebaf0b4189398137, type: 3}
+  <SkillCoolDownTime>k__BackingField: 5
+  <RequiredMp>k__BackingField: 10
+  <Damage>k__BackingField: 150
