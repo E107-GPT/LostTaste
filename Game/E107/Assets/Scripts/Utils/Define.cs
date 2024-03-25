@@ -69,7 +69,12 @@ public class Define
         SalamanderFlameEffect,
         NagaWizardLightningEffect,
         DemonFireballEffect,
+        CrabAttackEffect,
+        FishmanAttackEffect,
+        SkeletonAttackEffect,
+        SpecterAttackEffect,
         CrocodileSwordEffect,
+        CrocodileAttackEffect, 
         HitDownEndEffect,
         HitDownStartEffect,
         MaxCount

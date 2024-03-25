@@ -5,9 +5,14 @@ using UnityEngine.UIElements;
 
 public class LogSkill : Skill
 {
-    private const int DAMAGE = 200;
-    private readonly Vector3 SCALE = new Vector3(5.0f, 2.0f, 5.0f);
-    private const float BREAK_PROBABILITY = 0.5f;
+    [field: SerializeField]
+    public int Damage { get; set; }
+
+    [field: SerializeField]
+    private Vector3 Scale = new Vector3(5.0f, 2.0f, 5.0f);
+
+    [field: SerializeField]
+    private float BreakProbability = 0.5f;
 
     protected override void Init()
     {
@@ -15,7 +20,7 @@ public class LogSkill : Skill
         RequiredMp = 30;
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    protected override IEnumerator SkillCoroutine()
     {
         Root = transform.root;
         GameObject player = transform.root.gameObject;
@@ -27,20 +32,20 @@ public class LogSkill : Skill
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.StrongSwingEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, DAMAGE, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
         Vector3 offset = Root.forward.normalized * 1.5f;
         ps.transform.position += offset;
         skillObj.position += offset;
 
-        skillObj.localScale = SCALE;
-        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
+        skillObj.localScale = Scale;
+        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (Scale.z / 2));
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 
         yield return new WaitForSeconds(0.1f);
 
-        if (UnityEngine.Random.Range(0.0f, 1.0f) < BREAK_PROBABILITY)
+        if (UnityEngine.Random.Range(0.0f, 1.0f) < BreakProbability)
         {
             // ºÎ¼­Áü!
             Debug.Log("ºÎ¼­Áü!");

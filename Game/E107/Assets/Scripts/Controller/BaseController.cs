@@ -58,8 +58,7 @@ public abstract class BaseController : MonoBehaviour
 
 	private void Awake()
 	{
-		Debug.Log("AWAKE!!!");
-		// _isDie = false;
+		//Debug.Log("AWAKE!!!");
 		_statemachine = new StateMachine();
 		_animator = GetComponent<Animator>();
 		_rigidbody = GetComponent<Rigidbody>();
@@ -80,9 +79,7 @@ public abstract class BaseController : MonoBehaviour
         {
             isConnected = PhotonNetwork.InRoom;
         }
-
-        //if (!_isDie) 
-			_statemachine.Execute();
+        _statemachine.Execute();
 	}
 
     //public abstract void Updated();
@@ -104,7 +101,7 @@ public abstract class BaseController : MonoBehaviour
 
 	public virtual void TakeDamage(int skillObjectId, int damage) 
 	{
-		Debug.Log($"{gameObject.name} is damaged {damage} by {skillObjectId}");
+		//Debug.Log($"{gameObject.name} is damaged {damage} by {skillObjectId}");
 	}
 
 	// IDLE

@@ -25,6 +25,7 @@ public class PortalTrigger : MonoBehaviour
     public bool isBossRoom = false;
 
 
+
     // ��Ż Ȱ��ȭ �� ������ ���� Ȱ��ȭ
     public void ActivateItemBox()
     {
@@ -106,30 +107,48 @@ public class PortalTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (PhotonNetwork.InRoom)
-            {
-                if(totalPlayers != PhotonNetwork.CurrentRoom.PlayerCount)
-                    totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-            }
-            Debug.Log(totalPlayers);
-            Debug.Log("xdlkfs : "+ other.gameObject.name);
-            MonsterManager.Instance.portalTrigger = this;
-            playersInPortal.Add(other.gameObject.name, other.gameObject);
-            CheckAllPlayersInPortal();
+            other.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
+            //if (PhotonNetwork.InRoom)
+            //{
+            //    if(totalPlayers != PhotonNetwork.CurrentRoom.PlayerCount)
+            //        totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+            //}
+            //Debug.Log(totalPlayers);
+            //Debug.Log("xdlkfs : "+ other.gameObject.name);
+            //MonsterManager.Instance.portalTrigger = this;
+            //GameObject go;
+            ////playersInPortal.Add(other.gameObject.name, other.gameObject);
+            //if (playersInPortal.TryGetValue(other.gameObject.name, out go))
+            //{
+            //    playersInPortal[other.gameObject.name] = other.gameObject;
+            //}
+            //else
+            //{
+            //    playersInPortal.Add(other.gameObject.name, other.gameObject);
+            //}
+
+
+            //CheckAllPlayersInPortal();
             //MonsterManager.Instance.portalTrigger = this;
             //MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
             //MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
-
+            if (GameObject.Find("SpawnMonster").GetComponent<MonsterManager>().monstersInCurrentMap.Count < 1)
+            {
+                MonsterManager.Instance.portalTrigger = this;
+                MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+                Debug.Log("몬스터 생성 완료");
+                MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
+            }
         }
     }
 
     // Ʈ���� ���� ������ ������ �ο��� üũ
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            playersInPortal.Remove(other.gameObject.name);
-        }
+        //if (other.gameObject.CompareTag("Player"))
+        //{
+        //    playersInPortal.Remove(other.gameObject.name);
+        //}
     }
 
     // ��� �÷��̾ ��Ż ��ó�� ������ ����
@@ -143,22 +162,27 @@ public class PortalTrigger : MonoBehaviour
             foreach (KeyValuePair<string, GameObject> player in playersInPortal)
             {
                 NavMeshAgent agent = player.Value.GetComponent<NavMeshAgent>();
+                Debug.Log($"{agent.gameObject.name}");
+                if (agent.transform.GetComponent<PlayerController>().photonView.IsMine == false) continue;
+                //Debug.Log($"{agent.gameObject.name}");
                 if (agent != null)
                 {
                     Debug.Log("있는가?" + player.Value.GetComponent<NavMeshAgent>());
 
-                    agent.Warp(targetPortalLocation.position);  
-                }
-                else
-                {
-                    Debug.Log("왜 없지?" + player.Value.GetComponent<NavMeshAgent>());
-                    player.Value.transform.position = targetPortalLocation.position;
+                    //agent.Warp(targetPortalLocation.position);
+                    agent.transform.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
                 }
             }
             portal.SetActive(false);
             MonsterManager.Instance.portalTrigger = this;
             MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+            Debug.Log("몬스터 생성 완료");
             MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
         }
+    }
+
+    public void Clear()
+    {
+        playersInPortal.Clear();
     }
 }

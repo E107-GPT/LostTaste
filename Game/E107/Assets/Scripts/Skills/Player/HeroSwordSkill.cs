@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class HeroSwordSkill : Skill
 {
-    private const int DAMAGE = 150;
-    private readonly Vector3 SCALE = new Vector3(5.0f, 2.0f, 5.0f);
+    [field: SerializeField]
+    public int Damage { get; set; }
+
+    [field: SerializeField]
+    private Vector3 Scale = new Vector3(5.0f, 2.0f, 5.0f);
 
     protected override void Init()
     {
@@ -13,7 +16,7 @@ public class HeroSwordSkill : Skill
         RequiredMp = 20;
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    protected override IEnumerator SkillCoroutine()
     {
         Root = transform.root;
 
@@ -23,14 +26,14 @@ public class HeroSwordSkill : Skill
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.StrongSwingEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, DAMAGE, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
         Vector3 offset = Root.forward.normalized * 1.5f;
         ps.transform.position += offset;
         skillObj.position += offset;
 
-        skillObj.localScale = SCALE;
-        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
+        skillObj.localScale = Scale;
+        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (Scale.z / 2));
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 

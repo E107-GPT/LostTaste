@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 13527358370522533}
   - component: {fileID: 4008155954635057664}
   - component: {fileID: 1187582316465315530}
-  - component: {fileID: 1981915356109932159}
-  - component: {fileID: -405878780761105474}
+  - component: {fileID: 6193110352947771966}
+  - component: {fileID: 7617541196427836119}
   m_Layer: 9
   m_Name: 0028_BubbleWand
   m_TagString: Player
@@ -85,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1981915356109932159
+--- !u!114 &6193110352947771966
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,15 +94,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 827500848075308831}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 962a59e2d2d26174cbaf92c37ecc591c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDamage: 50
-  _attackRange: 8
+  <Name>k__BackingField: "\uBC29\uC6B8 \uC9C0\uD321\uC774"
+  <Tier>k__BackingField: 1
+  <FlavorText>k__BackingField: "\uBF40\uC1A1\uBF40\uC1A1\uD574\uC9C0\uB294 \uAE30\uBD84\uC785\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 21300000, guid: 36d7055fbcf67594c9ed9fceb9252a04, type: 3}
+  <LeftSkill>k__BackingField: {fileID: 0}
+  <RightSkill>k__BackingField: {fileID: 7617541196427836119}
   isDropped: 1
-  _leftSkill: {fileID: 0}
-  _rightSkill: {fileID: 0}
---- !u!114 &-405878780761105474
+--- !u!114 &7617541196427836119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,17 +113,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 827500848075308831}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: 11500000, guid: 52050f12af8fb854baf9a0932c7bbb71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 0
-  ObservedComponents:
-  - {fileID: 0}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
+  <Name>k__BackingField: "\uBC29\uC6B8\uBC29\uC6B8"
+  <Description>k__BackingField: "\uBC29\uC6B8\uC744 \uC18C\uD658\uD574 \uC55E\uC73C\uB85C
+    \uB0A0\uB9BD\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 21300000, guid: 71c94cf9e7a468a47bbefd3d7af9a857, type: 3}
+  <SkillCoolDownTime>k__BackingField: 5
+  <RequiredMp>k__BackingField: 10
+  <Damage>k__BackingField: 50
