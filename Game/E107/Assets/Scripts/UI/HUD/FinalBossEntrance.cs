@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// 플레이어가 Stage 3에 입장하면 스테이지 텍스트를 알맞게 업데이트하는 컴포넌트입니다.
+/// 플레이어가 최종 보스 방에 입장하면 스테이지 텍스트를 알맞게 업데이트하는 컴포넌트입니다.
 /// </summary>
-public class Stage3Entrance : MonoBehaviour
+public class FinalBossEntrance : MonoBehaviour
 {
     // 지도 패널
     [Header("[ 지도 패널 ]")]
@@ -18,7 +18,7 @@ public class Stage3Entrance : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            stageText.text = "Stage 3 - 서리빛 궁전"; // 스테이지 텍스트를 캠프에 맞게 업데이트
+            stageText.text = "Final Stage - 던전의 마왕"; // 스테이지 텍스트를 캠프에 맞게 업데이트
         }
     }
 }
