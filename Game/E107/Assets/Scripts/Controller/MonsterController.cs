@@ -74,10 +74,12 @@ public class MonsterController : BaseController
     public override void EnterIdle()
     {
         base.EnterIdle();
+
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
 
-        _animator.CrossFade("Idle", 0.5f);      // 기본적으로 base layer의 state를 나타냄
+        // 어떠한 동작을 하지 않고 바로 사망 상태
+        _animator.Play("Idle");      // 기본적으로 base layer의 state를 나타냄
         
         // 마스터 클래스에서만 전송
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeIdleState", RpcTarget.Others);
@@ -90,6 +92,7 @@ public class MonsterController : BaseController
         Debug.Log("MONSTER IDEL");
 
         if (PhotonNetwork.IsConnected &&PhotonNetwork.IsMasterClient == false) return;
+
         // Time.time: 게임이 시작된 후부터 시간(초)을 반환
         // _lastTime: 마지막으로 호출된 시간(초)을 가진다.
         // _coolDownTime: 스킬 사용 시간(초)을 나타낸다.
@@ -117,6 +120,7 @@ public class MonsterController : BaseController
     }
     public override void ExcuteMove()
     {
+        // 테스트를 위한 주석
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
         base.ExcuteMove();
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Move"))
@@ -168,31 +172,6 @@ public class MonsterController : BaseController
             //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.2f);
             transform.rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
         }
-
-        //if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
-        //{
-        //    Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
-        //    Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
-        //    // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
-
-        //    // 상속
-
-        //    photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
-        //}
-        //else if (!PhotonNetwork.IsConnected)
-        //{
-        //    Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
-        //    Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
-        //    // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.2f);
-        //}
-        //else
-        //{
-        //    // 회전이 필요할까?
-
-        //}
-
 
 
         _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
