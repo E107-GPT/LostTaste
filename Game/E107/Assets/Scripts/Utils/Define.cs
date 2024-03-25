@@ -65,6 +65,9 @@ public class Define
         SemUmbrellaSkillEffect,
         BoomerangSkillEffect,
         ToxicFlowerMissileEffect,
+        SalamanderFlameEffect,
+        NagaWizardLightningEffect,
+        DemonFireballEffect,
         CrocodileSwordEffect,
         MaxCount
     }

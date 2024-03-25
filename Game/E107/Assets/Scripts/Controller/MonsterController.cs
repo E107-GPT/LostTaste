@@ -144,27 +144,38 @@ public class MonsterController : BaseController
         
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
-        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
-        {
-            // ToDetectPlayer(0.2f);
-
-            //Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
-            //Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
-            //// Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
-            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
-
-            // 상속
-
-            photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
-        }
-        else
-        {
-            // 회전이 필요할까?
-
-        }
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
 
         // 테스트를 위함
         ToDetectPlayer(0.8f);
+
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
+
+        //if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        //{
+        //    Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
+        //    Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
+        //    // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
+
+        //    // 상속
+
+        //    photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
+        //}
+        //else if (!PhotonNetwork.IsConnected)
+        //{
+        //    Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
+        //    Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
+        //    // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.2f);
+        //}
+        //else
+        //{
+        //    // 회전이 필요할까?
+
+        //}
+
+        
 
         _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
         _animator.CrossFade("Attack", 0.3f, -1, 0);

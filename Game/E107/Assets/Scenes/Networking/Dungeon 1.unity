@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: bc6a42dc298632e46bf5e77e1a6a5aae, type: 2}
+--- !u!4 &186354022 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7882428009851098038, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+  m_PrefabInstance: {fileID: 7116547915656775850}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &264837356 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2550732372176524372, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
@@ -251,11 +256,25 @@ MonoBehaviour:
   totalPlayers: 1
   targetMapName: Camp
   portal: {fileID: 274316244}
+  itemBoxes: []
+  isBossRoom: 0
 --- !u!1 &332660167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6001604393595099217, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
   m_PrefabInstance: {fileID: 1467173001412813957}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &332660173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332660167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c527b18c51cbfa4d857e9e16b9cf5fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &343134458
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +450,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 387115533948124294, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 387115533948124294, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -834,15 +853,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f555ecceac4a3f349bec9b9b9ff5b456, type: 3}
+--- !u!4 &551345125 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4127055310538031489, guid: 1de5bf0b8e3073b48946e3672e25bf42, type: 3}
+  m_PrefabInstance: {fileID: 8228282240739257041}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &606981243 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6192065674169401566, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
   m_PrefabInstance: {fileID: 1840857730}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &627347949 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7223984692470007912, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
-  m_PrefabInstance: {fileID: 5776572977031128706}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &650889545
 GameObject:
@@ -1529,6 +1548,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9146445438859584142, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
   m_PrefabInstance: {fileID: 1840857730}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1202318644 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2662503810719042968, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+  m_PrefabInstance: {fileID: 5776572977031128706}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1226995692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4460379619246032231, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+  m_PrefabInstance: {fileID: 5776572977031128706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1231427330 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3957813822408871293, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
@@ -1676,6 +1705,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2263505394294251024, guid: 26f3ad9fdcf66a24caecd1aeb2afd71f, type: 3}
   m_PrefabInstance: {fileID: 1338576788}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1364374210 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8946442982517751709, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+  m_PrefabInstance: {fileID: 3521618124361187960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1375862280 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 517742396912868144, guid: c4e94f7c6454e2e4f82453ee77365454, type: 3}
+  m_PrefabInstance: {fileID: 909518166068110112}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1431481543 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 885602820817109040, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
@@ -1727,6 +1766,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -80}
   m_SizeDelta: {x: 0, y: 80}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!1 &1596975013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2157937946991078837, guid: e469a629f99d2324db91d84af0e08708, type: 3}
+  m_PrefabInstance: {fileID: 416718297}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1622165499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1833,6 +1877,16 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!4 &1646767316 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4829484133155348283, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+  m_PrefabInstance: {fileID: 3521618124361187960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1712992798 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8030910630990013344, guid: e469a629f99d2324db91d84af0e08708, type: 3}
+  m_PrefabInstance: {fileID: 416718297}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1728623986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1967,6 +2021,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1728623986}
   m_CullTransparentMesh: 1
+--- !u!4 &1750675902 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8743287229092916179, guid: c4e94f7c6454e2e4f82453ee77365454, type: 3}
+  m_PrefabInstance: {fileID: 909518166068110112}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1832760863 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2001999838471960797, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+  m_PrefabInstance: {fileID: 2085543782127943333}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1840857730
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2581,7 +2645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8413321355004073540, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DisconnectFromPhoton
+      value: ConnectLobby
       objectReference: {fileID: 0}
     - target: {fileID: 8413321355004073540, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -2802,6 +2866,11 @@ RectTransform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2263505394294251024, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
   m_PrefabInstance: {fileID: 1840857730}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1840970601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 92462353308556915, guid: 1de5bf0b8e3073b48946e3672e25bf42, type: 3}
+  m_PrefabInstance: {fileID: 8228282240739257041}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1951471119 stripped
 Transform:
@@ -3643,11 +3712,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dd0724bd46a1b945ad3b769190aee94, type: 3}
---- !u!4 &622379253823759772 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3648916835399233708, guid: 1de5bf0b8e3073b48946e3672e25bf42, type: 3}
-  m_PrefabInstance: {fileID: 8228282240739257041}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &909518166068110112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3656,6 +3720,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 259860738259940757, guid: c4e94f7c6454e2e4f82453ee77365454, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 1596975013}
+    - target: {fileID: 259860738259940757, guid: c4e94f7c6454e2e4f82453ee77365454, type: 3}
+      propertyPath: targetPortalLocation
+      value: 
+      objectReference: {fileID: 1712992798}
     - target: {fileID: 950170431820245992, guid: c4e94f7c6454e2e4f82453ee77365454, type: 3}
       propertyPath: bossStatusPanel
       value: 
@@ -3785,7 +3857,7 @@ PrefabInstance:
     - target: {fileID: 3261322981069576534, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 2085543782127943334}
+      objectReference: {fileID: 1832760863}
     - target: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -100
@@ -3832,7 +3904,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1260946086}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6001604393595099217, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 332660173}
   m_SourcePrefab: {fileID: 100100000, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
 --- !u!1001 &2085543782127943333
 PrefabInstance:
@@ -3889,7 +3964,7 @@ PrefabInstance:
     - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: portal
       value: 
-      objectReference: {fileID: 5776572977031128708}
+      objectReference: {fileID: 0}
     - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: targetMapName
       value: ForestMonster01
@@ -3897,11 +3972,19 @@ PrefabInstance:
     - target: {fileID: 1562881406875257685, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 627347949}
+      objectReference: {fileID: 0}
     - target: {fileID: 3893414538572191801, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: m_Name
       value: ForestEntrance
       objectReference: {fileID: 0}
+    - target: {fileID: 5247430748439453695, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 1226995692}
+    - target: {fileID: 5247430748439453695, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: targetPortalLocation
+      value: 
+      objectReference: {fileID: 1202318644}
     - target: {fileID: 7011782734232886834, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: m_Name
       value: Portal-ForestEntrance-N
@@ -3915,21 +3998,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
---- !u!4 &2085543782127943334 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4090675966857388374, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
-  m_PrefabInstance: {fileID: 2085543782127943333}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2886495432859477713 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6112978426738044116, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
-  m_PrefabInstance: {fileID: 7116547915656775850}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2934768898421763854 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2325297787950883524, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
-  m_PrefabInstance: {fileID: 4658095785577054956}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3521618124361187960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3989,7 +4057,7 @@ PrefabInstance:
     - target: {fileID: 4589419629187241905, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 2934768898421763854}
+      objectReference: {fileID: 0}
     - target: {fileID: 6141685043049084042, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4001,7 +4069,7 @@ PrefabInstance:
     - target: {fileID: 7537053584850723426, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 2934768898421763854}
+      objectReference: {fileID: 0}
     - target: {fileID: 7808179910058395546, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
       propertyPath: m_Name
       value: Boss Status UI Trigger
@@ -4198,11 +4266,19 @@ PrefabInstance:
     - target: {fileID: 4336241988643289584, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
       propertyPath: portal
       value: 
-      objectReference: {fileID: 5325892081258143942}
+      objectReference: {fileID: 0}
     - target: {fileID: 4336241988643289584, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 622379253823759772}
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726418618982888575, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 1840970601}
+    - target: {fileID: 4726418618982888575, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
+      propertyPath: targetPortalLocation
+      value: 
+      objectReference: {fileID: 551345125}
     - target: {fileID: 6073927932791432968, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
       propertyPath: m_Name
       value: CoastEntrance
@@ -4309,11 +4385,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fc496d59dd11a347a37c072847f1672, type: 3}
---- !u!1 &5325892081258143942 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 516405836933372470, guid: 1de5bf0b8e3073b48946e3672e25bf42, type: 3}
-  m_PrefabInstance: {fileID: 8228282240739257041}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5747954678112450167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4382,7 +4453,7 @@ PrefabInstance:
     - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: portal
       value: 
-      objectReference: {fileID: 7116547915656775852}
+      objectReference: {fileID: 0}
     - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: monstersCheck
       value: 3
@@ -4394,7 +4465,7 @@ PrefabInstance:
     - target: {fileID: 81300770927352540, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 2886495432859477713}
+      objectReference: {fileID: 0}
     - target: {fileID: 3150282959977391736, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4415,6 +4486,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForestMonster01
       objectReference: {fileID: 0}
+    - target: {fileID: 7890659640030115128, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 1226995692}
+    - target: {fileID: 7890659640030115128, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
+      propertyPath: targetPortalLocation
+      value: 
+      objectReference: {fileID: 186354022}
     - target: {fileID: 8082849596879377762, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4473,11 +4552,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
---- !u!1 &5776572977031128708 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6707192551937478374, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
-  m_PrefabInstance: {fileID: 5776572977031128706}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5883243648110296604
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4770,6 +4844,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5273142032139956848, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 1364374210}
+    - target: {fileID: 5273142032139956848, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      propertyPath: targetPortalLocation
+      value: 
+      objectReference: {fileID: 1646767316}
     - target: {fileID: 7718790035311374586, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: m_Name
       value: Portal-ForestMonster02-Spawn
@@ -4787,11 +4869,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
---- !u!1 &7116547915656775852 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8154480885681472294, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
-  m_PrefabInstance: {fileID: 7116547915656775850}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7594156803111747413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4803,7 +4880,7 @@ PrefabInstance:
     - target: {fileID: 425021996493363833, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
       propertyPath: portal
       value: 
-      objectReference: {fileID: 5776572977031128708}
+      objectReference: {fileID: 0}
     - target: {fileID: 425021996493363833, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
       propertyPath: targetPortalLocation
       value: 
@@ -4812,6 +4889,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoastMonster02
       objectReference: {fileID: 0}
+    - target: {fileID: 5880853573247365527, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 1375862280}
+    - target: {fileID: 5880853573247365527, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
+      propertyPath: targetPortalLocation
+      value: 
+      objectReference: {fileID: 1750675902}
     - target: {fileID: 6013659605104131936, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 100

@@ -38,12 +38,12 @@ public class Login : MonoBehaviour
     public GameObject loginPanel; // 로그인 패널
     public GameObject signUpPanel; // 회원가입 패널
     public GameObject connectingPanel; // 연결 중 패널
-    // public GameObject nicknamePanel; // �г��� �г�
+    public GameObject nicknamePanel; // 닉네임 패널
 
     // 텍스트
     [Header("[ 텍스트 ]")]
     public TextMeshProUGUI warningText; // 경고 텍스트
-    // public TextMeshProUGUI nicknameText; // �г��� �ؽ�Ʈ
+    public TextMeshProUGUI nicknameText; // 닉네임 텍스트
 
     HTTPRequest request;
 
@@ -69,6 +69,19 @@ public class Login : MonoBehaviour
 
         // HTTPRequest 컴포넌트를 찾아서 할당
         request = GameObject.Find("GameManager").GetComponent<HTTPRequest>();        
+    }
+
+    // 사용자 닉네임을 UI에 업데이트하는 메서드
+    void UpdateUserNicknameDisplay()
+    {
+        // UserInfo 인스턴스 가져오기
+        UserInfo userInfo = UserInfo.GetInstance();
+
+        // 닉네임 정보 가져오기
+        string nickname = userInfo.getNickName();
+
+        // 가져온 정보를 TextMeshProUGUI에 적용
+        nicknameText.text = nickname + "<color=white>님, 환영합니다!</color>";
     }
 
     // 로그인 버튼 클릭시 호출되는 메서드
@@ -179,8 +192,6 @@ public class Login : MonoBehaviour
     // 경고 메시지를 표시하는 메서드
     public void ShowWarnMessage(string message)
     {
-        // Debug.Log(message);
-
         if (message.Length > 0)
             warningText.text = message;
         else
@@ -192,6 +203,9 @@ public class Login : MonoBehaviour
     {
         connectingPanel.SetActive(false);
         authenticationPanel.SetActive(false);
-        // nicknamePanel.SetActive(true);
+        nicknamePanel.SetActive(true);
+
+        // 사용자 닉네임 표시
+        UpdateUserNicknameDisplay();
     }
 }
