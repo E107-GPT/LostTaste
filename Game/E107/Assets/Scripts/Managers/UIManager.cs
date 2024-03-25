@@ -48,7 +48,7 @@ public class UIManager
         // 필요에 따라 부모에 붙힌다.
 
         return go.GetOrAddComponent<T>();
-        //그리고 T라는 Component를 찾아서 반환해준다.
+        // 그리고 T라는 Component를 찾아서 반환해준다.
 
     }
 
