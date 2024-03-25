@@ -210,7 +210,7 @@ public class MonsterController : BaseController
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
         GetComponent<Collider>().enabled = false;
-        _agent.enabled = false;
+        //_agent.enabled = false;
 
         _animator.CrossFade("Die", 0.5f);
 
