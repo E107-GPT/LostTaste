@@ -18,7 +18,7 @@ public class Stage3BossEntrance : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            stageText.text = "Stage 3 - 던전의 마왕"; // 스테이지 텍스트를 캠프에 맞게 업데이트
+            stageText.text = "Stage 3 - 얼음 궁전의 군주"; // 스테이지 텍스트를 캠프에 맞게 업데이트
         }
     }
 }
