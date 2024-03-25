@@ -49,6 +49,7 @@ public class Define
         Salamander,
         Specter,
         Skeleton,
+        Crocodile,
     }
 
     public enum Effect
@@ -61,6 +62,9 @@ public class Define
         GalaxyZzzSkillEffect,
         WarriorClassSkillEffect,
         SemUmbrellaSkillEffect,
+        BoomerangSkillEffect,
+        ToxicFlowerMissileEffect,
+        CrocodileSwordEffect,
         MaxCount
     }
 

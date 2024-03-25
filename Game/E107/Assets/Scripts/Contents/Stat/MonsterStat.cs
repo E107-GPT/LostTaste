@@ -37,6 +37,11 @@ public class MonsterStat : Stat
                 _patternkDelay = 10.0f;     // 수정 필요
                 _patternDamage = 40;
                 break;
+            case UnitType.Crocodile:
+                _level = 1;
+                _detectRange = 20.0f;
+                _patternDamage = 40;
+                break;
             case UnitType.Slime:
                 _level = 1;
                 _detectRange = 15.0f;

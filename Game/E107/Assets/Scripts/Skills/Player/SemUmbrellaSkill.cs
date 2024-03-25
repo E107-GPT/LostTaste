@@ -9,8 +9,8 @@ public class SemUmbrellaSkill : Skill
 
     protected override void Init()
     {
-        SkillCoolDownTime = 1.0f;
-        RequiredMp = 0;
+        SkillCoolDownTime = 12.0f;
+        RequiredMp = 30;
     }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)

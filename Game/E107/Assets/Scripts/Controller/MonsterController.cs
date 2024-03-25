@@ -58,7 +58,6 @@ public class MonsterController : BaseController
         
     }
 
-
     protected void OnDrawGizmos()
     {
         _ray.origin = transform.position;
@@ -130,7 +129,6 @@ public class MonsterController : BaseController
                 _agent.speed = _stat.MoveSpeed;
             }
         }
-
         ChangeStateFromMove();
     }
 
@@ -146,27 +144,45 @@ public class MonsterController : BaseController
         
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
-        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
-        {
-            Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
-            Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
-            // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
 
-            // 상속
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
 
-            photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
-        }
-        else
-        {
-            // 회전이 필요할까?
+        Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
+        Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
+        // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.2f);
 
-        }
+        if(PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
+
+        //if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        //{
+        //    Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
+        //    Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
+        //    // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
+
+        //    // 상속
+
+        //    photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
+        //}
+        //else if (!PhotonNetwork.IsConnected)
+        //{
+        //    Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
+        //    Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
+        //    // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.2f);
+        //}
+        //else
+        //{
+        //    // 회전이 필요할까?
+
+        //}
+
+        // 테스트를 위함
+
+
         _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
         _animator.CrossFade("Attack", 0.3f, -1, 0);
-
-
-
     }
 
     public override void ExcuteSkill()
@@ -174,15 +190,22 @@ public class MonsterController : BaseController
         base.ExcuteSkill();
 
         // 상태 전환이 완벽하게 이뤄졌을 때 "Attack" 애니메이션이 끝났는지 확인
-        //if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-        //{
-        //    float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-        //    if (aniTime >= 1.0f)
-        //    {
-        //        _statemachine.ChangeState(new IdleState(this));
-        //    }
-        //}
+            if (aniTime < 0.9f)
+            {
+                Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
+                Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.15f);
+            }
+            else if (aniTime >= 1.0f)
+            {
+                PrintText("공격 -> IDLE");
+                _statemachine.ChangeState(new IdleState(this));
+            }
+        }
 
     }
     public override void ExitSkill()
