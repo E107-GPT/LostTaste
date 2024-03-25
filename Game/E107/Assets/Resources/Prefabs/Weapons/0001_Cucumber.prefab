@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8420812000761082809}
   - component: {fileID: 8661688187650375143}
   - component: {fileID: 5551370477159867434}
-  - component: {fileID: 47218220222636686}
+  - component: {fileID: 3062033861369886166}
+  - component: {fileID: 2948593646313100784}
   m_Layer: 9
   m_Name: 0001_Cucumber
   m_TagString: Untagged
@@ -84,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &47218220222636686
+--- !u!114 &3062033861369886166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,11 +94,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1322496192543931751}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a20c592bf1cd17743bc8584d058d8c1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDamage: 20
-  _attackRange: 5
+  <Name>k__BackingField: "\uC624\uC774"
+  <Tier>k__BackingField: 0
+  <FlavorText>k__BackingField: "\uC18C\uBB38\uC5D0 \uC758\uD558\uBA74 \uB9C8\uC655\uC740
+    \uC624\uC774\uB97C \uC2EB\uC5B4\uD55C\uB2E4\uACE0 \uD55C\uB2E4."
+  <Sprite>k__BackingField: {fileID: 0}
+  <LeftSkill>k__BackingField: {fileID: 0}
+  <RightSkill>k__BackingField: {fileID: 2948593646313100784}
   isDropped: 1
-  _leftSkill: {fileID: 0}
-  _rightSkill: {fileID: 0}
+--- !u!114 &2948593646313100784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322496192543931751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea171cb2fad153f4881c84af95a6f0c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

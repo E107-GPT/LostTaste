@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1827920016287768265}
   - component: {fileID: 2775735963235247916}
   - component: {fileID: 559189605185235740}
-  - component: {fileID: 4506348449925989488}
+  - component: {fileID: 4323777694805249889}
+  - component: {fileID: 939528296035364435}
   m_Layer: 9
   m_Name: 0012_HeroSword
   m_TagString: Untagged
@@ -84,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4506348449925989488
+--- !u!114 &4323777694805249889
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,11 +94,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 3966614522251436792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e709fe9e374c1b408b687a937db4694, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDamage: 50
-  _attackRange: 8
+  <Name>k__BackingField: "\uC6A9\uC0AC\uC758 \uAC80"
+  <Tier>k__BackingField: 1
+  <FlavorText>k__BackingField: "\uD3C9\uBC94\uD55C \uAC80\uC785\uB2C8\uB2E4."
+  <Sprite>k__BackingField: {fileID: 0}
+  <LeftSkill>k__BackingField: {fileID: 0}
+  <RightSkill>k__BackingField: {fileID: 939528296035364435}
   isDropped: 1
-  _leftSkill: {fileID: 0}
-  _rightSkill: {fileID: 0}
+--- !u!114 &939528296035364435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966614522251436792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a2abb7ceb7ed724180b525c26fbf42d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

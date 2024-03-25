@@ -222,6 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2449983969949929974}
   - component: {fileID: 6731236161261678251}
+  - component: {fileID: -1508507923140151581}
   m_Layer: 9
   m_Name: 0008_SemUmbrella
   m_TagString: Untagged
@@ -258,8 +259,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 739d5ba1c2ea1da45a7f30784d328348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDamage: 50
-  _attackRange: 8
+  <Name>k__BackingField: "(\uC0BC\uC131)\uC804\uAE30 \uC6B0\uC0B0"
+  <Tier>k__BackingField: 3
+  <FlavorText>k__BackingField: "\uC6B0\uC0B0 \uAC00\uC9C0\uACE0 \uBC16\uC5D0 \uB098\uAC00\uC9C0
+    \uB9C8\uC138\uC694."
+  <Sprite>k__BackingField: {fileID: 0}
+  <LeftSkill>k__BackingField: {fileID: 0}
+  <RightSkill>k__BackingField: {fileID: -1508507923140151581}
   isDropped: 1
-  _leftSkill: {fileID: 0}
-  _rightSkill: {fileID: 0}
+--- !u!114 &-1508507923140151581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3108341071753901014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e305181650398409da3959583a24db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

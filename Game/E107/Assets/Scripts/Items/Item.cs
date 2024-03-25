@@ -5,13 +5,19 @@ using Photon.Pun;
 public class Item : MonoBehaviour, IPlayerInteractable
 {
     protected CapsuleCollider _itemCollider;
-    
+
+    [field: SerializeField]
     public string Name { get; set; }
+    [field: SerializeField]
     public ItemTier Tier { get; set; }
+    [field: SerializeField]
     public string FlavorText { get; set; }
+    [field: SerializeField]
     public Sprite Sprite { get; set; }
 
+    [field: SerializeField]
     public Skill LeftSkill { get; protected set; }
+    [field: SerializeField]
     public Skill RightSkill { get; protected set; }
 
     [SerializeField]
@@ -19,6 +25,13 @@ public class Item : MonoBehaviour, IPlayerInteractable
 
     void Awake()
     {
+        if (LeftSkill == null) {
+            LeftSkill = gameObject.GetOrAddComponent<NormalAttackSkill>();
+        }
+        if (RightSkill == null) {
+            RightSkill = gameObject.GetOrAddComponent<EmptySkill>();
+        }
+
         Init();
     }
 
