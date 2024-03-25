@@ -19,11 +19,11 @@ public class DrillDuckAttackSkill : Skill
         yield return new WaitForSeconds(0.2f);
 
         // SkillObject에서 관리
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.DrillDuckAttackEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.transform.parent = _controller.transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
 
-        // _particleSystem.GetComponent<ParticleSystem>().Play();
         // Managers.Sound.Play("swing1");
 
         skillObj.localScale = new Vector3(1.0f, 3.0f, _attackRange / 2);    // 5.0f
@@ -31,8 +31,13 @@ public class DrillDuckAttackSkill : Skill
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 1.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 
+        ps.transform.parent = skillObj.transform;
+        //ps.transform.position = new Vector3(skillObj.transform.position.x, skillObj.transform.position.y, skillObj.transform.position.z);
+        ps.transform.position = skillObj.transform.position + skillObj.transform.right * 3.0f;
+        ps.transform.position = skillObj.transform.position + skillObj.transform.forward * 1.0f;
+
         yield return new WaitForSeconds(0.8f);
         Managers.Resource.Destroy(skillObj.gameObject);
-        // _particleSystem.GetComponent<ParticleSystem>().Stop();
+        Managers.Effect.Stop(ps);
     }
 }
