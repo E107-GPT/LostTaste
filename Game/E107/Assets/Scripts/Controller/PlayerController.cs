@@ -196,11 +196,11 @@ public class PlayerController : BaseController
         switch (_curSkill)
         {
             case Define.SkillType.LeftSkill:
-                _inventory[_currentItemNum].LeftSKillCast();
+                _inventory[_currentItemNum].CastLeftSkill();
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.LeftSkill, gameObject.transform.rotation);
                 break;
             case Define.SkillType.RightSkill:
-                _inventory[_currentItemNum].RightSkillCast();
+                _inventory[_currentItemNum].CastRightSkill();
                 _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.RightSkill, gameObject.transform.rotation);
                 Debug.Log(_stat.Mp);
