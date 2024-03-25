@@ -17,7 +17,6 @@ public class DrillDuckController : MonsterController
 
         // Other Class
         _stat = new MonsterStat(_unitType);
-    }
 
         // 슬라이드 쿨타임 추가
     }
