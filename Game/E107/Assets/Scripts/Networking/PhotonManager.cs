@@ -113,8 +113,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             PhotonNetwork.JoinLobby();
     }
 
-    public void DisconnectFromPhoton()
+    public void ExitRoom()
     {
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.JoinLobby();
         GameObject player = Managers.Resource.Instantiate("Player/Player");
         player.name = "Player";
         Transform pTrans = GameObject.Find("Player").GetComponent<Transform>();
@@ -124,7 +126,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //player.transform.rotation = pTrans.rotation;
 
         roomListPanel.SetActive(false);
-        PhotonNetwork.Disconnect();
     }
     public void LoadMasterScene()
     {
@@ -273,6 +274,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             {
                 if(roomlist[i].Name == rooom.Name)
                 {
+                    Debug.Log("알아");
                     if (rooom.PlayerCount != 0)
                         roomlist[i] = rooom;
                     // ������ ���ų� �������̰ų� �������϶� ������ �ʾƾ� ��
@@ -280,6 +282,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                     {
                     //else // ������ ������ �� ����
                         roomlist.Remove(roomlist[i]);
+                        Debug.Log("빠져");
                     }
                     change = true;
                 }
@@ -289,7 +292,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             {
                 Debug.Log(rooom);
                 // ���ο� �� �߰�
-                roomlist.Add(rooom);
+
+                if(rooom.PlayerCount != 0)
+                    roomlist.Add(rooom);
             }
         }
         printList();
@@ -317,6 +322,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        Debug.Log("하이");
         isConnectRoom = true;
         roomListPanel.SetActive(false);
         passwordPanel.SetActive(false);
@@ -337,17 +343,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 Vector3 position = Vector3.zero;
                 Quaternion rotate = Quaternion.identity;
 
-                //if (PhotonNetwork.IsMasterClient)
-                //{
-                //    position = singlePlayer.transform.position;
-                //    rotate = singlePlayer.transform.rotation;
-                //}
-                //else
-                //{
-                GameObject spawnPoint = GameObject.Find("CampSpawn");
-                position = spawnPoint.transform.position;
-                rotate = spawnPoint.transform.rotation;
-                //}
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    position = singlePlayer.transform.position;
+                    rotate = singlePlayer.transform.rotation;
+                }
+                else
+                {
+                    GameObject spawnPoint = GameObject.Find("CampSpawn");
+                    position = spawnPoint.transform.position;
+                    rotate = spawnPoint.transform.rotation;
+                }
 
                 if (singlePlayer != null)
                 {

@@ -105,12 +105,14 @@ public class PortalTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-        {           
-            if(totalPlayers != PhotonNetwork.CurrentRoom.PlayerCount)
-                totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        {
+            if (PhotonNetwork.InRoom)
+            {
+                if(totalPlayers != PhotonNetwork.CurrentRoom.PlayerCount)
+                    totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+            }
             Debug.Log(totalPlayers);
             Debug.Log("xdlkfs : "+ other.gameObject.name);
-
             MonsterManager.Instance.portalTrigger = this;
             playersInPortal.Add(other.gameObject.name, other.gameObject);
             CheckAllPlayersInPortal();

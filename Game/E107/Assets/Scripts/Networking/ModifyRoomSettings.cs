@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 public class ModifyRoomSettings : MonoBehaviourPunCallbacks
 {
-    // ∆˜≈ª ≈∏∏È ∑Î ª˝º∫ »§¿∫ ª˝º∫µ» ∑Î ƒøΩ∫≈“
+    // Ìè¨ÌÉà ÌÉÄÎ©¥ Î£∏ ÏÉùÏÑ± ÌòπÏùÄ ÏÉùÏÑ±Îêú Î£∏ Ïª§Ïä§ÌÖÄ
 
     bool makeRoom = false;
     public void MakePersonalRoom()
@@ -14,8 +14,7 @@ public class ModifyRoomSettings : MonoBehaviourPunCallbacks
         Debug.Log("CreateRoom");
         PhotonManager manager = GameObject.Find("gm").GetComponent<PhotonManager>();
 
-        Debug.Log("makeroom");
-        string roomName = UserInfo.GetInstance().getNickName() + "¿« πÊ";
+        string roomName = UserInfo.GetInstance().getNickName() + "Ïùò Î∞©";
         string captainName = UserInfo.GetInstance().getNickName();
         Debug.Log(captainName + " + " + roomName);
 
@@ -29,32 +28,62 @@ public class ModifyRoomSettings : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
         Debug.Log(room);
 
-        PhotonNetwork.CreateRoom(roomName, room);
+        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", false } };
+        room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword" };
+        
+        bool wht = PhotonNetwork.CreateRoom(roomName, room);
+
+        Debug.Log(wht);
     }
 
     public override void OnJoinedRoom()
     {
-    //    GameObject singlePlayer = GameObject.Find("Player");
-    //    Vector3 position = Vector3.zero;
-    //    Quaternion rotate = Quaternion.identity;
+        Debug.Log("Join Room");
+        PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        {
+            //ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ∆¥œ∏ÔøΩ ÔøΩÔøΩ»Ø
+            Debug.Log($"{PhotonNetwork.PlayerList[i].IsLocal}");
+            if (PhotonNetwork.PlayerList[i].IsLocal)
+            {
+                Debug.Log($"{PhotonNetwork.PlayerList[i].ActorNumber}");
+                GameObject singlePlayer = GameObject.Find("Player");
+                Vector3 position = Vector3.zero;
+                Quaternion rotate = Quaternion.identity;
 
-    //    if (singlePlayer != null)
-    //    {
-    //        position = singlePlayer.transform.position;
-    //        rotate = singlePlayer.transform.rotation;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    position = singlePlayer.transform.position;
+                    rotate = singlePlayer.transform.rotation;
+                }
+                else
+                {
+                    GameObject spawnPoint = GameObject.Find("CampSpawn");
+                    position = spawnPoint.transform.position;
+                    rotate = spawnPoint.transform.rotation;
+                }
 
-    //        Destroy(singlePlayer);
-    //    }
+                if (singlePlayer != null)
+                {
+                    Destroy(singlePlayer);
+                }
 
 
-    //    GameObject player2 = PhotonNetwork.Instantiate("Prefabs/Player/Player", position, rotate, 0);
-    //    //Assets/Resources/Prefabs/Player/Player.prefab
-    //    Debug.Log(player2);
-    //    player2.name = "Player";
-    //    HUDManager hud = GameObject.Find("HUD").GetComponent<HUDManager>();
-    //    hud.playerController = player2.GetComponent<PlayerController>();
-    //    GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player2;
+                GameObject player2 = PhotonNetwork.Instantiate("Player", position, rotate, 0);
+                //Assets/Resources/Prefabs/Player/Player.prefab
+                Debug.Log(player2);
+                player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
+                HUDManager hud = GameObject.Find("HUD").GetComponent<HUDManager>();
+                hud.playerController = player2.GetComponent<PlayerController>();
+                player2.name = "Player";
+                GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player2;
+            }
+        }
+    }
 
+    public override void OnCreatedRoom()
+    {
+        Debug.Log("ÎßåÎì§Ïñ¥ÏßÄ");
     }
 
     private void OnTriggerEnter(Collider other)
