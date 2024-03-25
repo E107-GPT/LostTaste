@@ -16,7 +16,7 @@ public class HeroSwordSkill : Skill
         RequiredMp = 20;
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    protected override IEnumerator SkillCoroutine()
     {
         Root = transform.root;
 
@@ -33,7 +33,7 @@ public class HeroSwordSkill : Skill
         skillObj.position += offset;
 
         skillObj.localScale = Scale;
-        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
+        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (Scale.z / 2));
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 

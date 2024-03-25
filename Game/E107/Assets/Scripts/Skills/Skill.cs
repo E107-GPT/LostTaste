@@ -67,6 +67,8 @@ public abstract class Skill : MonoBehaviour
 
     protected virtual IEnumerator SkillCoroutine()
     {
-        throw new NotImplementedException();
+#pragma warning disable 0618
+        return SkillCoroutine(1, 1.0f);
+#pragma warning restore 0618
     }
 }
