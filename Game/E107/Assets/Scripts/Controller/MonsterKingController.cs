@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class MonsterKingController : MonsterController
 {
+    [SerializeField]
+    private GameObject _weapon;     // Editor
+
     private float _jumpCoolDown;    // 점프 쿨타임
     private bool _isJumping;        // 지금 점프 중?
+
+    private ParticleSystem _particle;
+    private Coroutine _hitDownStart;
+    private Coroutine _hitDownEnd;
 
     public override void Init()
     {
@@ -16,11 +23,6 @@ public class MonsterKingController : MonsterController
 
         _jumpCoolDown = 10.0f;
         _isJumping = false;
-    }
-
-    private void Update()
-    {
-        // _statemachine.Execute();
     }
 
 
@@ -55,6 +57,18 @@ public class MonsterKingController : MonsterController
         }
     }
 
+    IEnumerator BrieflyEffect(Define.Effect effectName, Transform root, float seconds)
+    {
+        // Effect 가져와서 사용
+        _particle = Managers.Effect.Play(effectName, root);
+        
+        
+        yield return new WaitForSeconds(seconds);
+
+        // 가져온 Effect 제거
+        Managers.Effect.Stop(_particle);
+    }
+
     #region State Method
     public override void EnterMonsterKingHitDownState()         // HitDown
     {
@@ -62,9 +76,9 @@ public class MonsterKingController : MonsterController
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
 
-        ToDetectPlayer(0.8f);
+        ToDetectPlayer(1.0f);
 
-        _monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);
+        //_monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);
         _animator.CrossFade("HitDown", 0.3f, -1, 0);
     }      
     public override void ExecuteMonsterKingHitDownState() 
@@ -73,14 +87,48 @@ public class MonsterKingController : MonsterController
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime >= 1.0f)
+            if (aniTime <= 0.4f)
             {
-                PrintText("공격 -> IDLE");
+                _animator.speed = 0.2f;
+                if (_hitDownStart == null) _hitDownStart = StartCoroutine(BrieflyEffect(Define.Effect.HitDownStartEffect, _weapon.transform, 1.8f));
+            }
+            else if (aniTime > 0.4f && _hitDownStart != null)
+            {
+                if (_hitDownStart != null)
+                {
+                    StopCoroutine(_hitDownStart);
+                    _hitDownStart = null;
+                    if (_particle != null) Managers.Effect.Stop(_particle);
+                }
+            }
+            else if (aniTime < 0.53f)
+            {
+                _animator.speed = 1.0f;
+            }
+            else if (aniTime < 0.8f)
+            {
+                if (_hitDownEnd == null) _hitDownEnd = StartCoroutine(BrieflyEffect(Define.Effect.HitDownEndEffect, _weapon.transform, 1.8f));
+            }
+            else if (aniTime > 0.8f && _hitDownEnd != null)
+            {
+                if (_hitDownEnd != null)
+                {
+                    StopCoroutine(_hitDownEnd);
+                    _hitDownEnd = null;
+                }
+            }
+            else if (aniTime >= 1.0f)
+            {
+                _animator.speed = 1.0f;
+                PrintText("HitDown -> IDLE");
                 _statemachine.ChangeState(new IdleState(this));
             }
         }
     }
-    public override void ExitMonsterKingHitDownState() { }
+    public override void ExitMonsterKingHitDownState() 
+    {
+    }
+
     public override void EnterMonsterKingSlashState() { }        // Slash
     public override void ExecuteMonsterKingSlashState() { }
     public override void ExitMonsterKingSlashState() { }

@@ -15,7 +15,6 @@ public class CrocodileController : MonsterController
         _swordPS = GetComponentInChildren<ParticleSystem>();
         PrintText("PS : " + _swordPS.name);
         _swordPS.Stop();
-        // 슬라이드 쿨타임 추가
     }
 
     protected override void ChangeStateFromMove()

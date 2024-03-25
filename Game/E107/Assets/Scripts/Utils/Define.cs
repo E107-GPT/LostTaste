@@ -50,6 +50,7 @@ public class Define
         Specter,
         Skeleton,
         Crocodile,
+        MonsterKing,
     }
 
     public enum Effect
@@ -69,6 +70,8 @@ public class Define
         NagaWizardLightningEffect,
         DemonFireballEffect,
         CrocodileSwordEffect,
+        HitDownEndEffect,
+        HitDownStartEffect,
         MaxCount
     }
 
