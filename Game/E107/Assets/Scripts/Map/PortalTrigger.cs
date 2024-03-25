@@ -132,7 +132,13 @@ public class PortalTrigger : MonoBehaviour
             //MonsterManager.Instance.portalTrigger = this;
             //MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
             //MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
-
+            if (GameObject.Find("SpawnMonster").GetComponent<MonsterManager>().monstersInCurrentMap.Count < 1)
+            {
+                MonsterManager.Instance.portalTrigger = this;
+                MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+                Debug.Log("몬스터 생성 완료");
+                MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
+            }
         }
     }
 
