@@ -26,7 +26,7 @@ public class SkillObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
+        if (other == null) return;
         if (_attacker.gameObject.CompareTag("Player") && other.gameObject.CompareTag("Monster"))
         {
             Debug.Log($"{other.gameObject.name}");
