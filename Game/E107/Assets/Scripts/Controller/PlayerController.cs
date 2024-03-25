@@ -635,6 +635,20 @@ public class PlayerController : BaseController
             _allRenderers[i].material.color = _originalColors[i];
         }
     }
+
+
+    public void WarpTo(Vector3 position)
+    {
+        _agent.Warp(position);
+        if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("RPC_WarpTo", RpcTarget.Others, position);
+    }
+
+    [PunRPC]
+    void RPC_WarpTo(Vector3 position)
+    {
+        _agent.Warp(position);
+    }
+
     
 
 }
