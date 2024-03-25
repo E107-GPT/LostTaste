@@ -14,11 +14,13 @@ public class MonsterKingController : MonsterController
     private Coroutine _hitDownStart;
     private Coroutine _hitDownEnd;
 
+    public GameObject Weapon { get => _weapon; set => _weapon = value; }
+    public ParticleSystem Particle { get => _particle; set => _particle = value; }
+
     public override void Init()
     {
         base.Init();
 
-        // Other Class
         _stat = new MonsterStat(_unitType);
 
         _jumpCoolDown = 10.0f;
@@ -59,26 +61,22 @@ public class MonsterKingController : MonsterController
 
     IEnumerator BrieflyEffect(Define.Effect effectName, Transform root, float seconds)
     {
-        // Effect 가져와서 사용
         _particle = Managers.Effect.Play(effectName, root);
         
         
         yield return new WaitForSeconds(seconds);
 
-        // 가져온 Effect 제거
-        Managers.Effect.Stop(_particle);
+        if (_particle != null) Managers.Effect.Stop(_particle);
     }
 
     #region State Method
     public override void EnterMonsterKingHitDownState()         // HitDown
     {
-        // 이것도 함수로 통합
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
 
         ToDetectPlayer(1.0f);
 
-        //_monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);
         _animator.CrossFade("HitDown", 0.3f, -1, 0);
     }      
     public override void ExecuteMonsterKingHitDownState() 
@@ -107,7 +105,11 @@ public class MonsterKingController : MonsterController
             }
             else if (aniTime < 0.8f)
             {
-                if (_hitDownEnd == null) _hitDownEnd = StartCoroutine(BrieflyEffect(Define.Effect.HitDownEndEffect, _weapon.transform, 1.8f));
+                if (_hitDownEnd == null)
+                {
+                    _hitDownEnd = StartCoroutine(BrieflyEffect(Define.Effect.HitDownEndEffect, _weapon.transform, 1.8f));
+                    _monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);
+                }
             }
             else if (aniTime > 0.8f && _hitDownEnd != null)
             {
@@ -115,10 +117,12 @@ public class MonsterKingController : MonsterController
                 {
                     StopCoroutine(_hitDownEnd);
                     _hitDownEnd = null;
+                    if (_particle != null) Managers.Effect.Stop(_particle);
                 }
             }
             else if (aniTime >= 1.0f)
             {
+                _monsterInfo.Patterns[0].DeActiveCollider();
                 _animator.speed = 1.0f;
                 PrintText("HitDown -> IDLE");
                 _statemachine.ChangeState(new IdleState(this));
