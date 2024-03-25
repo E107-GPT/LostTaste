@@ -23,9 +23,14 @@ public class HUDManager : MonoBehaviour
     [Header("[ 팝업 창 ]")]
     public GameObject AdventureResultWindow; // 모험 결과 창
 
+    private bool gameOverDisplayed = false; // 게임 오버 창이 표시되었는지 여부
+
     // 시작 시 호출되는 Start 메서드
     void Start()
     {
+        // 사용자 정보 업데이트
+        UpdateUserInfoDisplay();
+
         // 플레이어 GameObject를 찾아서 PlayerController 컴포넌트를 playerController 변수에 할당
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
@@ -33,9 +38,6 @@ public class HUDManager : MonoBehaviour
     // 매 프레임마다 호출되는 Update 메서드
     void Update()
     {
-        // 사용자 정보 업데이트
-        UpdateUserInfoDisplay();
-
         // 플레이어 상태 업데이트
         UpdatePlayerStatus();
     }
@@ -69,9 +71,10 @@ public class HUDManager : MonoBehaviour
         playerManaText.text = string.Format("{0:0} / {1:0}", Mp, MaxMp);
 
         // 플레이어가 사망할 경우 게임 오버 창을 활성화
-        if (Hp <= 0)
+        if (Hp <= 0 && !gameOverDisplayed)
         {
             AdventureResultWindow.SetActive(true);
+            gameOverDisplayed = true; // 게임 오버 창이 표시되었음을 표시
         }
     }
 }

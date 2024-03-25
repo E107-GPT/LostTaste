@@ -5855,6 +5855,9 @@ GameObject:
   - component: {fileID: 7141449811742336474}
   - component: {fileID: 2333861586679540649}
   - component: {fileID: 6045006444759831174}
+  - component: {fileID: 6475295157424902973}
+  - component: {fileID: 6241173679199960078}
+  - component: {fileID: 5850820834642858252}
   m_Layer: 5
   m_Name: Giveup Button
   m_TagString: Untagged
@@ -6002,6 +6005,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   submitButton: {fileID: 7141449811742336474}
+--- !u!114 &6475295157424902973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5423744221507822077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f174c173dab79bb448a0ae9ea8f80c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 7141449811742336474}
+  popupWindow: {fileID: 1039267611675866146}
+  inputs: []
+--- !u!114 &6241173679199960078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5423744221507822077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f174c173dab79bb448a0ae9ea8f80c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 7141449811742336474}
+  popupWindow: {fileID: 5086955870155003568}
+  inputs: []
+--- !u!114 &5850820834642858252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5423744221507822077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bafca7a61d798a242b13cb7184c5827c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  campLocation: {fileID: 0}
+  confirmButton: {fileID: 7141449811742336474}
 --- !u!1 &5557274071190003128
 GameObject:
   m_ObjectHideFlags: 0

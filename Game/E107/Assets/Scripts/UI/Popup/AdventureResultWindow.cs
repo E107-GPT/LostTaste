@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI; // NavMeshAgent 사용을 위해 필요
 using TMPro;
 
 /// <summary>
