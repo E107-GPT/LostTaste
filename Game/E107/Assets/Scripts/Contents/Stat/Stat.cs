@@ -56,7 +56,14 @@ public class Stat
                 _maxHp = 1000;
                 _attackDamage = 15;
                 _moveSpeed = 8.0f;
-                _attackRange = 3.0f;
+                _attackRange = 3.0f;        // skill collider와 상관있음
+                break;
+            case Define.UnitType.Crocodile:
+                _hp = 1500;
+                _maxHp = 1500;
+                _attackDamage = 15;
+                _moveSpeed = 8.0f;
+                _attackRange = 6.0f;
                 break;
             case Define.UnitType.Slime:
                 _hp = 200;
@@ -77,21 +84,21 @@ public class Stat
                 _maxHp = 500;
                 _attackDamage = 15;
                 _moveSpeed = 6.5f;
-                _attackRange = 2.0f;
+                _attackRange = 10.0f;
                 break;
             case Define.UnitType.Crab:
                 _hp = 300;
                 _maxHp = 300;
                 _attackDamage = 15;
                 _moveSpeed = 6.0f;
-                _attackRange = 2.0f;
+                _attackRange = 2.3f;
                 break;
             case Define.UnitType.Fishman:
                 _hp = 500;
                 _maxHp = 500;
                 _attackDamage = 20;
                 _moveSpeed = 6.0f;
-                _attackRange = 2.0f;
+                _attackRange = 2.3f;
                 break;
             case Define.UnitType.NagaWizard:
                 _hp = 700;

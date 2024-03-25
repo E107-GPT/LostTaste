@@ -138,6 +138,12 @@ public abstract class BaseController : MonoBehaviour
     public virtual void ExcuteDrillDuckSlideState() { }
     public virtual void ExitDrillDuckSlideState() { }
 
+	// CrocodileSwordState - not loop
+	public virtual void EnterCrocodileSwordState() { }
+	public virtual void ExcuteCrocodileSwordState() { }
+	public virtual void ExitCrocodileSwordState() { }
+
+
     void OnHitEvent()
 	{
 		_statemachine.ChangeState(new IdleState(this));
