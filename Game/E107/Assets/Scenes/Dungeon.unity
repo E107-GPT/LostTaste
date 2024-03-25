@@ -14446,8 +14446,16 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4956503864458111761, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       insertIndex: 12
       addedObject: {fileID: 1393057191}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2557262211921270612, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3851254366259994453}
   m_SourcePrefab: {fileID: 100100000, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+--- !u!1 &1467173001412813958 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2557262211921270612, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+  m_PrefabInstance: {fileID: 1467173001412813957}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1961565599686921881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14677,6 +14685,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 458183079532070054, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
   m_PrefabInstance: {fileID: 1467173001412813957}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3851254366259994453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467173001412813958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25d26717ce83fc64e8b004531822a832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeContainerPanel: {fileID: 382873393}
+  stageText: {fileID: 382873391}
+  campGameMenu: {fileID: 728046657}
+  dungeonGameMenu: {fileID: 728046656}
 --- !u!4 &3897487118630134910 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7882428009851098038, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
