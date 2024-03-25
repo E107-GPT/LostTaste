@@ -10,12 +10,19 @@ public class BossRoomBlock : MonoBehaviour
 
     public GameObject bossRoomWall;
 
+    public GameObject bossRoomEffect;
+
     private void Awake()
     {
         if (bossRoomWall != null)
         {
             bossRoomWall.SetActive(false); // 초기에는 벽을 비활성화 상태로 둡니다.
             //Debug.Log("Boss room wall is deactivated");
+        }
+
+        if (bossRoomEffect != null)
+        {
+            bossRoomEffect.SetActive(false);
         }
     }
 
@@ -32,6 +39,10 @@ public class BossRoomBlock : MonoBehaviour
                 {
                     bossRoomWall.SetActive(true);
                     Debug.Log("Boss room wall is activated");
+                }
+                if (bossRoomEffect != null)
+                {
+                    bossRoomEffect.SetActive(true);
                 }
             }
 
