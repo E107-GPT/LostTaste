@@ -27,20 +27,22 @@ public class MonsterKingHitDownPattern : Pattern
 
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.transform.parent = _controller.transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, attackDamage, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(Root, attackDamage, _seq);   // Root가 Attacker -> Tag를 위함
 
         // Managers.Sound.Play("swing1");
 
-        skillObj.localScale = new Vector3(1.0f, 3.0f, attackDamage / 2);    // 5.0f
+        // Axe의 위치에 맞춰서 움직인다. -> 별로임
+        // 정사각형
+        // skillObj.localScale = new Vector3(1.0f, 3.0f, attackDamage / 2);    // 5.0f
+        skillObj.localScale = new Vector3(5.0f, 3.0f, 5.0f);
+
         skillObj.position = Root.transform.TransformPoint(Vector3.forward * (attackDamage / 3));
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 1.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.DrillDuckAttackEffect, Root);        // MonsterKing Effect
-
         yield return new WaitForSeconds(0.8f);
+
         Managers.Resource.Destroy(skillObj.gameObject);
-        Managers.Effect.Stop(ps);
 
     }
 

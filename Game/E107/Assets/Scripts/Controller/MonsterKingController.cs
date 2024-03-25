@@ -14,6 +14,8 @@ public class MonsterKingController : MonsterController
     private Coroutine _hitDownStart;
     private Coroutine _hitDownEnd;
 
+    public GameObject Weapon { get => _weapon; set => _weapon = value; }
+
     public override void Init()
     {
         base.Init();
@@ -78,7 +80,7 @@ public class MonsterKingController : MonsterController
 
         ToDetectPlayer(1.0f);
 
-        //_monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);
+        _monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);
         _animator.CrossFade("HitDown", 0.3f, -1, 0);
     }      
     public override void ExecuteMonsterKingHitDownState() 
