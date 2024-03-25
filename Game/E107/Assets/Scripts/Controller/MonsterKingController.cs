@@ -115,6 +115,7 @@ public class MonsterKingController : MonsterController
                 {
                     StopCoroutine(_hitDownEnd);
                     _hitDownEnd = null;
+                    if (_particle != null) Managers.Effect.Stop(_particle);
                 }
             }
             else if (aniTime >= 1.0f)
