@@ -19,7 +19,7 @@ public class DungeonEntranceTrigger : MonoBehaviour
         //totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
         totalPlayers = 1;
         portal.SetActive(false);
-        Debug.Log("포탈 비활성화");
+        //Debug.Log("포탈 비활성화");
     }
 
     private void OnTriggerEnter(Collider other)
