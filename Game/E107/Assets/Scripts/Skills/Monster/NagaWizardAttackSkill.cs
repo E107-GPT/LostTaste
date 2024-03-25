@@ -22,7 +22,7 @@ public class NagaWizardAttackSkill : Skill
 
         Root = transform.root;
         Vector3 dir = Root.forward;
-        Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
+        Root.GetComponent<Animator>().CrossFade("Attack", 0.1f, -1, 0);
         dir = new Vector3(dir.x, 0, dir.z);
 
         yield return new WaitForSeconds(0.5f);
