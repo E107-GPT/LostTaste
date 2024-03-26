@@ -85,7 +85,7 @@ public class PhotonUIManager : MonoBehaviour
     public string GetChatMessage()
     {
         string msg = message;
-        chatField.text = "";
+        //chatField.text = "";
 
         return msg;
     }
