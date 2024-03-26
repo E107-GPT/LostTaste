@@ -8,7 +8,6 @@ public class MonsterKingSlashPattern : Pattern
     private Coroutine _coroutine;
     private ParticleSystem _particle;
     private Transform _sectorLoc;
-    // 크로커다일 이펙트 및 최종 보스 패턴1 이펙트 수정
 
     protected override void Init()
     {
@@ -27,7 +26,7 @@ public class MonsterKingSlashPattern : Pattern
         }
     }
 
-    IEnumerator CheckParticle(int attackDamage)
+    IEnumerator CheckPatternObject(int attackDamage)
     {
         Root = _controller.transform;
         yield return new WaitForSeconds(0.1f);
@@ -64,7 +63,7 @@ public class MonsterKingSlashPattern : Pattern
     {
         if (_coroutine == null)
         {
-            _coroutine = StartCoroutine(CheckParticle(attackDamage));
+            _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
         }
     }
 }
