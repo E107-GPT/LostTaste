@@ -8,6 +8,6 @@ public class IceKingInfo : MonsterInfo
     {
         base.Init();
         Skill = gameObject.GetOrAddComponent<IceKingAttackSkill>();
-        Patterns.Add(gameObject.GetOrAddComponent<IceKingIceStrikePattern>());
+        Patterns.Add(gameObject.GetOrAddComponent<IceKingSpikePattern>());
     }
 }

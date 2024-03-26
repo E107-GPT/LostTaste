@@ -17,44 +17,28 @@ public class IceKingAttackSkill : Skill
     {
         Debug.Log("IceKing Attack");
 
-        Root = transform.root;
-        Vector3 dir = Root.forward;
-        Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
-        dir = new Vector3(dir.x, 0, dir.z);
-
         yield return new WaitForSeconds(0.5f);
 
         // SkillObject에서 관리
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.IceKingOrbEffect, Root);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.IceKingCleaveEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        //skillObj.transform.parent = _controller.transform;
+        skillObj.transform.parent = _controller.transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
-
-        ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 
         // Managers.Sound.Play("swing1");
 
-        skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);    // 1.1f
-        skillObj.position = Root.transform.position;
-        skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
-        skillObj.rotation.SetLookRotation(dir);
+        skillObj.localScale = new Vector3(1.0f, 3.0f, _attackRange / 1.7f);    // 5.0f
+        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange / 2.2f));
+        skillObj.position = new Vector3(skillObj.position.x, Root.position.y, skillObj.position.z);
+        skillObj.rotation = Root.rotation;
 
-        float moveDuration = 1.1f; // 투사체가 날아가는 시간을 설정합니다.
-        float timer = 0; // 타이머 초기화
-        float speed = 20.0f; // 투사체의 속도를 설정합니다.
+        ps.transform.parent = skillObj.transform;
+        //ps.transform.position = new Vector3(skillObj.position.x - 5.0f, skillObj.position.y, skillObj.position.z - 0.9f);
+        //ps.transform.position = skillObj.transform.position + skillObj.transform.right * 3.0f;
+        ps.transform.position = skillObj.transform.position - skillObj.transform.forward * 6.0f;
+        //ps.position = skillObj.position / 10.0f;
 
-        while (timer < moveDuration)
-        {
-            // 투사체와 파티클 시스템을 앞으로 움직입니다.
-            Vector3 moveStep = dir * speed * Time.deltaTime;
-            skillObj.position += moveStep;
-            ps.transform.position += moveStep;
-
-            timer += Time.deltaTime; // 타이머를 업데이트합니다.
-            yield return null; // 다음 프레임까지 대기합니다.
-        }
-
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1.0f);
         Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
     }
