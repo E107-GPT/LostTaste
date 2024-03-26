@@ -20,6 +20,10 @@ public class ChatWindow : MonoBehaviour
     [Header("[ 채팅 ScrollView ]")]
     public GameObject chatScrollView; // ScrollView
 
+    // 채팅 Background
+    [Header("[ 채팅 Background ]")]
+    public GameObject chatBackground; // Background
+
     void Start()
     {
         lastActivityTime = Time.time;
@@ -42,6 +46,9 @@ public class ChatWindow : MonoBehaviour
 
             // 채팅 ScrollView 활성화
             chatScrollView.SetActive(true);
+
+            // 채팅 chatBackground 활성화
+            chatBackground.SetActive(true);
 
             // 활동 시간 갱신
             lastActivityTime = Time.time;
