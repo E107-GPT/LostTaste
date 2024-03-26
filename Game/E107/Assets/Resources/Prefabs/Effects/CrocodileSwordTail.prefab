@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6301811993150592040}
   - component: {fileID: 8993379464357174345}
   m_Layer: 0
-  m_Name: CrocodileSword
+  m_Name: CrocodileSwordTail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 1875389228786706809}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000012344518, y: -0.707107, z: -0.00000004214687, w: 0.70710665}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1.3}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0

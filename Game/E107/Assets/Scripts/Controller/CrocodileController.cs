@@ -10,10 +10,8 @@ public class CrocodileController : MonsterController
     {
         base.Init();
 
-        // Other Class
         _stat = new MonsterStat(_unitType);
         _swordPS = GetComponentInChildren<ParticleSystem>();
-        //PrintText("PS : " + _swordPS.name);
         _swordPS.Stop();
     }
 
