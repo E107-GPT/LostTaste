@@ -53,6 +53,17 @@ public class MonsterController : BaseController
         _audioSource.playOnAwake = false;
     }
 
+    private void FixedUpdate()
+    {
+        FreezeVelocity();
+    }
+
+    // 캐릭터에게 물리력을 받아도 밀려나는 가속도로 인해 이동에 방해받지 않는다.
+    protected void FreezeVelocity()
+    {
+        _rigidbody.velocity = Vector3.zero;
+    }
+
     private void OnDestroy()
     {
         
