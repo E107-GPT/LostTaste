@@ -79,10 +79,12 @@ public class Define
         CrocodileSwordTail,
         IceKingCleaveEffect,
         IceKingSpikeEffect,
-        HitDownEndEffect,
-        HitDownStartEffect,
-        SlashLurkerEffect,
-        SlashStartEffect,
+        KingHitDownEndEffect,
+        KingHitDownStartEffect,
+        KingSlashLurkerEffect,
+        KingSlashStartEffect,
+        KingStabChargeEffect,
+        KingStabEffect,
         MaxCount
     }
 
