@@ -39,11 +39,15 @@ public class MonsterKingHitDownPattern : Pattern
 
         _cylinderLoc = Managers.Resource.Instantiate("Patterns/HitDownCollider").transform;
         _cylinderLoc.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
-        _cylinderLoc.position = Root.position;
         _cylinderLoc.rotation = Quaternion.identity;
 
-        Vector3 rootForward = Root.TransformDirection(Vector3.forward * 4.0f);
+        // pattern obj À§Ä¡
+        Vector3 rootForward = Root.TransformDirection(Vector3.forward * 5.0f);
         _cylinderLoc.position = Root.position + rootForward;
+        Vector3 tempCylinder = _cylinderLoc.position;
+        tempCylinder.y += 2.0f;
+        _cylinderLoc.position = tempCylinder;
+
         _ps = Managers.Effect.Play(Define.Effect.HitDownEndEffect, _cylinderLoc);
     }
 

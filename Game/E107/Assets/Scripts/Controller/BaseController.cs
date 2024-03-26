@@ -62,6 +62,7 @@ public abstract class BaseController : MonoBehaviour
 		_statemachine = new StateMachine();
 		_animator = GetComponent<Animator>();
 		_rigidbody = GetComponent<Rigidbody>();
+		_rigidbody.isKinematic = true;				// 캐릭터가 몬스터를 밀었을때 가속도를 받지 않기 위함
 		_agent = GetComponent<NavMeshAgent>();
 		photonView = GetComponent<PhotonView>();
 		Init();

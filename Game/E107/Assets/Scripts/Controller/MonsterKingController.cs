@@ -60,11 +60,13 @@ public class MonsterKingController : MonsterController
         int rand = Random.Range(0, 101);
         if (rand <= 99)
         {
+            
             _statemachine.ChangeState(new MonsterKingHitDownState(this));
         }
         else if (rand <= 100)
         {
             _statemachine.ChangeState(new MonsterKingSlashState(this));
+
         }
     }
 
@@ -82,6 +84,7 @@ public class MonsterKingController : MonsterController
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _animator.speed = 1.0f;
 
         ToDetectPlayer(0.8f);
 
@@ -118,7 +121,6 @@ public class MonsterKingController : MonsterController
             else if (aniTime >= 1.0f)
             {
                 _monsterInfo.Patterns[0].DeActiveCollider();
-                _animator.speed = 1.0f;
                 PrintText("HitDown -> IDLE");
                 _statemachine.ChangeState(new IdleState(this));
             }
@@ -152,7 +154,6 @@ public class MonsterKingController : MonsterController
             }
             else if (aniTime > 0.4f && _slashStart != null)
             {
-                _animator.speed = 1.0f;
                 StopCoroutine(_slashStart);
                 _slashStart = null;
                 if (_particle != null) Managers.Effect.Stop(_particle);
@@ -171,12 +172,52 @@ public class MonsterKingController : MonsterController
     }
     public override void ExitMonsterKingSlashState() 
     {
-        _animator.speed = 1.0f;
     }
 
-    public override void EnterMonsterKingStabState() { }         // Stab
-    public override void ExecuteMonsterKingStabState() { }
+    public override void EnterMonsterKingStabState()            // Stab
+    {
+        _agent.velocity = Vector3.zero;
+        _agent.speed = 0;
+        _animator.speed = 1.0f;
+
+        ToDetectPlayer(0.8f);
+
+        _animator.CrossFade("Stab", 0.3f, -1, 0);
+    }         
+    public override void ExecuteMonsterKingStabState() 
+    {
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Stab"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (aniTime <= 0.2f)        // 공격 준비
+            {
+                
+            }
+            else if (aniTime <= 0.4f)   // 공격 진행
+            {
+                _monsterInfo.Patterns[2].SetCollider(_stat.PatternDamage);
+            }
+            else if (aniTime <= 0.52f)  // 공격 후 뒷걸음질 전
+            {
+
+            }
+            else if (aniTime <= 0.58f)  // 뒷걸음질 시작
+            {
+
+            }
+            else if (aniTime <= 0.8f)   // 원위치로 이동
+            {
+
+            }
+            else if (aniTime > 1.0f)
+            {
+                _monsterInfo.Patterns[2].DeActiveCollider();
+                _statemachine.ChangeState(new IdleState(this));
+            }
+        }
+    }
     public override void ExitMonsterKingStabState() { }
+
     public override void EnterMonsterKingJumpStartState() { }    // JumpStart
     public override void ExecuteMonsterKingJumpStartState() { }
     public override void ExitMonsterKingJumpStartState() { }
