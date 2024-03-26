@@ -1,3 +1,4 @@
+﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,9 @@ public class CrocodileController : MonsterController
         _stat = new MonsterStat(_unitType);
         _swordPS = GetComponentInChildren<ParticleSystem>();
         _swordPS.Stop();
+        
     }
-
+    
     protected override void ChangeStateFromMove()
     {
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
@@ -107,10 +109,37 @@ public class CrocodileController : MonsterController
             }
         }
     }
+
     public override void ExitCrocodileSwordState()
     {
         base.ExitCrocodileSwordState();
         _swordPS.Stop();
     }
+    [PunRPC]
+    void RPC_ChangeCrocodileSwordState()
+    {
+        _statemachine.ChangeState(new CrocodileSwordState(this));
+    }
 
+    [PunRPC]
+    void RPC_ChangeIdleState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMoveState()
+    {
+        _statemachine.ChangeState(new MoveState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeSkillState()
+    {
+        // ???�ٲ�� ������
+        _statemachine.ChangeState(new SkillState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
 }

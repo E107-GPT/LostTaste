@@ -220,7 +220,7 @@ public class MonsterController : BaseController
         GetComponent<Collider>().enabled = false;
         //_agent.enabled = false;
 
-        _animator.CrossFade("Die", 0.5f);
+        _animator.Play("Die", -1);
 
         // 스폰에서 몬스터 배열을 통해 null 처리 또는 destroy
         Destroy(gameObject, 3.0f);

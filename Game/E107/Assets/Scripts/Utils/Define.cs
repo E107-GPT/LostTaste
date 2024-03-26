@@ -98,4 +98,10 @@ public class Define
         RightSkill,
         ClassSkill
     }
+
+    public enum ClassType
+    {
+        None,
+        Warrior
+    }
 }
