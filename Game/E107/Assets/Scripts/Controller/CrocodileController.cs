@@ -65,17 +65,25 @@ public class CrocodileController : MonsterController
     public override void EnterCrocodileSwordState()
     {
         base.EnterCrocodileSwordState();
-        _swordPS.Play();
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+            photonView.RPC("RPC_ChangeCrocodileSwordState", RpcTarget.Others);
+        }
+        
 
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
-        ToDetectPlayer(0.8f);
+        //ToDetectPlayer(0.8f);
         //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
         //Vector3 destPos = new Vector3(dirTarget.x, 0, dirTarget.z);
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
-
+        _swordPS.Play();
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("Sword", 0.2f, -1, 0);
+
+        
     }
     public override void ExcuteCrocodileSwordState()
     {
@@ -115,6 +123,7 @@ public class CrocodileController : MonsterController
         base.ExitCrocodileSwordState();
         _swordPS.Stop();
     }
+
     [PunRPC]
     void RPC_ChangeCrocodileSwordState()
     {
