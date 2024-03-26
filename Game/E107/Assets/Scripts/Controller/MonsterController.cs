@@ -53,6 +53,17 @@ public class MonsterController : BaseController
         _audioSource.playOnAwake = false;
     }
 
+    private void FixedUpdate()
+    {
+        FreezeVelocity();
+    }
+
+    // 캐릭터에게 물리력을 받아도 밀려나는 가속도로 인해 이동에 방해받지 않는다.
+    protected void FreezeVelocity()
+    {
+        _rigidbody.velocity = Vector3.zero;
+    }
+
     private void OnDestroy()
     {
         
@@ -209,7 +220,7 @@ public class MonsterController : BaseController
         GetComponent<Collider>().enabled = false;
         //_agent.enabled = false;
 
-        _animator.CrossFade("Die", 0.5f);
+        _animator.Play("Die", -1);
 
         // 스폰에서 몬스터 배열을 통해 null 처리 또는 destroy
         Destroy(gameObject, 3.0f);

@@ -80,6 +80,8 @@ public class Define
         IceKingCleaveEffect,
         HitDownEndEffect,
         HitDownStartEffect,
+        SlashLurkerEffect,
+        SlashStartEffect,
         MaxCount
     }
 
@@ -94,5 +96,11 @@ public class Define
         LeftSkill,
         RightSkill,
         ClassSkill
+    }
+
+    public enum ClassType
+    {
+        None,
+        Warrior
     }
 }

@@ -58,7 +58,7 @@ public class MonsterKingHitDownPattern : Pattern
                     _meshCol = col.GetComponent<MeshCollider>();
                     if (_meshCol == null) continue;
 
-                    Debug.Log("_meshCol: " + _meshCol.name);
+                    //Debug.Log("_meshCol: " + _meshCol.name);
                     col.GetComponent<PatternObject>().Init(_controller.transform, attackDamage, _seq);
                     _meshCol.enabled = true;
                 }
