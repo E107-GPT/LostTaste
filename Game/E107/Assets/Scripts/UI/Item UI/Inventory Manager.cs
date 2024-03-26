@@ -69,14 +69,34 @@ public class InventoryManager : MonoBehaviour
         // 아이템 1 업데이트
         firstItemIcon.sprite = firstItem.Icon;
         firstItemName.text = $"<color={GetTierColor(firstItem.Tier)}>{firstItem.Name}</color>"; // 아이템 이름에 색상 적용
-        firstItemRightSkillMana.text = firstItem.RightSkill.RequiredMp.ToString();
-        firstItemRightSkillCoolDown.text = $"{firstItem.RightSkill.SkillCoolDownTime}s";
+        
+        // 스킬이 없을 경우 텍스트를 -로 표시
+        if (firstItem.RightSkill.SkillCoolDownTime.ToString() == "Infinity")
+        {
+            firstItemRightSkillMana.text = "-";
+            firstItemRightSkillCoolDown.text = "-";
+        }
+        else
+        {
+            firstItemRightSkillMana.text = firstItem.RightSkill.RequiredMp.ToString();
+            firstItemRightSkillCoolDown.text = $"{firstItem.RightSkill.SkillCoolDownTime}s";
+        }
 
         // 아이템 2 업데이트
         secondItemIcon.sprite = secondItem.Icon;
         secondItemName.text = $"<color={GetTierColor(secondItem.Tier)}>{secondItem.Name}</color>"; // 아이템 이름에 색상 적용
-        secondItemRightSkillMana.text = secondItem.RightSkill.RequiredMp.ToString();
-        secondItemRightSkillCoolDown.text = $"{secondItem.RightSkill.SkillCoolDownTime}s";
+
+        // 스킬이 없을 경우 텍스트를 -로 표시
+        if (secondItem.RightSkill.SkillCoolDownTime.ToString() == "Infinity")
+        {
+            secondItemRightSkillMana.text = "-";
+            secondItemRightSkillCoolDown.text = "-";
+        }
+        else
+        {
+            secondItemRightSkillMana.text = secondItem.RightSkill.RequiredMp.ToString();
+            secondItemRightSkillCoolDown.text = $"{secondItem.RightSkill.SkillCoolDownTime}s";
+        }
     }
 
     // 사용 중인 아이템에 강조표시를 하는 메서드
