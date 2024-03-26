@@ -56,7 +56,7 @@ public class CampEntrance : MonoBehaviour
     IEnumerator ShowStagePanel()
     {
         stagePanel.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         stagePanel.SetActive(false);
     }
 }
