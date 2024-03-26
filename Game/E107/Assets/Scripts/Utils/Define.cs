@@ -80,6 +80,8 @@ public class Define
         IceKingCleaveEffect,
         HitDownEndEffect,
         HitDownStartEffect,
+        SlashLurkerEffect,
+        SlashStartEffect,
         MaxCount
     }
 
