@@ -25,6 +25,7 @@ public class PlayerController : BaseController
     Color _attackedColor = Color.red;
 
     public PlayerStat Stat { get { return _stat; } }
+    public Item[] Inventory { get { return _inventory; } }
 
     protected float _lastLeftSkillCastTime;
     protected float _lastRightSkillCastTime;
