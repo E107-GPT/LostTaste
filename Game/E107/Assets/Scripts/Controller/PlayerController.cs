@@ -67,14 +67,17 @@ public class PlayerController : BaseController
         Managers.Input.KeyAction += OnKeyboard;
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
+
+        Debug.Log("키 이벤트 추가됨");
         StartMpRecover();
 
         _statemachine.ChangeState(new IdleState(this));
     }
     private void OnDestroy()
     {
-        Managers.Input.KeyAction -= OnKeyboard;
 
+        Debug.Log("Player가 Destroy 됩니다.");
+        Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.MouseAction -= OnMouseClicked;
         StopMpRecover();
 
@@ -323,10 +326,13 @@ public class PlayerController : BaseController
 
     void OnKeyboard()
     {
-        //Debug.Log($"{gameObject.name} {isConnected}, {photonView != null}");
+        Debug.Log($"{gameObject.name} {isConnected}, {photonView != null}");
         if (isConnected && PhotonNetwork.InRoom) {
             if ((isConnected && photonView.IsMine == false)) return;
         }
+
+
+        Debug.Log("왜 안되지?");
 
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 

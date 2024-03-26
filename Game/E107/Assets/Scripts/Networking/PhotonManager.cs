@@ -49,7 +49,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         // �����Ͱ� ����� �ε��ϸ� ���� �濡 �ִ� ��� Ŭ���̾�Ʈ�� �ڵ����� ������ ����ȭ�ϵ��� ��
         PhotonNetwork.AutomaticallySyncScene = true;
-
         Connect();
     }
     void Start()
@@ -93,6 +92,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             // ����Ʈ ����ϱ�
             Debug.Log(PhotonNetwork.CountOfRooms);
             Debug.Log(roomlist.ToArray().ToString());
+            if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
+            
         }
         else
         {
@@ -111,6 +112,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
             PhotonNetwork.JoinLobby();
+        
     }
 
     public void ExitRoom()
@@ -393,7 +395,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             }
         }
     }
-    
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.JoinLobby();
+    }
+
 
     #endregion
 
