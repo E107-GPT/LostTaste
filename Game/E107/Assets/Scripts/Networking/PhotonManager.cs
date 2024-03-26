@@ -245,7 +245,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
 
         int idx = 0;
-        Debug.Log(roomlist.ToArray());
         foreach (RoomInfo room in roomlist)
         {
             partySelectButton[idx].SetActive(true);
@@ -376,14 +375,43 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 hud.playerController = player2.GetComponent<PlayerController>();
                 player2.name = "Player";
                 GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player2;
+
+                Managers.Player.SetLocalPlayerInfo(Define.ClassType.Warrior);
+                Managers.Player.LoadPlayersInfoInCurrentRoom();
+
             }
         }
     }
 
     public override void OnLeftRoom()
     {
+        Managers.Player.Clear();
         PhotonNetwork.JoinLobby();
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Managers.Player.AddPlayer(newPlayer);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Managers.Player.RemovePlayer(otherPlayer);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+    }
+
+
 
 
     #endregion
