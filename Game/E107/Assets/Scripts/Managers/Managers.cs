@@ -15,6 +15,7 @@ public class Managers : MonoBehaviour
     PoolManager _pool = new PoolManager();
     EffectManager _effect = new EffectManager();
     RandomManager _random = new RandomManager();
+    CoroutineManager _coroutine = new CoroutineManager();
     
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
@@ -24,6 +25,7 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance._pool; } }
     public static EffectManager Effect { get { return Instance._effect; } }
     public static RandomManager Random { get { return Instance._random; } }
+    public static CoroutineManager Coroutine { get { return Instance._coroutine; } }
 
     void Start()
     {
@@ -55,6 +57,7 @@ public class Managers : MonoBehaviour
             s_instance._sound.Init();
             s_instance._effect.Init();
             s_instance._random.Init();
+            s_instance._coroutine.Init(s_instance);
         }
 
         

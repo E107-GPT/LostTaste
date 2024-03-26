@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,6 @@ public class BubbleWandSkill :Skill
 
     protected override IEnumerator SkillCoroutine()
     {
-        Debug.Log("Right Skill");
         Root = transform.root;
 
         Vector3 dir = Root.forward;
@@ -27,7 +27,6 @@ public class BubbleWandSkill :Skill
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BubbleWandSkillEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
-        //Managers.Sound.Play("swing1");
 
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 
