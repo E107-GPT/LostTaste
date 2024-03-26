@@ -141,6 +141,11 @@ public abstract class BaseController : MonoBehaviour
     public virtual void ExcuteCrocodileSwordState() { }
     public virtual void ExitCrocodileSwordState() { }
 
+    // IceKingSpikeState - not loop
+    public virtual void EnterIceKingSpikeState() { }
+    public virtual void ExcuteIceKingSpikeState() { }
+    public virtual void ExitIceKingSpikeState() { }
+
     // MonsterKing - not loop
     public virtual void EnterMonsterKingHitDownState() { }		// HitDown
 	public virtual void ExecuteMonsterKingHitDownState() { }
