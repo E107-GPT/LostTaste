@@ -5,13 +5,13 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// 컨트롤 인터페이스 매니저는 아이템 스킬과 직업 스킬의 아이콘과 쿨타임을 표시하는 기능을 제공합니다.
+/// 컨트롤 인터페이스 매니저는 아이템 스킬을 표시하는 기능을 제공합니다.
 /// </summary>
 public class ControlInterfaceManager : MonoBehaviour
 {
     // ------------------------------------------------ 변수 선언 ------------------------------------------------
 
-    // 인벤토리 매니저가 사용할 변수 선언
+    // 컨트롤 인터페이스 매니저가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
     private Item[] _playerInventory; // 플레이어의 인벤토리 배열
     private int _currentItemNum; // 현재 장착한 무기
