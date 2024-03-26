@@ -15,6 +15,7 @@ public class Managers : MonoBehaviour
     PoolManager _pool = new PoolManager();
     EffectManager _effect = new EffectManager();
     RandomManager _random = new RandomManager();
+    PlayerManager _player = new PlayerManager();
     CoroutineManager _coroutine = new CoroutineManager();
     
     public static InputManager Input { get { return Instance._input; } }
@@ -26,6 +27,8 @@ public class Managers : MonoBehaviour
     public static EffectManager Effect { get { return Instance._effect; } }
     public static RandomManager Random { get { return Instance._random; } }
     public static CoroutineManager Coroutine { get { return Instance._coroutine; } }
+
+    public static PlayerManager Player { get { return Instance._player; } }
 
     void Start()
     {
@@ -70,6 +73,6 @@ public class Managers : MonoBehaviour
         Scene.Clear();
         UI.Clear();
 
-        Pool.Clear();// ¼ø¼­ ÁÖÀÇ
+        Pool.Clear();// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 }
