@@ -303,20 +303,17 @@ public class PlayerController : BaseController
             }
             else if (Input.GetMouseButton(1))
             {
-                if (_stat.Mp >= _inventory[_currentItemNum].RightSkill.RequiredMp)
-                {
-                    Debug.Log($"Rquired Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
-                    if (_lastRightSkillCastTime == 0 || Time.time - _lastRightSkillCastTime >= _inventory[_currentItemNum].RightSkill.SkillCoolDownTime)
-                    {
-                        _curSkill = Define.SkillType.RightSkill;
-                        _statemachine.ChangeState(new SkillState(this));
+                if (_stat.Mp < _inventory[_currentItemNum].RightSkill.RequiredMp) return;
 
+                Debug.Log($"Required Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
 
-                        //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
-                    }
+                float lastSkillCastTime = _inventory[_currentItemNum].RightSkill.LastCastTime;
+                if (lastSkillCastTime != 0 && Time.time - lastSkillCastTime < _inventory[_currentItemNum].RightSkill.SkillCoolDownTime) return;
 
-                }
+                _curSkill = Define.SkillType.RightSkill;
+                _statemachine.ChangeState(new SkillState(this));
 
+                //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
             }
 
 

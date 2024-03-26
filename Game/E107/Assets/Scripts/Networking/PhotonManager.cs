@@ -47,7 +47,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #region MonoBehaviour Callbacks
     private void Awake()
     {
-        // �����Ͱ� ����� �ε��ϸ� ���� �濡 �ִ� ��� Ŭ���̾�Ʈ�� �ڵ����� ������ ����ȭ�ϵ��� ��
         PhotonNetwork.AutomaticallySyncScene = true;
         Connect();
     }
@@ -57,7 +56,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         partyDescription = new TextMeshProUGUI[20];
         partyLeader = new TextMeshProUGUI[20];
         partyMember = new TextMeshProUGUI[20];
-        roomDescription.text = UserInfo.GetInstance().getNickName() + "�� ��";
+        roomDescription.text = UserInfo.GetInstance().getNickName() + "'s Party";
         for (int i = 0; i < 20; i++)
         {
             string partyName = "Party " + (i + 1);
@@ -85,11 +84,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         isConnecting = true;
 
-
-        // ���� ��Ʈ��ũ ���� ���� Ȯ��
         if (PhotonNetwork.IsConnected)
         {
-            // ����Ʈ ����ϱ�
             Debug.Log(PhotonNetwork.CountOfRooms);
             Debug.Log(roomlist.ToArray().ToString());
             if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
@@ -97,13 +93,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            // ���� ���� ����
-            Debug.Log("Connect?  " + PhotonNetwork.IsConnected);
+            // setting
             PhotonNetwork.GameVersion = gameVersion;
-            PhotonNetwork.NickName = UserInfo.GetInstance().getId();
-            Debug.Log(PhotonNetwork.NickName);
+            PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
             PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "kr";
-            // ���� Ŭ���忡 ����Ǵ� ���� ����
+            // start connect
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -300,12 +294,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                     Debug.Log("알아");
                     if (rooom.PlayerCount != 0)
                         roomlist[i] = rooom;
-                    // ������ ���ų� �������̰ų� �������϶� ������ �ʾƾ� ��
+                    // no player, no open, no multy
                     else if (rooom.PlayerCount == 0 || !rooom.IsOpen || !rooom.IsVisible)
                     {
-                    //else // ������ ������ �� ����
                         roomlist.Remove(roomlist[i]);
-                        Debug.Log("빠져");
                     }
                     change = true;
                 }
@@ -313,9 +305,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
             if (!change)
             {
-                Debug.Log(rooom);
-                // ���ο� �� �߰�
-
                 if(rooom.PlayerCount != 0)
                     roomlist.Add(rooom);
             }
@@ -331,15 +320,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         roomListPanel.SetActive(false);
         Debug.LogWarningFormat("OnDisconnected {0}", cause);
     }
-
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        Debug.Log("�� ���� ����");
-    }
+    
 
     public override void OnCreatedRoom()
     {
-        // ���� ���������
 
     }
 
