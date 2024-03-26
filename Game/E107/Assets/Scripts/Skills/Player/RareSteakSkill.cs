@@ -8,7 +8,7 @@ public class RareSteakSkill : ConsumingSkill
 
     protected override IEnumerator OnConsume(PlayerController playerController)
     {
-        Managers.Sound.Play("bite1");
+        Managers.Sound.Play("bite1", Define.Sound.Effect, 0.6f);
 
         playerController.Stat.Hp = Mathf.Min(100, playerController.Stat.Hp + HpRecoveryAmount);
 
