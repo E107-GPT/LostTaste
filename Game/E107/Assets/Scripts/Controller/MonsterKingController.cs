@@ -212,12 +212,13 @@ public class MonsterKingController : MonsterController
             }
             else if (aniTime <= 0.4f)   // 공격 진행
             {
-                _animator.SetFloat("StabSpeed", 1.0f);
+                _animator.SetFloat("StabSpeed", 0.8f);
                 _monsterInfo.Patterns[2].DeActiveCollider();
-                //_monsterInfo.Patterns[3].SetCollider(_stat.PatternDamage);
+                _monsterInfo.Patterns[3].SetCollider(_stat.PatternDamage);
             }
             else if (aniTime <= 0.52f)  // 공격 후 뒷걸음질 전
             {
+                _monsterInfo.Patterns[3].DeActiveCollider();
                 _animator.SetFloat("StabSpeed", 1.0f);
             }
             else if (aniTime <= 0.58f)  // 뒷걸음질 시작
@@ -234,7 +235,6 @@ public class MonsterKingController : MonsterController
             }
             else if (aniTime > 1.0f)
             {
-                //_monsterInfo.Patterns[3].DeActiveCollider();
                 _statemachine.ChangeState(new IdleState(this));
             }
         }
