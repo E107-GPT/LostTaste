@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI; // NavMeshAgent 사용을 위해 필요
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class MovePlayerToCamp : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class MovePlayerToCamp : MonoBehaviour
         // "Dungeon" 씬을 LoadSceneMode.Single 모드로 로드합니다.
         //SceneManager.LoadScene("Dungeon", LoadSceneMode.Single);
         Managers.Scene.LoadScene(Define.Scene.Dungeon, true);
+        
     }
 
     // '확인' 버튼 클릭 시 호출될 메서드
