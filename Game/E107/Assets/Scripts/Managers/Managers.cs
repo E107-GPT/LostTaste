@@ -15,6 +15,7 @@ public class Managers : MonoBehaviour
     PoolManager _pool = new PoolManager();
     EffectManager _effect = new EffectManager();
     RandomManager _random = new RandomManager();
+    PlayerManager _player = new PlayerManager();
     
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
@@ -24,6 +25,8 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance._pool; } }
     public static EffectManager Effect { get { return Instance._effect; } }
     public static RandomManager Random { get { return Instance._random; } }
+
+    public static PlayerManager Player { get { return Instance._player; } }
 
     void Start()
     {

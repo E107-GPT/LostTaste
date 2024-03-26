@@ -55,7 +55,7 @@ public abstract class Skill : MonoBehaviour
     public int Cast()
     {
         StartCoroutine(SkillCoroutine());
-        _lastCastTime = Time.time;
+        //_lastCastTime = Time.time;
         return RequiredMp;
     }
 
