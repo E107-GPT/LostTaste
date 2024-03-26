@@ -5,14 +5,14 @@ using UnityEngine;
 public class MonsterKingStabPattern : Pattern
 {
     private MonsterKingController _controller;
-    private ParticleSystem _ps;
+    private ParticleSystem _particle;
     private Coroutine _coroutine;
     private Transform[] _colliders;
     private MeshCollider _meshCol;
 
     protected override void Init()
     {
-        PatternName = "Stab";
+        PatternName = "KingStab";
         _controller = GetComponent<MonsterKingController>();
     }
     public override void DeActiveCollider()
