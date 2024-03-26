@@ -15,6 +15,7 @@ public class InventoryManager : MonoBehaviour
     // 인벤토리 매니저가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
     private Item[] _playerInventory; // 플레이어의 인벤토리 배열
+    private int _currentItemNum; // 현재 장착한 무기
 
     // 아이템 1
     [Header("[ 아이템 1 ]")]
@@ -57,10 +58,12 @@ public class InventoryManager : MonoBehaviour
         {
             // PlayerController의 인벤토리에 접근합니다.
             _playerInventory = _playerController.Inventory;
+            _currentItemNum = _playerController.CurrentItemNum;
         }
         else
         {
             Debug.LogError("PlayerController 컴포넌트를 찾을 수 없습니다.");
+            return;
         }
 
         Item firstItem = _playerInventory[1];
@@ -103,12 +106,12 @@ public class InventoryManager : MonoBehaviour
     void ItemChange()
     {
         // 무기 교체
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (_currentItemNum == 1)
         {
             firstItemUsed.SetActive(true);
             secondItemUsed.SetActive(false);
         }
-        else if (Input.GetKey(KeyCode.Alpha2))
+        else if (_currentItemNum == 2)
         {
             firstItemUsed.SetActive(false);
             secondItemUsed.SetActive(true);

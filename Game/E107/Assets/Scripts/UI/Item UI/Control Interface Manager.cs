@@ -14,6 +14,7 @@ public class ControlInterfaceManager : MonoBehaviour
     // 인벤토리 매니저가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
     private Item[] _playerInventory; // 플레이어의 인벤토리 배열
+    private int _currentItemNum; // 현재 장착한 무기
 
     // 아이템 1
     [Header("[ 아이템 1 ]")]
@@ -51,6 +52,7 @@ public class ControlInterfaceManager : MonoBehaviour
         {
             // PlayerController의 인벤토리에 접근합니다.
             _playerInventory = _playerController.Inventory;
+            _currentItemNum = _playerController.CurrentItemNum;
         }
         else
         {
@@ -68,7 +70,7 @@ public class ControlInterfaceManager : MonoBehaviour
         secondItemRightSkillIcon.sprite = secondItem.RightSkill.Icon;
 
         // 무기 교체
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (_currentItemNum == 1)
         {
             // 스킬이 없을 경우 오른쪽 스킬 아이콘을 스킬 없음 아이콘으로 표시
             if (firstItem.RightSkill.SkillCoolDownTime.ToString() == "Infinity")
@@ -84,7 +86,7 @@ public class ControlInterfaceManager : MonoBehaviour
 
             secondItemRightSkillPanel.SetActive(false);
         }
-        else if (Input.GetKey(KeyCode.Alpha2))
+        else if (_currentItemNum == 2)
         {
             // 스킬이 없을 경우 오른쪽 스킬 아이콘을 스킬 없음 아이콘으로 표시
             if (secondItem.RightSkill.SkillCoolDownTime.ToString() == "Infinity")

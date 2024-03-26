@@ -26,6 +26,7 @@ public class PlayerController : BaseController
 
     public PlayerStat Stat { get { return _stat; } }
     public Item[] Inventory { get { return _inventory; } }
+    public int CurrentItemNum { get { return _currentItemNum; } }
 
     protected float _lastLeftSkillCastTime;
     protected float _lastRightSkillCastTime;
