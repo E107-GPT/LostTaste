@@ -13,6 +13,12 @@ public class Stage3Entrance : MonoBehaviour
     [Header("[ 지도 패널 ]")]
     public TextMeshProUGUI stageText; // 스테이지 이름 텍스트
 
+    // 스테이지 패널
+    [Header("[ 스테이지 패널 ]")]
+    public GameObject stagePanel; // 스테이지 패널
+    public TextMeshProUGUI stageLevelText; // 스테이지 레벨 텍스트
+    public TextMeshProUGUI stageNameText; // 스테이지 이름 텍스트
+
     // 클리어 한 스테이지
     [Header("[ 클리어 한 스테이지 ]")]
     public GameObject stage2Icon; // Stage 2 클리어 아이콘
@@ -22,8 +28,22 @@ public class Stage3Entrance : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            stageText.text = "Stage 3 - 서리빛 궁전"; // 스테이지 텍스트를 캠프에 맞게 업데이트
+            stageText.text = "STAGE 3 - 서리빛 궁전"; // 스테이지 텍스트 업데이트
+
+            stageLevelText.text = "STAGE 3"; // 스테이지 레벨 텍스트를 업데이트
+            stageNameText.text = "서리빛 궁전"; // 스테이지 이름 텍스트를 업데이트
+
             stage2Icon.SetActive(true); // Stage 2 클리어 아이콘 활성화
+
+            StartCoroutine(ShowStagePanel());
         }
+    }
+
+    // 5초간 스테이지 패널을 활성화하고, 다시 비활성화 하는 코루틴
+    IEnumerator ShowStagePanel()
+    {
+        stagePanel.SetActive(true);
+        yield return new WaitForSeconds(5);
+        stagePanel.SetActive(false);
     }
 }
