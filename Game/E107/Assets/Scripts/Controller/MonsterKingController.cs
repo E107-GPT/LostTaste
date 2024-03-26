@@ -58,7 +58,7 @@ public class MonsterKingController : MonsterController
     private void RandomPatternSelector()
     {
         int rand = Random.Range(0, 101);
-        if (rand <= 0)
+        if (rand <= 99)
         {
             _statemachine.ChangeState(new MonsterKingHitDownState(this));
         }
