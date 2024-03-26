@@ -77,6 +77,8 @@ public class Define
         CrocodileAttackEffect, 
         HitDownEndEffect,
         HitDownStartEffect,
+        SlashLurkerEffect,
+        SlashStartEffect,
         MaxCount
     }
 

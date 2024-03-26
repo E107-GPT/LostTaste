@@ -2,17 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterKingStabPattern : MonoBehaviour
+public class MonsterKingStabPattern : Pattern
 {
-    // Start is called before the first frame update
-    void Start()
+    private MonsterKingController _controller;
+    private ParticleSystem _ps;
+    private Coroutine _coroutine;
+    private Transform[] _colliders;
+    private MeshCollider _meshCol;
+
+    protected override void Init()
     {
-        
+        PatternName = "Stab";
+        _controller = GetComponent<MonsterKingController>();
+    }
+    public override void DeActiveCollider()
+    {
+
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    public override void SetCollider(int attackDamage)
     {
-        
+
     }
 }

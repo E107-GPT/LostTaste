@@ -9,5 +9,7 @@ public class MonsterKingInfo : MonsterInfo
         base.Init();
         _skill = null;
         Patterns.Add(gameObject.GetOrAddComponent<MonsterKingHitDownPattern>());
+        Patterns.Add(gameObject.GetOrAddComponent<MonsterKingSlashPattern>());
+        Patterns.Add(gameObject.GetOrAddComponent<MonsterKingStabPattern>());
     }
 }

@@ -13,7 +13,7 @@ public class CrocodileController : MonsterController
         // Other Class
         _stat = new MonsterStat(_unitType);
         _swordPS = GetComponentInChildren<ParticleSystem>();
-        PrintText("PS : " + _swordPS.name);
+        //PrintText("PS : " + _swordPS.name);
         _swordPS.Stop();
     }
 
