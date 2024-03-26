@@ -36,9 +36,6 @@ public class ControlInterfaceManager : MonoBehaviour
     {
         // 컨트롤 인터페이스 업데이트
         UpdateControlInterface();
-
-        // 사용중인 아이템 강조 표시
-        //ItemChange();
     }
 
 
@@ -58,6 +55,7 @@ public class ControlInterfaceManager : MonoBehaviour
         else
         {
             Debug.LogError("PlayerController 컴포넌트를 찾을 수 없습니다.");
+            return;
         }
 
         Item firstItem = _playerInventory[1];
@@ -103,42 +101,4 @@ public class ControlInterfaceManager : MonoBehaviour
             firstItemRightSkillPanel.SetActive(false);
         }
     }
-
-    // 사용 중인 아이템에 따라 스킬 아이콘을 활성화/비활성화 하는 메서드
-    //void ItemChange()
-    //{
-    //    // 무기 교체
-    //    if (Input.GetKey(KeyCode.Alpha1))
-    //    {
-    //        // 스킬이 없을 경우 오른쪽 스킬 아이콘을 스킬 없음 아이콘으로 표시
-    //        if (firstItem.RightSkill.SkillCoolDownTime.ToString() == "Infinity")
-    //        {
-    //            skillNonePanel.SetActive(true);
-    //            firstItemRightSkillPanel.SetActive(false);
-    //        }
-    //        else
-    //        {
-    //            skillNonePanel.SetActive(false);
-    //            firstItemRightSkillPanel.SetActive(true);
-    //        }
-            
-    //        secondItemRightSkillPanel.SetActive(false);
-    //    }
-    //    else if (Input.GetKey(KeyCode.Alpha2))
-    //    {
-    //        // 스킬이 없을 경우 오른쪽 스킬 아이콘을 스킬 없음 아이콘으로 표시
-    //        if (secondItem.RightSkill.SkillCoolDownTime.ToString() == "Infinity")
-    //        {
-    //            skillNonePanel.SetActive(true);
-    //            secondItemRightSkillPanel.SetActive(false);
-    //        }
-    //        else
-    //        {
-    //            skillNonePanel.SetActive(false);
-    //            secondItemRightSkillPanel.SetActive(true);
-    //        }
-
-    //        firstItemRightSkillPanel.SetActive(false);
-    //    }
-    //}
 }
