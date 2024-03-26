@@ -50,6 +50,7 @@ public class Define
         Specter,
         Skeleton,
         Crocodile,
+        IceKing,
         MonsterKing,
     }
 
@@ -75,6 +76,8 @@ public class Define
         SpecterAttackEffect,
         CrocodileSwordEffect,
         CrocodileAttackEffect, 
+        IceKingOrbEffect,
+        IceKingCleaveEffect,
         HitDownEndEffect,
         HitDownStartEffect,
         MaxCount

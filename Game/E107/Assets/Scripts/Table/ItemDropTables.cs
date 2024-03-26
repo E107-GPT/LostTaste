@@ -21,6 +21,7 @@ public class ItemDropTables
 
     public static readonly GameObject[] RARE_ITEMS = new GameObject[] {
         Load("0014_GalaxyZzz"),
+        Load("0029_RareSteak"),
     };
 
     public static readonly GameObject[] EPIC_ITEMS = new GameObject[] {
