@@ -51,70 +51,37 @@ public class InventoryManager : MonoBehaviour
     // 인벤토리를 업데이트하는 메서드
     void UpdateInventory()
     {
-        // PlayerController 컴포넌트를 찾아서 참조합니다.
+        // PlayerController 컴포넌트를 찾아서 참조
         _playerController = GameObject.FindObjectOfType<PlayerController>();
 
-        if (_playerController != null)
-        {
-            // PlayerController의 인벤토리에 접근합니다.
-            _playerInventory = _playerController.Inventory;
-            _currentItemNum = _playerController.CurrentItemNum;
-        }
-        else
-        {
-            Debug.LogError("PlayerController 컴포넌트를 찾을 수 없습니다.");
-            return;
-        }
+        if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 
-        Item firstItem = _playerInventory[1];
-        Item secondItem = _playerInventory[2];
+        // PlayerController의 인벤토리에 접근
+        _playerInventory = _playerController.Inventory;
+        _currentItemNum = _playerController.CurrentItemNum;
 
-        // 아이템 1 업데이트
-        firstItemIcon.sprite = firstItem.Icon;
-        firstItemName.text = $"<color={GetTierColor(firstItem.Tier)}>{firstItem.Name}</color>"; // 아이템 이름에 색상 적용
-        
-        // 스킬이 없을 경우 텍스트를 -로 표시
-        if (firstItem.RightSkill.SkillCoolDownTime.ToString() == "Infinity")
-        {
-            firstItemRightSkillMana.text = "-";
-            firstItemRightSkillCoolDown.text = "-";
-        }
-        else
-        {
-            firstItemRightSkillMana.text = firstItem.RightSkill.RequiredMp.ToString();
-            firstItemRightSkillCoolDown.text = $"{firstItem.RightSkill.SkillCoolDownTime}s";
-        }
-
-        // 아이템 2 업데이트
-        secondItemIcon.sprite = secondItem.Icon;
-        secondItemName.text = $"<color={GetTierColor(secondItem.Tier)}>{secondItem.Name}</color>"; // 아이템 이름에 색상 적용
-
-        // 스킬이 없을 경우 텍스트를 -로 표시
-        if (secondItem.RightSkill.SkillCoolDownTime.ToString() == "Infinity")
-        {
-            secondItemRightSkillMana.text = "-";
-            secondItemRightSkillCoolDown.text = "-";
-        }
-        else
-        {
-            secondItemRightSkillMana.text = secondItem.RightSkill.RequiredMp.ToString();
-            secondItemRightSkillCoolDown.text = $"{secondItem.RightSkill.SkillCoolDownTime}s";
-        }
+        // 아이템 정보 업데이트
+        UpdateItemUI(firstItemIcon, firstItemName, firstItemRightSkillMana, firstItemRightSkillCoolDown, _playerInventory[1]);
+        UpdateItemUI(secondItemIcon, secondItemName, secondItemRightSkillMana, secondItemRightSkillCoolDown, _playerInventory[2]);
     }
 
-    // 사용 중인 아이템에 강조표시를 하는 메서드
-    void ItemChange()
+    // 아이템 UI 업데이트 메서드
+    void UpdateItemUI(Image itemIcon, TextMeshProUGUI itemName, TextMeshProUGUI skillMana, TextMeshProUGUI skillCoolDown, Item item)
     {
-        // 무기 교체
-        if (_currentItemNum == 1)
+        // 아이템 아이콘 및 이름 업데이트
+        itemIcon.sprite = item.Icon;
+        itemName.text = $"<color={GetTierColor(item.Tier)}>{item.Name}</color>"; // 아이템 이름에 색상 적용
+
+        // 스킬 정보 업데이트
+        if (float.IsInfinity(item.RightSkill.SkillCoolDownTime))
         {
-            firstItemUsed.SetActive(true);
-            secondItemUsed.SetActive(false);
+            skillMana.text = "-";
+            skillCoolDown.text = "-";
         }
-        else if (_currentItemNum == 2)
+        else
         {
-            firstItemUsed.SetActive(false);
-            secondItemUsed.SetActive(true);
+            skillMana.text = item.RightSkill.RequiredMp.ToString();
+            skillCoolDown.text = $"{item.RightSkill.SkillCoolDownTime}s";
         }
     }
 
@@ -137,6 +104,22 @@ public class InventoryManager : MonoBehaviour
                 return "#E74C3C";
             default:
                 return "#FFFFFF"; // 기본 값으로 흰색 반환
+        }
+    }
+
+    // 사용 중인 아이템에 강조표시를 하는 메서드
+    void ItemChange()
+    {
+        // 무기 교체
+        if (_currentItemNum == 1)
+        {
+            firstItemUsed.SetActive(true);
+            secondItemUsed.SetActive(false);
+        }
+        else if (_currentItemNum == 2)
+        {
+            firstItemUsed.SetActive(false);
+            secondItemUsed.SetActive(true);
         }
     }
 }
