@@ -68,7 +68,7 @@ public class MonsterKingController : MonsterController
         }
     }
 
-    IEnumerator BrieflyEffect(Define.Effect effectName, Transform root, float seconds)
+    IEnumerator ChargeEffect(Define.Effect effectName, Transform root, float seconds)
     {
         _particle = Managers.Effect.Play(effectName, root);
         
@@ -95,8 +95,8 @@ public class MonsterKingController : MonsterController
 
             if (aniTime <= 0.4f)
             {
-                _animator.speed = 0.2f;
-                if (_hitDownStart == null) _hitDownStart = StartCoroutine(BrieflyEffect(Define.Effect.HitDownStartEffect, _weapon.transform, 1.8f));
+                _animator.speed = 0.3f;
+                if (_hitDownStart == null) _hitDownStart = StartCoroutine(ChargeEffect(Define.Effect.HitDownStartEffect, _weapon.transform, 1.8f));
             }
             else if (aniTime > 0.4f && _hitDownStart != null)
             {
@@ -113,20 +113,7 @@ public class MonsterKingController : MonsterController
             }
             else if (aniTime < 0.8f)
             {
-                if (_hitDownEnd == null)
-                {
-                    _hitDownEnd = StartCoroutine(BrieflyEffect(Define.Effect.HitDownEndEffect, _weapon.transform, 1.8f));
-                    _monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);
-                }
-            }
-            else if (aniTime > 0.8f && _hitDownEnd != null)
-            {
-                if (_hitDownEnd != null)
-                {
-                    StopCoroutine(_hitDownEnd);
-                    _hitDownEnd = null;
-                    if (_particle != null) Managers.Effect.Stop(_particle);
-                }
+                _monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);
             }
             else if (aniTime >= 1.0f)
             {
@@ -160,7 +147,7 @@ public class MonsterKingController : MonsterController
             if (aniTime <= 0.4f)        // °ø°ÝÀü 
             {
                 _animator.speed = 0.1f;
-                if (_slashStart == null) _slashStart = StartCoroutine(BrieflyEffect(Define.Effect.SlashStartEffect, transform, 2.0f));
+                if (_slashStart == null) _slashStart = StartCoroutine(ChargeEffect(Define.Effect.SlashStartEffect, transform, 2.0f));
                 if (_particle != null) _particle.transform.parent = transform;
             }
             else if (aniTime > 0.4f && _slashStart != null)

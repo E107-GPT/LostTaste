@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 // Execute에서 Collider가 필요한 순간에만 사용
 // ex. 도끼를 내려찍고 폭발 이펙트가 생긴 시점 -> 공격 판정
@@ -9,6 +10,8 @@ public class MonsterKingHitDownPattern : Pattern
     private MonsterKingController _controller;
     private ParticleSystem _ps;
     private Coroutine _coroutine;
+    private Transform _cylinderLoc;
+
     private Transform[] _colliders;
     private MeshCollider _meshCol;
 
@@ -24,55 +27,31 @@ public class MonsterKingHitDownPattern : Pattern
         {
             StopCoroutine(_coroutine);
             _coroutine = null;
+            if (_ps != null) Managers.Effect.Stop(_ps);
+            if (_cylinderLoc != null) Managers.Resource.Destroy(_cylinderLoc.gameObject);
         }
-
-        if (_colliders != null)
-        {
-            foreach (Transform col in _colliders)
-            {
-                if (col == null || col.gameObject == null) continue;
-
-                _meshCol = col.GetComponent<MeshCollider>();
-                if (_meshCol != null)
-                {
-                    col.GetComponent<MeshCollider>().enabled = false;
-                    _meshCol = null;
-                }
-            }
-            
-        }
-        Debug.Log("DeActiveCollider");
     }
 
-    IEnumerator CheckParticle(int attackDamage)
+    IEnumerator CheckPatternObject(int attackDamage)
     {
-        while (true)
-        {
-            _ps = _controller.Particle;
-            
-            if (_ps != null && _ps.name.Equals(PatternName))
-            {
-                _colliders = _ps.GetComponentsInChildren<Transform>();
-                foreach (Transform col in _colliders)
-                {
-                    _meshCol = col.GetComponent<MeshCollider>();
-                    if (_meshCol == null) continue;
+        Root = _controller.transform;
+        yield return new WaitForSeconds(0.1f);
 
-                    //Debug.Log("_meshCol: " + _meshCol.name);
-                    col.GetComponent<PatternObject>().Init(_controller.transform, attackDamage, _seq);
-                    _meshCol.enabled = true;
-                }
-            }
+        _cylinderLoc = Managers.Resource.Instantiate("Patterns/HitDownCollider").transform;
+        _cylinderLoc.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
+        _cylinderLoc.position = Root.position;
+        _cylinderLoc.rotation = Quaternion.identity;
 
-            yield return new WaitForSeconds(0.1f);
-        }
+        Vector3 rootForward = Root.TransformDirection(Vector3.forward * 4.0f);
+        _cylinderLoc.position = Root.position + rootForward;
+        _ps = Managers.Effect.Play(Define.Effect.HitDownEndEffect, _cylinderLoc);
     }
 
     public override void SetCollider(int attackDamage)
     {
         if (_coroutine == null)
         {
-            _coroutine = StartCoroutine(CheckParticle(attackDamage));
+            _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
         }
     }
 }
