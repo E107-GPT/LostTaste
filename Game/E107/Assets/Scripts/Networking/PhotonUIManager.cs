@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PhotonUIManager : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class PhotonUIManager : MonoBehaviour
     string password;
     bool ispassword = false;
     string description;
+    string message;
+
+    public TextMeshProUGUI chatField;
+
 
     [SerializeField]
     string userName = "player";
@@ -72,6 +77,19 @@ public class PhotonUIManager : MonoBehaviour
         Debug.Log((password));
         GameObject.Find("GameManager").GetComponent<PhotonManager>().PasswordValidation();
     }
+
+    public void SetChatMessage(string message)
+    {
+        this.message = message;
+    }
+    public string GetChatMessage()
+    {
+        string msg = message;
+        //chatField.text = "";
+
+        return msg;
+    }
+
 
 
     public void TestPost()

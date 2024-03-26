@@ -67,14 +67,17 @@ public class PlayerController : BaseController
         Managers.Input.KeyAction += OnKeyboard;
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
+
+        Debug.Log("키 이벤트 추가됨");
         StartMpRecover();
 
         _statemachine.ChangeState(new IdleState(this));
     }
     private void OnDestroy()
     {
-        Managers.Input.KeyAction -= OnKeyboard;
 
+        Debug.Log("Player가 Destroy 됩니다.");
+        Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.MouseAction -= OnMouseClicked;
         StopMpRecover();
 
@@ -300,20 +303,17 @@ public class PlayerController : BaseController
             }
             else if (Input.GetMouseButton(1))
             {
-                if (_stat.Mp >= _inventory[_currentItemNum].RightSkill.RequiredMp)
-                {
-                    Debug.Log($"Rquired Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
-                    if (_lastRightSkillCastTime == 0 || Time.time - _lastRightSkillCastTime >= _inventory[_currentItemNum].RightSkill.SkillCoolDownTime)
-                    {
-                        _curSkill = Define.SkillType.RightSkill;
-                        _statemachine.ChangeState(new SkillState(this));
+                if (_stat.Mp < _inventory[_currentItemNum].RightSkill.RequiredMp) return;
 
+                Debug.Log($"Required Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
 
-                        //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
-                    }
+                float lastSkillCastTime = _inventory[_currentItemNum].RightSkill.LastCastTime;
+                if (lastSkillCastTime != 0 && Time.time - lastSkillCastTime < _inventory[_currentItemNum].RightSkill.SkillCoolDownTime) return;
 
-                }
+                _curSkill = Define.SkillType.RightSkill;
+                _statemachine.ChangeState(new SkillState(this));
 
+                //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
             }
 
 
@@ -323,10 +323,13 @@ public class PlayerController : BaseController
 
     void OnKeyboard()
     {
-        //Debug.Log($"{gameObject.name} {isConnected}, {photonView != null}");
+        Debug.Log($"{gameObject.name} {isConnected}, {photonView != null}");
         if (isConnected && PhotonNetwork.InRoom) {
             if ((isConnected && photonView.IsMine == false)) return;
         }
+
+
+        Debug.Log("왜 안되지?");
 
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 

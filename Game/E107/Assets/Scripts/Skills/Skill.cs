@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class Skill : MonoBehaviour
 {
     public static int _seq;
-    protected float _lastCastTime;
+    public float LastCastTime { get; set; }
 
     [field: SerializeField]
     [ReadOnly(false)]
@@ -48,14 +48,14 @@ public abstract class Skill : MonoBehaviour
     )]
     public int Cast(int attackDamage, float attackRange)
     {
-        StartCoroutine(SkillCoroutine(attackDamage, attackRange));   // TODO: 의미없는 파라미터 제거
-        _lastCastTime = Time.time;
+        Managers.Coroutine.Run(SkillCoroutine(attackDamage, attackRange));   // TODO: 의미없는 파라미터 제거
+        LastCastTime = Time.time;
         return RequiredMp;
     }
     public int Cast()
     {
-        StartCoroutine(SkillCoroutine());
-        _lastCastTime = Time.time;
+        Managers.Coroutine.Run(SkillCoroutine());
+        LastCastTime = Time.time;
         return RequiredMp;
     }
 
