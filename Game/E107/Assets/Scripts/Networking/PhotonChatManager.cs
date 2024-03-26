@@ -1,12 +1,12 @@
-using System.Collections;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
+using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.EventSystems;
+using TMPro;
 
 /// <summary>
 /// 채팅창을 관리하는 클래스입니다.
@@ -25,10 +25,6 @@ public class PhotonChatManager : MonoBehaviour
     // 채팅 InputField
     [Header("[ 채팅 InputField ]")]
     public TMP_InputField chatInputField;
-
-    // 채팅 전송 버튼
-    [Header("[ 채팅 전송 버튼 ]")]
-    public Button sendButton;
 
     // 채팅 컨테이너
     [Header("[ 채팅 컨테이너 ]")]
@@ -55,13 +51,6 @@ public class PhotonChatManager : MonoBehaviour
 
     // ------------------------------------------------ Life Cylce ------------------------------------------------
 
-    // private void Awake()
-    // {
-        // 버튼에 이벤트 추가
-    //     if (sendButton != null)
-    //         this.sendButton.onClick.AddListener(SendMessage);
-    // }
-
     private void Start()
     {
         ChattingPanel.SetActive(false);
@@ -82,11 +71,12 @@ public class PhotonChatManager : MonoBehaviour
         {
             if (isChatActive)
             {
-                SendMessage(); // 채팅창 활성화 되어 있을 시 메세지를 보냄
+                SendMessage(); // 메세지를 보냄
+                DisableChatWindow(); // 채팅창 비활성화
             }
             else
             {
-                DetectUserActivity(); // 채팅창 비활성화 되어 있을 시 채팅창을 활성화함
+                ActivateChatWindow(); // 채팅창 활성화
             }
         }
     }
@@ -105,24 +95,8 @@ public class PhotonChatManager : MonoBehaviour
         PhotonView view = gameObject.GetComponent<PhotonView>();//GameObject.Find("Player").GetComponent<PlayerController>().photonView;
         message.message = GameObject.Find("gm").GetComponent<PhotonUIManager>().GetChatMessage();
         
-
         // empty message
-        if (message.message.Length < 1)
-        {
-            // InputField 초기화
-            chatInputField.text = "";
-
-            // 채팅 chatBackground 비활성화
-            chatBackground.SetActive(false);
-
-            // 입력 필드 비활성화
-            chatInputField.DeactivateInputField();
-
-            // 채팅창 비활성화
-            isChatActive = false;
-
-            return;
-        }
+        if (message.message.Length < 1) return;
 
         message.sender = UserInfo.GetInstance().getNickName();
 
@@ -135,19 +109,6 @@ public class PhotonChatManager : MonoBehaviour
         chatPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = message.message;
 
         chatPrefab.transform.SetParent(chatContainer.transform, false);
-
-        // InputField 초기화
-        chatInputField.text = "";
-
-        // 채팅 chatBackground 비활성화
-        chatBackground.SetActive(false);
-
-        // 입력 필드 비활성화
-        chatInputField.DeactivateInputField();
-
-        // 채팅창 비활성화
-        isChatActive = false;
-
     }
 
     [PunRPC]
@@ -168,13 +129,10 @@ public class PhotonChatManager : MonoBehaviour
         ChattingPanel.SetActive(true);
     }
 
-    // 채팅창 비활성화 되어 있을 시 채팅창을 활성화하는 메서드
-    void DetectUserActivity()
+    // 채팅창을 활성화하는 메서드
+    void ActivateChatWindow()
     {
         if (isChatActive) return;
-
-        // InputField에 포커스
-        // EventSystem.current.SetSelectedGameObject(chatInputField.gameObject, null);
 
         // 채팅 chatBackground 활성화
         chatBackground.SetActive(true);
@@ -185,5 +143,23 @@ public class PhotonChatManager : MonoBehaviour
 
         // 채팅창 활성화
         isChatActive = true;
+    }
+
+    // 채팅창을 비활성화하는 메서드
+    void DisableChatWindow()
+    {
+        if (!isChatActive) return;
+
+        // InputField 초기화
+        chatInputField.text = "";
+
+        // 채팅 chatBackground 비활성화
+        chatBackground.SetActive(false);
+
+        // 입력 필드 비활성화
+        chatInputField.DeactivateInputField();
+
+        // 채팅창 비활성화
+        isChatActive = false;
     }
 }
