@@ -32,8 +32,8 @@ public class IceKingSpikePattern : Pattern
 
         // Managers.Sound.Play("swing1");
 
-        _sectorLoc.localScale = new Vector3(9.0f, 4.0f, 9.0f);    // 5.0f
-        _sectorLoc.position = Root.transform.TransformPoint(Vector3.forward * (5.2f));
+        _sectorLoc.localScale = new Vector3(10.0f, 5.0f, 10.0f);    // 5.0f
+        _sectorLoc.position = Root.transform.TransformPoint(Vector3.zero);
         _sectorLoc.position = new Vector3(_sectorLoc.position.x, Root.position.y, _sectorLoc.position.z);
         _sectorLoc.rotation = Root.rotation;
 
@@ -48,7 +48,7 @@ public class IceKingSpikePattern : Pattern
         //_particleSystem.transform.position = skillObj.transform.position + skillObj.transform.right * 3.0f;
         //ps.position = skillObj.position / 10.0f;
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
 
         Managers.Resource.Destroy(_sectorLoc.gameObject);
         Managers.Effect.Stop(_particleSystem);
@@ -63,7 +63,7 @@ public class IceKingSpikePattern : Pattern
             _coroutine = null;
             if (_particleSystem != null) Managers.Effect.Stop(_particleSystem);
             if (_sectorLoc != null) Managers.Resource.Destroy(_sectorLoc.gameObject);
-
+            
         }
     }
     public override void SetCollider(int attackDamage)
