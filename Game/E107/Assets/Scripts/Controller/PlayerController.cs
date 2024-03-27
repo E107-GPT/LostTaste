@@ -214,7 +214,7 @@ public class PlayerController : BaseController
                 _lastRightSkillCastTime = Time.time;
                 break;
             case Define.SkillType.ClassSkill:
-                gameObject.GetOrAddComponent<WarriorClassSkill>().Cast(_stat.AttackDamage, 10.0f);
+                gameObject.GetComponent<WarriorClassSkill>().Cast();
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.ClassSkill, gameObject.transform.rotation);
                 break;
         }
