@@ -44,10 +44,13 @@ public class PhotonChatManager : MonoBehaviour
     [System.Serializable]
     public class ChatMessage
     {
+        public int index;
         public string sender;
         public string message;
     }
 
+
+    public int playerIndex;
 
     // ------------------------------------------------ Life Cylce ------------------------------------------------
 
@@ -99,16 +102,17 @@ public class PhotonChatManager : MonoBehaviour
         if (message.message.Length < 1) return;
 
         message.sender = UserInfo.GetInstance().getNickName();
+        message.index = playerIndex;
 
+        Debug.Log("adiasjdiojaiopd " + PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Number"));
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Number"))
+        {
+            message.index =  (int)PhotonNetwork.LocalPlayer.CustomProperties["Number"];
+            Debug.Log("index : " + message.index);
+        }
         string messageJson = JsonUtility.ToJson(message);
-        view.RPC("ReceiveMessage", RpcTarget.Others, messageJson);
-
-        GameObject chatPrefab = Instantiate(ChatItem[1]);
-
-        chatPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = message.sender;
-        chatPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = message.message;
-
-        chatPrefab.transform.SetParent(chatContainer.transform, false);
+        view.RPC("ReceiveMessage", RpcTarget.All, messageJson);
     }
 
     [PunRPC]
@@ -116,7 +120,7 @@ public class PhotonChatManager : MonoBehaviour
     {
         ChatMessage chatMessage = JsonUtility.FromJson<ChatMessage>(message);
 
-        GameObject chatPrefab = Instantiate(ChatItem[0]);
+        GameObject chatPrefab = Instantiate(ChatItem[chatMessage.index]);
 
         chatPrefab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = chatMessage.sender;
         chatPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = chatMessage.message;

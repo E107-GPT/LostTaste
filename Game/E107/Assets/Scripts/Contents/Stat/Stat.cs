@@ -73,7 +73,7 @@ public class Stat
                 _attackRange = 5.0f;
                 break;
             case Define.UnitType.MonsterKing:
-                _hp = 4000;
+                _hp = 2000;
                 _maxHp = 4000;
                 _attackDamage = 30;
                 _moveSpeed = 8.0f;

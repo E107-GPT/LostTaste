@@ -87,7 +87,7 @@ public class IceKingController : MonsterController
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            Debug.Log($"{aniTime} ÆÐÅÏ ½ÇÇà ½Ã°£");
+            Debug.Log($"{aniTime} ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½");
 
             if (aniTime <= 0.5f)
             {
@@ -97,7 +97,7 @@ public class IceKingController : MonsterController
             {
                 _animator.SetFloat("SpikeSpeed", 0.8f);
                 _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
-                //Debug.Log($"{aniTime} ÆÐÅÏ ½ÇÇà ½Ã°£");
+                //Debug.Log($"{aniTime} ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½");
             }
             else if (aniTime > 1.0f)
             {
