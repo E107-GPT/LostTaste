@@ -359,7 +359,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 }
 
 
-                GameObject player2 = PhotonNetwork.Instantiate("Player", position, rotate, 0);
+                GameObject player2 = PhotonNetwork.Instantiate("Prefabs/Player/Player", position, rotate, 0);
                 //Assets/Resources/Prefabs/Player/Player.prefab
                 //Debug.Log(player2);
                 player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
