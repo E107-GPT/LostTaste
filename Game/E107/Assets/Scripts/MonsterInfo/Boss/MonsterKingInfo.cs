@@ -14,5 +14,9 @@ public class MonsterKingInfo : MonsterInfo
 
         Patterns.Add(gameObject.GetOrAddComponent<MonsterKingStabChargePattern>());
         Patterns.Add(gameObject.GetOrAddComponent<MonsterKingStabPattern>());
+
+        Patterns.Add(gameObject.GetOrAddComponent<MonsterKingJumpStartPattern>());
+        //Patterns.Add(gameObject.GetOrAddComponent<MonsterKingJumpAirPattern>());
+        Patterns.Add(gameObject.GetOrAddComponent<MonsterKingJumpEndPattern>());
     }
 }
