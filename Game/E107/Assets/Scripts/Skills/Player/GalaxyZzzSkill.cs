@@ -8,11 +8,7 @@ public class GalaxyZzzSkill : Skill
     [field: SerializeField]
     public int Damage { get; set; }
 
-    protected override void Init()
-    {
-        SkillCoolDownTime = 5.0f;
-        RequiredMp = 20;
-    }
+    protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
     {

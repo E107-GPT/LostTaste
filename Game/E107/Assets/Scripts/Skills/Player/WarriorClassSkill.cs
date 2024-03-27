@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class WarriorClassSkill : Skill
 {
-    protected override void Init()
-    {
-        SkillCoolDownTime = 1.0f;
-        RequiredMp = 0;
-        
-
-    }
+    protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {

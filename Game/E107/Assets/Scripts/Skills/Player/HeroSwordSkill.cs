@@ -10,11 +10,7 @@ public class HeroSwordSkill : Skill
     [field: SerializeField]
     private Vector3 Scale = new Vector3(5.0f, 2.0f, 5.0f);
 
-    protected override void Init()
-    {
-        SkillCoolDownTime = 5.0f;
-        RequiredMp = 20;
-    }
+    protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
     {

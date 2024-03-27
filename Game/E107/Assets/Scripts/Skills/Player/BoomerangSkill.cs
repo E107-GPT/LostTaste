@@ -16,11 +16,7 @@ public class BoomerangSkill : Skill
     [SerializeField]
     private float Acceleration = -10.0f;   // per seconds^2
 
-    protected override void Init()
-    {
-        SkillCoolDownTime = 8.0f;
-        RequiredMp = 10;
-    }
+    protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
     {
