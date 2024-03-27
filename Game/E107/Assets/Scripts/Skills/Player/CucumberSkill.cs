@@ -12,7 +12,7 @@ public class CucumberSkill : ConsumingSkill
         Debug.Log("ø¿¿Ã ≥»");
         Managers.Sound.Play("bite1");
 
-        playerController.Stat.Mp = Mathf.Min(100, playerController.Stat.Mp + MpRecoveryAmount);
+        playerController.Stat.Mp = Mathf.Min(playerController.Stat.MaxMp, playerController.Stat.Mp + MpRecoveryAmount);
 
         yield return null;
     }
