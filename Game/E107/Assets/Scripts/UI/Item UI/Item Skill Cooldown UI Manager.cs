@@ -28,18 +28,19 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
     public Image secondItemCoolDownImage; // 아이템 2 오른쪽 스킬 쿨타임 이미지
     public TextMeshProUGUI secondItemRightSkillCoolDownText; // 아이템 2 오른쪽 스킬 쿨타임
 
-    // 쿨타임 숫자 변수 선언
-    private float firstItemRightSkillCoolDown; // 아이템 1 오른쪽 스킬 쿨타임
-    private float secondItemRightSkillCoolDown; // 아이템 2 오른쪽 스킬 쿨타임
+    // 남은 쿨타임 숫자 변수 선언
+    private float firstItemRightSkillCoolDown; // 아이템 1 오른쪽 스킬 현재 쿨타임
+    private float secondItemRightSkillCoolDown; // 아이템 2 오른쪽 스킬 현재 쿨타임
 
 
     // ------------------------------------------------ Life Cylce ------------------------------------------------
 
     void Start()
     {
-        firstItemCoolDownImage.fillAmount = 1; // 초기 Fill Amount를 1로 설정
-        secondItemCoolDownImage.fillAmount = 1; // 초기 Fill Amount를 1로 설정
-        // currentCoolDownTime = coolDownTime; // 현재 쿨다운 시간 초기화
+        firstItemCoolDownImage.fillAmount = 0; // 초기 Fill Amount를 0으로 설정
+        secondItemCoolDownImage.fillAmount = 0; // 초기 Fill Amount를 0으로 설정
+        firstItemRightSkillCoolDownText.text = "";
+        secondItemRightSkillCoolDownText.text = "";
     }
 
     void Update()
@@ -71,31 +72,35 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
         bool isFirstItemSkillExists = !float.IsInfinity(firstItem.RightSkill.SkillCoolDownTime);
         bool isSecondItemSkillExists = !float.IsInfinity(secondItem.RightSkill.SkillCoolDownTime);
 
+        firstItemRightSkillCoolDown = firstItem.RightSkill.SkillCoolDownTime;
+        secondItemRightSkillCoolDown = secondItem.RightSkill.SkillCoolDownTime;
+
         // 쿨타임 정보 업데이트
-        UpdateItemCoolDown(firstItem, ref firstItemRightSkillCoolDown, firstItemRightSkillCoolDownText, firstItemCoolDownImage, isFirstItemSkillExists);
-        UpdateItemCoolDown(secondItem, ref secondItemRightSkillCoolDown, secondItemRightSkillCoolDownText, secondItemCoolDownImage, isSecondItemSkillExists);
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (_currentItemNum == 1) StartCoroutine(UpdateItemCoolDown(firstItem, firstItemRightSkillCoolDown, firstItemRightSkillCoolDownText, firstItemCoolDownImage, isFirstItemSkillExists));
+            else StartCoroutine(UpdateItemCoolDown(secondItem, secondItemRightSkillCoolDown, secondItemRightSkillCoolDownText, secondItemCoolDownImage, isSecondItemSkillExists));
+        }
 
         // 무기 교체에 따른 스킬 쿨타임 패널 업데이트
         ToggleSkillCoolDownPanels(_currentItemNum);
     }
 
     // 아이템 쿨타임 업데이트 메서드
-    void UpdateItemCoolDown(Item item, ref float skillCoolDown, TextMeshProUGUI skillCoolDownText, Image coolDownImage, bool isSkillExists)
+    IEnumerator UpdateItemCoolDown(Item item, float skillCoolDown, TextMeshProUGUI skillCoolDownText, Image coolDownImage, bool isSkillExists)
     {
-        if (isSkillExists)
+        if (!isSkillExists) yield break;
+
+        while (skillCoolDown > 0.0f)
         {
-            if (skillCoolDown > 0)
-            {
-                skillCoolDown -= Time.deltaTime;
-                coolDownImage.fillAmount = skillCoolDown / item.RightSkill.SkillCoolDownTime;
-                skillCoolDownText.text = Mathf.Ceil(skillCoolDown).ToString();
-            }
-            else
-            {
-                skillCoolDown = 0;
-                coolDownImage.fillAmount = 0;
-            }
+            skillCoolDown -= Time.unscaledDeltaTime;
+            coolDownImage.fillAmount = skillCoolDown / item.RightSkill.SkillCoolDownTime;
+            skillCoolDownText.text = Mathf.Ceil(skillCoolDown).ToString() + "s";
+            yield return new WaitForFixedUpdate();
         }
+
+        // 쿨타임이 완전히 끝났을 때, 텍스트를 빈 문자열로 설정
+        skillCoolDownText.text = "";
     }
 
     // 현재 선택된 아이템에 따라 쿨타임 패널을 토글하는 메서드
