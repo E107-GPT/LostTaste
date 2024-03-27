@@ -263,7 +263,7 @@ public class PlayerController : BaseController
 
         // 추가한 부분
         GetComponent<Collider>().enabled = false;
-        _agent.enabled = false;
+        // _agent.enabled = false;  // 꺼야 setDestination 에러가 발생하지 않음
 
         
 
