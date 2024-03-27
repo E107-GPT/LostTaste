@@ -1,3 +1,4 @@
+Ôªøusing Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,8 +63,15 @@ public class IceKingController : MonsterController
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
 
-        // µ— ¥Ÿ ∂»∞∞¿Ω
-        ToDetectPlayer(0.8f);
+        // Îëò Îã§ ÎòëÍ∞ôÏùå
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            //ToDetectPlayer(0.8f);
+            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+            photonView.RPC("RPC_ChangeIceKingSpikeState", RpcTarget.Others);
+        }
+        
         //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), 0.8f);
 
@@ -99,8 +107,31 @@ public class IceKingController : MonsterController
             }
         }
     }
-
-    public override void ExitCrocodileSwordState()
+    [PunRPC]
+    void RPC_ChangeIceKingSpikeState()
     {
+        _statemachine.ChangeState(new IceKingSpikeState(this));
     }
+    [PunRPC]
+    void RPC_ChangeIdleState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMoveState()
+    {
+        _statemachine.ChangeState(new MoveState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeSkillState()
+    {
+        // ???ÔøΩŸ≤ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
+        _statemachine.ChangeState(new SkillState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
+
 }

@@ -47,18 +47,6 @@ public class DrillDuckController : MonsterController
         }
     }
 
-    // Normal Attack
-    public override void EnterSkill()
-    {
-        base.EnterSkill();
-
-    }
-
-    public override void ExcuteSkill()
-    {
-        base.ExcuteSkill();
-    }
-
     // Before Slide
     public override void EnterDrillDuckSlideBeforeState()
     {
@@ -74,13 +62,16 @@ public class DrillDuckController : MonsterController
         }
         _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("BeforeSlide", 0.2f, -1, 0);
-        _animator.speed = _animator.speed / 2.5f;
-
     }
     public override void ExcuteDrillDuckSlideBeforeState()
     {
-        if (CurState is DieState) return;
+        if (CurState is DieState)
+        {
+            //_monsterInfo.Patterns[1].DeActiveCollider();
+            return;
+        }
 
+        _animator.SetFloat("BeforeSlideSpeed", 0.5f);
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("BeforeSlide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
@@ -94,7 +85,6 @@ public class DrillDuckController : MonsterController
     }
     public override void ExitDrillDuckSlideBeforeState()
     {
-        _animator.speed *= 2.5f;
     }
 
     // Silde
@@ -113,8 +103,13 @@ public class DrillDuckController : MonsterController
     }
     public override void ExcuteDrillDuckSlideState()
     {
-        if (CurState is DieState) return;
+        if (CurState is DieState)
+        {
+            //_monsterInfo.Patterns[0].DeActiveCollider();
+            return;
+        }
 
+        _animator.SetFloat("SlideSpeed", 0.5f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;

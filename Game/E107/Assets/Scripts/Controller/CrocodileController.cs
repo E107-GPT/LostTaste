@@ -81,27 +81,32 @@ public class CrocodileController : MonsterController
     }
     public override void ExcuteCrocodileSwordState()
     {
-        if (CurState is DieState) return;
+        if (CurState is DieState)
+        {
+            //_monsterInfo.Patterns[0].DeActiveCollider();
+            return;
+        }
 
         base.ExcuteCrocodileSwordState();
 
+        _animator.SetFloat("SwordSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Sword"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             
             if (aniTime <= 0.2f)
             {
-                _animator.speed = 0.2f;
+                _animator.SetFloat("SwordSpeed", 0.2f);
             }
             else if (aniTime <= 0.23f)
             {
-                _animator.speed = 0.06f;
+                _animator.SetFloat("SwordSpeed", 0.06f);
             }
-            else if (aniTime < 1.0f)
+            else if (aniTime <= 1.0f)
             {
-                _animator.speed = 1.0f;
+                _animator.SetFloat("SwordSpeed", 1.0f);
             }
-            else if (aniTime >= 1.0f)
+            else if (aniTime > 1.0f)
             {
                 _monsterInfo.Patterns[0].DeActiveCollider();
                 _statemachine.ChangeState(new IdleState(this));
