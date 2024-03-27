@@ -16,13 +16,6 @@ public class MonsterKingJumpStartPattern : Pattern
 
     public override void DeActiveCollider()
     {
-        //if (_coroutine != null)
-        //{
-        //    StopCoroutine(_coroutine);
-        //    _coroutine = null;
-        //    if (_particle != null) Managers.Effect.Stop(_particle);
-        //    if (_cylinderLoc != null) Managers.Resource.Destroy(_cylinderLoc.gameObject);
-        //}
         if (_controller != null ) _coroutine = null;
     }
 

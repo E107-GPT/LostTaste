@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -307,25 +308,49 @@ public class MonsterKingController : MonsterController
         GetComponent<Collider>().enabled = false;
         Agent.Warp(new Vector3(transform.position.x, transform.position.y + 100.0f, transform.position.z));
     }
+
+
+    private IEnumerator CheckParticleAndChangeState(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        _statemachine.ChangeState(new MonsterKingJumpEndState(this));
+    }
+
     public override void EnterMonsterKingJumpAirState()         // JumpAir
     {
-
+        _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, DetectPlayer.transform);
+        StartCoroutine(CheckParticleAndChangeState(_particle.main.duration));
     }
     public override void ExecuteMonsterKingJumpAirState() 
     {
-        
+        // 애니메이션은 필요 없음
+        _particle.transform.position = DetectPlayer.transform.position;
     }
     public override void ExitMonsterKingJumpAirState() 
     {
-        
+        Managers.Effect.Stop(_particle);
     }
     public override void EnterMonsterKingJumpEndState()         // JumpEnd
-    { 
-
+    {
+        _animator.CrossFade("JumpEnd", 0.3f, -1, 0);
     }      
     public override void ExecuteMonsterKingJumpEndState() 
-    { 
+    {
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("JumpEnd"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            //PrintText($"{aniTime}");
 
+            if (aniTime <= 1.0f)
+            {
+                _animator.SetFloat("JumpStartSpeed", 1.0f);
+            }
+            else if (aniTime > 1.0f)
+            {
+                _monsterInfo.Patterns[5].DeActiveCollider();
+                _statemachine.ChangeState(new MonsterKingJumpAirState(this));
+            }
+        }
     }
     public override void ExitMonsterKingJumpEndState() 
     {
