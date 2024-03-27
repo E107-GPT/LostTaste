@@ -47,11 +47,6 @@ public class DrillDuckController : MonsterController
         }
     }
 
-    protected override void ToDetectPlayer(float turnSpeed)
-    {
-        base.ToDetectPlayer(turnSpeed);
-    }
-
     // Normal Attack
     public override void EnterSkill()
     {
@@ -84,6 +79,8 @@ public class DrillDuckController : MonsterController
     }
     public override void ExcuteDrillDuckSlideBeforeState()
     {
+        if (CurState is DieState) return;
+
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("BeforeSlide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
@@ -103,11 +100,6 @@ public class DrillDuckController : MonsterController
     // Silde
     public override void EnterDrillDuckSlideState()
     {
-        //_agent.velocity = Vector3.zero;
-        //_agent.speed = 0;
-        //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        //Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
-
         // 경로상의 플레이어를 밀쳐내면서 돌진
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         _agent.radius *= 2;
@@ -115,13 +107,14 @@ public class DrillDuckController : MonsterController
 
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
 
-        //_agent.SetDestination(destPos);
         _animator.CrossFade("Slide", 0.2f, -1, 0);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDrillDuckSlideState", RpcTarget.Others);
 
     }
     public override void ExcuteDrillDuckSlideState()
     {
+        if (CurState is DieState) return;
+
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
