@@ -1,3 +1,4 @@
+Ôªøusing Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,8 +63,15 @@ public class IceKingController : MonsterController
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
 
-        // µ— ¥Ÿ ∂»∞∞¿Ω
-        ToDetectPlayer(0.8f);
+        // Îëò Îã§ ÎòëÍ∞ôÏùå
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            //ToDetectPlayer(0.8f);
+            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+            photonView.RPC("RPC_ChangeIceKingSpikeState", RpcTarget.Others);
+        }
+        
         //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), 0.8f);
 
@@ -75,33 +83,55 @@ public class IceKingController : MonsterController
         if (CurState is DieState) return;
 
         _animator.SetFloat("SpikeSpeed", 1.0f);
+
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            Debug.Log($"{aniTime} ∆–≈œ Ω««‡ Ω√∞£");
 
-            if (aniTime <= 0.1f)
+            if (aniTime <= 0.5f)
             {
                 _animator.SetFloat("SpikeSpeed", 1.0f);
             }
             else if (aniTime <= 0.9f)
             {
-                _animator.SetFloat("SpikeSpeed", 1.0f);
-                _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
-                
-            }
-            else if (aniTime <= 0.95f)
-            {
                 _animator.SetFloat("SpikeSpeed", 0.8f);
+                _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
+                //Debug.Log($"{aniTime} ∆–≈œ Ω««‡ Ω√∞£");
             }
             else if (aniTime > 1.0f)
             {
+                _animator.SetFloat("SpikeSpeed", 1.0f);
                 _monsterInfo.Patterns[0].DeActiveCollider();
                 _statemachine.ChangeState(new IdleState(this));
             }
         }
     }
-
-    public override void ExitCrocodileSwordState()
+    [PunRPC]
+    void RPC_ChangeIceKingSpikeState()
     {
+        _statemachine.ChangeState(new IceKingSpikeState(this));
     }
+    [PunRPC]
+    void RPC_ChangeIdleState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMoveState()
+    {
+        _statemachine.ChangeState(new MoveState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeSkillState()
+    {
+        // ???ÔøΩŸ≤ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
+        _statemachine.ChangeState(new SkillState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
+
 }

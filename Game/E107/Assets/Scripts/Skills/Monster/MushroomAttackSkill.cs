@@ -2,18 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Slime이 공격할 수 있는 수단 중 하나
-public class SlimeAttackSkill : Skill
+public class MushroomAttackSkill : Skill
 {
-    // private GameObject _particleSystem;
-
     protected override void Init()
     {
         // Root: Skill의 Start에서 관리
         // Effect: Skill의 Start에서 관리
         SkillCoolDownTime = 0;
-        // RequiredMp = 0;
-        // _particleSystem = Managers.Resource.Instantiate("Effects/SwordSlashThinBlue", Effect.transform);
     }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
@@ -25,7 +20,6 @@ public class SlimeAttackSkill : Skill
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
 
-        // ParticleSystem ps = Managers.Effect.Play(Define.Effect.NormalAttackEffect, Root);
         // Managers.Sound.Play("swing1");
 
         skillObj.localScale = new Vector3(1.0f, 5.0f, _attackRange);    // 1.1f
@@ -35,6 +29,5 @@ public class SlimeAttackSkill : Skill
 
         yield return new WaitForSeconds(0.3f);
         Managers.Resource.Destroy(skillObj.gameObject);
-        // Managers.Effect.Stop(ps);
     }
 }

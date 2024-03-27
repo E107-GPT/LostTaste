@@ -162,9 +162,6 @@ public class MonsterController : BaseController
         _agent.velocity = Vector3.zero;
         //if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
 
-        //// 테스트를 위함
-        //ToDetectPlayer(0.8f);
-
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
             Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
@@ -195,7 +192,6 @@ public class MonsterController : BaseController
 
             if (aniTime >= 1.0f)
             {
-                PrintText("공격 -> IDLE");
                 _statemachine.ChangeState(new IdleState(this));
             }
         }

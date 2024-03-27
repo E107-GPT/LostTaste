@@ -29,7 +29,9 @@ public class MovePlayerToCamp : MonoBehaviour
     {
         // "Dungeon" 씬을 LoadSceneMode.Single 모드로 로드합니다.
         //SceneManager.LoadScene("Dungeon", LoadSceneMode.Single);
+        PhotonNetwork.LeaveRoom();
         Managers.Scene.LoadScene(Define.Scene.Dungeon, true);
+        
         
     }
 
