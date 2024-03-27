@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerManager
 {
 
-    Player[] _playerList = new Player[4];
+    public Player[] _playerList = new Player[4];
     int _currentPlayerNumber = -1;
 
     public void Init()
