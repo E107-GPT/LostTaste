@@ -120,7 +120,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void MakePersonalRoom()
     {
         Debug.Log("CreatePersonalRoom");
-        PhotonManager manager = GameObject.Find("gm").GetComponent<PhotonManager>();
+        //PhotonManager manager = GameObject.Find("gm").GetComponent<PhotonManager>();
 
         string roomName = UserInfo.GetInstance().getNickName() + "의 방";
         string captainName = UserInfo.GetInstance().getNickName();
@@ -138,7 +138,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed" };
 
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
-        PhotonNetwork.CreateRoom(roomName, room);
+        PhotonNetwork.CreateRoom(roomName+ seed, room);
     }
 
     // Make multy Rroom

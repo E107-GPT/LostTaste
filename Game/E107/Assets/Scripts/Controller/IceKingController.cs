@@ -83,26 +83,25 @@ public class IceKingController : MonsterController
         if (CurState is DieState) return;
 
         _animator.SetFloat("SpikeSpeed", 1.0f);
+
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            Debug.Log($"{aniTime} 패턴 실행 시간");
 
-            if (aniTime <= 0.1f)
+            if (aniTime <= 0.5f)
             {
                 _animator.SetFloat("SpikeSpeed", 1.0f);
             }
             else if (aniTime <= 0.9f)
             {
-                _animator.SetFloat("SpikeSpeed", 1.0f);
-                _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
-                
-            }
-            else if (aniTime <= 0.95f)
-            {
                 _animator.SetFloat("SpikeSpeed", 0.8f);
+                _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
+                //Debug.Log($"{aniTime} 패턴 실행 시간");
             }
             else if (aniTime > 1.0f)
             {
+                _animator.SetFloat("SpikeSpeed", 1.0f);
                 _monsterInfo.Patterns[0].DeActiveCollider();
                 _statemachine.ChangeState(new IdleState(this));
             }
