@@ -20,25 +20,36 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
     [Header("[ 아이템 1 ]")]
     public GameObject firstItemRightSkillCoolDownPanel; // 아이템 1 오른쪽 스킬 쿨타임 패널
     public Image firstItemCoolDownImage; // 아이템 1 오른쪽 스킬 쿨타임 이미지
+    public Image firstItemKeyImage; // 아이템 1 오른쪽 스킬 키 이미지
     public TextMeshProUGUI firstItemRightSkillCoolDownText; // 아이템 1 오른쪽 스킬 쿨타임
 
     // 아이템 2
     [Header("[ 아이템 2 ]")]
     public GameObject secondItemRightSkillCoolDownPanel; // 아이템 2 오른쪽 스킬 쿨타임 패널
     public Image secondItemCoolDownImage; // 아이템 2 오른쪽 스킬 쿨타임 이미지
+    public Image secondItemKeyImage; // 아이템 2 오른쪽 스킬 키 이미지
     public TextMeshProUGUI secondItemRightSkillCoolDownText; // 아이템 2 오른쪽 스킬 쿨타임
 
     // 남은 쿨타임 숫자 변수 선언
     private float firstItemRightSkillCoolDown; // 아이템 1 오른쪽 스킬 현재 쿨타임
     private float secondItemRightSkillCoolDown; // 아이템 2 오른쪽 스킬 현재 쿨타임
 
+    // 쿨타임 진행 상태를 추적하는 변수 추가
+    private bool isFirstItemCoolingDown = false;
+    private bool isSecondItemCoolingDown = false;
+
 
     // ------------------------------------------------ Life Cylce ------------------------------------------------
 
     void Start()
     {
-        firstItemCoolDownImage.fillAmount = 0; // 초기 Fill Amount를 0으로 설정
-        secondItemCoolDownImage.fillAmount = 0; // 초기 Fill Amount를 0으로 설정
+        // 초기 Fill Amount를 0으로 설정
+        firstItemCoolDownImage.fillAmount = 0;
+        secondItemCoolDownImage.fillAmount = 0;
+        firstItemKeyImage.fillAmount = 0;
+        secondItemKeyImage.fillAmount = 0;
+
+        // 초기 쿨타임 텍스트 빈 문자열로 설정
         firstItemRightSkillCoolDownText.text = "";
         secondItemRightSkillCoolDownText.text = "";
     }
@@ -52,7 +63,6 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
 
     // ------------------------------------------------ 사용자 정의 메서드 ------------------------------------------------
 
-    // 쿨타임 패널을 업데이트하는 메서드
     void UpdateItemCoolDownPanel()
     {
         // PlayerController 컴포넌트를 찾아서 참조
@@ -76,31 +86,56 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
         secondItemRightSkillCoolDown = secondItem.RightSkill.SkillCoolDownTime;
 
         // 쿨타임 정보 업데이트
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetMouseButton(1))
         {
-            if (_currentItemNum == 1) StartCoroutine(UpdateItemCoolDown(firstItem, firstItemRightSkillCoolDown, firstItemRightSkillCoolDownText, firstItemCoolDownImage, isFirstItemSkillExists));
-            else StartCoroutine(UpdateItemCoolDown(secondItem, secondItemRightSkillCoolDown, secondItemRightSkillCoolDownText, secondItemCoolDownImage, isSecondItemSkillExists));
+            if (_currentItemNum == 1 && !isFirstItemCoolingDown)
+            {
+                StartCoroutine(UpdateItemCoolDown(firstItem, firstItemRightSkillCoolDown, firstItemRightSkillCoolDownText, firstItemCoolDownImage, firstItemKeyImage, isFirstItemSkillExists));
+            }
+            else if (_currentItemNum == 2 && !isSecondItemCoolingDown)
+            {
+                StartCoroutine(UpdateItemCoolDown(secondItem, secondItemRightSkillCoolDown, secondItemRightSkillCoolDownText, secondItemCoolDownImage, secondItemKeyImage, isSecondItemSkillExists));
+            }
         }
 
         // 무기 교체에 따른 스킬 쿨타임 패널 업데이트
         ToggleSkillCoolDownPanels(_currentItemNum);
     }
 
-    // 아이템 쿨타임 업데이트 메서드
-    IEnumerator UpdateItemCoolDown(Item item, float skillCoolDown, TextMeshProUGUI skillCoolDownText, Image coolDownImage, bool isSkillExists)
+    IEnumerator UpdateItemCoolDown(Item item, float skillCoolDown, TextMeshProUGUI skillCoolDownText, Image coolDownImage, Image keyImage, bool isSkillExists)
     {
         if (!isSkillExists) yield break;
+
+        // 쿨타임이 시작될 때의 상태 변경
+        if (item == _playerInventory[1])
+        {
+            isFirstItemCoolingDown = true;
+        }
+        else if (item == _playerInventory[2])
+        {
+            isSecondItemCoolingDown = true;
+        }
 
         while (skillCoolDown > 0.0f)
         {
             skillCoolDown -= Time.unscaledDeltaTime;
             coolDownImage.fillAmount = skillCoolDown / item.RightSkill.SkillCoolDownTime;
+            keyImage.fillAmount = skillCoolDown / item.RightSkill.SkillCoolDownTime;
             skillCoolDownText.text = Mathf.Ceil(skillCoolDown).ToString() + "s";
             yield return new WaitForFixedUpdate();
         }
 
-        // 쿨타임이 완전히 끝났을 때, 텍스트를 빈 문자열로 설정
-        skillCoolDownText.text = "";
+        skillCoolDownText.text = ""; // 쿨타임이 완전히 끝났을 때, 텍스트를 빈 문자열로 설정
+
+        // 쿨타임이 종료될 때의 상태 변경
+        if (item == _playerInventory[1])
+        {
+            isFirstItemCoolingDown = false;
+        }
+        else if (item == _playerInventory[2])
+        {
+            isSecondItemCoolingDown = false;
+        }
     }
 
     // 현재 선택된 아이템에 따라 쿨타임 패널을 토글하는 메서드
