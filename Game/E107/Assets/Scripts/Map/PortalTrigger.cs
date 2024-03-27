@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
 
 
 // �� �̵� ��Ż 
