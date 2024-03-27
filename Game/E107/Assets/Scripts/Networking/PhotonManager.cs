@@ -138,7 +138,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed" };
 
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
-        PhotonNetwork.CreateRoom(roomName, room);
+        PhotonNetwork.CreateRoom(roomName+ seed, room);
     }
 
     // Make multy Rroom
