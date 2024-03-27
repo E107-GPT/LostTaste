@@ -44,6 +44,7 @@ public class BoomerangSkill : Skill
         skillObj.localScale = Scale;
 
         float vel = StartVelocity;
+        float prevVel = StartVelocity;
         while (vel > -StartVelocity)
         {
             // 투사체와 파티클 시스템을 앞으로 움직입니다.
@@ -51,7 +52,21 @@ public class BoomerangSkill : Skill
             skillObj.position += moveStep;
             ps.transform.position += moveStep;
 
-            vel += Acceleration * Time.deltaTime;   // 속도를 변화시킵니다.
+            prevVel = vel;
+            vel += Acceleration * Time.deltaTime;   // 속도를 변화시킵니다
+
+            if (prevVel >= 0 && vel < 0)
+            {
+                Debug.Log("Boomerang Returning");
+                Transform newSkillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+                newSkillObj.GetComponent<SkillObject>().SetUp(player.transform, Damage, _seq + 1);
+                skillObj.position = ps.transform.position;
+                skillObj.localScale = Scale;
+
+                Destroy(skillObj.gameObject);
+                skillObj = newSkillObj;
+            }
+
             yield return null; // 다음 프레임까지 대기합니다.
         }
         Managers.Resource.Destroy(skillObj.gameObject);
