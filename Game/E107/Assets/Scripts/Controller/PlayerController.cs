@@ -28,10 +28,6 @@ public class PlayerController : BaseController
     public Item[] Inventory { get { return _inventory; } }
     public int CurrentItemNum { get { return _currentItemNum; } }
 
-    protected float _lastLeftSkillCastTime;
-    protected float _lastRightSkillCastTime;
-
-
     public override void Init()
     {
         // 캐릭터의 모든 Renderer 컴포넌트를 찾음
