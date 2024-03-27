@@ -352,6 +352,9 @@ public class PlayerController : BaseController
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            float lastSkillCastTime = GetComponent<WarriorClassSkill>().LastCastTime;
+            if (lastSkillCastTime != 0 && Time.time - lastSkillCastTime < GetComponent<WarriorClassSkill>().SkillCoolDownTime) return;
+
             _curSkill = Define.SkillType.ClassSkill;
             _statemachine.ChangeState(new SkillState(this));
             //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
