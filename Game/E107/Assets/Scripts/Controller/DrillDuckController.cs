@@ -79,6 +79,8 @@ public class DrillDuckController : MonsterController
     }
     public override void ExcuteDrillDuckSlideBeforeState()
     {
+        if (CurState is DieState) return;
+
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("BeforeSlide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
@@ -111,6 +113,8 @@ public class DrillDuckController : MonsterController
     }
     public override void ExcuteDrillDuckSlideState()
     {
+        if (CurState is DieState) return;
+
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;

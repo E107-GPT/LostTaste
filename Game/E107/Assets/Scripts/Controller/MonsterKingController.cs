@@ -97,6 +97,8 @@ public class MonsterKingController : MonsterController
     }      
     public override void ExecuteMonsterKingHitDownState() 
     {
+        if (CurState is DieState) return;
+
         _animator.SetFloat("HitDownSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("HitDown"))
         {
@@ -152,6 +154,8 @@ public class MonsterKingController : MonsterController
     }
     public override void ExecuteMonsterKingSlashState() 
     {
+        if (CurState is DieState) return;
+
         _animator.SetFloat("SlashSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slash"))
         {
@@ -201,6 +205,8 @@ public class MonsterKingController : MonsterController
     }         
     public override void ExecuteMonsterKingStabState() 
     {
+        if (CurState is DieState) return;
+
         _animator.SetFloat("StabSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Stab"))
         {

@@ -81,7 +81,10 @@ public class CrocodileController : MonsterController
     }
     public override void ExcuteCrocodileSwordState()
     {
+        if (CurState is DieState) return;
+
         base.ExcuteCrocodileSwordState();
+
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Sword"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;

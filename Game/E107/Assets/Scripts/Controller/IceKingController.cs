@@ -72,6 +72,8 @@ public class IceKingController : MonsterController
 
     public override void ExcuteIceKingSpikeState()
     {
+        if (CurState is DieState) return;
+
         _animator.SetFloat("SpikeSpeed", 1.0f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
         {
