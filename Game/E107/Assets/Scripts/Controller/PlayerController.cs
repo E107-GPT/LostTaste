@@ -28,10 +28,6 @@ public class PlayerController : BaseController
     public Item[] Inventory { get { return _inventory; } }
     public int CurrentItemNum { get { return _currentItemNum; } }
 
-    protected float _lastLeftSkillCastTime;
-    protected float _lastRightSkillCastTime;
-
-
     public override void Init()
     {
         // 캐릭터의 모든 Renderer 컴포넌트를 찾음
@@ -210,36 +206,12 @@ public class PlayerController : BaseController
                 _inventory[_currentItemNum].CastRightSkill();
                 _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.RightSkill, gameObject.transform.rotation);
-                Debug.Log(_stat.Mp);
-                _lastRightSkillCastTime = Time.time;
                 break;
             case Define.SkillType.ClassSkill:
-                gameObject.GetOrAddComponent<WarriorClassSkill>().Cast(_stat.AttackDamage, 10.0f);
+                gameObject.GetComponent<WarriorClassSkill>().Cast();
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.ClassSkill, gameObject.transform.rotation);
                 break;
         }
-
-        //if (Input.GetMouseButton(0))
-        //{
-
-
-
-        //}
-        //else if (Input.GetMouseButton(1))
-        //{
-
-
-
-
-        //}
-        //else if (Input.GetKey(KeyCode.Q))
-        //{
-        //    Debug.Log("QQQQQQQQ");
-
-        //}
-
-
-
     }
 
     public override void ExcuteSkill()
@@ -380,6 +352,9 @@ public class PlayerController : BaseController
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            float lastSkillCastTime = GetComponent<WarriorClassSkill>().LastCastTime;
+            if (lastSkillCastTime != 0 && Time.time - lastSkillCastTime < GetComponent<WarriorClassSkill>().SkillCoolDownTime) return;
+
             _curSkill = Define.SkillType.ClassSkill;
             _statemachine.ChangeState(new SkillState(this));
             //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);

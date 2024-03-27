@@ -12,13 +12,9 @@ public class LogSkill : Skill
     private Vector3 Scale = new Vector3(5.0f, 2.0f, 5.0f);
 
     [field: SerializeField]
-    private float BreakProbability = 0.5f;
+    private float BreakProbability { get; set; }
 
-    protected override void Init()
-    {
-        SkillCoolDownTime = 10.0f;
-        RequiredMp = 30;
-    }
+    protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
     {

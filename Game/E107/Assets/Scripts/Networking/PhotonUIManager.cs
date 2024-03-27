@@ -54,7 +54,7 @@ public class PhotonUIManager : MonoBehaviour
     public void SetEnterPassword()
     {
         Debug.Log((password));
-        GameObject.Find("GameManager").GetComponent<PhotonManager>().PasswordValidation();
+        GameObject.Find("gm").GetComponent<PhotonManager>().PasswordValidation();
     }
 
     public void SetChatMessage(string message)
@@ -67,6 +67,11 @@ public class PhotonUIManager : MonoBehaviour
         //chatField.text = "";
 
         return msg;
+    }
+
+    public void enterRoom()
+    {
+        GameObject.Find("gm").GetComponent<PhotonManager>().roomEnter();
     }
     public void TestPost()
     {
