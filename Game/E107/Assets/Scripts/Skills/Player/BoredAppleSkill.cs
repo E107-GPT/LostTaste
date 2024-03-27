@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardAppleSkill : ConsumingSkill
+public class BoredAppleSkill : ConsumingSkill
 {
     [field: SerializeField]
     [field: Header("회복 주기(초)")]
