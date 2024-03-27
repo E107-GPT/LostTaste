@@ -131,7 +131,6 @@ public class MonsterController : BaseController
     }
     public override void ExcuteMove()
     {
-        // 테스트를 위한 주석
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
         base.ExcuteMove();
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Move"))
@@ -170,8 +169,6 @@ public class MonsterController : BaseController
         {
             Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
             Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
-            // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
-            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.5f);
             transform.rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeSkillState", RpcTarget.Others);
         }
@@ -179,8 +176,6 @@ public class MonsterController : BaseController
         {
             Vector3 thisToTargetDist = _detectPlayer.position - transform.position;
             Vector3 dirToTarget = new Vector3(thisToTargetDist.x, 0, thisToTargetDist.z);
-            // Quaternion rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
-            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirToTarget.normalized, Vector3.up), 0.2f);
             transform.rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
         }
 
@@ -218,11 +213,9 @@ public class MonsterController : BaseController
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
         GetComponent<Collider>().enabled = false;
-        //_agent.enabled = false;
 
         _animator.Play("Die", -1);
 
-        // 스폰에서 몬스터 배열을 통해 null 처리 또는 destroy
         Destroy(gameObject, 3.0f);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDieState", RpcTarget.Others);
     }
@@ -293,8 +286,7 @@ public class MonsterController : BaseController
     protected virtual void ToDetectPlayer(float turnSpeed)
     {
         Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        Vector3 destPos = new Vector3(dirTarget.x, 0, dirTarget.z);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), turnSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), turnSpeed);
     }
 
     // Move 상태에서 다른 상태로 바꾸는 조건
