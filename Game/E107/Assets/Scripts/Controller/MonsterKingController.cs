@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterKingController : MonsterController
 {
     [SerializeField]
-    private GameObject _weapon;     // Editor
+    private GameObject _weapon;
     [SerializeField]
     private GameObject _leftArm;
 
@@ -88,12 +88,17 @@ public class MonsterKingController : MonsterController
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
 
+        // 둘 다 똑같음
         ToDetectPlayer(0.8f);
+        //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), 0.8f);
 
         _animator.CrossFade("HitDown", 0.3f, -1, 0);
     }      
     public override void ExecuteMonsterKingHitDownState() 
     {
+        if (CurState is DieState) return;
+
         _animator.SetFloat("HitDownSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("HitDown"))
         {
@@ -149,6 +154,8 @@ public class MonsterKingController : MonsterController
     }
     public override void ExecuteMonsterKingSlashState() 
     {
+        if (CurState is DieState) return;
+
         _animator.SetFloat("SlashSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slash"))
         {
@@ -198,6 +205,8 @@ public class MonsterKingController : MonsterController
     }         
     public override void ExecuteMonsterKingStabState() 
     {
+        if (CurState is DieState) return;
+
         _animator.SetFloat("StabSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Stab"))
         {

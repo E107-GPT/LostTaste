@@ -1,3 +1,4 @@
+﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,18 +60,28 @@ public class IceKingController : MonsterController
     // IceSpike
     public override void EnterIceKingSpikeState()
     {
-        //base.EnterIceKingSpikeState();
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
-        ToDetectPlayer(0.8f);
 
-        //_monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
+        // 둘 다 똑같음
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            //ToDetectPlayer(0.8f);
+            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+            photonView.RPC("RPC_ChangeIceKingSpikeState", RpcTarget.Others);
+        }
+        
+        //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), 0.8f);
+
         _animator.CrossFade("Spike", 0.2f, -1, 0);
     }
 
     public override void ExcuteIceKingSpikeState()
     {
-        //base.ExcuteIceKingSpikeState();
+        if (CurState is DieState) return;
+
         _animator.SetFloat("SpikeSpeed", 1.0f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
         {
@@ -79,8 +90,6 @@ public class IceKingController : MonsterController
             if (aniTime <= 0.1f)
             {
                 _animator.SetFloat("SpikeSpeed", 1.0f);
-                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
-                //Managers.Effect.Play
             }
             else if (aniTime <= 0.9f)
             {
@@ -91,7 +100,6 @@ public class IceKingController : MonsterController
             else if (aniTime <= 0.95f)
             {
                 _animator.SetFloat("SpikeSpeed", 0.8f);
-                //Managers.Effect.Stop
             }
             else if (aniTime > 1.0f)
             {
@@ -100,9 +108,31 @@ public class IceKingController : MonsterController
             }
         }
     }
-
-    public override void ExitCrocodileSwordState()
+    [PunRPC]
+    void RPC_ChangeIceKingSpikeState()
     {
-        //base.ExitIceKingSpikeState();
+        _statemachine.ChangeState(new IceKingSpikeState(this));
     }
+    [PunRPC]
+    void RPC_ChangeIdleState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMoveState()
+    {
+        _statemachine.ChangeState(new MoveState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeSkillState()
+    {
+        // ???�ٲ�� ������
+        _statemachine.ChangeState(new SkillState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
+
 }

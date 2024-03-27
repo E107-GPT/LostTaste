@@ -47,23 +47,6 @@ public class DrillDuckController : MonsterController
         }
     }
 
-    protected override void ToDetectPlayer(float turnSpeed)
-    {
-        base.ToDetectPlayer(turnSpeed);
-    }
-
-    // Normal Attack
-    public override void EnterSkill()
-    {
-        base.EnterSkill();
-
-    }
-
-    public override void ExcuteSkill()
-    {
-        base.ExcuteSkill();
-    }
-
     // Before Slide
     public override void EnterDrillDuckSlideBeforeState()
     {
@@ -79,11 +62,16 @@ public class DrillDuckController : MonsterController
         }
         _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("BeforeSlide", 0.2f, -1, 0);
-        _animator.speed = _animator.speed / 2.5f;
-
     }
     public override void ExcuteDrillDuckSlideBeforeState()
     {
+        if (CurState is DieState)
+        {
+            //_monsterInfo.Patterns[1].DeActiveCollider();
+            return;
+        }
+
+        _animator.SetFloat("BeforeSlideSpeed", 0.5f);
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("BeforeSlide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
@@ -97,17 +85,11 @@ public class DrillDuckController : MonsterController
     }
     public override void ExitDrillDuckSlideBeforeState()
     {
-        _animator.speed *= 2.5f;
     }
 
     // Silde
     public override void EnterDrillDuckSlideState()
     {
-        //_agent.velocity = Vector3.zero;
-        //_agent.speed = 0;
-        //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        //Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
-
         // 경로상의 플레이어를 밀쳐내면서 돌진
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         _agent.radius *= 2;
@@ -115,13 +97,19 @@ public class DrillDuckController : MonsterController
 
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
 
-        //_agent.SetDestination(destPos);
         _animator.CrossFade("Slide", 0.2f, -1, 0);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDrillDuckSlideState", RpcTarget.Others);
 
     }
     public override void ExcuteDrillDuckSlideState()
     {
+        if (CurState is DieState)
+        {
+            //_monsterInfo.Patterns[0].DeActiveCollider();
+            return;
+        }
+
+        _animator.SetFloat("SlideSpeed", 0.5f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;

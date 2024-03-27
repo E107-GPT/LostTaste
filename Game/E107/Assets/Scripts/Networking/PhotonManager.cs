@@ -64,7 +64,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             // 람다식에서 사용하기 위해 현재 인덱스를 변수에 할당.
             int index = i;
             // 파티 접속 버튼에 클릭 이벤트 리스너를 추가. 클릭 시 roomEnter 함수를 호출.
-            partyConnect.onClick.AddListener(()=>roomEnter(index));
+            partyConnect.onClick.AddListener(()=> ClickRoom(index));
         }
 
         roomListPanel.SetActive(false);
@@ -98,6 +98,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void ExitRoom()
     {
+        // 방이 아니면 탈퇴 불가
+        if (!PhotonNetwork.InRoom) return;
         // room -> Lobby
         PhotonNetwork.LeaveRoom();
 
@@ -110,7 +112,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         player.transform.rotation = pTrans.rotation;
         
         GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player;
-
+        roomDescription.text = UserInfo.GetInstance().getNickName() + "'s Party";
         roomListPanel.SetActive(false);
     }
 
@@ -178,26 +180,28 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, room);
     }
 
-    public void roomEnter(int roomNumber)
+    public void ClickRoom(int roomNumber)
+    {
+        selectRoom = roomlist[roomNumber];
+
+        if ((bool)selectRoom.CustomProperties["ispassword"])
+        {
+            //password panel open
+            GameObject.Find("Party Joining Window").SetActive(false);
+            passwordPanel.SetActive(true);
+        }
+    }
+
+    public void roomEnter()
     {
         // 나중에 수정
         string nickname = "Player";//UserInfo.GetInstance().getNickName();
         
         if (nickname == null) return;
 
-        RoomInfo curRoom = roomlist[roomNumber];
-
-        if ((bool)curRoom.CustomProperties["ispassword"])
-        {
-            //password panel open
-            selectRoom = curRoom;
-            passwordPanel.SetActive(true);
-        }
-        else
-        {
-            // no password enter
-            PhotonNetwork.JoinRoom(roomlist[roomNumber].Name);
-        }
+        // no password enter
+        PhotonNetwork.JoinRoom(selectRoom.Name);
+        GameObject.Find("Party Joining Window").SetActive(false);
     }
 
     public void PasswordValidation()
@@ -363,6 +367,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Managers.Player.RemovePlayer(otherPlayer);
         Managers.Player.LoadPlayersInfoInCurrentRoom();
+        PhotonNetwork.JoinLobby();
 
     }
 

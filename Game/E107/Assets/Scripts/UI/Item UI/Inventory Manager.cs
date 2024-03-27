@@ -34,7 +34,7 @@ public class InventoryManager : MonoBehaviour
     public TextMeshProUGUI secondItemRightSkillCoolDown; // 아이템 2 오른쪽 스킬 쿨타임
 
 
-    // ------------------------------------------------ Life Cylce ------------------------------------------------
+    // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Update()
     {
@@ -52,7 +52,7 @@ public class InventoryManager : MonoBehaviour
     void UpdateInventory()
     {
         // PlayerController 컴포넌트를 찾아서 참조
-        _playerController = GameObject.FindObjectOfType<PlayerController>();
+        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
         if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 

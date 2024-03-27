@@ -20,7 +20,7 @@ public class PortalTrigger : MonoBehaviour
 
     public GameObject portal;
 
-    public GameObject[] itemBoxes;
+    public GameObject itemBox;
 
     public bool isBossRoom = false;
 
@@ -29,11 +29,14 @@ public class PortalTrigger : MonoBehaviour
     // ��Ż Ȱ��ȭ �� ������ ���� Ȱ��ȭ
     public void ActivateItemBox()
     {
-        // ��� ������ ���ڸ� ���� ��Ȱ��ȭ
-        foreach (var box in itemBoxes)
+        // itemBox가 할당되지 않았다면, 메서드를 종료합니다.
+        if (itemBox == null)
         {
-            box.SetActive(false);
+            Debug.LogWarning("Item box is not assigned.");
+            return;
         }
+
+        itemBox.SetActive(false);
 
         if (isBossRoom) // �������� ���
         {
@@ -46,21 +49,11 @@ public class PortalTrigger : MonoBehaviour
 
         else // �������� �ƴ� ��� ���� Ȯ�� ������ ����
         {
-            float chance = Random.Range(0f, 100f); // 0���� 100 ������ ���� ����
             GameObject boxToActivate = null; // Ȱ��ȭ�� ����
 
-            if (chance <= 5f) // Golden ���� Ȯ�� 5%
-            {
-                boxToActivate = GetItemBoxByName("Golden");
-            }
-            else if (chance <= 45f) // Better ���� Ȯ�� 25%
-            {
-                boxToActivate = GetItemBoxByName("Better");
-            }
-            else // Wooden ���� Ȯ�� 70%
-            {
-                boxToActivate = GetItemBoxByName("Wooden");
-            }
+            
+             boxToActivate = GetItemBoxByName("Wooden");
+            
 
             if (boxToActivate != null)
             {
@@ -69,16 +62,17 @@ public class PortalTrigger : MonoBehaviour
         }
     }
 
+
+
     // ���� �̸����� ���� GameObject�� ã�� �޼���
     GameObject GetItemBoxByName(string boxName)
     {
-        foreach (var box in itemBoxes)
+        
+        if (itemBox.name.Contains(boxName)) // ���� �̸��� Ȯ��
         {
-            if (box.name.Contains(boxName)) // ���� �̸��� Ȯ��
-            {
-                return box;
-            }
+            return itemBox;
         }
+       
         return null; // �ش� �̸��� ���� ���ڰ� ���� ���
     }
 
@@ -95,10 +89,10 @@ public class PortalTrigger : MonoBehaviour
         else
         {
             // ��Ż�� ��Ȱ��ȭ�� �� ��� ������ ���ڸ� ��Ȱ��ȭ
-            foreach (var box in itemBoxes)
-            {
-                box.SetActive(false);
-            }
+
+            
+            itemBox.SetActive(false);
+            
         }
     }
 
