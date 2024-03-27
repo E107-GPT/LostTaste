@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class RareSteakSkill : ConsumingSkill
 {
-    public static int HpRecoveryAmount { get; set; }
+    [field: SerializeField]
+    public int HpRecoveryAmount { get; set; }
 
     protected override IEnumerator OnConsume(PlayerController playerController)
     {
