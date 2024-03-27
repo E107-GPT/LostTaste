@@ -35,7 +35,7 @@ public class MonsterKingJumpStartPattern : Pattern
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(_cylinderLoc.gameObject);
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(_particle.main.duration);
         Managers.Effect.Stop(_particle);
     }
 

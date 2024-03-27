@@ -17,32 +17,27 @@ public class MonsterKingJumpEndPattern : Pattern
 
     public override void DeActiveCollider()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-            _coroutine = null;
-            if (_particle != null) Managers.Effect.Stop(_particle);
-            if (_cylinderLoc != null) Managers.Resource.Destroy(_cylinderLoc.gameObject);
-        }
+        if (_coroutine != null) _coroutine = null;
     }
 
     IEnumerator CheckPatternObject(int attackDamage)
     {
         Root = _controller.transform;
-        yield return new WaitForSeconds(0.1f);
 
-        _cylinderLoc = Managers.Resource.Instantiate("Patterns/KingHitDownCollider").transform;
+        _cylinderLoc = Managers.Resource.Instantiate("Patterns/KingJumpEndCollider").transform;
         _cylinderLoc.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
         _cylinderLoc.rotation = Quaternion.identity;
 
-        // pattern obj À§Ä¡
-        Vector3 rootForward = Root.TransformDirection(Vector3.forward * 5.0f);
-        _cylinderLoc.position = Root.position + rootForward;
-        Vector3 tempCylinder = _cylinderLoc.position;
-        tempCylinder.y += 2.0f;
-        _cylinderLoc.position = tempCylinder;
+        Vector3 rootUp = Root.TransformDirection(Vector3.up);
+        _cylinderLoc.position = Root.position + rootUp;
 
-        _particle = Managers.Effect.Play(Define.Effect.KingHitDownEndEffect, _cylinderLoc);
+        _particle = Managers.Effect.Play(Define.Effect.KingJumpEndEffect, _cylinderLoc);
+
+        yield return new WaitForSeconds(0.1f);
+        Managers.Resource.Destroy(_cylinderLoc.gameObject);
+
+        yield return new WaitForSeconds(_particle.main.duration);
+        Managers.Effect.Stop(_particle);
     }
 
     public override void SetCollider(int attackDamage)

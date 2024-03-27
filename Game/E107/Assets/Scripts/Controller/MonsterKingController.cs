@@ -14,6 +14,10 @@ public class MonsterKingController : MonsterController
     private Coroutine _hitDownStart;
     private Coroutine _slashStart;
 
+    private Vector3 _detectPlayerLoc;
+    private float _jumpCoolDown;
+    private float _jumpLastTime;
+
     public GameObject Weapon { get => _weapon; }
     public GameObject LeftArm { get => _leftArm; }
     public ParticleSystem Particle { get => _particle; set => _particle = value; }
@@ -23,6 +27,7 @@ public class MonsterKingController : MonsterController
         base.Init();
 
         _stat = new MonsterStat(_unitType);
+        _jumpCoolDown = 15;
     }
 
     protected override void ChangeStateFromMove()
@@ -36,11 +41,11 @@ public class MonsterKingController : MonsterController
             // phase
             if (_stat.Hp <= _stat.MaxHp / 2)
             {
-                PhaseOnePatternSelector();      // 나중에 위치 변경
+                PhaseTwePatternSelector(); 
             }
             else if (_stat.Hp <= _stat.MaxHp)
             {
-                PhaseTwePatternSelector();
+                PhaseOnePatternSelector();
             }
             
         }
@@ -53,23 +58,13 @@ public class MonsterKingController : MonsterController
 
     private void PhaseTwePatternSelector()
     {
-        int rand = Random.Range(0, 101);
-        //if (rand <= 20)
-        //{
-        //    _statemachine.ChangeState(new MonsterKingStabState(this));
-        //}
-        //else if (rand <= 40)
-        //{
-        //    _statemachine.ChangeState(new MonsterKingHitDownState(this));
-        //}
-        //else if (rand <= 60)
-        //{
-        //    _statemachine.ChangeState(new MonsterKingSlashState(this));
-        //}
-
-        if (rand <= 100)
+        if (Time.time - _jumpLastTime >= _jumpCoolDown)
         {
             _statemachine.ChangeState(new MonsterKingJumpStartState(this));
+        }
+        else
+        {
+            PhaseOnePatternSelector();
         }
     }
 
@@ -302,7 +297,7 @@ public class MonsterKingController : MonsterController
             }
         }
     }
-    public override void ExitMonsterKingJumpStartState() 
+    public override void ExitMonsterKingJumpStartState()
     {
         // 이동
         GetComponent<Collider>().enabled = false;
@@ -328,10 +323,16 @@ public class MonsterKingController : MonsterController
     }
     public override void ExitMonsterKingJumpAirState() 
     {
+        _detectPlayerLoc = _particle.transform.position;
         Managers.Effect.Stop(_particle);
     }
+
     public override void EnterMonsterKingJumpEndState()         // JumpEnd
     {
+        // 착지
+        _agent.Warp(new Vector3(_detectPlayerLoc.x, _detectPlayerLoc.y, _detectPlayerLoc.z));
+        _monsterInfo.Patterns[5].SetCollider(_stat.PatternDamage);
+
         _animator.CrossFade("JumpEnd", 0.3f, -1, 0);
     }      
     public override void ExecuteMonsterKingJumpEndState() 
@@ -339,21 +340,18 @@ public class MonsterKingController : MonsterController
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("JumpEnd"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            //PrintText($"{aniTime}");
 
-            if (aniTime <= 1.0f)
-            {
-                _animator.SetFloat("JumpStartSpeed", 1.0f);
-            }
-            else if (aniTime > 1.0f)
+            if (aniTime > 1.0f)
             {
                 _monsterInfo.Patterns[5].DeActiveCollider();
-                _statemachine.ChangeState(new MonsterKingJumpAirState(this));
+                _statemachine.ChangeState(new IdleState(this));
             }
         }
     }
     public override void ExitMonsterKingJumpEndState() 
     {
+        _jumpLastTime = Time.time;
+        GetComponent<Collider>().enabled = true;
     }
 
     #endregion

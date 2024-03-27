@@ -6,37 +6,50 @@ using UnityEngine;
 // DectPlayer의 위치를 갱신해야함
 public class MonsterKingJumpAirPattern : Pattern
 {
-    private MonsterKingController _controller;
-    private Coroutine _coroutine;
-    private ParticleSystem _particle;
+    //private MonsterKingController _controller;
+    //private Coroutine _coroutine;
+    //private ParticleSystem _particle;
+    //private Transform _detectPlayerLoc;
+
+    //private float _lastTime;
 
     protected override void Init()
     {
-        PatternName = "KingJumpAirEffect";
-        _controller = GetComponent<MonsterKingController>();
+        //PatternName = "KingJumpAirEffect";
+        //_controller = GetComponent<MonsterKingController>();
     }
 
     public override void DeActiveCollider()
     {
-        if (_controller != null)
-        {
-            _coroutine = null;
-        }
+        //if (_controller != null)
+        //{
+        //    _coroutine = null;
+        //}
     }
 
-    IEnumerator CheckPatternObject(int attackDamage)
-    {
-        Root = _controller.DetectPlayer.transform;
-        yield return null;
+    //private IEnumerator CheckParticleAndChangeState(float duration)
+    //{
+    //    yield return new WaitForSeconds(duration);
+    //}
 
-        _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, Root);
-    }
+    //IEnumerator CheckAnimationFinish()
+    //{
+    //    _detectPlayerLoc = _controller.DetectPlayer.transform;
+    //    _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, _detectPlayerLoc);
+
+    //    while (true)
+    //    {
+    //        _detectPlayerLoc = _controller.DetectPlayer.transform;
+    //        _particle.transform.position = _detectPlayerLoc.position;
+    //        yield return null;
+    //    }
+    //}
 
     public override void SetCollider(int attackDamage)
     {
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
-        }
+        //if (_coroutine == null)
+        //{
+        //    _coroutine = StartCoroutine(CheckAnimationFinish());
+        //}
     }
 }

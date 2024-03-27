@@ -87,6 +87,7 @@ public class Define
         KingStabEffect,
         KingJumpStartEffect,
         KingJumpAirEffect,
+        KingJumpEndEffect,
         MaxCount
     }
 
