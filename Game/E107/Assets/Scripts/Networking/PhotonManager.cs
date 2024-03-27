@@ -138,7 +138,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed" };
 
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
-        PhotonNetwork.CreateRoom(roomName, room);
+        PhotonNetwork.CreateRoom(roomName+ seed, room);
     }
 
     // Make multy Rroom
@@ -327,7 +327,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
                 Managers.Player.SetLocalPlayerInfo(Define.ClassType.Warrior);
                 Managers.Player.LoadPlayersInfoInCurrentRoom();
+                int myIndex = 0;
 
+                Debug.Log("adiasjdiojaiopd " + PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Number"));
+
+                if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Number"))
+                {
+                    string playerClass = (string)PhotonNetwork.LocalPlayer.CustomProperties["Number"];
+                    Debug.Log($"My Class: {playerClass}");
+                }
+                GetComponent<PhotonChatManager>().playerIndex = myIndex;
             }
         }
 
