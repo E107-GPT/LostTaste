@@ -24,6 +24,7 @@ public abstract class BaseController : MonoBehaviour
 	protected bool isConnected = false;
 	public PhotonView photonView;
 
+	bool isDied;
 
     // protected bool _isDie;
     protected StateMachine _statemachine;
@@ -77,7 +78,7 @@ public abstract class BaseController : MonoBehaviour
     void Update()
 	{
 
-        _statemachine.Execute();
+		_statemachine.Execute();
 	}
 
     //public abstract void Updated();
@@ -108,13 +109,18 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void ExitIdle() { }
 
 	// DIE
-	public virtual void EnterDie() { }
+	public virtual void EnterDie() {
+	}
 	public virtual void ExcuteDie() { }
 	public virtual void ExitDie() { }
 
 	// SKILL
-	public virtual void EnterSkill() { }
-	public virtual void ExcuteSkill() { }
+	public virtual void EnterSkill() {
+		if (CurState is DieState) return;
+	}
+	public virtual void ExcuteSkill() {
+		if (CurState is DieState) return;
+	}
 	public virtual void ExitSkill() { }
 
 	// MOVE
