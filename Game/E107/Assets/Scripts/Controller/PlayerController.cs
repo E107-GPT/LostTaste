@@ -206,8 +206,6 @@ public class PlayerController : BaseController
                 _inventory[_currentItemNum].CastRightSkill();
                 _stat.Mp -= _inventory[_currentItemNum].RightSkill.RequiredMp;
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.RightSkill, gameObject.transform.rotation);
-                Debug.Log(_stat.Mp);
-                _lastRightSkillCastTime = Time.time;
                 break;
             case Define.SkillType.ClassSkill:
                 gameObject.GetComponent<WarriorClassSkill>().Cast();
