@@ -478,7 +478,7 @@ public class PlayerController : BaseController
 
     public void DetectInteractable()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item") | LayerMask.GetMask("NPC"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.5f, LayerMask.GetMask("Item") | LayerMask.GetMask("NPC"));
         float closestSqrDistance = Mathf.Infinity;
         Collider closestCollider = null;
 
