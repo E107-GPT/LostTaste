@@ -57,26 +57,51 @@ public class MonsterManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
 
-            monstersInCurrentMap.RemoveAll(monster => monster == null);
+            //if(FindObjectsByType<MonsterController>().Length == 0)
+            //{
 
-            if (monstersInCurrentMap.Count == 0)
+            //}
+            if(PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
             {
-                // 몬스터가 모두 제거되면 포탈 활성화
-                if (portalTrigger != null)
+                Debug.Log("제발 포탈님 제발요");
+                if (FindObjectsByType<MonsterController>(FindObjectsSortMode.None).Length == 0 )
                 {
-                    portalTrigger.ActivatePortal(true);
-                    monstersCleared = true;
-                    StopCoroutine("CheckMonstersCoroutine");
+                    if (portalTrigger != null)
+                    {
+                        portalTrigger.ActivatePortal(true);
+                        monstersCleared = true;
+                        StopCoroutine("CheckMonstersCoroutine");
+                    }
+                }
+                else
+                {
+                    Debug.Log("카운트 0아니여서 비활성화 되야함");
+                    if (portalTrigger != null)
+                    {
+                        portalTrigger.ActivatePortal(false);
+                    }
                 }
             }
-            else
-            {
-                Debug.Log("카운트 0아니여서 비활성화 되야함");
-                if (portalTrigger != null)
-                {
-                    portalTrigger.ActivatePortal(false);
-                }
-            }
+            //monstersInCurrentMap.RemoveAll(monster => monster == null);
+
+            //if (monstersInCurrentMap.Count == 0)
+            //{
+            //    // 몬스터가 모두 제거되면 포탈 활성화
+            //    if (portalTrigger != null)
+            //    {
+            //        portalTrigger.ActivatePortal(true);
+            //        monstersCleared = true;
+            //        StopCoroutine("CheckMonstersCoroutine");
+            //    }
+            //}
+            //else
+            //{
+            //    Debug.Log("카운트 0아니여서 비활성화 되야함");
+            //    if (portalTrigger != null)
+            //    {
+            //        portalTrigger.ActivatePortal(false);
+            //    }
+            //}
         } 
     }
 
@@ -94,7 +119,8 @@ public class MonsterManager : MonoBehaviour
                     Debug.Log($"방안인가?{PhotonNetwork.InRoom}");
                     if (PhotonNetwork.IsConnected && !PhotonNetwork.InRoom) clone = Instantiate(spawnInfo.monsterPrefab, spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
                     else if (PhotonNetwork.IsMasterClient) clone = PhotonNetwork.Instantiate($"Prefabs/Monster/{spawnInfo.monsterPrefab.name}", spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
-                    monstersInCurrentMap.Add(clone);
+                    //monstersInCurrentMap.Add(clone);
+
                     
                 }
                 break;
