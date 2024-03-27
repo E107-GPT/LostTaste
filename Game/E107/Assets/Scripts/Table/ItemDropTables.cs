@@ -33,7 +33,7 @@ public class ItemDropTables
     };
 
     public static readonly GameObject[] BOSS_ITEMS = new GameObject[] {
-        Load("OHS06_Sword"),    // test
+        Load("0031_MiniDrill")
     };
 
     public static readonly ProbabilityTable<GameObject[]> WOODEN_CHEST_TABLE = new ProbabilityTable<GameObject[]> {
