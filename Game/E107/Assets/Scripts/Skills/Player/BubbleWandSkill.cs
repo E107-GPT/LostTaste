@@ -8,12 +8,7 @@ public class BubbleWandSkill :Skill
     [field: SerializeField]
     public int Damage { get; set; }
 
-    protected override void Init()
-    {
-        SkillCoolDownTime = 0.5f;
-        RequiredMp = 10;
-
-    }
+    protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
     {
