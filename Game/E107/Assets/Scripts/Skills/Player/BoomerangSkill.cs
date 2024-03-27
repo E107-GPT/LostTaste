@@ -7,6 +7,9 @@ public class BoomerangSkill : Skill
     [field: SerializeField]
     public int Damage { get; set; }
 
+    [field: SerializeField]
+    public Vector3 Scale { get; set; }
+
     [SerializeField]
     private float StartVelocity = 10.0f;  // per seconds
 
@@ -30,20 +33,15 @@ public class BoomerangSkill : Skill
 
         yield return new WaitForSeconds(0.5f);
 
-        // Item boomerang = playerController.DropCurrentItem();
-        // boomerang.gameObject.transform.parent = null;
-
-        // Destroy(this.gameObject);
-        // playerController.ObtainWeapon("0000_Fist");
-
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BoomerangSkillEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         
-        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(player.transform, Damage, _seq);
 
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
         ps.transform.eulerAngles = Vector3.zero;
         skillObj.position = ps.transform.position;
+        skillObj.localScale = Scale;
 
         float vel = StartVelocity;
         while (vel > -StartVelocity)
