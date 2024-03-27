@@ -18,7 +18,7 @@ public class CrocodileSwordPattern : Pattern
     {
         Debug.Log("Sword - Crocodile");
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.7f);
         Root = _controller.transform;
         Vector3 dir = Root.forward;
 
