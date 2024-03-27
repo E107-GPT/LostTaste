@@ -31,7 +31,7 @@ public class ControlInterfaceManager : MonoBehaviour
     public GameObject skillNonePanel; // 스킬 없음 패널
 
 
-    // ------------------------------------------------ Life Cylce ------------------------------------------------
+    // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Update()
     {
@@ -46,7 +46,7 @@ public class ControlInterfaceManager : MonoBehaviour
     void UpdateControlInterface()
     {
         // PlayerController 컴포넌트를 찾아서 참조
-        _playerController = GameObject.FindObjectOfType<PlayerController>();
+        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
         if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 

@@ -10,13 +10,7 @@ public class NormalAttackSkill : Skill
     [field: SerializeField]
     private Vector3 Scale = new Vector3(3.0f, 2.0f, 3.0f);
 
-    protected override void Init()
-    {
-        SkillCoolDownTime = 0;
-        RequiredMp = 0;
-        
-
-    }
+    protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
     {

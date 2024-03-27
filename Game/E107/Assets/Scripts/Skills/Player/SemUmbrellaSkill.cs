@@ -10,11 +10,7 @@ public class SemUmbrellaSkill : Skill
     [field: SerializeField]
     private Vector3 Scale = new Vector3(5.0f, 5.0f, 5.0f);
 
-    protected override void Init()
-    {
-        SkillCoolDownTime = 12.0f;
-        RequiredMp = 30;
-    }
+    protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
     {
