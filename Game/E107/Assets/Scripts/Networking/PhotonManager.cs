@@ -363,6 +363,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Managers.Player.RemovePlayer(otherPlayer);
         Managers.Player.LoadPlayersInfoInCurrentRoom();
+        PhotonNetwork.JoinLobby();
 
     }
 
