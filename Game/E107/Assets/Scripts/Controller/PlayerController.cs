@@ -336,6 +336,10 @@ public class PlayerController : BaseController
         if (_detectedInteractable != null && Input.GetKeyDown(KeyCode.E))
         {
             _detectedInteractable.OnInteracted(this.gameObject);
+            if (photonView.IsMine)
+            {
+                if(_detectedInteractable is ItemChest) photonView.RPC("OpenChestRPC", RpcTarget.Others);
+            }
 
         }
 
@@ -415,9 +419,14 @@ public class PlayerController : BaseController
         //ObtainWeapon(itemName);
         _detectedInteractable.OnInteracted(this.gameObject);
         //GameObject go = Managers.Resource.Instantiate($"Weapons/{itemName}", _righthand.transform);
-
-
     }
+
+    [PunRPC]
+    void OpenChestRPC()
+    {
+        _detectedInteractable.OnInteracted(this.gameObject);
+    }
+
     [PunRPC]
     void DropCurrentItemRPC()
     {
