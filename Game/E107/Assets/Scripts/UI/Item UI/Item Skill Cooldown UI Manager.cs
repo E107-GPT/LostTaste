@@ -66,7 +66,7 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
     void UpdateItemCoolDownPanel()
     {
         // PlayerController 컴포넌트를 찾아서 참조
-        _playerController = GameObject.FindObjectOfType<PlayerController>();
+        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
         if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 
