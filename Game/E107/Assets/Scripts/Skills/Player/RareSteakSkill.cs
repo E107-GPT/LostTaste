@@ -10,7 +10,7 @@ public class RareSteakSkill : ConsumingSkill
     {
         Managers.Sound.Play("bite1", Define.Sound.Effect, 0.6f);
 
-        playerController.Stat.Hp = Mathf.Min(100, playerController.Stat.Hp + HpRecoveryAmount);
+        playerController.Stat.Hp = Mathf.Min(playerController.Stat.MaxHp, playerController.Stat.Hp + HpRecoveryAmount);
 
         yield return null;
     }
