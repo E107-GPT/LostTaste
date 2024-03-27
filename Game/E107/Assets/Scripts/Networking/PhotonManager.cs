@@ -140,12 +140,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void MakePersonalRoom()
     {
-        Debug.Log("CreateRoom");
+        //Debug.Log("CreateRoom");
         PhotonManager manager = GameObject.Find("gm").GetComponent<PhotonManager>();
 
         string roomName = UserInfo.GetInstance().getNickName() + "의 방";
         string captainName = UserInfo.GetInstance().getNickName();
-        Debug.Log(captainName + " + " + roomName);
+        //Debug.Log(captainName + " + " + roomName);
 
 
         RoomOptions room = new RoomOptions();
@@ -153,7 +153,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.IsVisible = false;
         room.IsOpen = false;
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
-        Debug.Log(room);
+        //Debug.Log(room);
 
         room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", false } };
         room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword" };
@@ -166,7 +166,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonUIManager manager = GameObject.Find("gm").GetComponent<PhotonUIManager>();
         string roomName = manager.GetDescription();
         string captainName = "player";//UserInfo.GetInstance().getNickName();
-        Debug.Log(captainName + " + " + roomName);
 
         if (captainName == null || roomName == null) return;
 
@@ -179,7 +178,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = manager.GetName();
         bool ispassword = manager.GetIsPassword();
         string password = manager.GetPassword();
-        Debug.Log("pw" + password);
         if (ispassword)
         {
             room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword }, { "password", password } };
@@ -191,8 +189,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword" };
         }
 
-        Debug.Log("pw" + (bool)room.CustomRoomProperties["ispassword"]);
-        Debug.Log(room);
         
         roomMakePanel.SetActive(false);
         PhotonNetwork.CreateRoom(roomName, room);
@@ -202,7 +198,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void roomEnter(int roomNumber)
     {
-        Debug.Log(roomNumber);
         string nickname = GameObject.Find("gm").GetComponent<PhotonUIManager>().GetName();
         if (nickname == null) return;
         PhotonNetwork.NickName = nickname;
@@ -245,7 +240,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
 
         int idx = 0;
-        Debug.Log(roomlist.ToArray());
         foreach (RoomInfo room in roomlist)
         {
             partySelectButton[idx].SetActive(true);
@@ -282,16 +276,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log("asdasdadas" + roomList);
         foreach (RoomInfo rooom in roomList)
         {
-            Debug.Log(rooom);
             bool change = false;
             for(int i = 0; i< roomlist.Count; i++)
             {
                 if(roomlist[i].Name == rooom.Name)
                 {
-                    Debug.Log("알아");
                     if (rooom.PlayerCount != 0)
                         roomlist[i] = rooom;
                     // no player, no open, no multy
@@ -329,7 +320,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("하이");
+        //Debug.Log("하이");
         isConnectRoom = true;
         roomListPanel.SetActive(false);
         passwordPanel.SetActive(false);
@@ -342,10 +333,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             //���� ������ �ƴϸ� ��ȯ
-            Debug.Log($"{PhotonNetwork.PlayerList[i].IsLocal}");
+            //Debug.Log($"{PhotonNetwork.PlayerList[i].IsLocal}");
             if (PhotonNetwork.PlayerList[i].IsLocal)
             {
-                Debug.Log($"{PhotonNetwork.PlayerList[i].ActorNumber}");
+                //Debug.Log($"{PhotonNetwork.PlayerList[i].ActorNumber}");
                 GameObject singlePlayer = GameObject.Find("Player");
                 Vector3 position = Vector3.zero;
                 Quaternion rotate = Quaternion.identity;
@@ -370,20 +361,49 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
                 GameObject player2 = PhotonNetwork.Instantiate("Player", position, rotate, 0);
                 //Assets/Resources/Prefabs/Player/Player.prefab
-                Debug.Log(player2);
+                //Debug.Log(player2);
                 player2.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
                 HUDManager hud = GameObject.Find("HUD").GetComponent<HUDManager>();
                 hud.playerController = player2.GetComponent<PlayerController>();
                 player2.name = "Player";
                 GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player2;
+
+                Managers.Player.SetLocalPlayerInfo(Define.ClassType.Warrior);
+                Managers.Player.LoadPlayersInfoInCurrentRoom();
+
             }
         }
     }
 
     public override void OnLeftRoom()
     {
+        Managers.Player.Clear();
         PhotonNetwork.JoinLobby();
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Managers.Player.AddPlayer(newPlayer);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Managers.Player.RemovePlayer(otherPlayer);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+    }
+
+
 
 
     #endregion
