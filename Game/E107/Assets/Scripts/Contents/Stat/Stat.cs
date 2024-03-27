@@ -65,6 +65,13 @@ public class Stat
                 _moveSpeed = 8.0f;
                 _attackRange = 6.0f;
                 break;
+            case Define.UnitType.IceKing:
+                _hp = 2000;
+                _maxHp = 2000;
+                _attackDamage = 20;
+                _moveSpeed = 8.0f;
+                _attackRange = 10.0f;
+                break;
             case Define.UnitType.MonsterKing:
                 _hp = 4000;
                 _maxHp = 4000;

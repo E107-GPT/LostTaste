@@ -25,9 +25,8 @@ public class PatternObject : MonoBehaviour
         if (other == null) return;
         if (_attacker.gameObject.CompareTag("Monster") && other.gameObject.CompareTag("Player"))
         {
-            Debug.Log($"Monster Target: {other.gameObject.name}");
-
             other.gameObject.GetComponent<PlayerController>().TakeDamage(_id, _damage);
+            Debug.Log($"Monster Target: {other.gameObject.name} HP: {other.gameObject.GetComponent<PlayerController>().Stat.Hp}");
         }
 
     }

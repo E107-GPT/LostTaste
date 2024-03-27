@@ -25,6 +25,7 @@ public class PlayerController : BaseController
     Color _attackedColor = Color.red;
 
     public PlayerStat Stat { get { return _stat; } }
+    public Item[] Inventory { get { return _inventory; } }
 
     protected float _lastLeftSkillCastTime;
     protected float _lastRightSkillCastTime;
@@ -68,7 +69,6 @@ public class PlayerController : BaseController
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
 
-        Debug.Log("키 이벤트 추가됨");
         StartMpRecover();
 
         _statemachine.ChangeState(new IdleState(this));
@@ -112,9 +112,9 @@ public class PlayerController : BaseController
     }
     public override void ExcuteMove()
     {
-        if (isConnected && PhotonNetwork.InRoom)
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
-            if ((isConnected && photonView.IsMine == false)) return;
+            if ((PhotonNetwork.IsConnected && photonView.IsMine == false)) return;
         }
         base.ExcuteMove();
         if (Input.GetKey(KeyCode.W))
@@ -166,7 +166,7 @@ public class PlayerController : BaseController
         if (Input.anyKey == false)
         {
             _statemachine.ChangeState(new IdleState(this));
-            if (isConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
+            if (PhotonNetwork.IsConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
         }
 
     }
@@ -272,9 +272,9 @@ public class PlayerController : BaseController
     #region InputMethod
     void OnMouseClicked(Define.MouseEvent evt)
     {
-        if (isConnected && PhotonNetwork.InRoom)
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
-            if ((isConnected && photonView.IsMine == false)) return;
+            if ((PhotonNetwork.IsConnected && photonView.IsMine == false)) return;
         }
         //Debug.Log($"{CurState?.ToString()}");
         if (_statemachine.CurState is DieState || _statemachine.CurState is SkillState || CurState is DashState) return;
@@ -303,20 +303,17 @@ public class PlayerController : BaseController
             }
             else if (Input.GetMouseButton(1))
             {
-                if (_stat.Mp >= _inventory[_currentItemNum].RightSkill.RequiredMp)
-                {
-                    Debug.Log($"Rquired Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
-                    if (_lastRightSkillCastTime == 0 || Time.time - _lastRightSkillCastTime >= _inventory[_currentItemNum].RightSkill.SkillCoolDownTime)
-                    {
-                        _curSkill = Define.SkillType.RightSkill;
-                        _statemachine.ChangeState(new SkillState(this));
+                if (_stat.Mp < _inventory[_currentItemNum].RightSkill.RequiredMp) return;
 
+                Debug.Log($"Required Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
 
-                        //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
-                    }
+                float lastSkillCastTime = _inventory[_currentItemNum].RightSkill.LastCastTime;
+                if (lastSkillCastTime != 0 && Time.time - lastSkillCastTime < _inventory[_currentItemNum].RightSkill.SkillCoolDownTime) return;
 
-                }
+                _curSkill = Define.SkillType.RightSkill;
+                _statemachine.ChangeState(new SkillState(this));
 
+                //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
             }
 
 
@@ -326,10 +323,11 @@ public class PlayerController : BaseController
 
     void OnKeyboard()
     {
-        Debug.Log($"{gameObject.name} {isConnected}, {photonView != null}");
-        if (isConnected && PhotonNetwork.InRoom) {
-            if ((isConnected && photonView.IsMine == false)) return;
+        //Debug.Log($"{gameObject.name} {isConnected}, {photonView != null}");
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom) {
+            if ((PhotonNetwork.IsConnected && photonView.IsMine == false)) return;
         }
+
 
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 

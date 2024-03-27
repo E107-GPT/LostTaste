@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class Skill : MonoBehaviour
 {
     public static int _seq;
-    protected float _lastCastTime;
+    public float LastCastTime { get; set; }
 
     [field: SerializeField]
     [ReadOnly(false)]
@@ -33,34 +33,34 @@ public abstract class Skill : MonoBehaviour
     {
         Root = transform.root;
 
-        // TOOD: Sprite°¡ nullÀÌ¸é ±âº» Sprite ÇÒ´ç
+        // TOOD: Spriteï¿½ï¿½ nullï¿½Ì¸ï¿½ ï¿½âº» Sprite ï¿½Ò´ï¿½
 
         Init();
     }
 
-    // ½ºÅ³ Äð´Ù¿î ¼³Á¤
+    // ï¿½ï¿½Å³ ï¿½ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½
     protected abstract void Init();
 
     [Obsolete("\n====================\n" +
-        "½ºÅ³ º°·Î ±âº» °ø°Ý ´ë¹ÌÁö¿Í ¹üÀ§°¡ ´Þ¶ó ÀÌ ¸Þ¼Òµå´Â ¾ø¾Ù ¿¹Á¤ÀÔ´Ï´Ù.\n" +
-        "°¢ ½ºÅ³¸¶´Ù ÇÏµåÄÚµùÇÏ¿© Ãß°¡ÇØÁÖ½Ã°í, ÇÊ¿ä½Ã ÃßÈÄ ´ë¹ÌÁö ¹èÀ², ¹üÀ§ ¹èÀ² µîÀ» ÀÎÀÚ·Î ³Ñ±â´Â ¸Þ¼Òµå¸¦ Ãß°¡ÇÏ°Ú½À´Ï´Ù.\n" +
-        "ÀÌ ¸Þ¼Òµå ´ë½Å ÀÎÀÚ°¡ ¾ø´Â Cast()¸¦ »ç¿ëÇØÁÖ¼¼¿ä."
+        "ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¶ï¿½ ï¿½ï¿½ ï¿½Þ¼Òµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.\n" +
+        "ï¿½ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ï¿½ï¿½ ï¿½Ïµï¿½ï¿½Úµï¿½ï¿½Ï¿ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½Ö½Ã°ï¿½, ï¿½Ê¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½Ñ±ï¿½ï¿½ ï¿½Þ¼Òµå¸¦ ï¿½ß°ï¿½ï¿½Ï°Ú½ï¿½ï¿½Ï´ï¿½.\n" +
+        "ï¿½ï¿½ ï¿½Þ¼Òµï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ Cast()ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½."
     )]
     public int Cast(int attackDamage, float attackRange)
     {
-        Managers.Coroutine.Run(SkillCoroutine(attackDamage, attackRange));   // TODO: ÀÇ¹Ì¾ø´Â ÆÄ¶ó¹ÌÅÍ Á¦°Å
-        _lastCastTime = Time.time;
+        Managers.Coroutine.Run(SkillCoroutine(attackDamage, attackRange));   // TODO: ï¿½Ç¹Ì¾ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        LastCastTime = Time.time;
         return RequiredMp;
     }
     public int Cast()
     {
         Managers.Coroutine.Run(SkillCoroutine());
-        _lastCastTime = Time.time;
+        LastCastTime = Time.time;
         return RequiredMp;
     }
 
     [Obsolete("\n====================\n" +
-        "ÀÌ ¸Þ¼Òµå ´ë½Å ÀÎÀÚ°¡ ¾ø´Â SkillCoroutine()À» ±¸ÇöÇØÁÖ¼¼¿ä."
+        "ï¿½ï¿½ ï¿½Þ¼Òµï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ SkillCoroutine()ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½."
     )]
     protected virtual IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {

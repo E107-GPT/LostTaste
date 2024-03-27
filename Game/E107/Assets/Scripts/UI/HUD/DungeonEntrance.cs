@@ -24,7 +24,13 @@ public class DungeonEntrance : MonoBehaviour
 
     // 지도 패널
     [Header("[ 지도 패널 ]")]
-    public TextMeshProUGUI stageText; // 스테이지 이름 텍스트
+    public TextMeshProUGUI stageText; // 스테이지 텍스트
+
+    // 스테이지 패널
+    [Header("[ 스테이지 패널 ]")]
+    public GameObject stagePanel; // 스테이지 패널
+    public TextMeshProUGUI stageLevelText; // 스테이지 레벨 텍스트
+    public TextMeshProUGUI stageNameText; // 스테이지 이름 텍스트
 
     // 게임 메뉴
     [Header("[ 게임 메뉴 ]")]
@@ -78,7 +84,10 @@ public class DungeonEntrance : MonoBehaviour
 
             isInCamp = false;
             timeContainerPanel.SetActive(true); // 게임 시간 UI 활성화
-            stageText.text = "Stage 1 - 깊은 숲"; // 스테이지 텍스트를 캠프에 맞게 업데이트
+            stageText.text = "STAGE 1 - 깊은 숲"; // 스테이지 텍스트 업데이트
+
+            stageLevelText.text = "STAGE 1"; // 스테이지 레벨 텍스트를 업데이트
+            stageNameText.text = "깊은 숲"; // 스테이지 이름 텍스트를 업데이트
 
             campGameMenu.SetActive(false); // 캠프 게임 메뉴 비활성화
             dungeonGameMenu.SetActive(true); // 던전 게임 메뉴 활성화
@@ -89,6 +98,16 @@ public class DungeonEntrance : MonoBehaviour
             stage3Icon.SetActive(false); // Stage 3 클리어 아이콘 비활성화
             finalStageIcon.SetActive(false); // Final Stage 클리어 아이콘 비활성화
             stageClearText.text = "클리어한 스테이지가 없습니다.";
+
+            StartCoroutine(ShowStagePanel());
         }
+    }
+
+    // 5초간 스테이지 패널을 활성화하고, 다시 비활성화 하는 코루틴
+    IEnumerator ShowStagePanel()
+    {
+        stagePanel.SetActive(true);
+        yield return new WaitForSeconds(5);
+        stagePanel.SetActive(false);
     }
 }

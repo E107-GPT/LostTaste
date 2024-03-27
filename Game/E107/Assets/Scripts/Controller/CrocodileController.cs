@@ -1,3 +1,4 @@
+﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,13 +11,12 @@ public class CrocodileController : MonsterController
     {
         base.Init();
 
-        // Other Class
         _stat = new MonsterStat(_unitType);
         _swordPS = GetComponentInChildren<ParticleSystem>();
-        PrintText("PS : " + _swordPS.name);
         _swordPS.Stop();
+        
     }
-
+    
     protected override void ChangeStateFromMove()
     {
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
@@ -65,17 +65,25 @@ public class CrocodileController : MonsterController
     public override void EnterCrocodileSwordState()
     {
         base.EnterCrocodileSwordState();
-        _swordPS.Play();
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+            photonView.RPC("RPC_ChangeCrocodileSwordState", RpcTarget.Others);
+        }
+        
 
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
-        ToDetectPlayer(0.8f);
+        //ToDetectPlayer(0.8f);
         //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
         //Vector3 destPos = new Vector3(dirTarget.x, 0, dirTarget.z);
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
-
+        _swordPS.Play();
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("Sword", 0.2f, -1, 0);
+
+        
     }
     public override void ExcuteCrocodileSwordState()
     {
@@ -109,10 +117,38 @@ public class CrocodileController : MonsterController
             }
         }
     }
+
     public override void ExitCrocodileSwordState()
     {
         base.ExitCrocodileSwordState();
         _swordPS.Stop();
     }
 
+    [PunRPC]
+    void RPC_ChangeCrocodileSwordState()
+    {
+        _statemachine.ChangeState(new CrocodileSwordState(this));
+    }
+
+    [PunRPC]
+    void RPC_ChangeIdleState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMoveState()
+    {
+        _statemachine.ChangeState(new MoveState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeSkillState()
+    {
+        // ???�ٲ�� ������
+        _statemachine.ChangeState(new SkillState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
 }

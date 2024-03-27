@@ -50,6 +50,7 @@ public class Define
         Specter,
         Skeleton,
         Crocodile,
+        IceKing,
         MonsterKing,
     }
 
@@ -74,9 +75,16 @@ public class Define
         SkeletonAttackEffect,
         SpecterAttackEffect,
         CrocodileSwordEffect,
-        CrocodileAttackEffect, 
-        HitDownEndEffect,
-        HitDownStartEffect,
+        CrocodileAttackEffect,
+        CrocodileSwordTail,
+        IceKingCleaveEffect,
+        IceKingSpikeEffect,
+        KingHitDownEndEffect,
+        KingHitDownStartEffect,
+        KingSlashLurkerEffect,
+        KingSlashStartEffect,
+        KingStabChargeEffect,
+        KingStabEffect,
         MaxCount
     }
 
@@ -91,5 +99,11 @@ public class Define
         LeftSkill,
         RightSkill,
         ClassSkill
+    }
+
+    public enum ClassType
+    {
+        None,
+        Warrior
     }
 }

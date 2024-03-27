@@ -7,6 +7,9 @@ public class BoomerangSkill : Skill
     [field: SerializeField]
     public int Damage { get; set; }
 
+    [field: SerializeField]
+    public Vector3 Scale { get; set; }
+
     [SerializeField]
     private float StartVelocity = 10.0f;  // per seconds
 
@@ -30,22 +33,18 @@ public class BoomerangSkill : Skill
 
         yield return new WaitForSeconds(0.5f);
 
-        // Item boomerang = playerController.DropCurrentItem();
-        // boomerang.gameObject.transform.parent = null;
-
-        // Destroy(this.gameObject);
-        // playerController.ObtainWeapon("0000_Fist");
-
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BoomerangSkillEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         
-        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(player.transform, Damage, _seq);
 
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
         ps.transform.eulerAngles = Vector3.zero;
         skillObj.position = ps.transform.position;
+        skillObj.localScale = Scale;
 
         float vel = StartVelocity;
+        float prevVel = StartVelocity;
         while (vel > -StartVelocity)
         {
             // 투사체와 파티클 시스템을 앞으로 움직입니다.
@@ -53,7 +52,21 @@ public class BoomerangSkill : Skill
             skillObj.position += moveStep;
             ps.transform.position += moveStep;
 
-            vel += Acceleration * Time.deltaTime;   // 속도를 변화시킵니다.
+            prevVel = vel;
+            vel += Acceleration * Time.deltaTime;   // 속도를 변화시킵니다
+
+            if (prevVel >= 0 && vel < 0)
+            {
+                Debug.Log("Boomerang Returning");
+                Transform newSkillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+                newSkillObj.GetComponent<SkillObject>().SetUp(player.transform, Damage, _seq + 1);
+                skillObj.position = ps.transform.position;
+                skillObj.localScale = Scale;
+
+                Destroy(skillObj.gameObject);
+                skillObj = newSkillObj;
+            }
+
             yield return null; // 다음 프레임까지 대기합니다.
         }
         Managers.Resource.Destroy(skillObj.gameObject);

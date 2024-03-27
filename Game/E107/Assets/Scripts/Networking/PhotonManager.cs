@@ -174,14 +174,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword }, { "seed", seed } };
             room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword", "seed" };
         }
-
         roomMakePanel.SetActive(false);
         PhotonNetwork.CreateRoom(roomName, room);
     }
 
     public void roomEnter(int roomNumber)
     {
-        Debug.Log(roomNumber + " : " + roomlist[roomNumber]);
         // 나중에 수정
         string nickname = "Player";//UserInfo.GetInstance().getNickName();
         
@@ -322,6 +320,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 hud.playerController = player.GetComponent<PlayerController>();
                 player.name = "Player";
                 GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player;
+
+                Managers.Player.SetLocalPlayerInfo(Define.ClassType.Warrior);
+                Managers.Player.LoadPlayersInfoInCurrentRoom();
+
             }
         }
 
@@ -338,8 +340,34 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        Managers.Player.Clear();
         PhotonNetwork.JoinLobby();
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Managers.Player.AddPlayer(newPlayer);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Managers.Player.RemovePlayer(otherPlayer);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+    }
+
+
+
 
     #endregion
 }

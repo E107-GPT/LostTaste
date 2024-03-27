@@ -9,10 +9,6 @@ public class ModifyRoomSettings : MonoBehaviourPunCallbacks
     // 포탈 타면 룸 생성 혹은 생성된 룸 커스텀
 
     bool makeRoom = false;
-    public override void OnCreatedRoom()
-    {
-        Debug.Log("만들어지");
-    }
 
     private void OnTriggerEnter(Collider other)
     {

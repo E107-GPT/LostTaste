@@ -62,6 +62,7 @@ public abstract class BaseController : MonoBehaviour
 		_statemachine = new StateMachine();
 		_animator = GetComponent<Animator>();
 		_rigidbody = GetComponent<Rigidbody>();
+		_rigidbody.isKinematic = true;				// 캐릭터가 몬스터를 밀었을때 가속도를 받지 않기 위함
 		_agent = GetComponent<NavMeshAgent>();
 		photonView = GetComponent<PhotonView>();
 		Init();
@@ -75,10 +76,7 @@ public abstract class BaseController : MonoBehaviour
 	}
     void Update()
 	{
-        if (isConnected != PhotonNetwork.InRoom)
-        {
-            isConnected = PhotonNetwork.InRoom;
-        }
+
         _statemachine.Execute();
 	}
 
@@ -144,6 +142,11 @@ public abstract class BaseController : MonoBehaviour
     public virtual void ExcuteCrocodileSwordState() { }
     public virtual void ExitCrocodileSwordState() { }
 
+    // IceKingSpikeState - not loop
+    public virtual void EnterIceKingSpikeState() { }
+    public virtual void ExcuteIceKingSpikeState() { }
+    public virtual void ExitIceKingSpikeState() { }
+
     // MonsterKing - not loop
     public virtual void EnterMonsterKingHitDownState() { }		// HitDown
 	public virtual void ExecuteMonsterKingHitDownState() { }
@@ -172,15 +175,4 @@ public abstract class BaseController : MonoBehaviour
 		_statemachine.ChangeState(new IdleState(this));
 
 	}
-
-    private void FixedUpdate()
-    {
-        FreezeVelocity();
-    }
-
-    // 캐릭터에게 물리력을 받아도 밀려나는 가속도로 인해 이동에 방해받지 않는다.
-    protected void FreezeVelocity()
-    {
-        //_rigidbody.velocity = Vector3.zero;
-    }
 }
