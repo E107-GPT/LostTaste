@@ -118,7 +118,7 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
 
         while (skillCoolDown > 0.0f)
         {
-            skillCoolDown -= Time.unscaledDeltaTime;
+            skillCoolDown -= Time.deltaTime;
             coolDownImage.fillAmount = skillCoolDown / item.RightSkill.SkillCoolDownTime;
             keyImage.fillAmount = skillCoolDown / item.RightSkill.SkillCoolDownTime;
             skillCoolDownText.text = Mathf.Ceil(skillCoolDown).ToString() + "s";
