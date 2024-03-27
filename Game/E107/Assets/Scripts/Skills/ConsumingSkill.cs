@@ -26,7 +26,7 @@ public abstract class ConsumingSkill : Skill
 
         Destroy(this.gameObject);
 
-        StartCoroutine(OnConsume(playerController));
+        Managers.Coroutine.Run(OnConsume(playerController));
 
         playerController.ObtainWeapon(_weaponName);
         playerController.StateMachine.ChangeState(new IdleState(playerController));
