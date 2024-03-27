@@ -8,12 +8,17 @@ using TMPro;
 /// </summary>
 public class ItemInteraction : MonoBehaviour
 {
+    // ------------------------------------------------ 변수 선언 ------------------------------------------------
+
+    // 아이템 인터렉션 클래스가 사용할 변수 선언
+    private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
+    private IPlayerInteractable _detectedInteractable; // 플레이어 접촉 상호작용
+
     // 상호작용 UI
     [Header("[ 상호작용 UI ]")]
     public GameObject interactionUI;
     public TextMeshProUGUI itemName; // 아이템 이름
 
-    private Item currentItem; // 현재 상호작용 중인 아이템
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
 
@@ -23,38 +28,42 @@ public class ItemInteraction : MonoBehaviour
         UpdateInteractionUI();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player")) // 캐릭터가 아이템 영역 안으로 들어옴
-        {
-            // 부딪힌 아이템의 정보를 가져옴
-            currentItem = other.GetComponent<Item>();
-            if (currentItem != null)
-            {
-                interactionUI.SetActive(true); // 상호작용 UI 활성화
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player") && currentItem != null) // 캐릭터가 아이템 영역을 벗어남
-        {
-            interactionUI.SetActive(false); // 상호작용 UI 비활성화
-            currentItem = null; // 현재 상호작용 중인 아이템 정보 초기화
-        }
-    }
-
 
     // ------------------------------------------------ 사용자 정의 메서드 ------------------------------------------------
 
-    // 인벤토리를 업데이트하는 메서드
+    // 인터렉션 UI를 업데이트하는 메서드
     void UpdateInteractionUI()
     {
-        if (currentItem != null)
+        // PlayerController 컴포넌트를 찾아서 참조
+        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
+
+        // PlayerController의 인터렉션에 접근
+        _detectedInteractable = _playerController.DetectedInteractable;
+
+        if (_detectedInteractable != null)
         {
-            itemName.text = $"<color={GetTierColor(currentItem.Tier)}>{currentItem.Name}</color>"; // 아이템 이름에 색상 적용
+            // UI 활성화
+            interactionUI.SetActive(true);
+
+            // 접촉중인 아이템 가져옴
+            Item item = _detectedInteractable as Item;
+
+            if (item != null)
+            {
+                // 아이템의 상세 정보를 UI에 표시
+                itemName.text = $"<color={GetTierColor(item.Tier)}>{item.Name}</color>"; // 아이템 이름에 색상 적용
+            }
         }
+        else
+        {
+            // UI 비활성화
+            interactionUI.SetActive(false);
+            itemName.text = "";
+        }
+
+        Debug.Log($"이름@@@@@@@@@@@@{_detectedInteractable}");
     }
 
     // 티어에 따른 색상 반환하는 메서드
