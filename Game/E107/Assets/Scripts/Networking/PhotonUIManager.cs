@@ -26,11 +26,6 @@ public class PhotonUIManager : MonoBehaviour
     #endregion
 
     #region public Methods
-
-    public void SetName(string uname)
-    {
-        userName = uname;
-    }
     public void SetDescription(string description)
     {
         this.description = description;
@@ -38,22 +33,6 @@ public class PhotonUIManager : MonoBehaviour
     public string GetDescription()
     {
         return description;
-    }
-
-    public string GetName()
-    {
-        return userName;
-    }
-
-    public void SetTitle(string newRoomName)
-    {
-        roomName = newRoomName;
-        Debug.Log(roomName);
-    }
-
-    public string GetTitle()
-    {
-        return roomName;
     }
 
     public void SetPassword(string pw)
@@ -89,9 +68,6 @@ public class PhotonUIManager : MonoBehaviour
 
         return msg;
     }
-
-
-
     public void TestPost()
     {
         Dictionary<string, string> request = new Dictionary<string, string>();
