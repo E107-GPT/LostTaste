@@ -17,7 +17,7 @@ public class ItemInteraction : MonoBehaviour
     // 상호작용 UI
     [Header("[ 상호작용 UI ]")]
     public GameObject interactionUI;
-    public TextMeshProUGUI itemName; // 아이템 이름
+    public TextMeshProUGUI nameText; // 이름 텍스트
 
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
@@ -44,47 +44,90 @@ public class ItemInteraction : MonoBehaviour
 
         if (_detectedInteractable != null)
         {
-            // UI 활성화
+            // 상호작용 가능한 대상이 감지되면 UI 업데이트
             interactionUI.SetActive(true);
-
-            // 접촉중인 아이템 가져옴
-            Item item = _detectedInteractable as Item;
-
-            if (item != null)
-            {
-                // 아이템의 상세 정보를 UI에 표시
-                itemName.text = $"<color={GetTierColor(item.Tier)}>{item.Name}</color>"; // 아이템 이름에 색상 적용
-            }
+            DisplayInteractableInfo();
         }
         else
         {
-            // UI 비활성화
+            // 감지된 대상이 없으면 UI 비활성화 및 텍스트 초기화
             interactionUI.SetActive(false);
-            itemName.text = "";
+            nameText.text = "";
         }
-
-        Debug.Log($"이름@@@@@@@@@@@@{_detectedInteractable}");
     }
 
-    // 티어에 따른 색상 반환하는 메서드
-    string GetTierColor(ItemTier tier)
+    // 상호작용 가능한 대상에 따라 UI에 정보를 표시
+    void DisplayInteractableInfo()
     {
-        switch (tier)
+        if (_detectedInteractable is Item)
+        {
+            // 아이템일 경우 아이템 정보 표시
+            DisplayItemInfo(_detectedInteractable as Item);
+        }
+        else if (_detectedInteractable is RandomItemChest)
+        {
+            // 아이템 상자일 경우 상자 정보 표시
+            DisplayChestInfo(_detectedInteractable as RandomItemChest);
+        }
+    }
+
+    // 아이템 정보를 UI에 표시
+    void DisplayItemInfo(Item item)
+    {
+        string colorHex = "";
+
+        switch (item.Tier)
         {
             case ItemTier.COMMON:
-                return "#BFBFBF";
+                colorHex = "#BFBFBF";
+                break;
             case ItemTier.UNCOMMON:
-                return "#1AAC9C";
+                colorHex = "#1AAC9C";
+                break;
             case ItemTier.RARE:
-                return "#3498DB";
+                colorHex = "#3498DB";
+                break;
             case ItemTier.EPIC:
-                return "#9B59B6";
+                colorHex = "#9B59B6";
+                break;
             case ItemTier.LEGENDARY:
-                return "#F1C40F";
+                colorHex = "#F1C40F";
+                break;
             case ItemTier.BOSS:
-                return "#E74C3C";
+                colorHex = "#E74C3C";
+                break;
             default:
-                return "#FFFFFF"; // 기본 값으로 흰색 반환
+                colorHex = "#FFFFFF"; // 기본 값으로 흰색 반환
+                break;
         }
+
+        nameText.text = $"<color={colorHex}>{item.Name}</color>";
+    }
+
+    // 아이템 상자 정보를 UI에 표시
+    void DisplayChestInfo(RandomItemChest itemChest)
+    {
+        string chestTypeName = "";
+        string colorHex = "";
+
+        switch (itemChest.ChestType)
+        {
+            case ItemChestType.WOODEN:
+                chestTypeName = "허름한 나무 상자";
+                colorHex = "#FFFFFF"; // 흰색
+                break;
+            case ItemChestType.BETTER:
+                chestTypeName = "튼튼한 나무 상자";
+                colorHex = "#4682B4"; // 청색
+                break;
+            case ItemChestType.GOLDEN:
+                chestTypeName = "찬란한 황금 상자";
+                colorHex = "#FFD700"; // 금색
+                break;
+            default:
+                break;
+        }
+
+        nameText.text = $"<color={colorHex}>{chestTypeName}</color>";
     }
 }
