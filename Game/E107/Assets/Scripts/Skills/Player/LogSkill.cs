@@ -39,20 +39,8 @@ public class LogSkill : Skill
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
 
-        if (UnityEngine.Random.Range(0.0f, 1.0f) < BreakProbability)
-        {
-            // ºÎ¼­Áü!
-            Debug.Log("ºÎ¼­Áü!");
-            Managers.Sound.Play("wood_break", Define.Sound.Effect, 1);
-
-            Destroy(this.gameObject);
-            playerController.ObtainWeapon("0000_Fist");
-            playerController.StateMachine.ChangeState(new IdleState(playerController));
-        }
-
-        yield return new WaitForSeconds(0.2f);
         Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
     }
