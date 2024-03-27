@@ -87,7 +87,6 @@ public class PhotonChatManager : MonoBehaviour
         chatPrefab.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = chatMessage.message;
         
         chatPrefab.transform.SetParent(chatContainer.transform, false);
-
     }
 
     public void openChatting()

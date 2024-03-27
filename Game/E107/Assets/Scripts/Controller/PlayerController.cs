@@ -331,9 +331,6 @@ public class PlayerController : BaseController
             if ((isConnected && photonView.IsMine == false)) return;
         }
 
-
-        Debug.Log("왜 안되지?");
-
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 
 
