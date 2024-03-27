@@ -262,7 +262,7 @@ public class PlayerController : BaseController
 
         // 추가한 부분
         GetComponent<Collider>().enabled = false;
-        //_agent.enabled = false;
+        _agent.enabled = false;
 
         
 
