@@ -212,28 +212,6 @@ public class PlayerController : BaseController
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.ClassSkill, gameObject.transform.rotation);
                 break;
         }
-
-        //if (Input.GetMouseButton(0))
-        //{
-
-
-
-        //}
-        //else if (Input.GetMouseButton(1))
-        //{
-
-
-
-
-        //}
-        //else if (Input.GetKey(KeyCode.Q))
-        //{
-        //    Debug.Log("QQQQQQQQ");
-
-        //}
-
-
-
     }
 
     public override void ExcuteSkill()
