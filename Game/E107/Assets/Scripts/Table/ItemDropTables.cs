@@ -17,6 +17,7 @@ public class ItemDropTables
         Load("0012_HeroSword"),
         Load("0019_FryingPan"),
         Load("0028_BubbleWand"),
+        Load("0035_BoardApple"),
     };
 
     public static readonly GameObject[] RARE_ITEMS = new GameObject[] {
