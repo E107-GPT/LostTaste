@@ -11,7 +11,7 @@ public class MonsterKingSlashPattern : Pattern
 
     protected override void Init()
     {
-        PatternName = "SlashLurkerEffect";
+        PatternName = "KingSlashLurkerEffect";
         _controller = GetComponent<MonsterKingController>();
     }
     public override void DeActiveCollider()
@@ -31,8 +31,8 @@ public class MonsterKingSlashPattern : Pattern
         Root = _controller.transform;
         yield return new WaitForSeconds(0.1f);
 
-        _particle = Managers.Effect.Play(Define.Effect.SlashLurkerEffect, Root);
-        _sectorLoc = Managers.Resource.Instantiate("Patterns/SlashLurkerCollider").transform;
+        _particle = Managers.Effect.Play(Define.Effect.KingSlashLurkerEffect, Root);
+        _sectorLoc = Managers.Resource.Instantiate("Patterns/KingSlashLurkerCollider").transform;
         _sectorLoc.position = Root.position;
         _sectorLoc.rotation = Root.rotation;
 

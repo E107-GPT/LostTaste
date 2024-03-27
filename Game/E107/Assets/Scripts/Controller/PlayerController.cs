@@ -70,7 +70,6 @@ public class PlayerController : BaseController
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
 
-        Debug.Log("키 이벤트 추가됨");
         StartMpRecover();
 
         _statemachine.ChangeState(new IdleState(this));
