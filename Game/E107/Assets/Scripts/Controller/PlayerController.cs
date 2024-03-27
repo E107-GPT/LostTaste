@@ -337,6 +337,10 @@ public class PlayerController : BaseController
         if (_detectedInteractable != null && Input.GetKeyDown(KeyCode.E))
         {
             _detectedInteractable.OnInteracted(this.gameObject);
+            if (photonView.IsMine)
+            {
+                if(_detectedInteractable is ItemChest) photonView.RPC("OpenChestRPC", RpcTarget.Others);
+            }
 
         }
 
@@ -416,9 +420,14 @@ public class PlayerController : BaseController
         //ObtainWeapon(itemName);
         _detectedInteractable.OnInteracted(this.gameObject);
         //GameObject go = Managers.Resource.Instantiate($"Weapons/{itemName}", _righthand.transform);
-
-
     }
+
+    [PunRPC]
+    void OpenChestRPC()
+    {
+        _detectedInteractable.OnInteracted(this.gameObject);
+    }
+
     [PunRPC]
     void DropCurrentItemRPC()
     {
@@ -479,7 +488,7 @@ public class PlayerController : BaseController
 
     public void DetectInteractable()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.0f, LayerMask.GetMask("Item") | LayerMask.GetMask("NPC"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1.5f, LayerMask.GetMask("Item") | LayerMask.GetMask("NPC"));
         float closestSqrDistance = Mathf.Infinity;
         Collider closestCollider = null;
 

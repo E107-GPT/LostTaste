@@ -79,9 +79,9 @@ public class Stat
                 _moveSpeed = 8.0f;
                 _attackRange = 8.0f;
                 break;
-            case Define.UnitType.Slime:
+            case Define.UnitType.Mushroom:
                 _hp = 200;
-                _maxHp = 100;
+                _maxHp = 200;
                 _attackDamage = 5;
                 _moveSpeed = 6.0f;
                 _attackRange = 1.4f;
