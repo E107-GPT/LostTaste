@@ -39,7 +39,7 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
     private bool isSecondItemCoolingDown = false;
 
 
-    // ------------------------------------------------ Life Cylce ------------------------------------------------
+    // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Start()
     {

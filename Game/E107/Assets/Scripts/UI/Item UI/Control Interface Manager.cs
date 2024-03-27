@@ -31,7 +31,7 @@ public class ControlInterfaceManager : MonoBehaviour
     public GameObject skillNonePanel; // 스킬 없음 패널
 
 
-    // ------------------------------------------------ Life Cylce ------------------------------------------------
+    // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Update()
     {

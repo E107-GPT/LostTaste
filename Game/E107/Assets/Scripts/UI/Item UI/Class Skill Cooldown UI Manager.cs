@@ -27,7 +27,7 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
     private bool isClassSkillCoolingDown = false;
 
 
-    // ------------------------------------------------ Life Cylce ------------------------------------------------
+    // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Start()
     {

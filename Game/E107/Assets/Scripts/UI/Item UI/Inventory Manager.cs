@@ -34,7 +34,7 @@ public class InventoryManager : MonoBehaviour
     public TextMeshProUGUI secondItemRightSkillCoolDown; // 아이템 2 오른쪽 스킬 쿨타임
 
 
-    // ------------------------------------------------ Life Cylce ------------------------------------------------
+    // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Update()
     {
