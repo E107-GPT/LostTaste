@@ -157,17 +157,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         bool ispassword = manager.GetIsPassword();
         string password = manager.GetPassword();
 
-        
+        // 시드 생성
+        int seed = (int)System.DateTime.Now.Ticks;
+
         // Register in lobby
         if (ispassword)
         {
-            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword }, { "password", password } };
-            room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword", "password" };
+            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword }, { "password", password }, { "seed", seed } };
+            room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword", "password", "seed" };
         }
         else
         {
-            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword } };
-            room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword" };
+            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword }, { "seed", seed } };
+            room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword", "seed" };
         }
 
         roomMakePanel.SetActive(false);
@@ -317,6 +319,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player;
             }
         }
+
+        ExitGames.Client.Photon.Hashtable info = PhotonNetwork.CurrentRoom.CustomProperties;
+        Debug.Log("seed : " + info["seed"]);
+        
+        Managers.Random.SetSeed((int)info["seed"]);
     }
 
     public override void OnJoinedLobby()
