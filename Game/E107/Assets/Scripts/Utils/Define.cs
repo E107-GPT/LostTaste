@@ -85,6 +85,7 @@ public class Define
         KingSlashStartEffect,
         KingStabChargeEffect,
         KingStabEffect,
+        KingJumpStartEffect,
         MaxCount
     }
 

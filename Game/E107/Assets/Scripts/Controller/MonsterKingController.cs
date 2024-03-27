@@ -9,9 +9,6 @@ public class MonsterKingController : MonsterController
     [SerializeField]
     private GameObject _leftArm;
 
-    private float _jumpCoolDown;    // 점프 쿨타임
-    private bool _isJumping;        // 지금 점프 중?
-
     private ParticleSystem _particle;
     private Coroutine _hitDownStart;
     private Coroutine _slashStart;
@@ -25,29 +22,26 @@ public class MonsterKingController : MonsterController
         base.Init();
 
         _stat = new MonsterStat(_unitType);
-
-        _jumpCoolDown = 10.0f;
-        _isJumping = false;
     }
-
 
     protected override void ChangeStateFromMove()
     {
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
 
         _agent.SetDestination(_detectPlayer.position);
-
-        //if (_stat.Hp <= _stat.MaxHp / 2)
-        //{
-        //    _statemachine.ChangeState(new MonsterKingHitDownState(this));
-        //}
-        //else if (_stat.Hp <= _stat.MaxHp)
-        //{
-        //    _statemachine.ChangeState(new MonsterKingHitDownState(this));
-        //}
+        
         if (distToDetectPlayer <= _stat.AttackRange)
         {
-            RandomPatternSelector();
+            // phase
+            if (_stat.Hp <= _stat.MaxHp / 2)
+            {
+                PhaseOnePatternSelector();      // 나중에 위치 변경
+            }
+            else if (_stat.Hp <= _stat.MaxHp)
+            {
+                PhaseTwePatternSelector();
+            }
+            
         }
         else if (distToDetectPlayer > _stat.DetectRange)
         {
@@ -56,7 +50,29 @@ public class MonsterKingController : MonsterController
         }
     }
 
-    private void RandomPatternSelector()
+    private void PhaseTwePatternSelector()
+    {
+        int rand = Random.Range(0, 101);
+        //if (rand <= 20)
+        //{
+        //    _statemachine.ChangeState(new MonsterKingStabState(this));
+        //}
+        //else if (rand <= 40)
+        //{
+        //    _statemachine.ChangeState(new MonsterKingHitDownState(this));
+        //}
+        //else if (rand <= 60)
+        //{
+        //    _statemachine.ChangeState(new MonsterKingSlashState(this));
+        //}
+
+        if (rand <= 100)
+        {
+            _statemachine.ChangeState(new MonsterKingJumpStartState(this));
+        }
+    }
+
+    private void PhaseOnePatternSelector()
     {
         int rand = Random.Range(0, 101);
         if (rand <= 25)
@@ -248,15 +264,72 @@ public class MonsterKingController : MonsterController
     }
     public override void ExitMonsterKingStabState() { }
 
-    public override void EnterMonsterKingJumpStartState() { }    // JumpStart
-    public override void ExecuteMonsterKingJumpStartState() { }
-    public override void ExitMonsterKingJumpStartState() { }
-    public override void EnterMonsterKingJumpAirState() { }      // JumpAir
-    public override void ExecuteMonsterKingJumpAirState() { }
-    public override void ExitMonsterKingJumpAirState() { }
-    public override void EnterMonsterKingJumpEndState() { }      // JumpEnd
-    public override void ExecuteMonsterKingJumpEndState() { }
-    public override void ExitMonsterKingJumpEndState() { }
+    public override void EnterMonsterKingJumpStartState()       // JumpStart
+    {
+        _agent.velocity = Vector3.zero;
+        _agent.speed = 0;
+
+        _animator.CrossFade("JumpStart", 0.3f, -1, 0);
+    }    
+    public override void ExecuteMonsterKingJumpStartState() 
+    {
+        if (CurState is DieState) return;
+
+        _animator.SetFloat("JumpStartSpeed", 0.1f);
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("JumpStart"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            //PrintText($"{aniTime}");
+
+            if (aniTime <= 0.4f)        // 점프 준비
+            {
+                _animator.SetFloat("JumpStartSpeed", 0.2f);
+            }
+            else if (aniTime <= 0.6f)   // 피격 판정
+            {
+                _animator.SetFloat("JumpStartSpeed", 1.0f);
+                _monsterInfo.Patterns[4].SetCollider(_stat.PatternDamage);
+            }
+            else if (aniTime <= 1.0f)
+            {
+                _animator.SetFloat("JumpStartSpeed", 1.0f);
+            }
+            else if (aniTime > 1.0f)
+            {
+                _monsterInfo.Patterns[4].DeActiveCollider();
+                _statemachine.ChangeState(new MonsterKingJumpAirState(this));
+            }
+        }
+    }
+    public override void ExitMonsterKingJumpStartState() 
+    {
+        // 이동
+        GetComponent<Collider>().enabled = false;
+        Agent.Warp(new Vector3(transform.position.x, transform.position.y + 100.0f, transform.position.z));
+    }
+    public override void EnterMonsterKingJumpAirState()         // JumpAir
+    {
+
+    }
+    public override void ExecuteMonsterKingJumpAirState() 
+    {
+        
+    }
+    public override void ExitMonsterKingJumpAirState() 
+    {
+        
+    }
+    public override void EnterMonsterKingJumpEndState()         // JumpEnd
+    { 
+
+    }      
+    public override void ExecuteMonsterKingJumpEndState() 
+    { 
+
+    }
+    public override void ExitMonsterKingJumpEndState() 
+    {
+    }
 
     #endregion
 }
