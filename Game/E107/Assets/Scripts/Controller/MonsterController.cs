@@ -31,7 +31,7 @@ public class MonsterController : BaseController
     public override void Init()
     {
         // BaseController
-        _agent.stoppingDistance = 1.5f;
+        _agent.stoppingDistance = 1.0f;
         _agent.angularSpeed = 500.0f;
         _agent.acceleration = 40.0f;
         _statemachine.CurState = new IdleState(this);
