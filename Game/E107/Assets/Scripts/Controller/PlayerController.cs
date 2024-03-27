@@ -27,6 +27,7 @@ public class PlayerController : BaseController
     public PlayerStat Stat { get { return _stat; } }
     public Item[] Inventory { get { return _inventory; } }
     public int CurrentItemNum { get { return _currentItemNum; } }
+    public IPlayerInteractable DetectedInteractable { get { return _detectedInteractable; } }
 
     public override void Init()
     {
