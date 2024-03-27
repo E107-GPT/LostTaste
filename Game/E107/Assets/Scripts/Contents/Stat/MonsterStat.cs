@@ -52,7 +52,7 @@ public class MonsterStat : Stat
                 _detectRange = 20.0f;
                 _patternDamage = 40;
                 break;
-            case UnitType.Slime:
+            case UnitType.Mushroom:
                 _level = 1;
                 _detectRange = 15.0f;
                 break;

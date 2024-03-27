@@ -38,7 +38,7 @@ public class Define
     public enum  UnitType
     {
         Player = 0,
-        Slime,
+        Mushroom,
         DrillDuck,
         TurtleSlime,
         ToxicFlower,

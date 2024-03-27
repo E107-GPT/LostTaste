@@ -33,7 +33,7 @@ public class MonsterSpawner : MonoBehaviour
             else if (clone.GetComponent<MonsterController>() != null)
             {
                 MonsterController monsterController = clone.GetComponent<MonsterController>();
-                monsterController.Setup(Define.UnitType.Slime.ToString());         // BaseController에서 각 객체의 이름을 부여
+                monsterController.Setup(Define.UnitType.Mushroom.ToString());         // BaseController에서 각 객체의 이름을 부여
                 monsterController.name = $"{monsterController.ID:D2}_Monster_{monsterController.name}";    // 00_Monster_name 으로 hierarchy 창에서 보임
 
                 monsters.Add(monsterController);
