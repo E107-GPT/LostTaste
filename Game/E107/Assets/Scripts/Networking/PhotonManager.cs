@@ -158,12 +158,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.IsVisible = true;
         room.IsOpen = true;
 
-        roomDescription.text = roomName;
         bool ispassword = manager.GetIsPassword();
         string password = manager.GetPassword();
 
         // 시드 생성
         int seed = (int)System.DateTime.Now.Ticks;
+
+        // 생성된 방 이름 + ` + 시드 값
+        roomDescription.text = roomName;
+        roomName  = roomName+ "`" + seed;
 
         // Register in lobby
         if (ispassword)
@@ -183,13 +186,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void ClickRoom(int roomNumber)
     {
         selectRoom = roomlist[roomNumber];
-
+        string printRoomName = selectRoom.Name;
+        int lastIndex = printRoomName.LastIndexOf("`");
+        if (lastIndex != -1)
+            printRoomName = printRoomName.Substring(0, lastIndex);
         if ((bool)selectRoom.CustomProperties["ispassword"])
         {
+            GameObject.Find("Party Joining PW Content Text").GetComponent<TextMeshProUGUI>().text = printRoomName + "파티에 참여하시겠습니까?";
             //password panel open
             GameObject.Find("Party Joining Window").SetActive(false);
             passwordPanel.SetActive(true);
         }
+        else
+            GameObject.Find("Party Joining Content Text").GetComponent<TextMeshProUGUI>().text = printRoomName + "파티에 참여하시겠습니까?";
     }
 
     public void roomEnter()
@@ -227,7 +236,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             partySelectButton[idx].SetActive(true);
 
             ExitGames.Client.Photon.Hashtable has = room.CustomProperties;
-            partyDescription[idx].text = room.Name;
+
+
+            // 마지막 ` 이후 시드값을 제외하고 출력
+            string printRoomName = room.Name;
+            int lastIndex = printRoomName.LastIndexOf("`");
+            if (lastIndex != -1)
+                printRoomName = printRoomName.Substring(0, lastIndex);
+
+
+            partyDescription[idx].text = printRoomName;
             partyLeader[idx].text = (string)has["captain"];
             partyMember[idx].text = room.PlayerCount + " / 4";
 
@@ -289,6 +307,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         roomListPanel.SetActive(false);
         passwordPanel.SetActive(false);
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
+        string printRoomName = PhotonNetwork.CurrentRoom.Name;
+        int lastIndex = printRoomName.LastIndexOf("`");
+        if (lastIndex != -1)
+            printRoomName = printRoomName.Substring(0, lastIndex);
+
+        roomDescription.text = printRoomName;
+
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
         {
             // my player -> spawn
@@ -381,7 +406,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
 
 
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        base.OnRoomPropertiesUpdate(propertiesThatChanged);
 
+        
+        //{
+        //    { "OpenPortal", "포탈명"}, { "ClosePortal", "포탈명"}
+        //}
+    }
 
     #endregion
 }
