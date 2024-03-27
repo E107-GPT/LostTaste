@@ -73,9 +73,8 @@ public class InputManager
         foreach (var result in results)
         {
             //Debug.Log($"{result.gameObject.layer} == {LayerMask.GetMask("Ignored UI")}");
-            if (result.gameObject.layer == 11) // 특정 태그를 가진 UI를 무시합니다.
+            if (1 << result.gameObject.layer == LayerMask.GetMask("Ignored UI")) // 특정 태그를 가진 UI를 무시합니다.
             {
-                Debug.Log("Ignored...");
                 return true;
             }
         }
