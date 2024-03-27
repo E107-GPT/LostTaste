@@ -127,10 +127,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.MaxPlayers = 4;
         room.IsVisible = false;
         room.IsOpen = false;
-        
+
+        // 시드 생성
+        int seed = (int)System.DateTime.Now.Ticks;
+
         // set custom properties
-        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", false } };
-        room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword" };
+        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "seed", seed } };
+        room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed" };
 
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
         PhotonNetwork.CreateRoom(roomName, room);
@@ -178,7 +181,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void roomEnter(int roomNumber)
     {
-        string nickname = UserInfo.GetInstance().getNickName();
+        Debug.Log(roomNumber + " : " + roomlist[roomNumber]);
+        // 나중에 수정
+        string nickname = "Player";//UserInfo.GetInstance().getNickName();
         
         if (nickname == null) return;
 
