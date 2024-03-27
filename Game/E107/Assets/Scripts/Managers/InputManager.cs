@@ -17,12 +17,9 @@ public class InputManager
     public void OnUpdate()
     {
         // 잠시 주석처리
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            Debug.Log("TTEESSTT");
-            if (!IsPointerOverIgnoredUI()) return;
 
-        }
+        if(!IsPointerOverIgnoredUI()) return;
+
 
 
         if (Input.anyKey && KeyAction != null)
@@ -70,15 +67,20 @@ public class InputManager
         }
         // 레이캐스트를 수행합니다.
         raycaster.Raycast(pointerData, results);
-        Debug.Log(results.Count);
+        //EventSystem.current.RaycastAll(pointerData, results);
+        if (results.Count == 0) return true;
+        //Debug.Log(results.Count);
         foreach (var result in results)
         {
-            Debug.Log($"{result}");
-            if (result.gameObject.name == "StageName") // 특정 태그를 가진 UI를 무시합니다.
+            //Debug.Log($"{result.gameObject.layer} == {LayerMask.GetMask("Ignored UI")}");
+            if (result.gameObject.layer == 11) // 특정 태그를 가진 UI를 무시합니다.
             {
+                Debug.Log("Ignored...");
                 return true;
             }
         }
+
+
         return false;
     }
 
