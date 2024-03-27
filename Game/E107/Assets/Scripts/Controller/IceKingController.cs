@@ -38,7 +38,7 @@ public class IceKingController : MonsterController
         {
             _statemachine.ChangeState(new IceKingSpikeState(this));
         }
-        if (rand <= 100)
+        else if (rand <= 100)
         {
             _statemachine.ChangeState(new SkillState(this));
         }
@@ -56,9 +56,9 @@ public class IceKingController : MonsterController
         base.ExcuteSkill();
     }
 
+    // IceSpike
     public override void EnterIceKingSpikeState()
     {
-        base.EnterIceKingSpikeState();
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
 
@@ -67,30 +67,31 @@ public class IceKingController : MonsterController
         //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), 0.8f);
 
-        _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("Spike", 0.2f, -1, 0);
     }
 
     public override void ExcuteIceKingSpikeState()
     {
-        base.ExcuteIceKingSpikeState();
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
+        _animator.SetFloat("SpikeSpeed", 1.0f);
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime <= 0.2f)
+            if (aniTime <= 0.1f)
             {
-                _animator.speed = 0.2f;
+                _animator.SetFloat("SpikeSpeed", 1.0f);
             }
-            else if (aniTime <= 0.23f)
+            else if (aniTime <= 0.9f)
             {
-                _animator.speed = 0.06f;
+                _animator.SetFloat("SpikeSpeed", 1.0f);
+                _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
+                
             }
-            else if (aniTime < 1.0f)
+            else if (aniTime <= 0.95f)
             {
-                _animator.speed = 1.0f;
+                _animator.SetFloat("SpikeSpeed", 0.8f);
             }
-            else if (aniTime >= 1.0f)
+            else if (aniTime > 1.0f)
             {
                 _monsterInfo.Patterns[0].DeActiveCollider();
                 _statemachine.ChangeState(new IdleState(this));
@@ -100,6 +101,5 @@ public class IceKingController : MonsterController
 
     public override void ExitCrocodileSwordState()
     {
-        base.ExitIceKingSpikeState();
     }
 }
