@@ -34,6 +34,8 @@ public class MiniDrillSkill : Skill
             timer += Time.deltaTime;
         }
 
+        playerController.StateMachine.ChangeState(new IdleState(playerController));
+
         Managers.Effect.Stop(particleSystem);
     }
 
