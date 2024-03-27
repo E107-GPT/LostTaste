@@ -28,7 +28,7 @@ public class GalaxyZzzSkill : Skill
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.GalaxyZzzSkillEffect, Root);
         GameObject skillObj = Managers.Resource.Instantiate("Skills/SkillObject");
-        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(player.transform, Damage, _seq);
 
         skillObj.transform.position = Root.position;
         skillObj.transform.rotation = Root.rotation;
