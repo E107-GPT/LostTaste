@@ -61,7 +61,11 @@ public class IceKingController : MonsterController
         base.EnterIceKingSpikeState();
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+
+        // 둘 다 똑같음
         ToDetectPlayer(0.8f);
+        //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), 0.8f);
 
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("Spike", 0.2f, -1, 0);
@@ -73,24 +77,18 @@ public class IceKingController : MonsterController
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-            //Vector3 destPos = new Vector3(dirTarget.x, 0, dirTarget.z);
 
             if (aniTime <= 0.2f)
             {
                 _animator.speed = 0.2f;
-                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
-                //Managers.Effect.Play
             }
             else if (aniTime <= 0.23f)
             {
                 _animator.speed = 0.06f;
-                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(destPos.normalized, Vector3.up), 0.2f);
             }
             else if (aniTime < 1.0f)
             {
                 _animator.speed = 1.0f;
-                //Managers.Effect.Stop
             }
             else if (aniTime >= 1.0f)
             {
