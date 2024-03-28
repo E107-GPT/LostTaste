@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3042179078123337259}
   - component: {fileID: 1823338230372967472}
+  - component: {fileID: 5183929032267380085}
   m_Layer: 9
   m_Name: 0021_FiveTimesBibimbap
   m_TagString: Untagged
@@ -57,8 +58,27 @@ MonoBehaviour:
   <FlavorText>k__BackingField: Five Times Bibimbap
   <Icon>k__BackingField: {fileID: 0}
   <LeftSkill>k__BackingField: {fileID: 0}
-  <RightSkill>k__BackingField: {fileID: 0}
+  <RightSkill>k__BackingField: {fileID: 5183929032267380085}
   isDropped: 1
+--- !u!114 &5183929032267380085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6541479847316099381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a04f2e668681a545a52e631097dae3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uB450 \uC785"
+  <Description>k__BackingField: "HP 50\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 0}
+  <SkillCoolDownTime>k__BackingField: 1
+  <RequiredMp>k__BackingField: 0
+  <NextItem>k__BackingField: {fileID: 3168958242682395510, guid: 975cb7d4da45b8d4f8ac462b40fe045d, type: 3}
+  <HpRecoveryAmount>k__BackingField: 50
 --- !u!1001 &1844915575895850753
 PrefabInstance:
   m_ObjectHideFlags: 0

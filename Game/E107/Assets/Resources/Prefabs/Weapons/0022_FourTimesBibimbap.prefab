@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8063468078946166339}
   - component: {fileID: 4003812562353562486}
+  - component: {fileID: -8119474886015922158}
   m_Layer: 9
   m_Name: 0022_FourTimesBibimbap
   m_TagString: Untagged
@@ -58,8 +59,27 @@ MonoBehaviour:
     \uC548 \uBB3C\uB9AC\uB294 \uB9DB"
   <Icon>k__BackingField: {fileID: 0}
   <LeftSkill>k__BackingField: {fileID: 0}
-  <RightSkill>k__BackingField: {fileID: 0}
+  <RightSkill>k__BackingField: {fileID: -8119474886015922158}
   isDropped: 1
+--- !u!114 &-8119474886015922158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3168958242682395510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a04f2e668681a545a52e631097dae3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uC138 \uC785"
+  <Description>k__BackingField: "HP 40\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 0}
+  <SkillCoolDownTime>k__BackingField: 1
+  <RequiredMp>k__BackingField: 0
+  <NextItem>k__BackingField: {fileID: 2544670806064677984, guid: 4930a0b51ea9724438452a503f44ee04, type: 3}
+  <HpRecoveryAmount>k__BackingField: 40
 --- !u!1001 &1040402321475861629
 PrefabInstance:
   m_ObjectHideFlags: 0

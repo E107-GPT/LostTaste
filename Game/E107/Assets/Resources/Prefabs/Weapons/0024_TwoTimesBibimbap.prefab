@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6521499206944199196}
   - component: {fileID: -4172164635123712546}
+  - component: {fileID: 8439094899546063697}
   m_Layer: 9
   m_Name: 0024_TwoTimesBibimbap
   m_TagString: Untagged
@@ -57,8 +58,27 @@ MonoBehaviour:
   <FlavorText>k__BackingField: "\uC721\uD68C\uB294 \uAC70\uC758 \uB2E4 \uBA39\uC5C8\uB2E4."
   <Icon>k__BackingField: {fileID: 0}
   <LeftSkill>k__BackingField: {fileID: 0}
-  <RightSkill>k__BackingField: {fileID: 0}
+  <RightSkill>k__BackingField: {fileID: 8439094899546063697}
   isDropped: 1
+--- !u!114 &8439094899546063697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3366105943576255079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a04f2e668681a545a52e631097dae3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uB2E4\uC12F \uC785"
+  <Description>k__BackingField: "HP 20\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 0}
+  <SkillCoolDownTime>k__BackingField: 1
+  <RequiredMp>k__BackingField: 0
+  <NextItem>k__BackingField: {fileID: 7947832427493186245, guid: 28da9e81f26fcbc4f965b3f833c73a3c, type: 3}
+  <HpRecoveryAmount>k__BackingField: 20
 --- !u!1001 &122127886728357647
 PrefabInstance:
   m_ObjectHideFlags: 0
