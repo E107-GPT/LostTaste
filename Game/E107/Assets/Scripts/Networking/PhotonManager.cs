@@ -22,14 +22,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region public fields
+    public GameObject partyUI;
     public GameObject passwordPanel;
-    public GameObject roomListPanel;
-    public GameObject roomMakePanel;
+    public GameObject partyListPanel;
+    public GameObject partyInfoPanel;
+    public GameObject partyMakePanel;
 
     public GameObject[] partySelectButton = new GameObject[20];
     public TextMeshProUGUI[] partyDescription = new TextMeshProUGUI[20];
     public TextMeshProUGUI[] partyLeader = new TextMeshProUGUI[20];
     public TextMeshProUGUI[] partyMember = new TextMeshProUGUI[20];
+    
+    public TextMeshProUGUI[] partyMemberInfo = new TextMeshProUGUI[4];
 
     public TextMeshProUGUI roomDescription;
     #endregion
@@ -67,7 +71,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             partyConnect.onClick.AddListener(()=> ClickRoom(index));
         }
 
-        roomListPanel.SetActive(false);
+        for(int i = 0; i<4; i++)
+        {
+            string partyName = "Party Member " + (i + 1);
+            GameObject party = GameObject.Find(partyName);
+
+            partyMemberInfo[i] = party.GetComponent<TextMeshProUGUI>();
+        }
+
+        partyUI.SetActive(false);
     }
 
     #endregion
@@ -113,7 +125,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         
         GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player;
         roomDescription.text = UserInfo.GetInstance().getNickName() + "'s Party";
-        roomListPanel.SetActive(false);
+        partyUI.SetActive(false);
     }
 
     // Enter the dungeon portal without a room
@@ -139,6 +151,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
         PhotonNetwork.CreateRoom(roomName+ seed, room);
+
     }
 
     // Make multy Rroom
@@ -179,7 +192,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword }, { "seed", seed } };
             room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword", "seed" };
         }
-        roomMakePanel.SetActive(false);
+        partyMakePanel.SetActive(false);
+        partyUI.SetActive(false);
         PhotonNetwork.CreateRoom(roomName, room);
     }
 
@@ -211,6 +225,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // no password enter
         PhotonNetwork.JoinRoom(selectRoom.Name);
         GameObject.Find("Party Joining Window").SetActive(false);
+        partyUI.SetActive(false);
     }
 
     public void PasswordValidation()
@@ -255,6 +270,23 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             //    + "\n captain : " + has["captain"] + "\n" + has["ispassword"] + " / " + has["password"];
         }
     }
+
+    public void OpenPartyWindow()
+    {
+        Debug.Log(PhotonNetwork.InRoom);
+
+            partyUI.SetActive(true);
+        if (PhotonNetwork.InRoom)
+        {
+            partyInfoPanel.SetActive(true);
+            partyListPanel.SetActive(false);
+        }
+        else
+        {
+            partyInfoPanel.SetActive(false);
+            partyListPanel.SetActive(true);
+        }
+    }
     #endregion
 
     #region MonoBehaviourPunCallbacks callbacks
@@ -297,14 +329,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         isConnecting = false;
 
-        if(roomListPanel!=null)
-            roomListPanel.SetActive(false);
+        if(partyUI!=null)
+            partyUI.SetActive(false);
         Debug.LogWarningFormat("OnDisconnected {0}", cause);
     }
 
     public override void OnJoinedRoom()
     {
-        roomListPanel.SetActive(false);
+        partyListPanel.SetActive(false);
         passwordPanel.SetActive(false);
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
         string printRoomName = PhotonNetwork.CurrentRoom.Name;
@@ -354,7 +386,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 Managers.Player.LoadPlayersInfoInCurrentRoom();
                 int myIndex = 0;
 
-                Debug.Log("adiasjdiojaiopd " + PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Number"));
 
                 if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Number"))
                 {

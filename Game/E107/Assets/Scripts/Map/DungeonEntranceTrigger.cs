@@ -17,34 +17,36 @@ public class DungeonEntranceTrigger : MonoBehaviour
     private void Start()
     {
         //totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        totalPlayers = 1;
-        portal.SetActive(false);
+        //totalPlayers = 1;
+        //portal.SetActive(false);
         //Debug.Log("포탈 비활성화");
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("플레이어가 포탈에 진입함");
-            string playerName = other.gameObject.name;
-            playersInPortal.Add(playerName);
+            //Debug.Log("플레이어가 포탈에 진입함");
+            //string playerName = other.gameObject.name;
+            //playersInPortal.Add(playerName);
 
-            if (playersInPortal.Count == totalPlayers)
-            {
-                portal.SetActive(true); 
-                Debug.Log("Portal activated");
-                portalActivated = true;
-            }
+            //if (playersInPortal.Count == totalPlayers)
+            //{
+            //    portal.SetActive(true); 
+            //    Debug.Log("Portal activated");
+            //    portalActivated = true;
+            //}
+            portal.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            string playerName = other.gameObject.name;
-            playersInPortal.Remove(playerName);
-        }
+        //if (other.gameObject.CompareTag("Player"))
+        //{
+        //    string playerName = other.gameObject.name;
+        //    playersInPortal.Remove(playerName);
+        //}
     }
 }
