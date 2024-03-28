@@ -37,6 +37,7 @@ public class PortalTrigger : MonoBehaviour
 
 
 
+    public Color nextBackgroundColor; // 변경할 배경색
 
     // ��Ż Ȱ��ȭ �� ������ ���� Ȱ��ȭ
     public void ActivateItemBox()
@@ -90,6 +91,11 @@ public class PortalTrigger : MonoBehaviour
         return null; // �ش� �̸��� ���� ���ڰ� ���� ���
     }
 
+    private void ChangeCameraBackgroundColor()
+    {
+        Camera.main.backgroundColor = nextBackgroundColor;
+    }
+
     public void ActivatePortal(bool isActive)
     {
         portal.SetActive(isActive);
@@ -98,6 +104,7 @@ public class PortalTrigger : MonoBehaviour
         // ��Ż�� Ȱ��ȭ�� �� ������ ���ڵ� �Բ� ó��
         if (isActive)
         {
+            //ChangeCameraBackgroundColor();
             ActivateItemBox(); // ��Ż Ȱ��ȭ �� ������ ���� Ȱ��ȭ
         }
         else
@@ -116,6 +123,7 @@ public class PortalTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
+            ChangeCameraBackgroundColor();
 
             MonsterManager.Instance.portalTrigger = this;
             if (!PhotonNetwork.IsMasterClient)

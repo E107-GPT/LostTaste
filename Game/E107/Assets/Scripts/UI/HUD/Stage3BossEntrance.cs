@@ -19,17 +19,20 @@ public class Stage3BossEntrance : MonoBehaviour
     public TextMeshProUGUI stageLevelText; // 스테이지 레벨 텍스트
     public TextMeshProUGUI stageNameText; // 스테이지 이름 텍스트
 
+    private bool hasEntered = false; // 플레이어가 이미 입장했는지 여부를 저장하는 변수
+
     // 플레이어가 캠프에 진입할 때 호출되는 메서드
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !hasEntered)
         {
             stageText.text = "STAGE 3 - 얼음 궁전의 군주"; // 스테이지 텍스트 업데이트
-
             stageLevelText.text = "STAGE 3 BOSS"; // 스테이지 레벨 텍스트를 업데이트
             stageNameText.text = "얼음 궁전의 군주"; // 스테이지 이름 텍스트를 업데이트
 
             StartCoroutine(ShowStagePanel());
+
+            hasEntered = true; // 플레이어가 입장했음을 표시
         }
     }
 
@@ -37,7 +40,7 @@ public class Stage3BossEntrance : MonoBehaviour
     IEnumerator ShowStagePanel()
     {
         stagePanel.SetActive(true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         stagePanel.SetActive(false);
     }
 }
