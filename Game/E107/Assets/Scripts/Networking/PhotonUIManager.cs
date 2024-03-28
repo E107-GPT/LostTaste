@@ -97,6 +97,11 @@ public class PhotonUIManager : MonoBehaviour
         gameObject.GetComponent<HTTPRequest>().POSTCall("auth/login", request);
     }
 
+    public void OpenPartyWindow()
+    {
+        GetComponent<PhotonManager>().OpenPartyWindow();
+    }
+
     #endregion
 
 
