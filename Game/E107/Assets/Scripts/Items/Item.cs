@@ -7,6 +7,9 @@ public class Item : MonoBehaviour, IPlayerInteractable
     protected CapsuleCollider _itemCollider;
 
     [field: SerializeField]
+    public int Id { get; set; }
+
+    [field: SerializeField]
     public string Name { get; set; }
     [field: SerializeField]
     public ItemTier Tier { get; set; }
@@ -72,6 +75,11 @@ public class Item : MonoBehaviour, IPlayerInteractable
     public void OnInteracted(GameObject player)
     {
         player.GetComponent<PlayerController>().EquipItem(this);
+    }
+
+    public string GetFullId()
+    {
+        return "ITM_" + Id.ToString().PadLeft(4, '0');
     }
 }
 
