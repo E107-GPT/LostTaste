@@ -23,6 +23,10 @@ public class Item : MonoBehaviour, IPlayerInteractable
     [field: SerializeField]
     public Skill RightSkill { get; protected set; }
 
+    // true일 시 아이템 상자에서 나오지 않음
+    [field: SerializeField]
+    public bool IsHidden { get; protected set; }
+
     [SerializeField]
     protected bool isDropped = false;
 
