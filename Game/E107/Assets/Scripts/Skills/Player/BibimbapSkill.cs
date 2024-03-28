@@ -7,7 +7,10 @@ public class BibimbapSkill : ConsumingSkill
     [field: SerializeField]
     public int HpRecoveryAmount { get; set; }
 
-    private Dictionary<PlayerController, float> _lastCastTimes = new Dictionary<PlayerController, float>();
+    [field: SerializeField]
+    public float GroupCooldownTime { get; set; }
+
+    private static Dictionary<PlayerController, float> _groupLastCastTimes = new Dictionary<PlayerController, float>();
 
     protected override IEnumerator OnConsume(PlayerController playerController)
     {
@@ -15,12 +18,15 @@ public class BibimbapSkill : ConsumingSkill
 
         playerController.Stat.Hp = Mathf.Min(playerController.Stat.MaxHp, playerController.Stat.Hp + HpRecoveryAmount);
 
+        _groupLastCastTimes[playerController] = LastCastTime;
+
         yield return null;
     }
 
     public override bool IsPlayerCastable(PlayerController playerController)
     {
-        // TODO
-        return base.IsPlayerCastable(playerController);
+        float lastCastTime;
+        bool hasCastBefore = _groupLastCastTimes.TryGetValue(playerController, out lastCastTime);
+        return (!hasCastBefore || Time.time - lastCastTime > GroupCooldownTime) && base.IsPlayerCastable(playerController);
     }
 }
