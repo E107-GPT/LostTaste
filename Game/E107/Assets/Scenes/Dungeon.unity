@@ -642,6 +642,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3555889421795255098, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3825432061159760588, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: m_Name
       value: HUD
@@ -726,6 +730,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6467139422801943980, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: finalStageIcon
+      value: 
+      objectReference: {fileID: 1748719416}
+    - target: {fileID: 6467139422801943980, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: stageClearText
+      value: 
+      objectReference: {fileID: 1748719415}
+    - target: {fileID: 6467139422801943980, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: adventureResultsWindow
+      value: 
+      objectReference: {fileID: 1507488862}
     - target: {fileID: 6956869002813449296, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3868,6 +3884,11 @@ MonoBehaviour:
   closeButton: {fileID: 1407194893}
   popupWindow: {fileID: 1655736924}
   inputs: []
+--- !u!1 &1492595923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5936340325103141270, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+  m_PrefabInstance: {fileID: 382873389}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1507488860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6027,6 +6048,10 @@ PrefabInstance:
       propertyPath: stageLevelText
       value: 
       objectReference: {fileID: 219504692}
+    - target: {fileID: 7249528983533872271, guid: e469a629f99d2324db91d84af0e08708, type: 3}
+      propertyPath: crocodileHealthBar
+      value: 
+      objectReference: {fileID: 484040979}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6288,6 +6313,10 @@ PrefabInstance:
       propertyPath: stageLevelText
       value: 
       objectReference: {fileID: 219504692}
+    - target: {fileID: 699916846595664507, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
+      propertyPath: drillDuckHealthBar
+      value: 
+      objectReference: {fileID: 382873394}
     - target: {fileID: 877996205917813992, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 100
@@ -6538,6 +6567,14 @@ PrefabInstance:
       propertyPath: stageLevelText
       value: 
       objectReference: {fileID: 219504692}
+    - target: {fileID: 1751365017787146543, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+      propertyPath: iceKingHealthBar
+      value: 
+      objectReference: {fileID: 425769688}
+    - target: {fileID: 2687057810085401149, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+      propertyPath: bossStatusPanel
+      value: 
+      objectReference: {fileID: 1492595923}
     - target: {fileID: 3617413055077961946, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 307.6114

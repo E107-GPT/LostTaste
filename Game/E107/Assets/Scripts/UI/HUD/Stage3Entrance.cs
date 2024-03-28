@@ -23,6 +23,10 @@ public class Stage3Entrance : MonoBehaviour
     [Header("[ 클리어 한 스테이지 ]")]
     public GameObject stage2Icon; // Stage 2 클리어 아이콘
 
+    // 크로커다일 체력 슬라이더
+    [Header("[ 크로커다일 체력 슬라이더 ]")]
+    public GameObject crocodileHealthBar;
+
     private bool hasEntered = false; // 플레이어가 이미 입장했는지 여부를 저장하는 변수
 
     // 플레이어가 캠프에 진입할 때 호출되는 메서드
@@ -31,11 +35,12 @@ public class Stage3Entrance : MonoBehaviour
         if (other.CompareTag("Player") && !hasEntered)
         {
             stageText.text = "STAGE 3 - 서리빛 궁전"; // 스테이지 텍스트 업데이트
-
             stageLevelText.text = "STAGE 3"; // 스테이지 레벨 텍스트를 업데이트
             stageNameText.text = "서리빛 궁전"; // 스테이지 이름 텍스트를 업데이트
 
             stage2Icon.SetActive(true); // Stage 2 클리어 아이콘 활성화
+
+            crocodileHealthBar.SetActive(false); // 이전 스테이지 보스 체력 바 비활성화
 
             StartCoroutine(ShowStagePanel());
 
