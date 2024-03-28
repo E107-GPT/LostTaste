@@ -18,6 +18,8 @@ public class MonsterManager : MonoBehaviour
 
     public List<GameObject> PortalList;
 
+    public string _curMap;
+
     //public string targetMapName;
 
     [System.Serializable]
@@ -92,6 +94,7 @@ public class MonsterManager : MonoBehaviour
     // 특정 맵에 몬스터 소환
     public void SpawnMonstersForMap(string mapName)
     {
+        _curMap = mapName;
         if (monstersInCurrentMap.Count != 0) return;
         foreach (MonsterSpawnInfo info in monsterSpawnInfos)
         {
@@ -112,6 +115,7 @@ public class MonsterManager : MonoBehaviour
             }
         }
     }
+
 
     public void RestartCheckMonstersCoroutine(string newMapName)
     {
@@ -147,5 +151,14 @@ public class MonsterManager : MonoBehaviour
         go.SetActive(true);
         go.GetComponent<PortalTrigger>().ActivateItemBox();
 
+    }
+
+    public void ReStartManage()
+    {
+        foreach(var monster in GameObject.FindGameObjectsWithTag("Monster"))
+        {
+            monstersInCurrentMap.Add(monster);
+        }
+        RestartCheckMonstersCoroutine(_curMap);
     }
 }

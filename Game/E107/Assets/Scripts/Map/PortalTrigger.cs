@@ -136,10 +136,11 @@ public class PortalTrigger : MonoBehaviour
                 }
             }
 
-            MonsterManager.Instance.portalTrigger = this;
+            MonsterManager.Instance._curMap = targetMapName;
             if (!PhotonNetwork.IsMasterClient)
             {
                 MonsterManager.Instance.SendMonsterSpawnMsg(targetMapName);
+                
                 return;
             }
 

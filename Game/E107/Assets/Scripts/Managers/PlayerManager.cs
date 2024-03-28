@@ -82,11 +82,11 @@ public class PlayerManager
     }
 
 
-    public void SetLocalPlayerInfo(Define.ClassType type)
+    public void SetLocalPlayerInfo(int viewID, Define.ClassType type)
     {
         var usedNumbers = PhotonNetwork.CurrentRoom.CustomProperties["UsedNumbers"] as int[] ?? new int[4];
         int myNumber = FindAvailableNumber(usedNumbers);
-        var myProperties = new ExitGames.Client.Photon.Hashtable { { "Number", myNumber }, { "Class", type } };
+        var myProperties = new ExitGames.Client.Photon.Hashtable { { "Number", myNumber }, { "Class", type }, {"ViewID", viewID } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(myProperties);
 
         // 방의 커스텀 프로퍼티 업데이트
