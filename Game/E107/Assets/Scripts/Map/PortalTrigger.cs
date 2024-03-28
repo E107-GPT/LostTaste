@@ -132,7 +132,7 @@ public class PortalTrigger : MonoBehaviour
                 if (PhotonNetwork.IsMasterClient)
                 {
                     Managers.Sound.Clear();
-                    Managers.Sound.Play(bgmName, Define.Sound.BGM);
+                    Managers.Sound.Play(bgmName, Define.Sound.BGM, 1.0f, 0.3f);
                 }
             }
 
