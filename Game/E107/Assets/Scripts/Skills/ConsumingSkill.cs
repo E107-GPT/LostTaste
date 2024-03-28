@@ -29,7 +29,7 @@ public abstract class ConsumingSkill : Skill
 
         yield return null;
 
-        Destroy(this.gameObject);
+        Managers.Resource.Destroy(gameObject);
 
         Managers.Coroutine.Run(OnConsume(playerController));
 
