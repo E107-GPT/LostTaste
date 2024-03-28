@@ -52,11 +52,6 @@ public class SoundManager
             _lastBgmPath = path;
         }
 
-        if (type == Define.Sound.BGM)
-        {
-            _lastBgmPath = path;
-        }
-
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f, float volume = 0.5f)
     {
