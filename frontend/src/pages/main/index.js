@@ -1,5 +1,6 @@
 import { Box, Button, Container, Stack } from "@mui/material";
 import MainPageBackGround from "../../assets/images/mainpage_background.png";
+import LogoImg from "../../assets/images/Lost Taste.png";
 const MainPage = () => {
     return (
         <>
@@ -13,12 +14,10 @@ const MainPage = () => {
                     backgroundPosition: "center", // 이미지 위치 설정
                 }}
             >
-                <Stack
-                    direction={"column"}
-                    alignItems={"center"}
-                    justifyContent={"center"}
-                >
-                    <video></video>
+                <Stack direction={"column"} alignItems={"center"} justifyContent={"center"}>
+                    <Box marginY={15} bgcolor={"rgba(0,0,0,0.5)"} padding={10} borderRadius={"20px"}>
+                        <img src={LogoImg}></img>
+                    </Box>
                     <Box
                         color={"black"}
                         bgcolor={"#FFD257"}
@@ -28,12 +27,7 @@ const MainPage = () => {
                             boxShadow: `0px 7px #121212`,
                         }}
                     >
-                        <Stack
-                            minWidth={"15vw"}
-                            direction={"column"}
-                            alignItems={"center"}
-                            justifyContent={"center"}
-                        >
+                        <Stack minWidth={"15vw"} direction={"column"} alignItems={"center"} justifyContent={"center"}>
                             <Button
                                 color="inherit"
                                 fullWidth
@@ -44,7 +38,9 @@ const MainPage = () => {
                                     fontWeight: 700,
                                 }}
                             >
-                                게임 다운로드
+                                <a href="https://j10e107.p.ssafy.io/file/download/LostTaste.zip" download={"LostTaste.zip"}>
+                                    게임 다운로드
+                                </a>
                             </Button>
                         </Stack>
                     </Box>
