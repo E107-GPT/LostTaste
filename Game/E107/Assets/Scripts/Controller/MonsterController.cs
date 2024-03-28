@@ -7,6 +7,14 @@ using UnityEngine.AI;
 using static UnityEngine.EventSystems.EventTrigger;
 using Photon.Pun;
 
+// 몬스터의 audio source component 순서
+public enum SoundOrder
+{
+    DIE = 0,
+    ATTACKED,
+    LENGTH
+}
+
 // 일반 몬스터
 public class MonsterController : BaseController
 {
@@ -20,13 +28,13 @@ public class MonsterController : BaseController
     protected Ray _ray;                       // Gizmos에 사용
     private Renderer[] _allRenderers;         // 캐릭터의 모든 Renderer 컴포넌트 -> 모든 render의 색을 변경!
     private Color[] _originalColors;          // 원래의 머티리얼 색상 저장용 배열
-    private AudioSource _audioSource;         // MainCamera의 Audio Listener가 필요
+    private AudioSource[] _audioSource;         // MainCamera의 Audio Listener가 필요
 
     public MonsterStat Stat { get { return _stat; } }
     public MonsterInfo MonsterInfo { get { return _monsterInfo; } }
     public Transform DetectPlayer { get { return _detectPlayer; } set { _detectPlayer = value; } }
-    public AudioSource Audio {  get { return _audioSource; } }
-    
+    public AudioSource[] Audio { get => _audioSource; }
+
 
     public override void Init()
     {
@@ -40,8 +48,7 @@ public class MonsterController : BaseController
         _stat = new MonsterStat(_unitType);
         _monsterInfo = GetComponent<MonsterInfo>();
 
-        // 현재 몬스터의 모든 Renderer 컴포넌트를 찾는다.
-        // 각 Renderer의 원래 머티리얼 색상 저장
+        // 현재 몬스터의 모든 Renderer 컴포넌트를 찾는다. 각 Renderer의 원래 머티리얼 색상 저장
         _allRenderers = GetComponentsInChildren<Renderer>();
         _originalColors = new Color[_allRenderers.Length];
         for (int i = 0; i < _allRenderers.Length; i++)
@@ -49,8 +56,12 @@ public class MonsterController : BaseController
             _originalColors[i] = _allRenderers[i].material.color;
         }
 
-        _audioSource = GetComponent<AudioSource>();
-        _audioSource.playOnAwake = false;
+        _audioSource = GetComponents<AudioSource>();
+        foreach (AudioSource audio in  _audioSource)        // audio clip이 none이면 audio에 저장되지 않음
+        {
+            audio.playOnAwake = false;
+            audio.Stop();
+        }
     }
 
     //private void FixedUpdate()
@@ -210,6 +221,7 @@ public class MonsterController : BaseController
         _agent.velocity = Vector3.zero;
         GetComponent<Collider>().enabled = false;
 
+        _audioSource[(int)SoundOrder.DIE].Play();
         _animator.Play("Die", -1);
 
         Destroy(gameObject, 3.0f);
@@ -319,7 +331,12 @@ public class MonsterController : BaseController
         }
 
         StartCoroutine(ChangeColorFromDamage());
-        _audioSource.Play();
+
+        // 보스는 피격음이 없다.
+        if (_audioSource.Length == (int)SoundOrder.LENGTH)
+        {
+            _audioSource[(int)SoundOrder.ATTACKED].Play();
+        }
 
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;
