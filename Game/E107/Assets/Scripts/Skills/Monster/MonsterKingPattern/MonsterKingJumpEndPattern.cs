@@ -32,6 +32,7 @@ public class MonsterKingJumpEndPattern : Pattern
         _cylinderLoc.position = Root.position + rootUp;
 
         _particle = Managers.Effect.Play(Define.Effect.KingJumpEndEffect, _cylinderLoc);
+        Managers.Sound.Play("Monster/KingJumpEndEffect", Define.Sound.Effect);
 
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(_cylinderLoc.gameObject);

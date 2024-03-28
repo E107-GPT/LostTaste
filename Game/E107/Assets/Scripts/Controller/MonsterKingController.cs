@@ -74,11 +74,11 @@ public class MonsterKingController : MonsterController
     private void PhaseOnePatternSelector()
     {
         int rand = Random.Range(0, 101);
-        if (rand <= 25)
+        if (rand <= 20)
         {
             _statemachine.ChangeState(new MonsterKingStabState(this));
         }
-        else if (rand <= 65)
+        else if (rand <= 60)
         {
             _statemachine.ChangeState(new MonsterKingHitDownState(this));
         }
@@ -147,7 +147,7 @@ public class MonsterKingController : MonsterController
             else if (aniTime < 0.8f)
             {
                 _animator.SetFloat("HitDownSpeed", 1.0f);
-                _monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);
+                _monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);       // 내려찍기
             }
             else if (aniTime <= 1.0f)
             {
@@ -156,12 +156,14 @@ public class MonsterKingController : MonsterController
             else if (aniTime >= 1.0f)
             {
                 _monsterInfo.Patterns[0].DeActiveCollider();
+                _monsterInfo.Patterns[6].SetCollider(_stat.AttackDamage);       // 후속타
                 _statemachine.ChangeState(new IdleState(this));
             }
         }
     }
     public override void ExitMonsterKingHitDownState() 
     {
+        _monsterInfo.Patterns[6].DeActiveCollider();
     }
 
     public override void EnterMonsterKingSlashState()           // Slash
@@ -191,15 +193,17 @@ public class MonsterKingController : MonsterController
             if (aniTime <= 0.4f)        // 공격전 
             {
                 _animator.SetFloat("SlashSpeed", 0.38f);
-                if (_slashStart == null) _slashStart = StartCoroutine(ChargeEffect(Define.Effect.KingSlashStartEffect, transform, 2.0f));
-                if (_particle != null) _particle.transform.parent = transform;
+                if (_slashStart == null)    _slashStart = StartCoroutine(ChargeEffect(Define.Effect.KingSlashStartEffect, transform, 2.0f));
+                if (_particle != null)      _particle.transform.parent = transform;
             }
             else if (aniTime > 0.4f && _slashStart != null)
             {
+                Managers.Sound.Play("Monster/KingSlashSwordEffect", Define.Sound.Effect);
                 _animator.SetFloat("SlashSpeed", 1.0f);
                 StopCoroutine(_slashStart);
                 _slashStart = null;
-                if (_particle != null) Managers.Effect.Stop(_particle);
+                if (_particle != null)
+                    Managers.Effect.Stop(_particle);
             }
             else if (aniTime <= 0.7f)   // 칼을 휘두르는 중
             {
@@ -345,11 +349,16 @@ public class MonsterKingController : MonsterController
             photonView.RPC("RPC_ChangeMonsterKingJumpAirState", RpcTarget.Others);
             photonView.RPC("RPC_JumpTrace", RpcTarget.Others, DetectPlayer.transform.position);
             _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, DetectPlayer.transform);
+            Managers.Sound.Play("Monster/KingJumpAirEffect", Define.Sound.Effect);
             StartCoroutine(CheckParticleAndChangeState(_particle.main.duration));
         }
         else
         {
-            _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, new GameObject().transform);
+            // 테스트를 위함
+            // Managers.Sound.Play("Monster/KingJumpAirEffect", Define.Sound.Effect);
+            _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, new GameObject().transform);  // 이 부분만 남겼음
+            // StartCoroutine(CheckParticleAndChangeState(_particle.main.duration));
+            PrintText("PhotonNetwork 연결 필요!");
         }
         
         

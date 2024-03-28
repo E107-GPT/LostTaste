@@ -46,6 +46,7 @@ public class MonsterKingHitDownPattern : Pattern
         _cylinderLoc.position = tempCylinder;
 
         _particle = Managers.Effect.Play(Define.Effect.KingHitDownEndEffect, _cylinderLoc);
+        Managers.Sound.Play("Monster/KingHitDownEndEffect", Define.Sound.Effect);
     }
 
     public override void SetCollider(int attackDamage)
