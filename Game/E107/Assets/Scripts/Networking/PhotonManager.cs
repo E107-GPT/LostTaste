@@ -154,7 +154,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed" };
 
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
-        PhotonNetwork.CreateRoom(roomName+ seed, room);
+        roomName = roomName + "`" + seed;
+        PhotonNetwork.CreateRoom(roomName, room);
 
     }
 
@@ -205,18 +206,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void ClickRoom(int roomNumber)
     {
         selectRoom = roomlist[roomNumber];
-        roomEnter();
-        return;
         string printRoomName = selectRoom.Name;
         int lastIndex = printRoomName.LastIndexOf("`");
         if (lastIndex != -1)
             printRoomName = printRoomName.Substring(0, lastIndex);
         if ((bool)selectRoom.CustomProperties["ispassword"])
         {
+            passwordPanel.SetActive(true);
+            Debug.Log(GameObject.Find("Party Joining PW Content Text"));
             GameObject.Find("Party Joining PW Content Text").GetComponent<TextMeshProUGUI>().text = printRoomName + "파티에 참여하시겠습니까?";
+            
             //password panel open
             GameObject.Find("Party Joining Window").SetActive(false);
-            passwordPanel.SetActive(true);
         }
         else
             GameObject.Find("Party Joining Content Text").GetComponent<TextMeshProUGUI>().text = printRoomName + "파티에 참여하시겠습니까?";
@@ -242,6 +243,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if ((string)selectRoom.CustomProperties["password"] == pw)
         {
             PhotonNetwork.JoinRoom(selectRoom.Name);
+            partyUI.SetActive(false);
         }
     }
 
@@ -299,7 +301,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         for(int i = 0; i<4; i++)
         {
-            partyMemberInfo[i].text = "닉네임";
+            partyMemberInfo[i].text = "파티원 모집중...";
         }
         int idx = 0;
         // 이거 체크해보기
@@ -311,8 +313,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             Debug.Log(player.Key);
-            partyMemberInfo[idx].text = player.Value.NickName;
-            idx++;
+            partyMemberInfo[(int)player.Value.CustomProperties["Number"]].text = player.Value.NickName;
+            //idx++;
         }
     }
 
