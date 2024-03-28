@@ -37,12 +37,6 @@ public class ControlInterfaceManager : MonoBehaviour
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
 
-    void Start()
-    {
-        // PlayerController 컴포넌트를 찾아서 참조
-        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-    }
-
     void Update()
     {
         // 컨트롤 인터페이스 업데이트
@@ -55,6 +49,9 @@ public class ControlInterfaceManager : MonoBehaviour
     // 컨트롤 인터페이스를 업데이트하는 메서드
     void UpdateControlInterface()
     {
+        // PlayerController 컴포넌트를 찾아서 참조
+        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+
         if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 
         // PlayerController의 인벤토리에 접근
