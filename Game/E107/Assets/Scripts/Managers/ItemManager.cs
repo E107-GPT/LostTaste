@@ -58,12 +58,5 @@ public class ItemManager
 
             ChestItemDictionary[item.Tier].Add(gameObject);
         }
-
-        Debug.Log("Common Count: " + ChestItemDictionary[ItemTier.COMMON].Count);
-        Debug.Log("Uncommon Count: " + ChestItemDictionary[ItemTier.UNCOMMON].Count);
-        Debug.Log("Rare Count: " + ChestItemDictionary[ItemTier.RARE].Count);
-        Debug.Log("Epic Count: " + ChestItemDictionary[ItemTier.EPIC].Count);
-        Debug.Log("Legendary Count: " + ChestItemDictionary[ItemTier.LEGENDARY].Count);
-        Debug.Log("Boss Count: " + ChestItemDictionary[ItemTier.BOSS].Count);
     }
 }
