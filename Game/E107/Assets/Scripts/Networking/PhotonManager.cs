@@ -299,7 +299,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         for(int i = 0; i<4; i++)
         {
-            partyMemberInfo[i].text = "닉네임";
+            partyMemberInfo[i].text = "파티원 모집중...";
         }
         int idx = 0;
         // 이거 체크해보기
@@ -311,8 +311,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             Debug.Log(player.Key);
-            partyMemberInfo[idx].text = player.Value.NickName;
-            idx++;
+            partyMemberInfo[(int)player.Value.CustomProperties["Number"]].text = player.Value.NickName;
+            //idx++;
         }
     }
     #endregion
