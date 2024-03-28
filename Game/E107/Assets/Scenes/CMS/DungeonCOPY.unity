@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5877,11 +5877,6 @@ MonoBehaviour:
   stagePanel: {fileID: 219504693}
   stageLevelText: {fileID: 219504692}
   stageNameText: {fileID: 219504691}
---- !u!1 &2043949753 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5054022301560295500, guid: 76832f3175c3d7c499e74a0138e0c474, type: 3}
-  m_PrefabInstance: {fileID: 7365273930779516552}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2055916450 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4225647022006575297, guid: e469a629f99d2324db91d84af0e08708, type: 3}
@@ -6070,7 +6065,7 @@ PrefabInstance:
     - target: {fileID: 3346274330026272322, guid: ad5b15d1531efb84d835d74b463b73f6, type: 3}
       propertyPath: itemBox
       value: 
-      objectReference: {fileID: 569889204}
+      objectReference: {fileID: 1057252411}
     - target: {fileID: 3346274330026272322, guid: ad5b15d1531efb84d835d74b463b73f6, type: 3}
       propertyPath: targetPortalLocation
       value: 
@@ -6600,10 +6595,6 @@ PrefabInstance:
       value: IceBoss
       objectReference: {fileID: 0}
     - target: {fileID: 6275528542426146911, guid: e9c7feee9e74178438f760324288cbc7, type: 3}
-      propertyPath: itemBox
-      value: 
-      objectReference: {fileID: 1057252411}
-    - target: {fileID: 6275528542426146911, guid: e9c7feee9e74178438f760324288cbc7, type: 3}
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 1961429438}
@@ -6952,7 +6943,7 @@ PrefabInstance:
     - target: {fileID: 3647406969539854640, guid: 76832f3175c3d7c499e74a0138e0c474, type: 3}
       propertyPath: itemBox
       value: 
-      objectReference: {fileID: 2043949753}
+      objectReference: {fileID: 569889204}
     - target: {fileID: 3647406969539854640, guid: 76832f3175c3d7c499e74a0138e0c474, type: 3}
       propertyPath: targetPortalLocation
       value: 
