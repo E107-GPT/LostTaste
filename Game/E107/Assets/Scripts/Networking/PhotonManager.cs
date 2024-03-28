@@ -75,8 +75,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             string partyName = "Party Member " + (i + 1);
             GameObject party = GameObject.Find(partyName);
+            Transform parentTransform = party.transform;
+            Transform childTransform = parentTransform.Find("Party Memeber Nickname Text " +(i+1));
 
-            partyMemberInfo[i] = party.GetComponent<TextMeshProUGUI>();
+            partyMemberInfo[i] = childTransform.GetComponent<TextMeshProUGUI>();
         }
 
         partyUI.SetActive(false);
@@ -278,6 +280,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             partyUI.SetActive(true);
         if (PhotonNetwork.InRoom)
         {
+            PrintPlayer();
             partyInfoPanel.SetActive(true);
             partyListPanel.SetActive(false);
         }
@@ -285,6 +288,21 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             partyInfoPanel.SetActive(false);
             partyListPanel.SetActive(true);
+        }
+    }
+
+    public void PrintPlayer()
+    {
+        int idx = 0;
+        // 이거 체크해보기
+        //Debug.Log(GameObject.Find("Party Leader Nickname"));
+        //GameObject.Find("Party Leader Nickname").GetComponent<TextMeshProUGUI>().text = (string)PhotonNetwork.CurrentRoom.CustomProperties["captain"];
+        
+        foreach(KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            Debug.Log(player.Key);
+            partyMemberInfo[idx].text = player.Value.NickName;
+            idx++;
         }
     }
     #endregion
@@ -436,16 +454,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     }
 
-
-    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
-    {
-        base.OnRoomPropertiesUpdate(propertiesThatChanged);
-
-        
-        //{
-        //    { "OpenPortal", "포탈명"}, { "ClosePortal", "포탈명"}
-        //}
-    }
 
     #endregion
 }
