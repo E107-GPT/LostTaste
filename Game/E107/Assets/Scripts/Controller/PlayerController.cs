@@ -93,6 +93,7 @@ public class PlayerController : BaseController
     public override void ExcuteIdle()
     {
         base.ExcuteIdle();
+        if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
         DetectInteractable();
     }
 
@@ -105,14 +106,17 @@ public class PlayerController : BaseController
     public override void EnterMove()
     {
         base.EnterMove();
-        _animator.CrossFade("RUN", 0.1f);
+        _animator.CrossFade("RUN", 0.3f);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeMoveState", RpcTarget.Others);
     }
     public override void ExcuteMove()
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
-            if ((PhotonNetwork.IsConnected && photonView.IsMine == false)) return;
+            if ((PhotonNetwork.IsConnected && photonView.IsMine == false))
+            {
+                return;
+            }
         }
         base.ExcuteMove();
         if (Input.GetKey(KeyCode.W))
@@ -164,7 +168,7 @@ public class PlayerController : BaseController
         if (Input.anyKey == false)
         {
             _statemachine.ChangeState(new IdleState(this));
-            if (PhotonNetwork.IsConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
+            //if (PhotonNetwork.IsConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
         }
 
     }
@@ -176,7 +180,7 @@ public class PlayerController : BaseController
         base.EnterDash();
         if (photonView.IsMine || !PhotonNetwork.IsConnected || PhotonNetwork.InLobby) LookMousePosition();
 
-        _animator.CrossFade("DASH", 0.1f, -1, 0);
+        _animator.Play("DASH", -1, 0);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDashState", RpcTarget.Others);
 
     }
@@ -388,7 +392,7 @@ public class PlayerController : BaseController
     void ChangeIdleState()
     {
         //Debug.Log("STOP PLZ");
-        _statemachine.ChangeState(new IdleState(this));
+        if(CurState is not  IdleState) _statemachine.ChangeState(new IdleState(this));
     }
 
     [PunRPC]
@@ -448,7 +452,7 @@ public class PlayerController : BaseController
     {
         
 
-        _statemachine.ChangeState(new IdleState(this));
+        _statemachine.ChangeState(new MoveState(this));
         //if (photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
     }
 

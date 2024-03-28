@@ -14,6 +14,10 @@ public class MonsterManager : MonoBehaviour
 
     public PortalTrigger portalTrigger;
 
+    PhotonView photonView;
+
+    public List<GameObject> PortalList;
+
     //public string targetMapName;
 
     [System.Serializable]
@@ -39,6 +43,7 @@ public class MonsterManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            photonView = GetComponent<PhotonView>();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -49,65 +54,45 @@ public class MonsterManager : MonoBehaviour
         //StartCoroutine(CheckMonstersCoroutine());
     }
 
-    IEnumerator CheckMonstersCoroutine()
+    IEnumerator CheckMonstersCoroutine(string mapName)
     {
         bool monstersCleared = false;
 
+        PortalTrigger portal = PortalList.Find((e) =>  e.transform.root.name == mapName ).GetComponent<PortalTrigger>();
+
+        Debug.Log(portal.name);
         while (!monstersCleared)
         {
             yield return new WaitForSeconds(0.5f);
 
-            //if(FindObjectsByType<MonsterController>().Length == 0)
-            //{
+            monstersInCurrentMap.RemoveAll(monster => monster == null);
 
-            //}
-            if(PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
+            if (monstersInCurrentMap.Count == 0)
             {
-                Debug.Log("제발 포탈님 제발요");
-                if (FindObjectsByType<MonsterController>(FindObjectsSortMode.None).Length == 0 )
-                {
-                    if (portalTrigger != null)
-                    {
-                        portalTrigger.ActivatePortal(true);
-                        monstersCleared = true;
-                        StopCoroutine("CheckMonstersCoroutine");
-                    }
-                }
-                else
-                {
-                    Debug.Log("카운트 0아니여서 비활성화 되야함");
-                    if (portalTrigger != null)
-                    {
-                        portalTrigger.ActivatePortal(false);
-                    }
-                }
-            }
-            //monstersInCurrentMap.RemoveAll(monster => monster == null);
+                // 몬스터가 모두 제거되면 포탈 활성화
+                //if (portalTrigger != null)
+                //{
+                //    portalTrigger.ActivatePortal(true);
+                //    monstersCleared = true;
+                //    SendActivatePortal();
+                //    StopCoroutine("CheckMonstersCoroutine");
+                //}
 
-            //if (monstersInCurrentMap.Count == 0)
-            //{
-            //    // 몬스터가 모두 제거되면 포탈 활성화
-            //    if (portalTrigger != null)
-            //    {
-            //        portalTrigger.ActivatePortal(true);
-            //        monstersCleared = true;
-            //        StopCoroutine("CheckMonstersCoroutine");
-            //    }
-            //}
-            //else
-            //{
-            //    Debug.Log("카운트 0아니여서 비활성화 되야함");
-            //    if (portalTrigger != null)
-            //    {
-            //        portalTrigger.ActivatePortal(false);
-            //    }
-            //}
-        } 
+                //portal.ActivatePortal(true);
+                portal.gameObject.SetActive(true);
+                portal.ActivateItemBox();
+                monstersCleared = true;
+                SendActivatePortal(portal.name);
+                StopCoroutine("CheckMonstersCoroutine");
+
+            }
+        }
     }
 
     // 특정 맵에 몬스터 소환
     public void SpawnMonstersForMap(string mapName)
     {
+        if (monstersInCurrentMap.Count != 0) return;
         foreach (MonsterSpawnInfo info in monsterSpawnInfos)
         {
             if (info.mapName == mapName)
@@ -119,9 +104,9 @@ public class MonsterManager : MonoBehaviour
                     Debug.Log($"방안인가?{PhotonNetwork.InRoom}");
                     if (PhotonNetwork.IsConnected && !PhotonNetwork.InRoom) clone = Instantiate(spawnInfo.monsterPrefab, spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
                     else if (PhotonNetwork.IsMasterClient) clone = PhotonNetwork.Instantiate($"Prefabs/Monster/{spawnInfo.monsterPrefab.name}", spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
-                    //monstersInCurrentMap.Add(clone);
+                    monstersInCurrentMap.Add(clone);
 
-                    
+
                 }
                 break;
             }
@@ -130,6 +115,37 @@ public class MonsterManager : MonoBehaviour
 
     public void RestartCheckMonstersCoroutine(string newMapName)
     {
-        StartCoroutine(CheckMonstersCoroutine());
+        StartCoroutine(CheckMonstersCoroutine(newMapName));
+    }
+
+    public void SendMonsterSpawnMsg(string mapName)
+    {
+        Debug.Log("몬스터 스폰 해달라고 메세지를 보냄");
+        photonView.RPC("RPC_SpawnMonster", RpcTarget.MasterClient, mapName);
+    }
+
+    [PunRPC]
+    void RPC_SpawnMonster(string mapName)
+    {
+        SpawnMonstersForMap(mapName);
+        RestartCheckMonstersCoroutine(mapName);
+    }
+
+    public void SendActivatePortal(string portalName)
+    {
+        photonView.RPC("RPC_ActivatePortal",RpcTarget.Others, portalName);
+        
+    }
+
+    [PunRPC]
+    void RPC_ActivatePortal(string portalName)
+    {
+        //portalTrigger.ActivatePortal(true);
+        Debug.Log(portalName);
+        Debug.Log(PortalList.Find((e) => e.name == portalName));
+        GameObject go = PortalList.Find((e) => e.name == portalName);
+        go.SetActive(true);
+        go.GetComponent<PortalTrigger>().ActivateItemBox();
+
     }
 }

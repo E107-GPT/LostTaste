@@ -151,6 +151,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
         PhotonNetwork.CreateRoom(roomName+ seed, room);
+
     }
 
     // Make multy Rroom
