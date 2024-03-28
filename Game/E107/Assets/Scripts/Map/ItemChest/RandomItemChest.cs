@@ -11,8 +11,8 @@ public class RandomItemChest : ItemChest
 
     public override GameObject GetItemPrefab()
     {
-        var chestTable = ItemDropTables.CHEST_TABLES[(int)ChestType];
-        var items = Managers.Random.Randomizer.GetFromTable(ItemTierRandomKey, chestTable);
-        return Managers.Random.Randomizer.Get(ItemTypeRandomKey, items);
+        ProbabilityTable<ItemTier> chestTable = Managers.Item.RandomChestTables[ChestType];
+        ItemTier itemTier = Managers.Random.Randomizer.GetFromTable(ItemTierRandomKey, chestTable);
+        return Managers.Random.Randomizer.Get(ItemTypeRandomKey, Managers.Item.ChestItemDictionary[itemTier]);
     }
 }
