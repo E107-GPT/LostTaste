@@ -46,6 +46,8 @@ public class DungeonEntrance : MonoBehaviour
     public GameObject finalStageIcon; // Final Stage 클리어 아이콘
     public TextMeshProUGUI stageClearText; // 스테이지 클리어 텍스트
 
+    private bool hasEntered = false; // 플레이어가 이미 입장했는지 여부를 저장하는 변수
+
     private void Awake()
     {
         if (Instance == null)
@@ -79,7 +81,7 @@ public class DungeonEntrance : MonoBehaviour
     // 플레이어가 캠프에 진입할 때 호출되는 메서드
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !hasEntered)
         {
 
             isInCamp = false;
@@ -100,6 +102,8 @@ public class DungeonEntrance : MonoBehaviour
             stageClearText.text = "클리어한 스테이지가 없습니다.";
 
             StartCoroutine(ShowStagePanel());
+
+            hasEntered = true; // 플레이어가 입장했음을 표시
         }
     }
 

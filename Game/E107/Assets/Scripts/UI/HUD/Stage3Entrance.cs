@@ -23,10 +23,12 @@ public class Stage3Entrance : MonoBehaviour
     [Header("[ 클리어 한 스테이지 ]")]
     public GameObject stage2Icon; // Stage 2 클리어 아이콘
 
+    private bool hasEntered = false; // 플레이어가 이미 입장했는지 여부를 저장하는 변수
+
     // 플레이어가 캠프에 진입할 때 호출되는 메서드
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !hasEntered)
         {
             stageText.text = "STAGE 3 - 서리빛 궁전"; // 스테이지 텍스트 업데이트
 
@@ -36,6 +38,8 @@ public class Stage3Entrance : MonoBehaviour
             stage2Icon.SetActive(true); // Stage 2 클리어 아이콘 활성화
 
             StartCoroutine(ShowStagePanel());
+
+            hasEntered = true; // 플레이어가 입장했음을 표시
         }
     }
 
