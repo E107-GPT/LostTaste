@@ -445,8 +445,8 @@ public class PlayerController : BaseController
 
     void OnDashFinishedEvent()
     {
-        
 
+        if (PhotonNetwork.InRoom && !photonView.IsMine) return;
         _statemachine.ChangeState(new MoveState(this));
         //if (photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
     }
