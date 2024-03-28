@@ -281,12 +281,7 @@ public class PlayerController : BaseController
             }
             else if (Input.GetMouseButton(1))
             {
-                if (_stat.Mp < _inventory[_currentItemNum].RightSkill.RequiredMp) return;
-
-                Debug.Log($"Required Mp {_inventory[_currentItemNum].RightSkill.RequiredMp}");
-
-                float lastSkillCastTime = _inventory[_currentItemNum].RightSkill.LastCastTime;
-                if (lastSkillCastTime != 0 && Time.time - lastSkillCastTime < _inventory[_currentItemNum].RightSkill.SkillCoolDownTime) return;
+                if (!_inventory[_currentItemNum].RightSkill.IsPlayerCastable(this)) return;
 
                 _curSkill = Define.SkillType.RightSkill;
                 _statemachine.ChangeState(new SkillState(this));

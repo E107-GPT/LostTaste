@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: bc6a42dc298632e46bf5e77e1a6a5aae, type: 2}
+--- !u!1 &31021797 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3039221132628036445, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
+  m_PrefabInstance: {fileID: 1840857730}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &219504689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1952,6 +1957,7 @@ MonoBehaviour:
   partyListPanel: {fileID: 258701908}
   partyInfoPanel: {fileID: 983796363}
   partyMakePanel: {fileID: 231413834}
+  partyCaptain: {fileID: 31021797}
   partySelectButton:
   - {fileID: 0}
   - {fileID: 0}
@@ -4833,7 +4839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3869633547308172995, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3941196128669640622, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
       propertyPath: m_AnchorMax.y
