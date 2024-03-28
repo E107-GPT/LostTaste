@@ -10,6 +10,7 @@ public class ItemDropTables
     public static readonly GameObject[] COMMON_ITEMS = new GameObject[] {
         Load("0001_Cucumber"),
         Load("0027_Log"),
+        Load("0025_Bibimbap"),
     };
 
     public static readonly GameObject[] UNCOMMON_ITEMS = new GameObject[] {
@@ -30,7 +31,7 @@ public class ItemDropTables
     };
 
     public static readonly GameObject[] LEGENDARY_ITEMS = new GameObject[] {
-        Load("OHS05_Sword"),    // test
+        Load("0020_SixTimesBibimbap"),
     };
 
     public static readonly GameObject[] BOSS_ITEMS = new GameObject[] {
