@@ -17,6 +17,7 @@ public class Managers : MonoBehaviour
     RandomManager _random = new RandomManager();
     PlayerManager _player = new PlayerManager();
     CoroutineManager _coroutine = new CoroutineManager();
+    ItemManager _item = new ItemManager();
     
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
@@ -27,6 +28,7 @@ public class Managers : MonoBehaviour
     public static EffectManager Effect { get { return Instance._effect; } }
     public static RandomManager Random { get { return Instance._random; } }
     public static CoroutineManager Coroutine { get { return Instance._coroutine; } }
+    public static ItemManager Item { get { return Instance._item; } }
 
     public static PlayerManager Player { get { return Instance._player; } }
 
@@ -62,6 +64,7 @@ public class Managers : MonoBehaviour
             s_instance._effect.Init();
             s_instance._random.Init();
             s_instance._coroutine.Init(s_instance);
+            s_instance._item.Init();
         }
 
         

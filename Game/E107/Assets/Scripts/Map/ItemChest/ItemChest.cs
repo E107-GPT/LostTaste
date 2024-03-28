@@ -26,3 +26,11 @@ public abstract class ItemChest : MonoBehaviour, IPlayerInteractable
 
     public abstract GameObject GetItemPrefab();
 }
+
+public enum ItemChestType
+{
+    WOODEN = 0,
+    BETTER = 1,
+    GOLDEN = 2,
+    BOSS = 3,
+}
