@@ -19,10 +19,6 @@ public class Stage3BossEntrance : MonoBehaviour
     public TextMeshProUGUI stageLevelText; // 스테이지 레벨 텍스트
     public TextMeshProUGUI stageNameText; // 스테이지 이름 텍스트
 
-    // 클리어 한 스테이지
-    [Header("[ 클리어 한 스테이지 ]")]
-    public GameObject stage3Icon; // Stage 3 클리어 아이콘
-
     // 플레이어가 캠프에 진입할 때 호출되는 메서드
     private void OnTriggerEnter(Collider other)
     {
@@ -32,8 +28,6 @@ public class Stage3BossEntrance : MonoBehaviour
 
             stageLevelText.text = "STAGE 3 BOSS"; // 스테이지 레벨 텍스트를 업데이트
             stageNameText.text = "얼음 궁전의 군주"; // 스테이지 이름 텍스트를 업데이트
-
-            stage3Icon.SetActive(true); // Stage 3 클리어 아이콘 활성화
 
             StartCoroutine(ShowStagePanel());
         }
