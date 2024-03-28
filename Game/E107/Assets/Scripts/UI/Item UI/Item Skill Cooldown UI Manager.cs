@@ -88,6 +88,9 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
         // 쿨타임 정보 업데이트
         if (Input.GetMouseButton(1))
         {
+            // 캐릭터가 '스킬 상태'가 아닐 경우 함수를 빠져나감
+            if (_playerController.CurState is not SkillState) return;
+
             if (_currentItemNum == 1 && !isFirstItemCoolingDown)
             {
                 StartCoroutine(UpdateItemCoolDown(firstItem, firstItemRightSkillCoolDown, firstItemRightSkillCoolDownText, firstItemCoolDownImage, firstItemKeyImage, isFirstItemSkillExists));

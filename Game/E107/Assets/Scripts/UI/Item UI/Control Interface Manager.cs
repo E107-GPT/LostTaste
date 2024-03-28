@@ -30,8 +30,18 @@ public class ControlInterfaceManager : MonoBehaviour
     [Header("[ 스킬 없음]")]
     public GameObject skillNonePanel; // 스킬 없음 패널
 
+    // 직업 스킬
+    [Header("[ 직업 스킬 ]")]
+    public Image classSkillIcon; // 직업 스킬 아이콘
+
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
+
+    void Start()
+    {
+        // PlayerController 컴포넌트를 찾아서 참조
+        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+    }
 
     void Update()
     {
@@ -45,9 +55,6 @@ public class ControlInterfaceManager : MonoBehaviour
     // 컨트롤 인터페이스를 업데이트하는 메서드
     void UpdateControlInterface()
     {
-        // PlayerController 컴포넌트를 찾아서 참조
-        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-
         if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 
         // PlayerController의 인벤토리에 접근
@@ -68,6 +75,12 @@ public class ControlInterfaceManager : MonoBehaviour
 
         // 무기 교체에 따른 스킬 패널 업데이트
         ToggleSkillPanels(_currentItemNum, isFirstItemSkillExists, isSecondItemSkillExists);
+
+        //// 직업 아이콘 업데이트
+        //if (warriorSkill != null)
+        //{
+        //    UpdateClassSkillIcon(classSkillIcon, warriorSkillIcon);
+        //}
     }
 
     // 스킬 아이콘을 업데이트하는 메서드
@@ -96,4 +109,10 @@ public class ControlInterfaceManager : MonoBehaviour
 
         skillNonePanel.SetActive(!isSkillPanelActive);
     }
+
+    //// 직업 스킬 아이콘을 업데이트하는 메서드
+    //void UpdateClassSkillIcon(Image skillIcon, Sprite warriorSkillIcon)
+    //{
+    //    skillIcon.sprite = warriorSkillIcon;
+    //}
 }
