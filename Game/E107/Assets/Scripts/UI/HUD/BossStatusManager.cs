@@ -74,7 +74,7 @@ public class BossStatusManager : MonoBehaviour
         drillDuckController = GameObject.Find("DrillDuck(Clone)").GetComponent<DrillDuckController>();
 
         // 보스의 이름 정보를 TextMeshProUGUI에 적용
-        drillDuckNameText.text = "Drill Duck";
+        drillDuckNameText.text = "숲의 주인 드릴덕";
 
         // 보스의 현재 체력을 체력 바에 반영
         int Hp = drillDuckController.Stat.Hp;
@@ -99,7 +99,7 @@ public class BossStatusManager : MonoBehaviour
         crocodileController = GameObject.Find("Crocodile(Clone)").GetComponent<CrocodileController>();
 
         // 보스의 이름 정보를 TextMeshProUGUI에 적용
-        crocodileNameText.text = "Crocodile";
+        crocodileNameText.text = "해변의 수호자 크로커다일";
 
         // 보스의 현재 체력을 체력 바에 반영
         int Hp = crocodileController.Stat.Hp;
@@ -124,7 +124,7 @@ public class BossStatusManager : MonoBehaviour
         iceKingController = GameObject.Find("IceKing(Clone)").GetComponent<IceKingController>();
 
         // 보스의 이름 정보를 TextMeshProUGUI에 적용
-        iceKingNameText.text = "Ice King";
+        iceKingNameText.text = "얼음 군주 아이스킹";
 
         // 보스의 현재 체력을 체력 바에 반영
         int Hp = iceKingController.Stat.Hp;
@@ -149,7 +149,7 @@ public class BossStatusManager : MonoBehaviour
         monsterKingController = GameObject.Find("MonsterKing(Clone)").GetComponent<MonsterKingController>();
 
         // 보스의 이름 정보를 TextMeshProUGUI에 적용
-        monsterKingNameText.text = "Monster King";
+        monsterKingNameText.text = "마왕";
 
         // 보스의 현재 체력을 체력 바에 반영
         int Hp = monsterKingController.Stat.Hp;
