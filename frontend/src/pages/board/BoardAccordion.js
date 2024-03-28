@@ -47,19 +47,8 @@ const BoardAccordion = () => {
     ]);
     return (
         <>
-            <Box
-                bgcolor={"#F4F4F4"}
-                width={"100%"}
-                paddingY={"0.5rem"}
-                borderRadius={"10px 10px 0px 0px "}
-                borderBottom={"3px solid black"}
-            >
-                <Stack
-                    direction={"row"}
-                    alignItems={"center"}
-                    textAlign={"center"}
-                    fontWeight={700}
-                >
+            <Box bgcolor={"#F4F4F4"} width={"100%"} paddingY={"0.5rem"} borderRadius={"10px 10px 0px 0px "} borderBottom={"3px solid black"}>
+                <Stack direction={"row"} alignItems={"center"} textAlign={"center"} fontWeight={700}>
                     <Box flex={1}>번호</Box>
                     <Box flex={1}>종류</Box>
                     <Box flex={3}>제목</Box>
@@ -69,59 +58,22 @@ const BoardAccordion = () => {
             </Box>
             {boardList.map((board, index) => (
                 <Accordion key={index} sx={{ padding: 0, fontWeight: 700 }}>
-                    <AccordionSummary
-                        aria-controls="panel2-content"
-                        id="panel2-header"
-                        sx={{ padding: 0 }}
-                    >
-                        <Stack
-                            direction={"row"}
-                            alignItems={"center"}
-                            textAlign={"center"}
-                            width={"100%"}
-                        >
+                    <AccordionSummary aria-controls="panel2-content" id="panel2-header" sx={{ padding: 0 }}>
+                        <Stack direction={"row"} alignItems={"center"} textAlign={"center"} width={"100%"}>
                             <Typography flex={1}>{board.num}</Typography>
                             <Box flex={1}>
-                                <Stack
-                                    direction={"row"}
-                                    justifyContent={"center"}
-                                >
-                                    <Box
-                                        borderRadius={"20px"}
-                                        width={"7rem"}
-                                        bgcolor={
-                                            board.type === "question"
-                                                ? "#0EB4FC"
-                                                : "#F05650"
-                                        }
-                                        textAlign={"center"}
-                                    >
-                                        {board.type === "question"
-                                            ? "건의"
-                                            : "버그제보"}
+                                <Stack direction={"row"} justifyContent={"center"}>
+                                    <Box borderRadius={"20px"} width={"7rem"} bgcolor={board.type === "question" ? "#0EB4FC" : "#F05650"} textAlign={"center"}>
+                                        {board.type === "question" ? "건의" : "버그제보"}
                                     </Box>
                                 </Stack>
                             </Box>
                             <Typography flex={3}>{board.title}</Typography>
                             <Typography flex={1}>{board.date}</Typography>
                             <Box flex={1}>
-                                <Stack
-                                    direction={"row"}
-                                    justifyContent={"center"}
-                                >
-                                    <Box
-                                        borderRadius={"20px"}
-                                        width={"7rem"}
-                                        bgcolor={
-                                            board.status === "solved"
-                                                ? "#3FE87F"
-                                                : "#B5B5B5"
-                                        }
-                                        textAlign={"center"}
-                                    >
-                                        {board.status === "solved"
-                                            ? "해결"
-                                            : "미해결"}
+                                <Stack direction={"row"} justifyContent={"center"}>
+                                    <Box borderRadius={"20px"} width={"7rem"} bgcolor={board.status === "solved" ? "#3FE87F" : "#B5B5B5"} textAlign={"center"}>
+                                        {board.status === "solved" ? "해결" : "미해결"}
                                     </Box>
                                 </Stack>
                             </Box>
