@@ -117,7 +117,6 @@ public class DrillDuckController : MonsterController
             if (aniTime <= 0.2f)
             {
                 _agent.speed = _stat.MoveSpeed;
-                //Managers.Effect.Play
             }
             else if (aniTime <= 0.5f)
             {
