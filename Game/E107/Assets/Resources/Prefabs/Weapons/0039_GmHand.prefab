@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2653394625757274399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2059302790805433879}
+  - component: {fileID: 8110813608107628695}
+  - component: {fileID: 5937849274457258809}
+  - component: {fileID: 8566178429385654222}
+  m_Layer: 9
+  m_Name: 0039_GmHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2059302790805433879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653394625757274399}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.16, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8110813608107628695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653394625757274399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "GM\uC758 \uC190"
+  <Tier>k__BackingField: 5
+  <FlavorText>k__BackingField: "\uACE0\uD1B5\uBC1B\uB294 \uD14C\uC2A4\uD130\uB4E4\uC744
+    \uC704\uD55C \uCE58\uD2B8"
+  <Icon>k__BackingField: {fileID: 21300000, guid: ed19753f71c2893429ed80846f965bfc, type: 3}
+  <LeftSkill>k__BackingField: {fileID: 5937849274457258809}
+  <RightSkill>k__BackingField: {fileID: 8566178429385654222}
+  isDropped: 1
+--- !u!114 &5937849274457258809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653394625757274399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d804e49567ab104c98933b82d97753d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uCC0D\uAE30"
+  <Description>k__BackingField: "\uBC88\uAC1C\uB97C \uB0B4\uB9AC\uCE69\uB2C8\uB2E4"
+  <Icon>k__BackingField: {fileID: 21300000, guid: 9902aa858793f294ebaf0b4189398137, type: 3}
+  <SkillCoolDownTime>k__BackingField: 1
+  <RequiredMp>k__BackingField: 0
+  <Damage>k__BackingField: 9999
+--- !u!114 &8566178429385654222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653394625757274399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a2abb7ceb7ed724180b525c26fbf42d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uC2F9\uC4F8\uC774"
+  <Description>k__BackingField: "\uC544\uC8FC \uD070 \uAC80\uAE30\uB97C \uD718\uB450\uB985\uB2C8\uB2E4"
+  <Icon>k__BackingField: {fileID: 21300000, guid: 9911c5d457a3e5d4c87ac6dc00425da4, type: 3}
+  <SkillCoolDownTime>k__BackingField: 0
+  <RequiredMp>k__BackingField: 20
+  <Damage>k__BackingField: 9999
+  Scale: {x: 100, y: 2, z: 100}
