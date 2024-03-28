@@ -18,7 +18,7 @@ export class BoardBriefDto {
             categoryCode: entity.category.id,
             title: entity.title,
             createdAt: entity.createdAt,
-            isReplied: entity.repliedAt !== undefined
+            isReplied: entity.repliedAt !== null && entity.repliedAt !== undefined
         };
     }
 }
