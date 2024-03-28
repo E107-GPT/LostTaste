@@ -25,6 +25,10 @@ public class Stage2Entrance : MonoBehaviour
     public GameObject stage1Icon; // Stage 1 클리어 아이콘
     public TextMeshProUGUI stageClearText; // 스테이지 클리어 텍스트
 
+    // 드릴덕 체력 슬라이더
+    [Header("[ 드릴덕 체력 슬라이더 ]")]
+    public GameObject drillDuckHealthBar;
+
     private bool hasEntered = false; // 플레이어가 이미 입장했는지 여부를 저장하는 변수
 
     // 플레이어가 캠프에 진입할 때 호출되는 메서드
@@ -39,6 +43,8 @@ public class Stage2Entrance : MonoBehaviour
             stageXIcon.SetActive(false); // 클리어 한 스테이지 없음 아이콘 비활성화
             stage1Icon.SetActive(true); // Stage 1 클리어 아이콘 활성화
             stageClearText.text = "클리어한 스테이지입니다.";
+
+            drillDuckHealthBar.SetActive(false); // 이전 스테이지 보스 체력 바 비활성화
 
             StartCoroutine(ShowStagePanel());
 
