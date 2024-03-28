@@ -55,10 +55,17 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
 
         if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 
-        classSkillCoolDown = 10.0f;
+        classSkillCoolDown = 60.0f;
 
         // 쿨타임 정보 업데이트
-        if (Input.GetKey(KeyCode.Q) && !isClassSkillCoolingDown) StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
+        if (Input.GetKey(KeyCode.Q) && !isClassSkillCoolingDown)
+        {
+            // 캐릭터가 '스킬 상태'가 아닐 경우 함수를 빠져나감
+            if (_playerController.CurState is not SkillState) return;
+
+            StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
+        }
+            
     }
 
     IEnumerator UpdateClassSkillCoolDown(float skillCoolDown, TextMeshProUGUI skillCoolDownText, Image coolDownImage, Image keyImage)
@@ -69,8 +76,8 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
         while (skillCoolDown > 0.0f)
         {
             skillCoolDown -= Time.deltaTime;
-            coolDownImage.fillAmount = skillCoolDown / 10.0f;
-            keyImage.fillAmount = skillCoolDown / 10.0f;
+            coolDownImage.fillAmount = skillCoolDown / 60.0f;
+            keyImage.fillAmount = skillCoolDown / 60.0f;
             skillCoolDownText.text = Mathf.Ceil(skillCoolDown).ToString() + "s";
             yield return new WaitForFixedUpdate();
         }
