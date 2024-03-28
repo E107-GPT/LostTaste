@@ -11,6 +11,12 @@ public class SoundManager
     // Audio Clip
     // Audio Listener
 
+    private string _lastBgmPath = "";
+
+    public string LastBgmPath
+    {
+        get { return _lastBgmPath; }
+    }
 
     public void Init()
     {
@@ -40,6 +46,11 @@ public class SoundManager
     {
         AudioClip audioClip = GetOrAddAudioClip(path, type);
         Play(audioClip, type, pitch);
+
+        if (type == Define.Sound.BGM)
+        {
+            _lastBgmPath = path;
+        }
 
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)

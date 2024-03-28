@@ -111,7 +111,7 @@ public class MonsterController : BaseController
     {
         base.ExcuteIdle();
 
-        Debug.Log("MONSTER IDEL");
+        //Debug.Log("MONSTER IDEL");
 
         if (PhotonNetwork.IsConnected &&PhotonNetwork.IsMasterClient == false) return;
 

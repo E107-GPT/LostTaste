@@ -12,25 +12,23 @@ public class ModifyRoomSettings : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!makeRoom)
+
+
+        if (other.gameObject.CompareTag("Player"))
         {
-            makeRoom = true;
 
-            if (other.gameObject.CompareTag("Player"))
+            if (!PhotonNetwork.InRoom)
             {
-
-                if (!PhotonNetwork.InRoom)
-                {
-                    GameObject.Find("gm").GetComponent<PhotonManager>().MakePersonalRoom();
-                }
-                else
-                {
-                    PhotonNetwork.CurrentRoom.IsVisible = false;
-                    PhotonNetwork.CurrentRoom.IsOpen = false;
-                }
-
-                Debug.Log(PhotonNetwork.CurrentRoom);
+                GameObject.Find("gm").GetComponent<PhotonManager>().MakePersonalRoom();
             }
+            else
+            {
+                PhotonNetwork.CurrentRoom.IsVisible = false;
+                PhotonNetwork.CurrentRoom.IsOpen = false;
+            }
+
+            Debug.Log(PhotonNetwork.CurrentRoom);
         }
+        
     }
 }

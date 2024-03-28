@@ -10,41 +10,49 @@ public class DungeonEntranceTrigger : MonoBehaviour
 
     public int totalPlayers;
 
-    public GameObject portal;
+    public List<GameObject> portal = new List<GameObject>();
 
     private bool portalActivated = false;
 
     private void Start()
     {
         //totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        totalPlayers = 1;
-        portal.SetActive(false);
+        //totalPlayers = 1;
+        //portal.SetActive(false);
         //Debug.Log("포탈 비활성화");
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("플레이어가 포탈에 진입함");
-            string playerName = other.gameObject.name;
-            playersInPortal.Add(playerName);
+            //Debug.Log("플레이어가 포탈에 진입함");
+            //string playerName = other.gameObject.name;
+            //playersInPortal.Add(playerName);
 
-            if (playersInPortal.Count == totalPlayers)
+            //if (playersInPortal.Count == totalPlayers)
+            //{
+            //    portal.SetActive(true); 
+            //    Debug.Log("Portal activated");
+            //    portalActivated = true;
+            //}
+            //portal.SetActive(true);
+
+            foreach (var p in portal)
             {
-                portal.SetActive(true); 
-                Debug.Log("Portal activated");
-                portalActivated = true;
+                p.SetActive(true);
             }
+
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            string playerName = other.gameObject.name;
-            playersInPortal.Remove(playerName);
-        }
+        //if (other.gameObject.CompareTag("Player"))
+        //{
+        //    string playerName = other.gameObject.name;
+        //    playersInPortal.Remove(playerName);
+        //}
     }
 }

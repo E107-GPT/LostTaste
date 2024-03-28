@@ -23,6 +23,22 @@ public class PortalTrigger : MonoBehaviour
 
     public bool isBossRoom = false;
 
+    public string bgmName;
+
+
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+        if (itemBox == null) return;
+        itemBox.SetActive(false);
+    }
+
+    private void Start()
+    {
+    }
+
+
+
     public Color nextBackgroundColor; // 변경할 배경색
 
     // ��Ż Ȱ��ȭ �� ������ ���� Ȱ��ȭ
@@ -35,30 +51,32 @@ public class PortalTrigger : MonoBehaviour
             return;
         }
 
-        itemBox.SetActive(false);
+        itemBox.SetActive(true);
 
-        if (isBossRoom) // �������� ���
-        {
-            var goldenBox = GetItemBoxByName("Golden");
-            if (goldenBox != null)
-            {
-                goldenBox.SetActive(true); // Golden ���ڸ� Ȱ��ȭ
-            }
-        }
+        //itemBox.SetActive(false);
 
-        else // �������� �ƴ� ��� ���� Ȯ�� ������ ����
-        {
-            GameObject boxToActivate = null; // Ȱ��ȭ�� ����
+        //if (isBossRoom) // �������� ���
+        //{
+        //    var goldenBox = GetItemBoxByName("Golden");
+        //    if (goldenBox != null)
+        //    {
+        //        goldenBox.SetActive(true); // Golden ���ڸ� Ȱ��ȭ
+        //    }
+        //}
+
+        //else // �������� �ƴ� ��� ���� Ȯ�� ������ ����
+        //{
+        //    GameObject boxToActivate = null; // Ȱ��ȭ�� ����
 
             
-             boxToActivate = GetItemBoxByName("Wooden");
+        //     boxToActivate = GetItemBoxByName("Wooden");
             
 
-            if (boxToActivate != null)
-            {
-                boxToActivate.SetActive(true);
-            }
-        }
+        //    if (boxToActivate != null)
+        //    {
+        //        boxToActivate.SetActive(true);
+        //    }
+        //}
     }
 
 
@@ -108,47 +126,32 @@ public class PortalTrigger : MonoBehaviour
         {
             other.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
             ChangeCameraBackgroundColor();
-            //if (PhotonNetwork.InRoom)
-            //{
-            //    if(totalPlayers != PhotonNetwork.CurrentRoom.PlayerCount)
-            //        totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-            //}
-            //Debug.Log(totalPlayers);
-            //Debug.Log("xdlkfs : "+ other.gameObject.name);
-            //MonsterManager.Instance.portalTrigger = this;
-            //GameObject go;
-            ////playersInPortal.Add(other.gameObject.name, other.gameObject);
-            //if (playersInPortal.TryGetValue(other.gameObject.name, out go))
-            //{
-            //    playersInPortal[other.gameObject.name] = other.gameObject;
-            //}
-            //else
-            //{
-            //    playersInPortal.Add(other.gameObject.name, other.gameObject);
-            //}
 
-
-            //CheckAllPlayersInPortal();
-            //MonsterManager.Instance.portalTrigger = this;
-            //MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
-            //MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
-            if (GameObject.Find("SpawnMonster").GetComponent<MonsterManager>().monstersInCurrentMap.Count < 1)
+            if (!string.IsNullOrEmpty(bgmName))
             {
-                MonsterManager.Instance.portalTrigger = this;
-                MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
-                Debug.Log("몬스터 생성 완료");
-                MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    Managers.Sound.Clear();
+                    Managers.Sound.Play(bgmName, Define.Sound.BGM);
+                }
             }
+
+            MonsterManager.Instance.portalTrigger = this;
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                MonsterManager.Instance.SendMonsterSpawnMsg(targetMapName);
+                return;
+            }
+
+            MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+            Debug.Log("몬스터 생성 완료");
+            MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
         }
     }
 
     // Ʈ���� ���� ������ ������ �ο��� üũ
     private void OnTriggerExit(Collider other)
     {
-        //if (other.gameObject.CompareTag("Player"))
-        //{
-        //    playersInPortal.Remove(other.gameObject.name);
-        //}
     }
 
     // ��� �÷��̾ ��Ż ��ó�� ������ ����

@@ -7,14 +7,19 @@ using UnityEngine;
 /// </summary>
 public abstract class ConsumingSkill : Skill
 {
-    private string _weaponName = "0000_Fist";
-
-    public string WeaponName { get { return _weaponName; } set { _weaponName = value; } }
+    [field: SerializeField]
+    public GameObject NextItem { get; set; }
 
     protected override void Init()
     {
         RequiredMp = 0;
         SkillCoolDownTime = 1.0f;
+
+        if (NextItem == null)
+        {
+            NextItem = Resources.Load<GameObject>("Prefabs/Weapons/0000_Fist");
+            Debug.Log(NextItem);
+        }
     }
 
     protected override IEnumerator SkillCoroutine()
@@ -24,11 +29,11 @@ public abstract class ConsumingSkill : Skill
 
         yield return null;
 
-        Destroy(this.gameObject);
+        Managers.Resource.Destroy(gameObject);
 
         Managers.Coroutine.Run(OnConsume(playerController));
 
-        playerController.ObtainWeapon(_weaponName);
+        playerController.ObtainWeapon(NextItem.name);
         playerController.StateMachine.ChangeState(new IdleState(playerController));
     }
 
