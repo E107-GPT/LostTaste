@@ -46,7 +46,7 @@ public class MonsterManager : MonoBehaviour
         {
             Instance = this;
             photonView = GetComponent<PhotonView>();
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -63,24 +63,19 @@ public class MonsterManager : MonoBehaviour
         PortalTrigger portal = PortalList.Find((e) =>  e.transform.root.name == mapName ).GetComponent<PortalTrigger>();
 
         Debug.Log(portal.name);
+        
         while (!monstersCleared)
         {
             yield return new WaitForSeconds(0.5f);
 
             monstersInCurrentMap.RemoveAll(monster => monster == null);
-
+            Debug.Log(monstersInCurrentMap.Count);
             if (monstersInCurrentMap.Count == 0)
             {
-                // 몬스터가 모두 제거되면 포탈 활성화
-                //if (portalTrigger != null)
-                //{
-                //    portalTrigger.ActivatePortal(true);
-                //    monstersCleared = true;
-                //    SendActivatePortal();
-                //    StopCoroutine("CheckMonstersCoroutine");
-                //}
 
                 //portal.ActivatePortal(true);
+
+                Debug.Log("포탈 켜!!");
                 portal.gameObject.SetActive(true);
                 portal.ActivateItemBox();
                 monstersCleared = true;
@@ -131,12 +126,14 @@ public class MonsterManager : MonoBehaviour
     [PunRPC]
     void RPC_SpawnMonster(string mapName)
     {
+        Debug.Log("마스터가 받았습니다.");
         SpawnMonstersForMap(mapName);
         RestartCheckMonstersCoroutine(mapName);
     }
 
     public void SendActivatePortal(string portalName)
     {
+        Debug.Log("다른 사람들 포탈 켜라고 얘기하기");
         photonView.RPC("RPC_ActivatePortal",RpcTarget.Others, portalName);
         
     }
@@ -149,12 +146,14 @@ public class MonsterManager : MonoBehaviour
         Debug.Log(PortalList.Find((e) => e.name == portalName));
         GameObject go = PortalList.Find((e) => e.name == portalName);
         go.SetActive(true);
+        Debug.Log("여기서 켜져야함");
         go.GetComponent<PortalTrigger>().ActivateItemBox();
 
     }
 
     public void ReStartManage()
     {
+        if (_curMap == null) return;
         foreach(var monster in GameObject.FindGameObjectsWithTag("Monster"))
         {
             monstersInCurrentMap.Add(monster);
