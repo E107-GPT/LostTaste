@@ -14,7 +14,7 @@ public class BibimbapSkill : ConsumingSkill
 
     protected override IEnumerator OnConsume(PlayerController playerController)
     {
-        Managers.Sound.Play("bite1");
+        Managers.Sound.Play("spoon_clack", Define.Sound.Effect, 1.0f);
 
         playerController.Stat.Hp = Mathf.Min(playerController.Stat.MaxHp, playerController.Stat.Hp + HpRecoveryAmount);
 
