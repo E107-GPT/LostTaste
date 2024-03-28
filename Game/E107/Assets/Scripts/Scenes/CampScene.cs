@@ -55,7 +55,7 @@ public class CampScene : BaseScene
                 agent.Warp(entrancePosition);
             }
         }
-        Managers.Sound.Play(bgmName, Define.Sound.BGM);
+        Managers.Sound.Play(bgmName, Define.Sound.BGM, 1.0f, 0.3f);
     }
 
 
