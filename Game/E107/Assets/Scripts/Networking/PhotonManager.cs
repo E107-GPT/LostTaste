@@ -446,7 +446,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //        PhotonNetwork.Destroy(p.gameObject);
         //    }
         //}
-        MonsterManager.Instance.SendReStartMsg();
         Managers.Scene.LoadScene(Define.Scene.Dungeon, true);
 
     }
@@ -488,6 +487,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         
 
     }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if(PhotonNetwork.LocalPlayer == newMasterClient)
+        {
+            MonsterManager.Instance.ReStartManage();
+        }
+        
+        
+    }
+
+
+
 
 
 

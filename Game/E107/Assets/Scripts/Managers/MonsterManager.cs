@@ -18,7 +18,7 @@ public class MonsterManager : MonoBehaviour
 
     public List<GameObject> PortalList;
 
-    private string _curMap;
+    public string _curMap;
 
     //public string targetMapName;
 
@@ -153,19 +153,12 @@ public class MonsterManager : MonoBehaviour
 
     }
 
-    public void SendReStartMsg()
-    {
-        photonView.RPC("ReStartManage", RpcTarget.Others);
-    }
-
-    [PunRPC]
-    void ReStartManage()
+    public void ReStartManage()
     {
         foreach(var monster in GameObject.FindGameObjectsWithTag("Monster"))
         {
             monstersInCurrentMap.Add(monster);
         }
-        Debug.Log("코루틴이 돌아가요");
         RestartCheckMonstersCoroutine(_curMap);
     }
 }
