@@ -355,9 +355,9 @@ public class MonsterKingController : MonsterController
         else
         {
             // 테스트를 위함
-            Managers.Sound.Play("Monster/KingJumpAirEffect", Define.Sound.Effect);
+            // Managers.Sound.Play("Monster/KingJumpAirEffect", Define.Sound.Effect);
             _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, new GameObject().transform);  // 이 부분만 남겼음
-            StartCoroutine(CheckParticleAndChangeState(_particle.main.duration));
+            // StartCoroutine(CheckParticleAndChangeState(_particle.main.duration));
             PrintText("PhotonNetwork 연결 필요!");
         }
         
