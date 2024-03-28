@@ -88,6 +88,8 @@ public class Define
         KingJumpStartEffect,
         KingJumpAirEffect,
         KingJumpEndEffect,
+        MushroomAttackEffect,
+        TurtleSlimeAttackEffect,
         MaxCount
     }
 
