@@ -1,3 +1,4 @@
+Ôªøusing Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ public class MonsterKingController : MonsterController
     private Vector3 _detectPlayerLoc;
     private float _jumpCoolDown;
     private float _jumpLastTime;
+
+    private Vector3 _tracePosition;
 
     public GameObject Weapon { get => _weapon; }
     public GameObject LeftArm { get => _leftArm; }
@@ -100,8 +103,14 @@ public class MonsterKingController : MonsterController
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
 
-        // µ— ¥Ÿ ∂»∞∞¿Ω
-        ToDetectPlayer(0.8f);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+            photonView.RPC("RPC_ChangeMonsterKingHitDownState", RpcTarget.Others);
+        }
+        // Îëò Îã§ ÎòëÍ∞ôÏùå
+        //ToDetectPlayer(0.8f);
         //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), 0.8f);
 
@@ -160,7 +169,13 @@ public class MonsterKingController : MonsterController
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
 
-        ToDetectPlayer(0.8f);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+            photonView.RPC("RPC_ChangeMonsterKingSlashState", RpcTarget.Others);
+        }
+        //ToDetectPlayer(0.8f);
 
         _animator.CrossFade("Slash", 0.3f, -1, 0);
     }
@@ -173,7 +188,7 @@ public class MonsterKingController : MonsterController
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime <= 0.4f)        // ∞¯∞›¿¸ 
+            if (aniTime <= 0.4f)        // Í≥µÍ≤©Ï†Ñ 
             {
                 _animator.SetFloat("SlashSpeed", 0.38f);
                 if (_slashStart == null) _slashStart = StartCoroutine(ChargeEffect(Define.Effect.KingSlashStartEffect, transform, 2.0f));
@@ -186,7 +201,7 @@ public class MonsterKingController : MonsterController
                 _slashStart = null;
                 if (_particle != null) Managers.Effect.Stop(_particle);
             }
-            else if (aniTime <= 0.7f)   // ƒÆ¿ª »÷µŒ∏£¥¬ ¡ﬂ
+            else if (aniTime <= 0.7f)   // ÏπºÏùÑ ÌúòÎëêÎ•¥Îäî Ï§ë
             {
                 _animator.SetFloat("SlashSpeed", 1.0f);
                 _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
@@ -211,7 +226,13 @@ public class MonsterKingController : MonsterController
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
 
-        ToDetectPlayer(0.8f);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+            photonView.RPC("RPC_ChangeMonsterKingStabState", RpcTarget.Others);
+        }
+        //ToDetectPlayer(0.8f);
 
         _animator.CrossFade("Stab", 0.3f, -1, 0);
     }         
@@ -224,27 +245,27 @@ public class MonsterKingController : MonsterController
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime <= 0.2f)        // ∞¯∞› ¡ÿ∫Ò
+            if (aniTime <= 0.2f)        // Í≥µÍ≤© Ï§ÄÎπÑ
             {
                 _animator.SetFloat("StabSpeed", 0.39f);
                 _monsterInfo.Patterns[2].SetCollider(_stat.PatternDamage);
             }
-            else if (aniTime <= 0.4f)   // ∞¯∞› ¡¯«‡
+            else if (aniTime <= 0.4f)   // Í≥µÍ≤© ÏßÑÌñâ
             {
                 _animator.SetFloat("StabSpeed", 0.8f);
                 _monsterInfo.Patterns[2].DeActiveCollider();
                 _monsterInfo.Patterns[3].SetCollider(_stat.PatternDamage);
             }
-            else if (aniTime <= 0.52f)  // ∞¯∞› »ƒ µﬁ∞…¿Ω¡˙ ¿¸
+            else if (aniTime <= 0.52f)  // Í≥µÍ≤© ÌõÑ Îí∑Í±∏ÏùåÏßà Ï†Ñ
             {
                 _monsterInfo.Patterns[3].DeActiveCollider();
                 _animator.SetFloat("StabSpeed", 1.0f);
             }
-            else if (aniTime <= 0.58f)  // µﬁ∞…¿Ω¡˙ Ω√¿€
+            else if (aniTime <= 0.58f)  // Îí∑Í±∏ÏùåÏßà ÏãúÏûë
             {
                 _animator.SetFloat("StabSpeed", 1.0f);
             }
-            else if (aniTime <= 0.8f)   // ø¯¿ßƒ°∑Œ ¿Ãµø
+            else if (aniTime <= 0.8f)   // ÏõêÏúÑÏπòÎ°ú Ïù¥Îèô
             {
                 _animator.SetFloat("StabSpeed", 1.0f);
             }
@@ -264,6 +285,12 @@ public class MonsterKingController : MonsterController
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            //transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+            photonView.RPC("RPC_ChangeMonsterKingJumpStartState", RpcTarget.Others);
+        }
 
         _animator.CrossFade("JumpStart", 0.3f, -1, 0);
     }    
@@ -277,11 +304,11 @@ public class MonsterKingController : MonsterController
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             //PrintText($"{aniTime}");
 
-            if (aniTime <= 0.4f)        // ¡°«¡ ¡ÿ∫Ò
+            if (aniTime <= 0.4f)        // Ï†êÌîÑ Ï§ÄÎπÑ
             {
                 _animator.SetFloat("JumpStartSpeed", 0.2f);
             }
-            else if (aniTime <= 0.6f)   // ««∞› ∆«¡§
+            else if (aniTime <= 0.6f)   // ÌîºÍ≤© ÌåêÏ†ï
             {
                 _animator.SetFloat("JumpStartSpeed", 1.0f);
                 _monsterInfo.Patterns[4].SetCollider(_stat.PatternDamage);
@@ -299,7 +326,7 @@ public class MonsterKingController : MonsterController
     }
     public override void ExitMonsterKingJumpStartState()
     {
-        // ¿Ãµø
+        // Ïù¥Îèô
         GetComponent<Collider>().enabled = false;
         Agent.Warp(new Vector3(transform.position.x, transform.position.y + 100.0f, transform.position.z));
     }
@@ -313,13 +340,34 @@ public class MonsterKingController : MonsterController
 
     public override void EnterMonsterKingJumpAirState()         // JumpAir
     {
-        _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, DetectPlayer.transform);
-        StartCoroutine(CheckParticleAndChangeState(_particle.main.duration));
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("RPC_ChangeMonsterKingJumpAirState", RpcTarget.Others);
+            photonView.RPC("RPC_JumpTrace", RpcTarget.Others, DetectPlayer.transform.position);
+            _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, DetectPlayer.transform);
+            StartCoroutine(CheckParticleAndChangeState(_particle.main.duration));
+        }
+        else
+        {
+            _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, new GameObject().transform);
+        }
+        
+        
     }
     public override void ExecuteMonsterKingJumpAirState() 
     {
-        // æ÷¥œ∏ﬁ¿Ãº«¿∫ « ø‰ æ¯¿Ω
-        _particle.transform.position = DetectPlayer.transform.position;
+        // Ïï†ÎãàÎ©îÏù¥ÏÖòÏùÄ ÌïÑÏöî ÏóÜÏùå
+        if(PhotonNetwork.IsMasterClient)
+        {
+            _particle.transform.position = DetectPlayer.transform.position;
+            photonView.RPC("RPC_JumpTrace", RpcTarget.Others, DetectPlayer.transform.position);
+        }
+        else
+        {
+            //Debug.Log($"{_particle.transform.position} {_tracePosition}");
+            //_particle.transform.position = _tracePosition;
+        }
+
     }
     public override void ExitMonsterKingJumpAirState() 
     {
@@ -329,7 +377,12 @@ public class MonsterKingController : MonsterController
 
     public override void EnterMonsterKingJumpEndState()         // JumpEnd
     {
-        // ¬¯¡ˆ
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("RPC_ChangeMonsterKingJumpEndState", RpcTarget.Others);
+
+        }
+        // Ï∞©ÏßÄ
         _agent.Warp(new Vector3(_detectPlayerLoc.x, _detectPlayerLoc.y, _detectPlayerLoc.z));
         _monsterInfo.Patterns[5].SetCollider(_stat.PatternDamage);
 
@@ -354,5 +407,68 @@ public class MonsterKingController : MonsterController
         GetComponent<Collider>().enabled = true;
     }
 
+    #endregion
+
+
+    #region RPC
+    [PunRPC]
+    void RPC_ChangeMonsterKingHitDownState()
+    {
+        _statemachine.ChangeState(new MonsterKingHitDownState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMonsterKingSlashState()
+    {
+        _statemachine.ChangeState(new MonsterKingSlashState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMonsterKingStabState()
+    {
+        _statemachine.ChangeState(new MonsterKingStabState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMonsterKingJumpStartState()
+    {
+        _statemachine.ChangeState(new MonsterKingJumpStartState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMonsterKingJumpAirState()
+    {
+        _statemachine.ChangeState(new MonsterKingJumpAirState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMonsterKingJumpEndState()
+    {
+        _statemachine.ChangeState(new MonsterKingJumpEndState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeIdleState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMoveState()
+    {
+        _statemachine.ChangeState(new MoveState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeSkillState()
+    {
+        // ???ÔøΩŸ≤ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
+        _statemachine.ChangeState(new SkillState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
+
+    [PunRPC]
+    void RPC_JumpTrace(Vector3 _pos)
+    {
+        //_tracePosition = _pos;
+        Debug.Log(_pos);
+        _particle.transform.position = _pos;
+    }
     #endregion
 }

@@ -10,7 +10,7 @@ public class DungeonEntranceTrigger : MonoBehaviour
 
     public int totalPlayers;
 
-    public GameObject portal;
+    public List<GameObject> portal = new List<GameObject>();
 
     private bool portalActivated = false;
 
@@ -37,7 +37,13 @@ public class DungeonEntranceTrigger : MonoBehaviour
             //    Debug.Log("Portal activated");
             //    portalActivated = true;
             //}
-            portal.SetActive(true);
+            //portal.SetActive(true);
+
+            foreach (var p in portal)
+            {
+                p.SetActive(true);
+            }
+
         }
     }
 

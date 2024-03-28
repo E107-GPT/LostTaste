@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1598,6 +1598,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3067344570716554924, guid: e469a629f99d2324db91d84af0e08708, type: 3}
   m_PrefabInstance: {fileID: 1098507478768843699}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &760941799 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1349125855047849103, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+  m_PrefabInstance: {fileID: 5282426566471425933}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &794021138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 467178909602419378, guid: 1de5bf0b8e3073b48946e3672e25bf42, type: 3}
@@ -2141,6 +2146,10 @@ MonoBehaviour:
   - {fileID: 6157623430779575353}
   - {fileID: 8336835905048795777}
   - {fileID: 1843244675}
+  - {fileID: 760941799}
+  - {fileID: 1109159057}
+  - {fileID: 2118542345}
+  - {fileID: 2011596771}
   monsterSpawnInfos:
   - mapName: ForestMonster01
     spawnPoints:
@@ -2389,6 +2398,11 @@ MonoBehaviour:
   sceneViewId: 7
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!1 &1109159057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7751464036447808008, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+  m_PrefabInstance: {fileID: 5282426566471425933}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1120775287 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9146445438859584142, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
@@ -5838,10 +5852,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6998166843782904844, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
   m_PrefabInstance: {fileID: 5282426566471425933}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2011596771 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4705629151581920595, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+  m_PrefabInstance: {fileID: 5282426566471425933}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2043949753 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7044633964654479626, guid: 76832f3175c3d7c499e74a0138e0c474, type: 3}
   m_PrefabInstance: {fileID: 7279753661527806532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2118542345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5507673840839627696, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+  m_PrefabInstance: {fileID: 5282426566471425933}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &27976215898500049 stripped
 GameObject:
@@ -6946,6 +6970,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camp
       objectReference: {fileID: 0}
+    - target: {fileID: 3126597379249392860, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: portal.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126597379249392860, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: portal.Array.data[0]
+      value: 
+      objectReference: {fileID: 1843244675}
+    - target: {fileID: 3126597379249392860, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: portal.Array.data[1]
+      value: 
+      objectReference: {fileID: 2011596771}
+    - target: {fileID: 3126597379249392860, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: portal.Array.data[2]
+      value: 
+      objectReference: {fileID: 760941799}
+    - target: {fileID: 3126597379249392860, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: portal.Array.data[3]
+      value: 
+      objectReference: {fileID: 1109159057}
+    - target: {fileID: 3126597379249392860, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: portal.Array.data[4]
+      value: 
+      objectReference: {fileID: 2118542345}
     - target: {fileID: 3714906740853401899, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: m_IsActive
       value: 0
