@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumberString, Min } from "class-validator";
+import { IsNotEmpty, IsNumberString, IsOptional, Min } from "class-validator";
 import { Board } from "src/db/entity/board";
 
 export class BoardGetDto {
@@ -10,6 +10,7 @@ export class BoardGetDto {
     })
     limit: number;
 
+    @IsOptional()
     @IsNumberString({ no_symbols: true }, {
         message: '이전 번호는 숫자여야 합니다!'
     })

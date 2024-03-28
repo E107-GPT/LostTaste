@@ -17,6 +17,9 @@ async function bootstrap() {
   initializeSwagger(app);
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
+    transformOptions: {
+      enableImplicitConversion: true
+    }
   }));
   app.useGlobalFilters(new BusinessExceptionFilter());
 
