@@ -46,7 +46,7 @@ public class MonsterKingHitDownAfterPattern : Pattern
             float angle = i * Mathf.PI * 2 / _colliderCnt;
             Vector3 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * _radius;
             GameObject go = Managers.Resource.Instantiate("Patterns/KingDonutCollider");
-            go.GetComponent<PatternObject>().Init(Root, attackDamage, _seq + 1);    // HitDown은 패턴이 2개 있고, 2개를 연속으로 맞을 수 있다.
+            go.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
             go.transform.parent = _donutLoc;
             go.transform.localPosition = pos;
         }
