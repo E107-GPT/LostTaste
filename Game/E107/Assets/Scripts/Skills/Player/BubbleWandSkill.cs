@@ -21,7 +21,7 @@ public class BubbleWandSkill :Skill
         yield return new WaitForSeconds(0.3f);
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BubbleWandSkillEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage * 100, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 
