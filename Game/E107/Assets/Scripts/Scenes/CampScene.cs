@@ -14,6 +14,8 @@ public class CampScene : BaseScene
     
     Vector3 entrancePosition = new Vector3(-100, 0, 0);
 
+    public string bgmName;
+
     // Scene 초기화 시 호출되는 함수
     protected override void Init()
     {
@@ -53,6 +55,7 @@ public class CampScene : BaseScene
                 agent.Warp(entrancePosition);
             }
         }
+        Managers.Sound.Play(bgmName, Define.Sound.BGM);
     }
 
 

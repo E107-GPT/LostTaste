@@ -1730,6 +1730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70e083b0b7483e4493b63fe43c1cad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgmName: Camp
 --- !u!1 &970295987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,6 +1897,7 @@ MonoBehaviour:
   portal: {fileID: 4360738414484516722}
   itemBox: {fileID: 0}
   isBossRoom: 1
+  bgmName: 
   nextBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!65 &1047256998
 BoxCollider:
@@ -6010,6 +6012,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7744707475393415481, guid: c4e94f7c6454e2e4f82453ee77365454, type: 3}
+      propertyPath: bgmName
+      value: Ice
+      objectReference: {fileID: 0}
+    - target: {fileID: 7744707475393415481, guid: c4e94f7c6454e2e4f82453ee77365454, type: 3}
       propertyPath: itemBox
       value: 
       objectReference: {fileID: 1545108930}
@@ -6452,6 +6458,10 @@ PrefabInstance:
       value: ForestBoss
       objectReference: {fileID: 0}
     - target: {fileID: 4254003264791793099, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
+      propertyPath: bgmName
+      value: Coast
+      objectReference: {fileID: 0}
+    - target: {fileID: 4254003264791793099, guid: 7ca87f43e29054d48b01d81dda421f6d, type: 3}
       propertyPath: itemBox
       value: 
       objectReference: {fileID: 1904544593}
@@ -6545,6 +6555,10 @@ PrefabInstance:
       propertyPath: portal
       value: 
       objectReference: {fileID: 4360738414484516722}
+    - target: {fileID: 2361995986586118533, guid: ad5b15d1531efb84d835d74b463b73f6, type: 3}
+      propertyPath: bgmName
+      value: IceBoss
+      objectReference: {fileID: 0}
     - target: {fileID: 2361995986586118533, guid: ad5b15d1531efb84d835d74b463b73f6, type: 3}
       propertyPath: itemBox
       value: 
@@ -6709,6 +6723,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1087379419505326563}
     - target: {fileID: 6536348260036794133, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
+      propertyPath: bgmName
+      value: CoastBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 6536348260036794133, guid: e64661dd867d6624cab171d4cdb4bdad, type: 3}
       propertyPath: itemBox
       value: 
       objectReference: {fileID: 1751538443}
@@ -6777,6 +6795,10 @@ PrefabInstance:
       propertyPath: portal
       value: 
       objectReference: {fileID: 7851363126910307923}
+    - target: {fileID: 1753338489482800377, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      propertyPath: bgmName
+      value: ForestBoss
+      objectReference: {fileID: 0}
     - target: {fileID: 1753338489482800377, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
       propertyPath: itemBox
       value: 
@@ -7064,6 +7086,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7831515556079621880}
     - target: {fileID: 4308693848382670213, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: bgmName
+      value: Forest
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308693848382670213, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 2222624939823589040}
@@ -7258,63 +7284,6 @@ PrefabInstance:
       addedObject: {fileID: 115397873}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
---- !u!1001 &5375306814708785569
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 280.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 28.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7848688714548754970, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
-      propertyPath: m_Name
-      value: FinalBossSpawn
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
 --- !u!4 &5409048007374955281 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2935299817700661787, guid: c4e94f7c6454e2e4f82453ee77365454, type: 3}
@@ -7364,6 +7333,10 @@ PrefabInstance:
       propertyPath: stageLevelText
       value: 
       objectReference: {fileID: 219504692}
+    - target: {fileID: 1475033988400261805, guid: e9c7feee9e74178438f760324288cbc7, type: 3}
+      propertyPath: bgmName
+      value: FinalBoss
+      objectReference: {fileID: 0}
     - target: {fileID: 1475033988400261805, guid: e9c7feee9e74178438f760324288cbc7, type: 3}
       propertyPath: itemBox
       value: 
@@ -7566,4 +7539,3 @@ SceneRoots:
   - {fileID: 6218671015299026436}
   - {fileID: 3446004711366728905}
   - {fileID: 1047851868}
-  - {fileID: 5375306814708785569}

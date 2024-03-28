@@ -23,6 +23,8 @@ public class PortalTrigger : MonoBehaviour
 
     public bool isBossRoom = false;
 
+    public string bgmName;
+
 
     private void Awake()
     {
@@ -124,6 +126,15 @@ public class PortalTrigger : MonoBehaviour
         {
             other.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
             ChangeCameraBackgroundColor();
+
+            if (!string.IsNullOrEmpty(bgmName))
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    Managers.Sound.Clear();
+                    Managers.Sound.Play(bgmName, Define.Sound.BGM);
+                }
+            }
 
             MonsterManager.Instance.portalTrigger = this;
             if (!PhotonNetwork.IsMasterClient)
