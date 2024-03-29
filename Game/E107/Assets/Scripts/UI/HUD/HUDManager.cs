@@ -21,11 +21,6 @@ public class HUDManager : MonoBehaviour
     public Slider playerManaSlider; // 플레이어 마나 바 슬라이더
     public PlayerController playerController; // 플레이어 컨트롤러
 
-    // 알림
-    [Header("[ 알림 ]")]
-    public GameObject announcementPanel; // 알림 패널
-    public TextMeshProUGUI announcementText; // 알림 텍스트
-
     // 팝업 창
     [Header("[ 팝업 창 ]")]
     public GameObject AdventureResultWindow; // 모험 결과 창
@@ -38,9 +33,6 @@ public class HUDManager : MonoBehaviour
         // 사용자 정보 업데이트
         UpdateUserInfoDisplay();
 
-        // 알림 UI 비활성화 상태로 초기화
-        announcementPanel.SetActive(false);
-
         // 플레이어 GameObject를 찾아서 PlayerController 컴포넌트를 playerController 변수에 할당
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
@@ -50,20 +42,6 @@ public class HUDManager : MonoBehaviour
     {
         // 플레이어 상태 업데이트
         UpdatePlayerStatus();
-
-        // @@@@@@@@@@@@@@@@@@@@@@@@@@ 파티원이 들어왔을 때 알림을 켭니다 (코드 추가 필요) @@@@@@@@@@@@@@@@@@@@@@@@@@
-        //
-        //
-        //
-        // 코르틴이 실행되는 조건이 필요해요 (파티원이 들어왔을 때!)
-
-        // StartCoroutine(ShowAnnouncementPanel());
-
-        //
-        //
-        //
-        //
-        // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     }
 
     // 사용자 정보를 UI에 업데이트하는 메서드
@@ -102,31 +80,5 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    // 1.5초간 플레이어 입장 알림을 활성화하고, 다시 비활성화 하는 코루틴
-    IEnumerator ShowAnnouncementPanel()
-    {
-        // @@@@@@@@@@@@@@@@@@@@@@@@@@ 파티원이 들어왔을 때 알림을 켭니다 (코드 추가 필요) @@@@@@@@@@@@@@@@@@@@@@@@@@
-        //
-        //
-        // 알림 텍스트에 들어온 사람의 닉네임을 넣어야함
-        // 인스펙터 창에서 연결은 다 해두었습니다
-
-        // 알림 텍스트 
-        announcementText.text = $"{111}님이 파티에 참가하였습니다.";
-        announcementPanel.SetActive(true);
-
-        //
-        //
-        //
-        //
-        // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-        // 1.5초 기다림
-        yield return new WaitForSeconds(1.5f);
-
-        // 알림 텍스트 초기화 및 패널 비활성화
-        announcementText.text = "";
-        announcementPanel.SetActive(false);
-    }
 }
 
