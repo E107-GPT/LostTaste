@@ -43,32 +43,103 @@ public class Stat
         {
             case Define.UnitType.Player:
                 // 100으로 돌려야함
-                _hp = 1000;
-                _maxHp = 1000;
+                // 전사 기준 스탯( HP: 300 )
+                _hp = 300;
+                _maxHp = 300;
                 _mp = 100;
                 _maxMp = 100;
                 _attackDamage = 10;
                 _moveSpeed = 5.0f;
                 _attackRange = 1.8f;
                 break;
+            case Define.UnitType.Mushroom:      // stage 1
+                _hp = 150;
+                _maxHp = 150;
+                _attackDamage = 4;
+                _moveSpeed = 6.0f;
+                _attackRange = 1.4f;
+                break;
+            case Define.UnitType.TurtleSlime:
+                _hp = 220;
+                _maxHp = 220;
+                _attackDamage = 5;
+                _moveSpeed = 5.0f;
+                _attackRange = 2.0f;
+                break;
+            case Define.UnitType.ToxicFlower:
+                _hp = 200;
+                _maxHp = 200;
+                _attackDamage = 8;
+                _moveSpeed = 6.5f;
+                _attackRange = 10.0f;
+                break;
             case Define.UnitType.DrillDuck:
-                _hp = 1000;
-                _maxHp = 1000;
+                _hp = 1200;
+                _maxHp = 1200;
                 _attackDamage = 15;
                 _moveSpeed = 8.0f;
-                _attackRange = 3.0f;        // skill collider와 상관있음
+                _attackRange = 3.0f;
+                break;
+            case Define.UnitType.Crab:          // stage 2
+                _hp = 200;
+                _maxHp = 200;
+                _attackDamage = 6;
+                _moveSpeed = 6.0f;
+                _attackRange = 2.3f;
+                break;
+            case Define.UnitType.Fishman:
+                _hp = 250;
+                _maxHp = 250;
+                _attackDamage = 7;
+                _moveSpeed = 6.0f;
+                _attackRange = 2.3f;
+                break;
+            case Define.UnitType.NagaWizard:
+                _hp = 200;
+                _maxHp = 200;
+                _attackDamage = 10;
+                _moveSpeed = 5.5f;
+                _attackRange = 10.0f;
                 break;
             case Define.UnitType.Crocodile:
-                _hp = 1500;
-                _maxHp = 1500;
-                _attackDamage = 15;
+                _hp = 1700;
+                _maxHp = 1700;
+                _attackDamage = 20;
                 _moveSpeed = 8.0f;
                 _attackRange = 6.0f;
                 break;
+            case Define.UnitType.Demon:         // stage 3
+                _hp = 250;
+                _maxHp = 250;
+                _attackDamage = 14;
+                _moveSpeed = 5.5f;
+                _attackRange = 10.0f;
+                break;
+            case Define.UnitType.Salamander:
+                _hp = 250;
+                _maxHp = 250;
+                _attackDamage = 12;
+                _moveSpeed = 5.5f;
+                _attackRange = 10.0f;
+                break;
+            case Define.UnitType.Specter:
+                _hp = 250;
+                _maxHp = 250;
+                _attackDamage = 25;
+                _moveSpeed = 6.5f;
+                _attackRange = 2.5f;
+                break;
+            case Define.UnitType.Skeleton:
+                _hp = 220;
+                _maxHp = 220;
+                _attackDamage = 25;
+                _moveSpeed = 5.5f;
+                _attackRange = 2.5f;
+                break;
             case Define.UnitType.IceKing:
-                _hp = 2000;
-                _maxHp = 2000;
-                _attackDamage = 20;
+                _hp = 2300;
+                _maxHp = 2300;
+                _attackDamage = 25;
                 _moveSpeed = 8.0f;
                 _attackRange = 5.0f;
                 break;
@@ -78,77 +149,7 @@ public class Stat
                 _attackDamage = 30;
                 _moveSpeed = 8.0f;
                 _attackRange = 8.0f;
-                break;
-            case Define.UnitType.Mushroom:
-                _hp = 200;
-                _maxHp = 200;
-                _attackDamage = 5;
-                _moveSpeed = 6.0f;
-                _attackRange = 1.4f;
-                break;
-            case Define.UnitType.TurtleSlime:
-                _hp = 300;
-                _maxHp = 300;
-                _attackDamage = 10;
-                _moveSpeed = 5.0f;
-                _attackRange = 2.0f;
-                break;
-            case Define.UnitType.ToxicFlower:
-                _hp = 500;
-                _maxHp = 500;
-                _attackDamage = 15;
-                _moveSpeed = 6.5f;
-                _attackRange = 10.0f;
-                break;
-            case Define.UnitType.Crab:
-                _hp = 300;
-                _maxHp = 300;
-                _attackDamage = 15;
-                _moveSpeed = 6.0f;
-                _attackRange = 2.3f;
-                break;
-            case Define.UnitType.Fishman:
-                _hp = 500;
-                _maxHp = 500;
-                _attackDamage = 20;
-                _moveSpeed = 6.0f;
-                _attackRange = 2.3f;
-                break;
-            case Define.UnitType.NagaWizard:
-                _hp = 700;
-                _maxHp = 700;
-                _attackDamage = 30;
-                _moveSpeed = 5.5f;
-                _attackRange = 10.0f;
-                break;
-            case Define.UnitType.Demon:
-                _hp = 800;
-                _maxHp = 800;
-                _attackDamage = 30;
-                _moveSpeed = 5.5f;
-                _attackRange = 10.0f;
-                break;
-            case Define.UnitType.Salamander:
-                _hp = 400;
-                _maxHp = 400;
-                _attackDamage = 15;
-                _moveSpeed = 5.5f;
-                _attackRange = 10.0f;
-                break;
-            case Define.UnitType.Specter:
-                _hp = 500;
-                _maxHp = 500;
-                _attackDamage = 25;
-                _moveSpeed = 6.5f;
-                _attackRange = 2.5f;
-                break;
-            case Define.UnitType.Skeleton:
-                _hp = 500;
-                _maxHp = 500;
-                _attackDamage = 25;
-                _moveSpeed = 5.5f;
-                _attackRange = 2.5f;
-                break;
+                break;        
         }
     }
 

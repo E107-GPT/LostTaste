@@ -87,10 +87,6 @@ public class MonsterController : BaseController
         if (CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.DetectRange);        // 탐색 범위
     }
 
-    //이동 타겟팅 기능
-    //가장 큰 데미지를 넣은 플레이어를 추격하는 기능을 넣을 수 있다.
-    
-
     #region State Method
     // IDLE
     public override void EnterIdle()
@@ -100,7 +96,6 @@ public class MonsterController : BaseController
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
 
-        // 어떠한 동작을 하지 않고 바로 사망 상태
         _animator.Play("Idle");      // 기본적으로 base layer의 state를 나타냄
         
         // 마스터 클래스에서만 전송
@@ -111,13 +106,8 @@ public class MonsterController : BaseController
     {
         base.ExcuteIdle();
 
-        //Debug.Log("MONSTER IDEL");
-
         if (PhotonNetwork.IsConnected &&PhotonNetwork.IsMasterClient == false) return;
 
-        // Time.time: 게임이 시작된 후부터 시간(초)을 반환
-        // _lastTime: 마지막으로 호출된 시간(초)을 가진다.
-        // _coolDownTime: 스킬 사용 시간(초)을 나타낸다.
         if (Time.time - _lastDetectTime >= _stat.DetectTime)
         {
             UpdateDetectPlayer();
@@ -136,14 +126,15 @@ public class MonsterController : BaseController
         _agent.speed = _stat.MoveSpeed;
         _agent.velocity = Vector3.zero;
 
-        // -1: 이진수 11111 모든 layer를 선택
         _animator.CrossFade("Move", 1.0f, -1, 0);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeMoveState", RpcTarget.Others);
     }
     public override void ExcuteMove()
     {
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient == false) return;
+
         base.ExcuteMove();
+
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Move"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
@@ -187,9 +178,7 @@ public class MonsterController : BaseController
             transform.rotation = Quaternion.LookRotation(dirToTarget.normalized, Vector3.up);
         }
 
-
-        _monsterInfo.Skill.Cast(_stat.AttackDamage, _stat.AttackRange);
-        _animator.CrossFade("Attack", 0.3f, -1, 0);
+        _monsterInfo.Skill.Cast();
     }
 
     public override void ExcuteSkill()
@@ -199,6 +188,7 @@ public class MonsterController : BaseController
         // 상태 전환이 완벽하게 이뤄졌을 때 "Attack" 애니메이션이 끝났는지 확인
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
+            if (CurState is DieState) _statemachine.ChangeState(new DieState(this));
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
             if (aniTime >= 1.0f)
