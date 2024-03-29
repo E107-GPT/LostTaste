@@ -6,17 +6,13 @@ public class MushroomAttackSkill : Skill
 {
     protected override void Init()
     {
-        // Root: Skill의 Start에서 관리
-        // Effect: Skill의 Start에서 관리
-        SkillCoolDownTime = 0;
+        SkillCoolDownTime = 1;
     }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
-        Debug.Log("Slime Attack");
         yield return new WaitForSeconds(0.3f);
 
-        // SkillObject에서 관리
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
 

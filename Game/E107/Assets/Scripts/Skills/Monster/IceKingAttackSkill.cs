@@ -16,20 +16,14 @@ public class IceKingAttackSkill : Skill
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
         Root = transform.root;
-
-        Debug.Log("IceKing Attack");
-
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
 
         yield return new WaitForSeconds(0.5f);
 
-        // SkillObject에서 관리
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.IceKingCleaveEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.transform.parent = _controller.transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
-
-        // Managers.Sound.Play("swing1");
 
         skillObj.localScale = new Vector3(1.0f, 3.0f, _attackRange + 3.0f);    // 5.0f
         skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange - 1.0f));

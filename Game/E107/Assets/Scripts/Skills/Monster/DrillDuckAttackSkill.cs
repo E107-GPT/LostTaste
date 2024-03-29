@@ -15,16 +15,12 @@ public class DrillDuckAttackSkill : Skill
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
-        Debug.Log("DrillDuck Attack");
         yield return new WaitForSeconds(0.2f);
 
-        // SkillObject에서 관리
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.DrillDuckAttackEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.transform.parent = _controller.transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
-
-        // Managers.Sound.Play("swing1");
 
         skillObj.localScale = new Vector3(1.0f, 3.0f, _attackRange / 2);    // 5.0f
         skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_attackRange/ 3));
@@ -32,7 +28,6 @@ public class DrillDuckAttackSkill : Skill
         skillObj.rotation = Root.rotation;
 
         ps.transform.parent = skillObj.transform;
-        //ps.transform.position = new Vector3(skillObj.transform.position.x, skillObj.transform.position.y, skillObj.transform.position.z);
         ps.transform.position = skillObj.transform.position + skillObj.transform.right * 3.0f;
         ps.transform.position = skillObj.transform.position + skillObj.transform.forward * 1.0f;
 

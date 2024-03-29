@@ -5,15 +5,9 @@ using UnityEngine;
 
 public class ToxicFlowerAttackSkill : Skill
 {
-    // private GameObject _particleSystem;
-
     protected override void Init()
     {
-        // Root: Skill의 Start에서 관리
-        // Effect: Skill의 Start에서 관리
         SkillCoolDownTime = 1.0f;
-        // RequiredMp = 0;
-        // _particleSystem = Managers.Resource.Instantiate("Effects/SwordSlashThinBlue", Effect.transform);
     }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
@@ -27,13 +21,11 @@ public class ToxicFlowerAttackSkill : Skill
 
         yield return new WaitForSeconds(0.3f);
 
-        // SkillObject에서 관리
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
 
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
-        // Managers.Sound.Play("swing1");
 
         skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
         skillObj.position = Root.transform.position;

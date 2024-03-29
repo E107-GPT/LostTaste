@@ -5,21 +5,13 @@ using UnityEngine;
 
 public class NagaWizardAttackSkill : Skill
 {
-    // private GameObject _particleSystem;
-
     protected override void Init()
     {
-        // Root: Skill의 Start에서 관리
-        // Effect: Skill의 Start에서 관리
         SkillCoolDownTime = 1.0f;
-        // RequiredMp = 0;
-        // _particleSystem = Managers.Resource.Instantiate("Effects/SwordSlashThinBlue", Effect.transform);
     }
 
     protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
     {
-        Debug.Log("Slime Attack");
-
         Root = transform.root;
         Vector3 dir = Root.forward;
         Root.GetComponent<Animator>().CrossFade("Attack", 0.1f, -1, 0);
@@ -27,13 +19,11 @@ public class NagaWizardAttackSkill : Skill
 
         yield return new WaitForSeconds(0.5f);
 
-        // SkillObject에서 관리
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.NagaWizardLightningEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
 
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
-        // Managers.Sound.Play("swing1");
 
         skillObj.localScale = new Vector3(1.0f, 1.0f, 1.0f);    // 1.1f
         skillObj.position = Root.transform.position;
