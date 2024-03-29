@@ -1,4 +1,4 @@
-﻿using Photon.Pun;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -87,7 +87,6 @@ public class IceKingController : MonsterController
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            Debug.Log($"{aniTime} ���� ���� �ð�");
 
             if (aniTime <= 0.5f)
             {
@@ -97,7 +96,6 @@ public class IceKingController : MonsterController
             {
                 _animator.SetFloat("SpikeSpeed", 0.8f);
                 _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
-                //Debug.Log($"{aniTime} ���� ���� �ð�");
             }
             else if (aniTime > 1.0f)
             {

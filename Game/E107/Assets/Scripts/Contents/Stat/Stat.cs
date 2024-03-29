@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Stat
 {
-    // °ø°İÀÚÀÇ ¸¶Áö¸· °ø°İ ½Ã°£À» ÀúÀåÇÏ´Â »çÀü
+    // ê³µê²©ìì˜ ë§ˆì§€ë§‰ ê³µê²© ì‹œê°„ì„ ì €ì¥í•˜ëŠ” ì‚¬ì „
     private Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
 
 
@@ -42,8 +42,8 @@ public class Stat
         switch (_unitType)
         {
             case Define.UnitType.Player:
-                // 100À¸·Î µ¹·Á¾ßÇÔ
-                // Àü»ç ±âÁØ ½ºÅÈ( HP: 300 )
+                // 100ìœ¼ë¡œ ëŒë ¤ì•¼í•¨
+                // ì „ì‚¬ ê¸°ì¤€ ìŠ¤íƒ¯( HP: 300 )
                 _hp = 300;
                 _maxHp = 300;
                 _mp = 100;
@@ -104,7 +104,7 @@ public class Stat
             case Define.UnitType.Crocodile:
                 _hp = 1700;
                 _maxHp = 1700;
-                _attackDamage = 20;
+                _attackDamage = 22;
                 _moveSpeed = 8.0f;
                 _attackRange = 6.0f;
                 break;
@@ -146,7 +146,7 @@ public class Stat
             case Define.UnitType.MonsterKing:
                 _hp = 4000;
                 _maxHp = 4000;
-                _attackDamage = 30;
+                _attackDamage = 30;         // ì‚¬ìš©ì•ˆí•¨
                 _moveSpeed = 8.0f;
                 _attackRange = 8.0f;
                 break;        

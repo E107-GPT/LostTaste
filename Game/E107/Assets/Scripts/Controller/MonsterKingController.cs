@@ -1,4 +1,4 @@
-﻿using Photon.Pun;
+using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -109,10 +109,6 @@ public class MonsterKingController : MonsterController
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeMonsterKingHitDownState", RpcTarget.Others);
         }
-        // 둘 다 똑같음
-        //ToDetectPlayer(0.8f);
-        //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), 0.8f);
 
         _animator.CrossFade("HitDown", 0.3f, -1, 0);
     }      
@@ -147,7 +143,7 @@ public class MonsterKingController : MonsterController
             else if (aniTime < 0.8f)
             {
                 _animator.SetFloat("HitDownSpeed", 1.0f);
-                _monsterInfo.Patterns[0].SetCollider(_stat.AttackDamage);       // 내려찍기
+                _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage - 10);       // 내려찍기
             }
             else if (aniTime <= 1.0f)
             {
@@ -156,7 +152,7 @@ public class MonsterKingController : MonsterController
             else if (aniTime >= 1.0f)
             {
                 _monsterInfo.Patterns[0].DeActiveCollider();
-                _monsterInfo.Patterns[6].SetCollider(_stat.AttackDamage);       // 후속타
+                _monsterInfo.Patterns[6].SetCollider(_stat.PatternDamage - 10);       // 후속타
                 _statemachine.ChangeState(new IdleState(this));
             }
         }
@@ -177,7 +173,6 @@ public class MonsterKingController : MonsterController
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeMonsterKingSlashState", RpcTarget.Others);
         }
-        //ToDetectPlayer(0.8f);
 
         _animator.CrossFade("Slash", 0.3f, -1, 0);
     }
@@ -208,7 +203,7 @@ public class MonsterKingController : MonsterController
             else if (aniTime <= 0.7f)   // 칼을 휘두르는 중
             {
                 _animator.SetFloat("SlashSpeed", 1.0f);
-                _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
+                _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage - 5);
             }
             else if (aniTime <= 1.0f)
             {
@@ -236,7 +231,6 @@ public class MonsterKingController : MonsterController
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeMonsterKingStabState", RpcTarget.Others);
         }
-        //ToDetectPlayer(0.8f);
 
         _animator.CrossFade("Stab", 0.3f, -1, 0);
     }         
@@ -258,7 +252,7 @@ public class MonsterKingController : MonsterController
             {
                 _animator.SetFloat("StabSpeed", 0.8f);
                 _monsterInfo.Patterns[2].DeActiveCollider();
-                _monsterInfo.Patterns[3].SetCollider(_stat.PatternDamage);
+                _monsterInfo.Patterns[3].SetCollider(_stat.PatternDamage - 15);
             }
             else if (aniTime <= 0.52f)  // 공격 후 뒷걸음질 전
             {
@@ -306,7 +300,6 @@ public class MonsterKingController : MonsterController
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("JumpStart"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            //PrintText($"{aniTime}");
 
             if (aniTime <= 0.4f)        // 점프 준비
             {
@@ -315,7 +308,7 @@ public class MonsterKingController : MonsterController
             else if (aniTime <= 0.6f)   // 피격 판정
             {
                 _animator.SetFloat("JumpStartSpeed", 1.0f);
-                _monsterInfo.Patterns[4].SetCollider(_stat.PatternDamage);
+                _monsterInfo.Patterns[4].SetCollider(_stat.PatternDamage - 30);
             }
             else if (aniTime <= 1.0f)
             {
@@ -393,7 +386,7 @@ public class MonsterKingController : MonsterController
         }
         // 착지
         _agent.Warp(new Vector3(_detectPlayerLoc.x, _detectPlayerLoc.y, _detectPlayerLoc.z));
-        _monsterInfo.Patterns[5].SetCollider(_stat.PatternDamage);
+        _monsterInfo.Patterns[5].SetCollider(_stat.PatternDamage + 20);
 
         _animator.CrossFade("JumpEnd", 0.3f, -1, 0);
     }      
