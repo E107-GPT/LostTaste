@@ -1039,6 +1039,14 @@ PrefabInstance:
       propertyPath: adventureResultsWindow
       value: 
       objectReference: {fileID: 1507488862}
+    - target: {fileID: 6467139422801943980, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: CongratulationsTitleText
+      value: 
+      objectReference: {fileID: 776888646}
+    - target: {fileID: 6467139422801943980, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: CongratulationsImagePanel
+      value: 
+      objectReference: {fileID: 939379086}
     - target: {fileID: 6468549836026241728, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -2029,6 +2037,17 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: f6137e54985d5ed43aa14089fd8d11d7, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &776888646 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7189915844274840346, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &818002711
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,6 +2093,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmName: Camp
+--- !u!1 &939379086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7918808740668640166, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &970295987
 GameObject:
   m_ObjectHideFlags: 0
