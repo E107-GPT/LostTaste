@@ -29,9 +29,7 @@ public class MonsterKingHitDownAfterPattern : Pattern
 
     IEnumerator CheckPatternObject(int attackDamage)
     {
-        Root = _controller.transform;               // ³»·ÁÂïÀº »óÅÂ¸¦ °¡Á®¿Í¾ßÇÔ
-
-        yield return new WaitForSeconds(0.3f);
+        Root = _controller.transform;               // ë‚´ë ¤ì°ì€ ìƒíƒœë¥¼ ê°€ì ¸ì™€ì•¼í•¨
         
         _donutLoc = Managers.Resource.Instantiate("Patterns/KingDonutCenter").transform;
 
@@ -51,12 +49,12 @@ public class MonsterKingHitDownAfterPattern : Pattern
             go.transform.localPosition = pos;
         }
 
-        // ¼Ò¸® Àç»ı
+        // ì†Œë¦¬ ì¬ìƒ
         Managers.Sound.Play("Monster/KingHitDownAfterEffect", Define.Sound.Effect);
 
         yield return new WaitForSeconds(1.0f);
-        // hit box Á¦°Å
-        // hit box ¾È¿¡ effect°¡ Á¸Àç
+        // hit box ì œê±°
+        // hit box ì•ˆì— effectê°€ ì¡´ì¬
         Managers.Resource.Destroy(_donutLoc.gameObject);
     }
 
