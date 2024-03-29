@@ -1,81 +1,84 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// HUD(Head-Up Display)¸¦ °ü¸®ÇÏ´Â Å¬·¡½ºÀÔ´Ï´Ù.
+/// HUD(Head-Up Display)ë¥¼ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤ì…ë‹ˆë‹¤.
 /// </summary>
 public class HUDManager : MonoBehaviour
 {
-    // ¸ğÇè »óÅÂ
-    [Header("[ ¸ğÇè »óÅÂ ]")]
-    public TextMeshProUGUI nicknameText; // ´Ğ³×ÀÓ ÅØ½ºÆ®
+    // ëª¨í—˜ ìƒíƒœ
+    [Header("[ ëª¨í—˜ ìƒíƒœ ]")]
+    public TextMeshProUGUI nicknameText; // ë‹‰ë„¤ì„ í…ìŠ¤íŠ¸
 
-    // ÇÃ·¹ÀÌ¾î »óÅÂ
-    [Header("[ ÇÃ·¹ÀÌ¾î »óÅÂ ]")]
-    public TextMeshProUGUI playerHealthText; // ÇÃ·¹ÀÌ¾î Ã¼·Â ÅØ½ºÆ®
-    public Slider playerHealthSlider; // ÇÃ·¹ÀÌ¾î Ã¼·Â ¹Ù ½½¶óÀÌ´õ
-    public TextMeshProUGUI playerManaText; // ÇÃ·¹ÀÌ¾î ¸¶³ª ÅØ½ºÆ®
-    public Slider playerManaSlider; // ÇÃ·¹ÀÌ¾î ¸¶³ª ¹Ù ½½¶óÀÌ´õ
-    public PlayerController playerController; // ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯
+    // í”Œë ˆì´ì–´ ìƒíƒœ
+    [Header("[ í”Œë ˆì´ì–´ ìƒíƒœ ]")]
+    public TextMeshProUGUI playerHealthText; // í”Œë ˆì´ì–´ ì²´ë ¥ í…ìŠ¤íŠ¸
+    public Slider playerHealthSlider; // í”Œë ˆì´ì–´ ì²´ë ¥ ë°” ìŠ¬ë¼ì´ë”
+    public TextMeshProUGUI playerManaText; // í”Œë ˆì´ì–´ ë§ˆë‚˜ í…ìŠ¤íŠ¸
+    public Slider playerManaSlider; // í”Œë ˆì´ì–´ ë§ˆë‚˜ ë°” ìŠ¬ë¼ì´ë”
+    public PlayerController playerController; // í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬
 
-    // ÆË¾÷ Ã¢
-    [Header("[ ÆË¾÷ Ã¢ ]")]
-    public GameObject AdventureResultWindow; // ¸ğÇè °á°ú Ã¢
+    // íŒì—… ì°½
+    [Header("[ íŒì—… ì°½ ]")]
+    public GameObject AdventureResultWindow; // ëª¨í—˜ ê²°ê³¼ ì°½
 
-    private bool gameOverDisplayed = false; // °ÔÀÓ ¿À¹ö Ã¢ÀÌ Ç¥½ÃµÇ¾ú´ÂÁö ¿©ºÎ
+    private bool gameOverDisplayed = false; // ê²Œì„ ì˜¤ë²„ ì°½ì´ í‘œì‹œë˜ì—ˆëŠ”ì§€ ì—¬ë¶€
 
-    // ½ÃÀÛ ½Ã È£ÃâµÇ´Â Start ¸Ş¼­µå
+    // ì‹œì‘ ì‹œ í˜¸ì¶œë˜ëŠ” Start ë©”ì„œë“œ
     void Start()
     {
-        // »ç¿ëÀÚ Á¤º¸ ¾÷µ¥ÀÌÆ®
+        // ì‚¬ìš©ì ì •ë³´ ì—…ë°ì´íŠ¸
         UpdateUserInfoDisplay();
 
-        // ÇÃ·¹ÀÌ¾î GameObject¸¦ Ã£¾Æ¼­ PlayerController ÄÄÆ÷³ÍÆ®¸¦ playerController º¯¼ö¿¡ ÇÒ´ç
+        // í”Œë ˆì´ì–´ GameObjectë¥¼ ì°¾ì•„ì„œ PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ playerController ë³€ìˆ˜ì— í• ë‹¹
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
-    // ¸Å ÇÁ·¹ÀÓ¸¶´Ù È£ÃâµÇ´Â Update ¸Ş¼­µå
+    // ë§¤ í”„ë ˆì„ë§ˆë‹¤ í˜¸ì¶œë˜ëŠ” Update ë©”ì„œë“œ
     void Update()
     {
-        // ÇÃ·¹ÀÌ¾î »óÅÂ ¾÷µ¥ÀÌÆ®
+        // í”Œë ˆì´ì–´ ìƒíƒœ ì—…ë°ì´íŠ¸
         UpdatePlayerStatus();
     }
 
-    // »ç¿ëÀÚ Á¤º¸¸¦ UI¿¡ ¾÷µ¥ÀÌÆ®ÇÏ´Â ¸Ş¼­µå
+    // ì‚¬ìš©ì ì •ë³´ë¥¼ UIì— ì—…ë°ì´íŠ¸í•˜ëŠ” ë©”ì„œë“œ
     void UpdateUserInfoDisplay()
     {
-        // UserInfo ÀÎ½ºÅÏ½º °¡Á®¿À±â
+        // UserInfo ì¸ìŠ¤í„´ìŠ¤ ê°€ì ¸ì˜¤ê¸°
         UserInfo userInfo = UserInfo.GetInstance();
 
-        // ´Ğ³×ÀÓ Á¤º¸ °¡Á®¿À±â
+        // ë‹‰ë„¤ì„ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
         string nickname = userInfo.getNickName();
 
-        // °¡Á®¿Â Á¤º¸¸¦ TextMeshProUGUI¿¡ Àû¿ë
+        // ê°€ì ¸ì˜¨ ì •ë³´ë¥¼ TextMeshProUGUIì— ì ìš©
         nicknameText.text = nickname;
     }
 
-    // ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ ¾÷µ¥ÀÌÆ® ÇÏ´Â ¸Ş¼­µå
+    // í”Œë ˆì´ì–´ ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸ í•˜ëŠ” ë©”ì„œë“œ
     void UpdatePlayerStatus()
     {
-        // ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç Ã¼·ÂÀ» Ã¼·Â ¹Ù¿¡ ¹İ¿µ
+        // í”Œë ˆì´ì–´ì˜ í˜„ì¬ ì²´ë ¥ì„ ì²´ë ¥ ë°”ì— ë°˜ì˜
         int Hp = playerController.Stat.Hp;
         int MaxHp = playerController.Stat.MaxHp;
         playerHealthSlider.value = (float)Hp / MaxHp;
         playerHealthText.text = string.Format("{0:0} / {1:0}", Hp, MaxHp);
 
-        // ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç ¸¶³ª¸¦ ¸¶³ª ¹Ù¿¡ ¹İ¿µ
+        // í”Œë ˆì´ì–´ì˜ í˜„ì¬ ë§ˆë‚˜ë¥¼ ë§ˆë‚˜ ë°”ì— ë°˜ì˜
         int Mp = playerController.Stat.Mp;
         int MaxMp = playerController.Stat.MaxMp;
         playerManaSlider.value = (float)Mp / MaxMp;
         playerManaText.text = string.Format("{0:0} / {1:0}", Mp, MaxMp);
 
-        // ÇÃ·¹ÀÌ¾î°¡ »ç¸ÁÇÒ °æ¿ì °ÔÀÓ ¿À¹ö Ã¢À» È°¼ºÈ­
+        // í”Œë ˆì´ì–´ê°€ ì‚¬ë§í•  ê²½ìš° ê²Œì„ ì˜¤ë²„ ì°½ì„ í™œì„±í™”
         if (Hp <= 0 && !gameOverDisplayed)
         {
             AdventureResultWindow.SetActive(true);
-            gameOverDisplayed = true; // °ÔÀÓ ¿À¹ö Ã¢ÀÌ Ç¥½ÃµÇ¾úÀ½À» Ç¥½Ã
+            gameOverDisplayed = true; // ê²Œì„ ì˜¤ë²„ ì°½ì´ í‘œì‹œë˜ì—ˆìŒì„ í‘œì‹œ
         }
     }
+
 }
 
