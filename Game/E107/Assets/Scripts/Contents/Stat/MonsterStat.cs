@@ -7,15 +7,13 @@ public class MonsterStat : Stat
 {
     protected int _level;
     protected float _detectRange;
-    protected float _detectTime;        // Idle »óÅÂ¿¡¼­ ÀûÀ» Å½»öÇÏ´Â ½Ã°£
-    protected float _patternkDelay;
+    protected float _detectTime;        // Idle ìƒíƒœì—ì„œ ì ì„ íƒìƒ‰í•˜ëŠ” ì‹œê°„
     protected int _patternDamage;
     
 
     public int Level { set => _level = value; get => _level; }
     public float DetectRange { set => _detectRange = value; get => _detectRange; }
     public float DetectTime { set => _detectTime = value;  get => _detectTime; }
-    public float PatternDelay { set => _patternkDelay = value; get => _patternkDelay; }
     public int PatternDamage { set => _patternDamage = value; get => _patternDamage; }
 
     public MonsterStat(UnitType unitType) : base(unitType) 
@@ -34,8 +32,7 @@ public class MonsterStat : Stat
             case UnitType.DrillDuck:
                 _level = 1;
                 _detectRange = 20.0f;
-                _patternkDelay = 10.0f;     // ¼öÁ¤ ÇÊ¿ä
-                _patternDamage = 40;
+                _patternDamage = 30;
                 break;
             case UnitType.Crocodile:
                 _level = 1;
@@ -52,6 +49,7 @@ public class MonsterStat : Stat
                 _detectRange = 20.0f;
                 _patternDamage = 40;
                 break;
+
             case UnitType.Mushroom:
                 _level = 1;
                 _detectRange = 15.0f;

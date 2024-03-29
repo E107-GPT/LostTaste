@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// °¢ ¸ó½ºÅÍ °ÔÀÓ °´Ã¼°¡ °¢ÀÚÀÇ Info¸¦ °¡Áø´Ù.
+// ê° ëª¬ìŠ¤í„° ê²Œì„ ê°ì²´ê°€ ê°ìì˜ Infoë¥¼ ê°€ì§„ë‹¤.
 public class MonsterInfo : MonoBehaviour
 {
     protected MonsterController _controller;
@@ -13,9 +13,9 @@ public class MonsterInfo : MonoBehaviour
     protected float _attackRange;
 
     [SerializeField]
-    protected Skill _skill;             // °¢ ¸ó½ºÅÍ°¡ °¡Áø ±âº» °ø°İ
+    protected Skill _skill;             // ê° ëª¬ìŠ¤í„°ê°€ ê°€ì§„ ê¸°ë³¸ ê³µê²©
     [SerializeField]
-    protected List<Pattern> _patterns;   // °¢ ¸ó½ºÅÍ°¡ °¡Áø ÆĞÅÏ °ø°İ
+    protected List<Pattern> _patterns;   // ê° ëª¬ìŠ¤í„°ê°€ ê°€ì§„ íŒ¨í„´ ê³µê²©
 
 
     public Define.UnitType UnitType {  get { return _unitType; } set { _unitType = value; } }
@@ -38,7 +38,7 @@ public class MonsterInfo : MonoBehaviour
 
         _patterns = new List<Pattern>();
 
-        Debug.Log($"Normal Attack - " + _unitType.ToString());
+        // Debug.Log($"Normal Attack - " + _unitType.ToString());
     }
 
 }
