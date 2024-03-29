@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,10 +11,15 @@ public abstract class ItemChest : MonoBehaviour, IPlayerInteractable
 
     public void OnInteracted(GameObject player)
     {
-        GameObject itemObject = Instantiate(GetItemPrefab());
-        itemObject.transform.position = gameObject.transform.position;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameObject itemObject = PhotonNetwork.Instantiate($"Prefabs/Weapons/{GetItemPrefab().name}", gameObject.transform.position, new Quaternion());
 
-        itemObject.GetComponent<Item>().OnDropped();
+        }
+        //GameObject itemObject = Instantiate(GetItemPrefab());
+        //itemObject.transform.position = gameObject.transform.position;
+
+        //itemObject.GetComponent<Item>().OnDropped();
 
         Animator animator = GetComponent<Animator>();
         animator.SetBool("Opened", true);
