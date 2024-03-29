@@ -318,7 +318,7 @@ public class MonsterController : BaseController
         base.TakeDamage(skillObjectId, damage);
         if (CurState is DieState)
         {
-            PrintText($"현재 상태: {CurState}");
+            //PrintText($"현재 상태: {CurState}");
             return;
         }
 
