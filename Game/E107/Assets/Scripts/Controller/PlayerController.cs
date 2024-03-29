@@ -217,6 +217,7 @@ public class PlayerController : BaseController
         if (photonView.IsMine || !PhotonNetwork.IsConnected || PhotonNetwork.InLobby) LookMousePosition();
 
         _animator.Play("DASH", -1, 0);
+        _lastDashTime = Time.time;
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDashState", RpcTarget.Others);
 
     }
@@ -258,7 +259,7 @@ public class PlayerController : BaseController
     public override void ExcuteSkill()
     {
         base.ExcuteSkill();
-        if (Input.GetKeyDown(KeyCode.Space)) _statemachine.ChangeState(new DashState(this));
+        if (Input.GetKeyDown(KeyCode.Space) && (Time.time - _lastDashTime >= _dashCoolDownTime || _lastDashTime == 0)) _statemachine.ChangeState(new DashState(this));
     }
 
     public override void ExitSkill()
@@ -354,7 +355,7 @@ public class PlayerController : BaseController
         if (Input.GetKey(KeyCode.Space) && (Time.time - _lastDashTime >= _dashCoolDownTime || _lastDashTime == 0))
         {
             _statemachine.ChangeState(new DashState(this));
-            _lastDashTime = Time.time;
+            
             //if (isConnected) photonView.RPC("ChangeDashState", RpcTarget.Others);
         }
 
