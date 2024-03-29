@@ -10,12 +10,10 @@ public class DrillDuckController : MonsterController
     {
         base.Init();
 
-        // Other Class
         _stat = new MonsterStat(_unitType);
     }
 
 
-    // DectPlayer 유지
     protected override void ChangeStateFromMove()
     {
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
@@ -165,7 +163,6 @@ public class DrillDuckController : MonsterController
     [PunRPC]
     void RPC_ChangeSkillState()
     {
-        // ???�ٲ�� ������
         _statemachine.ChangeState(new SkillState(this));
     }
     [PunRPC]

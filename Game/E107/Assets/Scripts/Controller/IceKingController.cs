@@ -9,7 +9,6 @@ public class IceKingController : MonsterController
     {
         base.Init();
 
-        // Other Class
         _stat = new MonsterStat(_unitType);
         
     }
@@ -66,14 +65,10 @@ public class IceKingController : MonsterController
         // 둘 다 똑같음
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
-            //ToDetectPlayer(0.8f);
             Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeIceKingSpikeState", RpcTarget.Others);
         }
-        
-        //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), 0.8f);
 
         _animator.CrossFade("Spike", 0.2f, -1, 0);
     }
@@ -123,7 +118,6 @@ public class IceKingController : MonsterController
     [PunRPC]
     void RPC_ChangeSkillState()
     {
-        // ???�ٲ�� ������
         _statemachine.ChangeState(new SkillState(this));
     }
     [PunRPC]

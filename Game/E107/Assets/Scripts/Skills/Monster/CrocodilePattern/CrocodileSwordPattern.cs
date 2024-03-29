@@ -16,8 +16,6 @@ public class CrocodileSwordPattern : Pattern
 
     IEnumerator FireSword(int attackDamage)
     {
-        Debug.Log("Sword - Crocodile");
-
         yield return new WaitForSeconds(1.7f);
         Root = _controller.transform;
         Vector3 dir = Root.forward;
@@ -36,12 +34,10 @@ public class CrocodileSwordPattern : Pattern
 
         _particleSystem = Managers.Effect.Play(Define.Effect.CrocodileSwordEffect, Root);
         _particleSystem.transform.position = new Vector3(_particleSystem.transform.position.x, _particleSystem.transform.position.y + 1.5f, _particleSystem.transform.position.z);
-        // new Vector3(skillObj.position.x - 1.0f, skillObj.position.y, skillObj.position.z - 1.0f);
-        // 
 
         while (timer < moveDuration)
         {
-            // Åõ»çÃ¼¿Í ÆÄÆ¼Å¬ ½Ã½ºÅÛÀ» ¾ÕÀ¸·Î ¿òÁ÷ÀÔ´Ï´Ù.
+            // íˆ¬ì‚¬ì²´ì™€ íŒŒí‹°í´ ì‹œìŠ¤í…œì„ ì•žìœ¼ë¡œ ì›€ì§ìž…ë‹ˆë‹¤.
             Vector3 moveStep = dir * speed * Time.deltaTime;
             skillObj.position += moveStep;
             _particleSystem.transform.position += moveStep;
@@ -51,7 +47,7 @@ public class CrocodileSwordPattern : Pattern
         }
 
         Managers.Resource.Destroy(skillObj.gameObject);
-        Managers.Resource.Destroy(_particleSystem.gameObject);      // ÀÌ°Å ¿Ö ÀÖÁö
+        Managers.Resource.Destroy(_particleSystem.gameObject);
         Managers.Effect.Stop(_particleSystem);
     }
 

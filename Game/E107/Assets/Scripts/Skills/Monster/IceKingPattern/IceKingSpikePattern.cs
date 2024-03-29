@@ -9,7 +9,6 @@ public class IceKingSpikePattern : Pattern
     private IceKingController _controller;
     private ParticleSystem _particleSystem;
     private Coroutine _coroutine;
-    private Coroutine _IceSpike;
     private Transform _sectorLoc;
 
     protected override void Init()
@@ -20,34 +19,20 @@ public class IceKingSpikePattern : Pattern
 
     IEnumerator IceSpike(int attackDamage)
     {
-        Debug.Log("IceKing Attack");
-
         yield return new WaitForSeconds(0.5f);
         Root = _controller.transform;
-        Vector3 dir = Root.forward;
 
-        // SkillObjectø°º≠ ∞¸∏Æ
+        // SkillObjectÏóêÏÑú Í¥ÄÎ¶¨
         _sectorLoc = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         _sectorLoc.GetComponent<SkillObject>().SetUp(Root, attackDamage, _seq);
-
-        // Managers.Sound.Play("swing1");
 
         _sectorLoc.localScale = new Vector3(10.0f, 5.0f, 10.0f);    // 5.0f
         _sectorLoc.position = Root.transform.TransformPoint(Vector3.zero);
         _sectorLoc.position = new Vector3(_sectorLoc.position.x, Root.position.y, _sectorLoc.position.z);
         _sectorLoc.rotation = Root.rotation;
 
-        float moveDuration = 1.5f;
-        float timer = 0;
-        float speed = 13.0f;
-
         _particleSystem = Managers.Effect.Play(Define.Effect.IceKingSpikeEffect, Root);
-        //_particleSystem.transform.parent = skillObj.transform;
-        //ps.transform.position = new Vector3(skillObj.position.x - 5.0f, skillObj.position.y, skillObj.position.z - 0.9f);
-        _particleSystem.transform.position = _sectorLoc.transform.position /*+ skillObj.transform.forward * 6.0f*/;
-        //_particleSystem.transform.position = skillObj.transform.position + skillObj.transform.right * 3.0f;
-        //ps.position = skillObj.position / 10.0f;
-
+        _particleSystem.transform.position = _sectorLoc.transform.position;
         yield return new WaitForSeconds(2.0f);
 
         Managers.Resource.Destroy(_sectorLoc.gameObject);
@@ -58,7 +43,7 @@ public class IceKingSpikePattern : Pattern
     {
         if (_coroutine != null)
         {
-            // wait for seconds∑Œ æ¯æ÷¥¬ ≈∏¿Ãπ÷¿ª ∏¬√ﬂ±‚ »˚µÈ¥Ÿ
+            // wait for secondsÎ°ú ÏóÜÏï†Îäî ÌÉÄÏù¥Î∞çÏùÑ ÎßûÏ∂îÍ∏∞ ÌûòÎì§Îã§
             StopCoroutine(_coroutine);
             _coroutine = null;
             if (_particleSystem != null) Managers.Effect.Stop(_particleSystem);
