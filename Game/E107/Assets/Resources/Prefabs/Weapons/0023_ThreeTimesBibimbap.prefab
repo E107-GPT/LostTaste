@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2282440792485106570}
   - component: {fileID: 3518640714564448260}
   - component: {fileID: -2872088760895447444}
+  - component: {fileID: 7802018207835353037}
   m_Layer: 9
   m_Name: 0023_ThreeTimesBibimbap
   m_TagString: Untagged
@@ -83,6 +84,28 @@ MonoBehaviour:
   <NextItem>k__BackingField: {fileID: 3366105943576255079, guid: ead6c1062df983342910fb5288775d08, type: 3}
   <HpRecoveryAmount>k__BackingField: 30
   <GroupCooldownTime>k__BackingField: 1
+--- !u!114 &7802018207835353037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2544670806064677984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &230997343563562026
 PrefabInstance:
   m_ObjectHideFlags: 0
