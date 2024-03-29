@@ -20,7 +20,6 @@ public class DrillDuckBeforePatttern : Pattern
 
     public override void SetCollider(int attackDamage)
     {
-        Debug.Log("Before Slide - DrillDuck");
         Root = _controller.transform;
         _particleSystem = Managers.Effect.Play(Define.Effect.DrillDuckBeforeEffect, Root);
         _particleSystem.transform.parent = _controller.transform;

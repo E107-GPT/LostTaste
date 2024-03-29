@@ -33,22 +33,21 @@ public class MonsterKingStabPattern : Pattern
 
         yield return new WaitForSeconds(0.1f);
 
-        // hit box »ı¼º
-        //_leftArm = _controller.LeftArm.transform;
+        // hit box ìƒì„±
         _stabLoc = Managers.Resource.Instantiate("Patterns/StabCollider").transform;
         _stabLoc.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
 
-        // ¿ŞÆÈ À§Ä¡¿¡ ¾î´À ¹æÇâÀ¸·Î À§Ä¡ÇÏ´ÂÁö È®ÀÎ
-        Vector3 rootLeft = Root.TransformDirection(Vector3.left);              // rootÀÇ local ÁÂÇ¥°è¸¦ ±âÁØÀ¸·Î ¿ŞÂÊÀ¸·Î ÀÌµ¿
-        Vector3 rootUp = Root.TransformDirection(Vector3.up);                  // rootÀÇ local ÁÂÇ¥°è¸¦ ±âÁØÀ¸·Î À§ÂÊÀ¸·Î ÀÌµ¿
-        Vector3 tempPos = Root.position + (rootUp) + (rootLeft * 0.7f);        // rootÀÇ À§Ä¡¿¡¼­ Ãß°¡·Î À§ÂÊÀ¸·Î ÇÑÄ­, ¿ŞÂÊÀ¸·Î ÇÑÄ­¹İ ÀÌµ¿
+        // ì™¼íŒ” ìœ„ì¹˜ì— ì–´ëŠ ë°©í–¥ìœ¼ë¡œ ìœ„ì¹˜í•˜ëŠ”ì§€ í™•ì¸
+        Vector3 rootLeft = Root.TransformDirection(Vector3.left);              // rootì˜ local ì¢Œí‘œê³„ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì™¼ìª½ìœ¼ë¡œ ì´ë™
+        Vector3 rootUp = Root.TransformDirection(Vector3.up);                  // rootì˜ local ì¢Œí‘œê³„ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ìœ„ìª½ìœ¼ë¡œ ì´ë™
+        Vector3 tempPos = Root.position + (rootUp) + (rootLeft * 0.7f);        // rootì˜ ìœ„ì¹˜ì—ì„œ ì¶”ê°€ë¡œ ìœ„ìª½ìœ¼ë¡œ í•œì¹¸, ì™¼ìª½ìœ¼ë¡œ í•œì¹¸ë°˜ ì´ë™
         _stabLoc.position = tempPos;
         _stabLoc.rotation = Root.rotation;
 
-        _particle = Managers.Effect.Play(Define.Effect.KingStabEffect, _stabLoc);      // stabLocÀÌ¶û ÇÔ²² ÀÌµ¿
+        _particle = Managers.Effect.Play(Define.Effect.KingStabEffect, _stabLoc);      // stabLocì´ë‘ í•¨ê»˜ ì´ë™
 
 
-        // ÀÌÆåÆ®¿Í hit box¸¦ Âî¸£´Â ¾Ö´Ï¸ŞÀÌ¼Ç°ú ¸ÂÃç¼­ ÀÌµ¿
+        // ì´í™íŠ¸ì™€ hit boxë¥¼ ì°Œë¥´ëŠ” ì• ë‹ˆë©”ì´ì…˜ê³¼ ë§ì¶°ì„œ ì´ë™
         float speed = 43.0f;
         while (true)
         {

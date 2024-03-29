@@ -1,4 +1,4 @@
-﻿using Photon.Pun;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -74,7 +74,6 @@ public class CrocodileController : MonsterController
 
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
-        //ToDetectPlayer(0.8f);
         _swordPS.Play();
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("Sword", 0.2f, -1, 0);
@@ -139,7 +138,6 @@ public class CrocodileController : MonsterController
     [PunRPC]
     void RPC_ChangeSkillState()
     {
-        // ???�ٲ�� ������
         _statemachine.ChangeState(new SkillState(this));
     }
     [PunRPC]

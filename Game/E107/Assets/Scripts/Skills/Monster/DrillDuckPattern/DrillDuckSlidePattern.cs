@@ -21,14 +21,10 @@ public class DrillDuckSlidePattern : Pattern
 
     public override void SetCollider(int attackDamage)
     {
-        Debug.Log("Slide Attack - DrillDuck");
-
-        // SkillObjectø°º≠ ∞¸∏Æ
+        // SkillObjectÏóêÏÑú Í¥ÄÎ¶¨
         Root = transform.root;
         SkillObj.SetActive(true);
 
-        // scale: 10.0f, 2.5f, 5f: 
-        // position: 0, 1.5, -1.5
         _particleSystem = Managers.Effect.Play(Define.Effect.DrillDuckSlideEffect, Root);
         _particleSystem.transform.parent = _controller.transform;
         _particleSystem.transform.localScale = new Vector3(10.0f, 2.5f, 5.0f);
@@ -36,7 +32,7 @@ public class DrillDuckSlidePattern : Pattern
 
         
         SkillObj.GetComponent<SkillObject>().SetUp(Root, attackDamage, _seq);           
-        SkillObj.transform.localScale = new Vector3(1.5f, 5.0f, 1.5f);          // 2.0f, 5.0f, 2.0f
+        SkillObj.transform.localScale = new Vector3(1.5f, 5.0f, 1.5f);
         SkillObj.transform.position = Root.transform.TransformPoint(Vector3.forward * 0.8f);
         SkillObj.transform.position = new Vector3(SkillObj.transform.position.x, Root.position.y + 0.5f, SkillObj.transform.position.z);
         SkillObj.transform.rotation = Root.rotation;

@@ -6,8 +6,6 @@ public abstract class Pattern : MonoBehaviour
 {
     public static int _seq;
     protected string _patternName;
-    protected float _lastCastTime;
-    protected float _patternCoolDownTime;
     protected Transform _root;
     protected GameObject _skillObj;
 
@@ -15,12 +13,6 @@ public abstract class Pattern : MonoBehaviour
     {
         get { return _patternName; }
         set { _patternName = value; }
-    }
-    public float LastCastTime { get { return _lastCastTime; } set { _lastCastTime = value; } }
-    public float PatternCoolDownTime
-    {
-        get { return _patternCoolDownTime; }
-        set { _patternCoolDownTime = value; }
     }
 
     public Transform Root

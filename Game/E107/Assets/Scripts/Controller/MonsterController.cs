@@ -20,7 +20,7 @@ public class MonsterController : BaseController
 {
     protected MonsterStat _stat;
     protected MonsterInfo _monsterInfo;
-    private string _curSkillName;           // 현재 공격의 이름 - Info에서 가져옴
+    private string _curSkillName;             // 현재 공격의 이름 - Info에서 가져옴
     private float _lastDetectTime;
 
     [SerializeField]
@@ -28,12 +28,15 @@ public class MonsterController : BaseController
     protected Ray _ray;                       // Gizmos에 사용
     private Renderer[] _allRenderers;         // 캐릭터의 모든 Renderer 컴포넌트 -> 모든 render의 색을 변경!
     private Color[] _originalColors;          // 원래의 머티리얼 색상 저장용 배열
-    private AudioSource[] _audioSource;         // MainCamera의 Audio Listener가 필요
+    private AudioSource[] _audioSource;       // MainCamera의 Audio Listener가 필요
+
+    private bool _isDie;
 
     public MonsterStat Stat { get { return _stat; } }
     public MonsterInfo MonsterInfo { get { return _monsterInfo; } }
     public Transform DetectPlayer { get { return _detectPlayer; } set { _detectPlayer = value; } }
     public AudioSource[] Audio { get => _audioSource; }
+    public bool IsDie { get => _isDie; }
 
 
     public override void Init()
@@ -44,7 +47,6 @@ public class MonsterController : BaseController
         _agent.acceleration = 40.0f;
         _statemachine.CurState = new IdleState(this);
 
-        // Other Class
         _stat = new MonsterStat(_unitType);
         _monsterInfo = GetComponent<MonsterInfo>();
 
@@ -57,7 +59,7 @@ public class MonsterController : BaseController
         }
 
         _audioSource = GetComponents<AudioSource>();
-        foreach (AudioSource audio in  _audioSource)        // audio clip이 none이면 audio에 저장되지 않음
+        foreach (AudioSource audio in _audioSource)        // audio clip이 none이면 audio에 저장되지 않음
         {
             audio.playOnAwake = false;
             audio.Stop();
@@ -75,16 +77,16 @@ public class MonsterController : BaseController
     //    _rigidbody.velocity = Vector3.zero;
     //}
 
-    private void OnDestroy()
-    {
+    //private void OnDestroy()
+    //{
         
-    }
+    //}
 
     protected void OnDrawGizmos()
     {
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
-        if (CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.DetectRange);        // 탐색 범위
+        if (CurState is IdleState) Gizmos.DrawWireSphere(_ray.origin, _stat.DetectRange);
     }
 
     #region State Method
@@ -96,7 +98,7 @@ public class MonsterController : BaseController
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
 
-        _animator.Play("Idle");      // 기본적으로 base layer의 state를 나타냄
+        _animator.Play("Idle", -1);
         
         // 마스터 클래스에서만 전송
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeIdleState", RpcTarget.Others);
@@ -207,12 +209,16 @@ public class MonsterController : BaseController
     public override void EnterDie()
     {
         base.EnterDie();
+
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
-        GetComponent<Collider>().enabled = false;
+        //GetComponent<Collider>().enabled = false;
 
         _audioSource[(int)SoundOrder.DIE].Play();
         _animator.Play("Die", -1);
+        ////_animator.SetBool("isDie", true);
+        //_isDie = true;
+        //PrintText($"{_isDie}");
 
         Destroy(gameObject, 3.0f);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDieState", RpcTarget.Others);
@@ -309,7 +315,13 @@ public class MonsterController : BaseController
 
     public override void TakeDamage(int skillObjectId, int damage)
     {
+        if (PhotonNetwork.IsMasterClient == false) return;
         base.TakeDamage(skillObjectId, damage);
+        if (CurState is DieState)
+        {
+            //PrintText($"현재 상태: {CurState}");
+            return;
+        }
 
         float lastAttackTime;
         lastAttackTimes.TryGetValue(skillObjectId, out lastAttackTime);
@@ -331,7 +343,7 @@ public class MonsterController : BaseController
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;
         lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
-
+        photonView.RPC("RPC_MonsterAttacked", RpcTarget.Others, damage);
         if (_stat.Hp <= 0)
         {
             _statemachine.ChangeState(new DieState(this));
@@ -354,6 +366,20 @@ public class MonsterController : BaseController
             _allRenderers[i].material.color = _originalColors[i];
         }
     }
+    [PunRPC]
+    void RPC_MonsterAttacked(int damage)
+    {
+        StartCoroutine(ChangeColorFromDamage());
 
+        // 보스는 피격음이 없다.
+        if (_audioSource.Length == (int)SoundOrder.LENGTH)
+        {
+            _audioSource[(int)SoundOrder.ATTACKED].Play();
+        }
+
+        _stat.Hp -= damage;
+        if (_stat.Hp < 0) _stat.Hp = 0;
+
+    }
 }
 
