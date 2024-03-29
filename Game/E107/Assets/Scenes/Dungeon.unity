@@ -2294,7 +2294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1234755031
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4252,7 +4252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1725151767
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6182,6 +6182,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 498949063335892636, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+      propertyPath: stageText
+      value: 
+      objectReference: {fileID: 382873391}
+    - target: {fileID: 498949063335892636, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+      propertyPath: stage3Icon
+      value: 
+      objectReference: {fileID: 1748719416}
+    - target: {fileID: 498949063335892636, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+      propertyPath: stagePanel
+      value: 
+      objectReference: {fileID: 219504693}
+    - target: {fileID: 498949063335892636, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+      propertyPath: stageNameText
+      value: 
+      objectReference: {fileID: 219504691}
+    - target: {fileID: 498949063335892636, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+      propertyPath: stageLevelText
+      value: 
+      objectReference: {fileID: 219504692}
+    - target: {fileID: 498949063335892636, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+      propertyPath: iceKingHealthBar
+      value: 
+      objectReference: {fileID: 425769688}
     - target: {fileID: 1751365017787146543, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
       propertyPath: stageText
       value: 
@@ -6250,6 +6274,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4202554928502247645, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+      propertyPath: bossStatusPanel
+      value: 
+      objectReference: {fileID: 1492595923}
     - target: {fileID: 5748740213170221724, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
       propertyPath: m_Name
       value: FinalBoss
@@ -6781,7 +6809,7 @@ PrefabInstance:
       objectReference: {fileID: 1836880637188187888}
     - target: {fileID: 6855409005135040549, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: portal.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6855409005135040549, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: portal.Array.data[1]

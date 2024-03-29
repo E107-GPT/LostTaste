@@ -31,11 +31,11 @@ public class SoundManager
             for (int i = 0; i < soundNames.Length - 1; i++)
             {
                 GameObject go = new GameObject { name = soundNames[i] };
-                // »õ·Î »ı¼ºÇØ¼­
+                // ìƒˆë¡œ ìƒì„±í•´ì„œ
                 _audioSources[i] = go.AddComponent<AudioSource>();
-                // Audio Source ´Ş¾ÆÁÖ°í
+                // Audio Source ë‹¬ì•„ì£¼ê³ 
                 go.transform.parent = root.transform;
-                // @Sound¾È¿¡ ³Ö¾îÁÖ±â
+                // @Soundì•ˆì— ë„£ì–´ì£¼ê¸°
             }
 
             _audioSources[(int)Define.Sound.BGM].loop = true;
@@ -44,6 +44,7 @@ public class SoundManager
 
     public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f, float volume = 0.5f)
     {
+        if (type == Define.Sound.BGM && _lastBgmPath == path) return;
         AudioClip audioClip = GetOrAddAudioClip(path, type);
         Play(audioClip, type, pitch, volume);
 
@@ -76,11 +77,13 @@ public class SoundManager
             audioSource.PlayOneShot(audioClip);
 
         }
+
+       
     }
 
     public void Clear()
     {
-        // ¾Æ¸¶µµ ¾ÀÀÌ ¹Ù²î´Â °æ¿ì
+        // ì•„ë§ˆë„ ì”¬ì´ ë°”ë€ŒëŠ” ê²½ìš°
         foreach(AudioSource audioSource in _audioSources)
         {
             audioSource.clip = null;
