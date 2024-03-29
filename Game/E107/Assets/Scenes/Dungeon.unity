@@ -2173,6 +2173,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3869633547308172995, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
   m_PrefabInstance: {fileID: 1840857730}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1010754420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1547010033624955202, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+  m_PrefabInstance: {fileID: 7189251558341214102}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1047851865
 GameObject:
   m_ObjectHideFlags: 0
@@ -2642,7 +2647,7 @@ MonoBehaviour:
       monsterPrefab: {fileID: 8805547551415297548, guid: e5d14d25889f56440a293a730e53793d, type: 3}
   - mapName: IceBoss
     spawnPoints:
-    - spawnPoint: {fileID: 3347703678286378857, guid: fedb2a053279eb5478a553f412269619, type: 3}
+    - spawnPoint: {fileID: 7143549204535826422, guid: fedb2a053279eb5478a553f412269619, type: 3}
       monsterPrefab: {fileID: 3948880186286502869, guid: 5be6d83d33a639d47b3f29d10d029628, type: 3}
     - spawnPoint: {fileID: 3470023705401434863, guid: 633a55c4e95479e4fbde4b2cff94a4db, type: 3}
       monsterPrefab: {fileID: 7366281943995135627, guid: f666c966b308d3449a8febf41c3fe8e5, type: 3}
@@ -6391,6 +6396,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForestMonster02
       objectReference: {fileID: 0}
+    - target: {fileID: 6796524871184733210, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 6796524871184733210, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.42
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7159,6 +7172,10 @@ PrefabInstance:
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 82393910134851442}
+    - target: {fileID: 1301352634189866626, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2161248386381197970, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -100
@@ -7223,6 +7240,10 @@ PrefabInstance:
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 8353377873420609258}
+    - target: {fileID: 5755909877447801055, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5778420089886050193, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: m_Name
       value: Camp
@@ -7277,12 +7298,28 @@ PrefabInstance:
       objectReference: {fileID: 1836880637188187888}
     - target: {fileID: 6855409005135040549, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: portal.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6855409005135040549, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: portal.Array.data[1]
       value: 
-      objectReference: {fileID: 7189251558341214103}
+      objectReference: {fileID: 1010754420}
+    - target: {fileID: 7418590515999543127, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418721254695787407, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7419033819263268871, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7419632621808445339, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7421745927343861113, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.25
@@ -7337,11 +7374,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
---- !u!1 &7189251558341214103 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1421732645273239437, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
-  m_PrefabInstance: {fileID: 7189251558341214102}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7386962799005595321
 PrefabInstance:
   m_ObjectHideFlags: 0
