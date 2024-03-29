@@ -17,6 +17,8 @@ public class PlayerController : BaseController
     IPlayerInteractable _detectedInteractable;
     GameObject _righthand;
     Coroutine _mpRecoverCoroutine;
+    private float _lastDashTime;
+    float _dashCoolDownTime = 1.0f;
     Define.SkillType _curSkill = Define.SkillType.None;
 
 
@@ -315,9 +317,10 @@ public class PlayerController : BaseController
             }
 
         }
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && (Time.time - _lastDashTime >= _dashCoolDownTime || _lastDashTime == 0))
         {
             _statemachine.ChangeState(new DashState(this));
+            _lastDashTime = Time.time;
             //if (isConnected) photonView.RPC("ChangeDashState", RpcTarget.Others);
         }
         // 무기 교체
