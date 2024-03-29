@@ -57,7 +57,7 @@ public class HUDManager : MonoBehaviour
         //
         // 코르틴이 실행되는 조건이 필요해요 (파티원이 들어왔을 때!)
 
-        StartCoroutine(ShowAnnouncementPanel());
+        // StartCoroutine(ShowAnnouncementPanel());
 
         //
         //
