@@ -6,6 +6,9 @@ public class IcePearlStaffSkill : Skill
     [field: SerializeField]
     public int Damage { get; set; }
 
+    [field: SerializeField]
+    public Vector3 Scale { get; set; }
+
     protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
@@ -20,8 +23,9 @@ public class IcePearlStaffSkill : Skill
         GameObject skillObj = Managers.Resource.Instantiate("Skills/SkillObject");
         skillObj.GetComponent<SkillObject>().SetUp(player.transform, Damage, _seq);
 
-        skillObj.transform.position = player.transform.position;
+        skillObj.transform.position = player.transform.TransformPoint(Vector3.forward * (Scale.z / 2)) + new Vector3(0, 0.5f, 0);
         skillObj.transform.rotation = player.transform.rotation;
+        skillObj.transform.localScale = Scale;
 
         yield return new WaitForSeconds(0.5f);
 
