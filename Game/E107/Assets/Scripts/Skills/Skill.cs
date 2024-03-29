@@ -74,10 +74,13 @@ public abstract class Skill : MonoBehaviour
 #pragma warning restore 0618
     }
 
+    public virtual bool IsMonsterCastable()
+    {
+        return LastCastTime != 0 && Time.time - LastCastTime >= SkillCoolDownTime;
+    }
+
     public virtual bool IsPlayerCastable(PlayerController playerController)
     {
-        if (playerController.Stat.Mp < RequiredMp) return false;
-        if (LastCastTime != 0 && Time.time - LastCastTime < SkillCoolDownTime) return false;
-        return true;
+        return IsMonsterCastable() && (playerController.Stat.Mp >= RequiredMp);
     }
 }
