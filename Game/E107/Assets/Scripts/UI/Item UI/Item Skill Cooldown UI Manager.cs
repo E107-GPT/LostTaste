@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static UnityEditor.Progress;
+using UnityEditor.Experimental.GraphView;
 
 /// <summary>
 /// 아이템 스킬 쿨타임 UI 매니저는 쿨타임이 있는 아이템 스킬의 쿨타임을 표시하는 기능을 제공합니다.
@@ -34,9 +36,7 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
     private float firstItemRightSkillCoolDown; // 아이템 1 오른쪽 스킬 현재 쿨타임
     private float secondItemRightSkillCoolDown; // 아이템 2 오른쪽 스킬 현재 쿨타임
 
-    // 쿨타임 진행 상태를 추적하는 변수 추가
-    private bool isFirstItemCoolingDown = false;
-    private bool isSecondItemCoolingDown = false;
+    private bool _isCurrentItemCoolingDownPrev = false;
 
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
@@ -72,72 +72,84 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
 
         // PlayerController의 인벤토리에 접근
         _playerInventory = _playerController.Inventory;
-        _currentItemNum = _playerController.CurrentItemNum;
 
-        // PlayerController의 인벤토리와 현재 아이템 번호를 가져옴
-        Item firstItem = _playerInventory[1];
-        Item secondItem = _playerInventory[2];
+        Item currentItem = _playerController.Inventory[_playerController.CurrentItemNum];
 
         // 스킬 존재 여부 확인
-        bool isFirstItemSkillExists = !float.IsInfinity(firstItem.RightSkill.SkillCoolDownTime);
-        bool isSecondItemSkillExists = !float.IsInfinity(secondItem.RightSkill.SkillCoolDownTime);
+        bool isCurrentItemSkillExists = currentItem.RightSkill != null && !(currentItem.RightSkill is EmptySkill);
 
-        firstItemRightSkillCoolDown = firstItem.RightSkill.SkillCoolDownTime;
-        secondItemRightSkillCoolDown = secondItem.RightSkill.SkillCoolDownTime;
+        bool isCurrentItemCoolingDown = !currentItem.RightSkill.IsPlayerCastable(_playerController);
 
-        // 쿨타임 정보 업데이트
-        if (Input.GetMouseButton(1))
+        if (isCurrentItemCoolingDown && isCurrentItemSkillExists)
         {
-            // 캐릭터가 '스킬 상태'가 아닐 경우 함수를 빠져나감
-            if (_playerController.CurState is not SkillState) return;
-
-            if (_currentItemNum == 1 && !isFirstItemCoolingDown)
-            {
-                StartCoroutine(UpdateItemCoolDown(firstItem, firstItemRightSkillCoolDown, firstItemRightSkillCoolDownText, firstItemCoolDownImage, firstItemKeyImage, isFirstItemSkillExists));
-            }
-            else if (_currentItemNum == 2 && !isSecondItemCoolingDown)
-            {
-                StartCoroutine(UpdateItemCoolDown(secondItem, secondItemRightSkillCoolDown, secondItemRightSkillCoolDownText, secondItemCoolDownImage, secondItemKeyImage, isSecondItemSkillExists));
-            }
+            UpdateItemSkillCoolDown(currentItem);
+        }
+        else if (!isCurrentItemCoolingDown && _isCurrentItemCoolingDownPrev)
+        {
+            ResetCoolDownUI(currentItem);
         }
 
         // 무기 교체에 따른 스킬 쿨타임 패널 업데이트
         ToggleSkillCoolDownPanels(_currentItemNum);
+
+        // 아이템 변경 또는 버림 감지
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.B))
+        {
+            // 캐릭터가 '대기 상태' 또는 '걷기 상태'가 아닐 경우 함수를 빠져나감
+            if (!(_playerController.CurState is IdleState || _playerController.CurState is MoveState)) return;
+        }
+
+        _isCurrentItemCoolingDownPrev = isCurrentItemCoolingDown;
     }
 
-    IEnumerator UpdateItemCoolDown(Item item, float skillCoolDown, TextMeshProUGUI skillCoolDownText, Image coolDownImage, Image keyImage, bool isSkillExists)
+    void UpdateItemSkillCoolDown(Item item)
     {
-        if (!isSkillExists) yield break;
+        float remainingTime = item.RightSkill.SkillCoolDownTime - (Time.time - item.RightSkill.LastCastTime);
+        float percentage = remainingTime / item.RightSkill.SkillCoolDownTime;
+        string remainingTimeString;
+        if (remainingTime > 1.0f)
+        {
+            remainingTimeString = Mathf.Ceil(remainingTime).ToString() + "s";
+        }
+        else
+        {
+            remainingTimeString = string.Format("{0:0.0}", remainingTime) + "s";
+        }
 
-        // 쿨타임이 시작될 때의 상태 변경
+        UpdateCoolDownUI(item, percentage, remainingTimeString);
+    }
+
+    // 쿨다운 UI 업데이트 메서드 (새로 추가)
+    void UpdateCoolDownUI(Item item, float fillAmount, string text)
+    {
         if (item == _playerInventory[1])
         {
-            isFirstItemCoolingDown = true;
+            firstItemRightSkillCoolDownText.text = text;
+            firstItemCoolDownImage.fillAmount = fillAmount;
+            firstItemKeyImage.fillAmount = fillAmount;
         }
         else if (item == _playerInventory[2])
         {
-            isSecondItemCoolingDown = true;
+            secondItemRightSkillCoolDownText.text = text;
+            secondItemCoolDownImage.fillAmount = fillAmount;
+            secondItemKeyImage.fillAmount = fillAmount;
         }
+    }
 
-        while (skillCoolDown > 0.0f)
-        {
-            skillCoolDown -= Time.deltaTime;
-            coolDownImage.fillAmount = skillCoolDown / item.RightSkill.SkillCoolDownTime;
-            keyImage.fillAmount = skillCoolDown / item.RightSkill.SkillCoolDownTime;
-            skillCoolDownText.text = Mathf.Ceil(skillCoolDown).ToString() + "s";
-            yield return new WaitForFixedUpdate();
-        }
-
-        skillCoolDownText.text = ""; // 쿨타임이 완전히 끝났을 때, 텍스트를 빈 문자열로 설정
-
-        // 쿨타임이 종료될 때의 상태 변경
+    // 코루틴이 끝난 뒤 쿨타임 패널을 초기화 하는 메서드
+    void ResetCoolDownUI(Item item)
+    {
         if (item == _playerInventory[1])
         {
-            isFirstItemCoolingDown = false;
+            firstItemRightSkillCoolDownText.text = "";
+            firstItemCoolDownImage.fillAmount = 0;
+            firstItemKeyImage.fillAmount = 0;
         }
         else if (item == _playerInventory[2])
         {
-            isSecondItemCoolingDown = false;
+            secondItemRightSkillCoolDownText.text = "";
+            secondItemCoolDownImage.fillAmount = 0;
+            secondItemKeyImage.fillAmount = 0;
         }
     }
 
