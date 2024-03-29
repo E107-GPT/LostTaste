@@ -5625,11 +5625,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5359339078534975979, guid: 6ea81d959f43c3441aa36764ba139cbe, type: 3}
   m_PrefabInstance: {fileID: 2199632503528357276}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &391186988638517369 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8616442996333207487, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
-  m_PrefabInstance: {fileID: 3446004711366728905}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &954949334039589068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5912,7 +5907,7 @@ PrefabInstance:
     - target: {fileID: 6866149959141414233, guid: e9c7feee9e74178438f760324288cbc7, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 391186988638517369}
+      objectReference: {fileID: 0}
     - target: {fileID: 7821081643168141017, guid: e9c7feee9e74178438f760324288cbc7, type: 3}
       propertyPath: m_Name
       value: IceBoss
@@ -6104,6 +6099,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+--- !u!4 &3446004711366728907 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1490751185746072752, guid: 9bb4ddc3bcfe4f6468938731433416a3, type: 3}
+  m_PrefabInstance: {fileID: 3446004711366728905}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3497252524110175769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3771615452992161270, guid: 1de5bf0b8e3073b48946e3672e25bf42, type: 3}
@@ -6607,6 +6607,14 @@ PrefabInstance:
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 1836880637188187888}
+    - target: {fileID: 6855409005135040549, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: portal.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855409005135040549, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: portal.Array.data[1]
+      value: 
+      objectReference: {fileID: 7189251558341214103}
     - target: {fileID: 8126692174378660274, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: portal
       value: 
@@ -6614,16 +6622,30 @@ PrefabInstance:
     - target: {fileID: 8126692174378660274, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 391186988638517369}
+      objectReference: {fileID: 0}
+    - target: {fileID: 8268168676588809709, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8268168676588809709, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: bgmName
+      value: FinalBoss
+      objectReference: {fileID: 0}
     - target: {fileID: 8268168676588809709, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
-      objectReference: {fileID: 391186988638517369}
+      objectReference: {fileID: 3446004711366728907}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7059088300879146835, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+--- !u!1 &7189251558341214103 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1421732645273239437, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+  m_PrefabInstance: {fileID: 7189251558341214102}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7386962799005595321
 PrefabInstance:
   m_ObjectHideFlags: 0
