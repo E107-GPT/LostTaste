@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Dungeon SceneÀ¸·Î ÀüÈ¯ÇÏ´Â ÄÄÆ÷³ÍÆ®ÀÔ´Ï´Ù.
+/// Dungeon Sceneìœ¼ë¡œ ì „í™˜í•˜ëŠ” ì»´í¬ë„ŒíŠ¸ì…ë‹ˆë‹¤.
 /// </summary>
 public class SceneLoader : MonoBehaviour
 {
-    // Camp SceneÀ» ·ÎµåÇÏ´Â ¸Ş¼­µå
+    // Camp Sceneì„ ë¡œë“œí•˜ëŠ” ë©”ì„œë“œ
     public void LoadCampScene()
     {
-        SceneManager.LoadScene("Dungeon");
+        SceneManager.LoadScene("Loading");
     }
 }
