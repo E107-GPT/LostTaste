@@ -76,7 +76,7 @@ public abstract class Skill : MonoBehaviour
 
     public virtual bool IsMonsterCastable()
     {
-        return LastCastTime != 0 && Time.time - LastCastTime >= SkillCoolDownTime;
+        return LastCastTime == 0 || Time.time - LastCastTime >= SkillCoolDownTime;
     }
 
     public virtual bool IsPlayerCastable(PlayerController playerController)
