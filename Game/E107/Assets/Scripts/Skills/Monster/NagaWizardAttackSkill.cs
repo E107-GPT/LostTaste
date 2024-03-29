@@ -5,23 +5,31 @@ using UnityEngine;
 
 public class NagaWizardAttackSkill : Skill
 {
+    [field: SerializeField]
+    private int _damage;
+
     protected override void Init()
     {
-        SkillCoolDownTime = 1.0f;
+        SkillCoolDownTime = 0.5f;
+
+        _damage = Root.GetComponent<MonsterController>().Stat.AttackDamage;
     }
 
-    protected override IEnumerator SkillCoroutine(int _attackDamage, float _attackRange)
+    protected override IEnumerator SkillCoroutine()
     {
-        Root = transform.root;
+        Root.GetComponent<Animator>().CrossFade("AttackBefore", 0.3f, -1, 0);
+
+        yield return new WaitForSeconds(SkillCoolDownTime);
+
         Vector3 dir = Root.forward;
-        Root.GetComponent<Animator>().CrossFade("Attack", 0.1f, -1, 0);
         dir = new Vector3(dir.x, 0, dir.z);
+        Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
 
         yield return new WaitForSeconds(0.5f);
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.NagaWizardLightningEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, _attackDamage, _seq);
+        skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
 
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 

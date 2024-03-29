@@ -116,10 +116,10 @@ public abstract class BaseController : MonoBehaviour
 
 	// SKILL
 	public virtual void EnterSkill() {
-		if (CurState is DieState) return;
-	}
+		if (CurState is DieState) _statemachine.ChangeState(new DieState(this));
+    }
 	public virtual void ExcuteSkill() {
-		if (CurState is DieState) return;
+		if (CurState is DieState) _statemachine.ChangeState(new DieState(this));
 	}
 	public virtual void ExitSkill() { }
 
