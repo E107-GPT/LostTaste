@@ -53,7 +53,6 @@ public class MonsterKingHitDownAfterPattern : Pattern
         Managers.Sound.Play("Monster/KingHitDownAfterEffect", Define.Sound.Effect);
 
         yield return new WaitForSeconds(1.0f);
-        // hit box 제거
         // hit box 안에 effect가 존재
         Managers.Resource.Destroy(_donutLoc.gameObject);
     }

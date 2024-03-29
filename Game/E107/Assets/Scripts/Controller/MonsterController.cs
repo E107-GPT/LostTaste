@@ -98,7 +98,7 @@ public class MonsterController : BaseController
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
 
-        _animator.Play("Idle");
+        _animator.Play("Idle", -1);
         
         // 마스터 클래스에서만 전송
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeIdleState", RpcTarget.Others);

@@ -109,12 +109,12 @@ public class MonsterKingController : MonsterController
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeMonsterKingHitDownState", RpcTarget.Others);
         }
-        // test
-        else
-        {
-            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
-        }
+        //// test
+        //else
+        //{
+        //    Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+        //    transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+        //}
 
         _animator.CrossFade("HitDown", 0.3f, -1, 0);
     }      
@@ -179,12 +179,12 @@ public class MonsterKingController : MonsterController
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeMonsterKingSlashState", RpcTarget.Others);
         }
-        // test
-        else
-        {
-            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
-        }
+        //// test
+        //else
+        //{
+        //    Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+        //    transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+        //}
 
         _animator.CrossFade("Slash", 0.3f, -1, 0);
     }
@@ -243,12 +243,12 @@ public class MonsterKingController : MonsterController
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeMonsterKingStabState", RpcTarget.Others);
         }
-        // test
-        else
-        {
-            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-            transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
-        }
+        //// test
+        //else
+        //{
+        //    Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+        //    transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
+        //}
 
         _animator.CrossFade("Stab", 0.3f, -1, 0);
     }         
