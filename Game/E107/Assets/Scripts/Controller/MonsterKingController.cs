@@ -489,5 +489,14 @@ public class MonsterKingController : MonsterController
         Debug.Log(_pos);
         _particle.transform.position = _pos;
     }
+
+    [PunRPC]
+    void RPC_MonsterAttacked(int damage)
+    {
+        MonsterAttacked(damage);
+
+    }
+
+
     #endregion
 }

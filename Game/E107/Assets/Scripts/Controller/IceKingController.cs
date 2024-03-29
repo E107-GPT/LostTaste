@@ -126,4 +126,11 @@ public class IceKingController : MonsterController
         _statemachine.ChangeState(new DieState(this));
     }
 
+    [PunRPC]
+    void RPC_MonsterAttacked(int damage)
+    {
+        MonsterAttacked(damage);
+
+    }
+
 }

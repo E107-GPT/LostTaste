@@ -622,7 +622,7 @@ public class PlayerController : BaseController
 
         int viewID = item.GetComponent<PhotonView>().ViewID;
         Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
-        //PhotonNetwork.Destroy(item.gameObject);
+        if(PhotonNetwork.IsMasterClient)PhotonNetwork.Destroy(item.gameObject);
         if (photonView.IsMine) photonView.RPC("RPC_EquipItem", RpcTarget.Others, _currentItemNum, dropItemName, viewID);
 
     }
@@ -640,7 +640,7 @@ public class PlayerController : BaseController
         // 바닥에 생성 해주기
 
         // TODO : 마스터에서 생성해야하나?
-        
+
         //int ViewID = go.GetComponent<PhotonView>().ViewID;
 
         //currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
@@ -648,7 +648,10 @@ public class PlayerController : BaseController
         //currentItem.gameObject.transform.position = gameObject.transform.root.position;
         //currentItem.gameObject.transform.rotation = new Quaternion();
         //currentItem.OnDropped();
-
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate($"Prefabs/Weapons/{currentItem.gameObject.name}", transform.position, new Quaternion());
+        }
         if (photonView.IsMine) photonView.RPC("RPC_DropCurrentItem", RpcTarget.Others, currentItem.gameObject.name, transform.position);
 
     }

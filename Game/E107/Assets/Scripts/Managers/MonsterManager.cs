@@ -9,7 +9,7 @@ public class MonsterManager : MonoBehaviour
 {
     public static MonsterManager Instance { get; private set; }
 
-    // °¢ ¸Ê¿¡ ¼ÒÈ¯µÈ ¸ó½ºÅÍ ¸®½ºÆ®
+    // ê° ë§µì— ì†Œí™˜ëœ ëª¬ìŠ¤í„° ë¦¬ìŠ¤íŠ¸
     public List<GameObject> monstersInCurrentMap = new List<GameObject>();
 
     public PortalTrigger portalTrigger;
@@ -33,7 +33,7 @@ public class MonsterManager : MonoBehaviour
     public class SpawnPointInfo
     {
         public Transform spawnPoint;
-        public GameObject monsterPrefab; // °¢ ½ºÆù Æ÷ÀÎÆ®º°·Î ¸ó½ºÅÍ ÇÁ¸®ÆÕ ÁöÁ¤
+        public GameObject monsterPrefab; // ê° ìŠ¤í° í¬ì¸íŠ¸ë³„ë¡œ ëª¬ìŠ¤í„° í”„ë¦¬íŒ¹ ì§€ì •
     }
 
     public List<MonsterSpawnInfo> monsterSpawnInfos;
@@ -75,7 +75,7 @@ public class MonsterManager : MonoBehaviour
 
                 //portal.ActivatePortal(true);
 
-                Debug.Log("Æ÷Å» ÄÑ!!");
+                Debug.Log("í¬íƒˆ ì¼œ!!");
                 portal.gameObject.SetActive(true);
                 portal.ActivateItemBox();
                 monstersCleared = true;
@@ -86,7 +86,7 @@ public class MonsterManager : MonoBehaviour
         }
     }
 
-    // Æ¯Á¤ ¸Ê¿¡ ¸ó½ºÅÍ ¼ÒÈ¯
+    // íŠ¹ì • ë§µì— ëª¬ìŠ¤í„° ì†Œí™˜
     public void SpawnMonstersForMap(string mapName)
     {
         _curMap = mapName;
@@ -97,9 +97,9 @@ public class MonsterManager : MonoBehaviour
             {
                 foreach (SpawnPointInfo spawnInfo in info.spawnPoints)
                 {
-                    // °¢ ½ºÆù Æ÷ÀÎÆ®º°·Î ÁöÁ¤µÈ ¸ó½ºÅÍ ÇÁ¸®ÆÕÀ¸·Î ¸ó½ºÅÍ¸¦ ¼ÒÈ¯
+                    // ê° ìŠ¤í° í¬ì¸íŠ¸ë³„ë¡œ ì§€ì •ëœ ëª¬ìŠ¤í„° í”„ë¦¬íŒ¹ìœ¼ë¡œ ëª¬ìŠ¤í„°ë¥¼ ì†Œí™˜
                     GameObject clone = null;
-                    Debug.Log($"¹æ¾ÈÀÎ°¡?{PhotonNetwork.InRoom}");
+                    Debug.Log($"ë°©ì•ˆì¸ê°€?{PhotonNetwork.InRoom}");
                     if (PhotonNetwork.IsConnected && !PhotonNetwork.InRoom) clone = Instantiate(spawnInfo.monsterPrefab, spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
                     else if (PhotonNetwork.IsMasterClient) clone = PhotonNetwork.Instantiate($"Prefabs/Monster/{spawnInfo.monsterPrefab.name}", spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
                     monstersInCurrentMap.Add(clone);
@@ -119,21 +119,21 @@ public class MonsterManager : MonoBehaviour
 
     public void SendMonsterSpawnMsg(string mapName)
     {
-        Debug.Log("¸ó½ºÅÍ ½ºÆù ÇØ´Ş¶ó°í ¸Ş¼¼Áö¸¦ º¸³¿");
+        Debug.Log("ëª¬ìŠ¤í„° ìŠ¤í° í•´ë‹¬ë¼ê³  ë©”ì„¸ì§€ë¥¼ ë³´ëƒ„");
         photonView.RPC("RPC_SpawnMonster", RpcTarget.MasterClient, mapName);
     }
 
     [PunRPC]
     void RPC_SpawnMonster(string mapName)
     {
-        Debug.Log("¸¶½ºÅÍ°¡ ¹Ş¾Ò½À´Ï´Ù.");
+        Debug.Log("ë§ˆìŠ¤í„°ê°€ ë°›ì•˜ìŠµë‹ˆë‹¤.");
         SpawnMonstersForMap(mapName);
         RestartCheckMonstersCoroutine(mapName);
     }
 
     public void SendActivatePortal(string portalName)
     {
-        Debug.Log("´Ù¸¥ »ç¶÷µé Æ÷Å» ÄÑ¶ó°í ¾ê±âÇÏ±â");
+        Debug.Log("ë‹¤ë¥¸ ì‚¬ëŒë“¤ í¬íƒˆ ì¼œë¼ê³  ì–˜ê¸°í•˜ê¸°");
         photonView.RPC("RPC_ActivatePortal",RpcTarget.Others, portalName);
         
     }
@@ -146,7 +146,7 @@ public class MonsterManager : MonoBehaviour
         Debug.Log(PortalList.Find((e) => e.name == portalName));
         GameObject go = PortalList.Find((e) => e.name == portalName);
         go.SetActive(true);
-        Debug.Log("¿©±â¼­ ÄÑÁ®¾ßÇÔ");
+        Debug.Log("ì—¬ê¸°ì„œ ì¼œì ¸ì•¼í•¨");
         go.GetComponent<PortalTrigger>().ActivateItemBox();
 
     }
