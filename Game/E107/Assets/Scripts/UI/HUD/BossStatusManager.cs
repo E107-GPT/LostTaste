@@ -3,169 +3,173 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// º¸½º »óÅÂ¸¦ °ü¸®ÇÏ´Â Å¬·¡½ºÀÔ´Ï´Ù.
+/// ë³´ìŠ¤ ìƒíƒœë¥¼ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤ì…ë‹ˆë‹¤.
 /// </summary>
 public class BossStatusManager : MonoBehaviour
 {
-    // µå¸±´ö »óÅÂ
-    [Header("[ µå¸±´ö »óÅÂ ]")]
+    // ë“œë¦´ë• ìƒíƒœ
+    [Header("[ ë“œë¦´ë• ìƒíƒœ ]")]
     public GameObject drillDuckStatus;
-    public TextMeshProUGUI drillDuckNameText; // ÀÌ¸§ ÅØ½ºÆ®
-    public TextMeshProUGUI drillDuckHealthText; // Ã¼·Â ÅØ½ºÆ®
-    public Slider drillDuckHealthSlider; // Ã¼·Â ¹Ù ½½¶óÀÌ´õ
+    public TextMeshProUGUI drillDuckNameText; // ì´ë¦„ í…ìŠ¤íŠ¸
+    public TextMeshProUGUI drillDuckHealthText; // ì²´ë ¥ í…ìŠ¤íŠ¸
+    public Slider drillDuckHealthSlider; // ì²´ë ¥ ë°” ìŠ¬ë¼ì´ë”
 
-    // Å©·ÎÄ¿´ÙÀÏ »óÅÂ
-    [Header("[ Å©·ÎÄ¿´ÙÀÏ »óÅÂ ]")]
+    // í¬ë¡œì»¤ë‹¤ì¼ ìƒíƒœ
+    [Header("[ í¬ë¡œì»¤ë‹¤ì¼ ìƒíƒœ ]")]
     public GameObject crocodileStatus;
-    public TextMeshProUGUI crocodileNameText; // ÀÌ¸§ ÅØ½ºÆ®
-    public TextMeshProUGUI crocodileHealthText; // Ã¼·Â ÅØ½ºÆ®
-    public Slider crocodileHealthSlider; // Ã¼·Â ¹Ù ½½¶óÀÌ´õ
+    public TextMeshProUGUI crocodileNameText; // ì´ë¦„ í…ìŠ¤íŠ¸
+    public TextMeshProUGUI crocodileHealthText; // ì²´ë ¥ í…ìŠ¤íŠ¸
+    public Slider crocodileHealthSlider; // ì²´ë ¥ ë°” ìŠ¬ë¼ì´ë”
 
-    // ¾ÆÀÌ½ºÅ· »óÅÂ
-    [Header("[ ¾ÆÀÌ½ºÅ· »óÅÂ ]")]
+    // ì•„ì´ìŠ¤í‚¹ ìƒíƒœ
+    [Header("[ ì•„ì´ìŠ¤í‚¹ ìƒíƒœ ]")]
     public GameObject iceKingStatus;
-    public TextMeshProUGUI iceKingNameText; // ÀÌ¸§ ÅØ½ºÆ®
-    public TextMeshProUGUI iceKingHealthText; // Ã¼·Â ÅØ½ºÆ®
-    public Slider iceKingHealthSlider; // Ã¼·Â ¹Ù ½½¶óÀÌ´õ
+    public TextMeshProUGUI iceKingNameText; // ì´ë¦„ í…ìŠ¤íŠ¸
+    public TextMeshProUGUI iceKingHealthText; // ì²´ë ¥ í…ìŠ¤íŠ¸
+    public Slider iceKingHealthSlider; // ì²´ë ¥ ë°” ìŠ¬ë¼ì´ë”
 
-    // ¸ó½ºÅÍÅ· »óÅÂ
-    [Header("[ ¸ó½ºÅÍÅ· »óÅÂ ]")]
+    // ëª¬ìŠ¤í„°í‚¹ ìƒíƒœ
+    [Header("[ ëª¬ìŠ¤í„°í‚¹ ìƒíƒœ ]")]
     public GameObject monsterKingStatus;
-    public TextMeshProUGUI monsterKingNameText; // ÀÌ¸§ ÅØ½ºÆ®
-    public TextMeshProUGUI monsterKingHealthText; // Ã¼·Â ÅØ½ºÆ®
-    public Slider monsterKingHealthSlider; // Ã¼·Â ¹Ù ½½¶óÀÌ´õ
+    public TextMeshProUGUI monsterKingNameText; // ì´ë¦„ í…ìŠ¤íŠ¸
+    public TextMeshProUGUI monsterKingHealthText; // ì²´ë ¥ í…ìŠ¤íŠ¸
+    public Slider monsterKingHealthSlider; // ì²´ë ¥ ë°” ìŠ¬ë¼ì´ë”
 
-    // ¸ğÇè °á°ú Ã¢
-    [Header("[ ¸ğÇè °á°ú Ã¢ ]")]
+    // ëª¨í—˜ ê²°ê³¼ ì°½
+    [Header("[ ëª¨í—˜ ê²°ê³¼ ì°½ ]")]
     public GameObject adventureResultsWindow;
-    public GameObject finalStageIcon; // Final Stage Å¬¸®¾î ¾ÆÀÌÄÜ
-    public TextMeshProUGUI stageClearText; // ½ºÅ×ÀÌÁö Å¬¸®¾î ÅØ½ºÆ®
+    public GameObject finalStageIcon; // Final Stage í´ë¦¬ì–´ ì•„ì´ì½˜
+    public GameObject CongratulationsImagePanel; // ì¶•í•˜ ì´ë¯¸ì§€
+    public TextMeshProUGUI CongratulationsTitleText; // ì¶•í•˜ ì œëª© í…ìŠ¤íŠ¸
+    public TextMeshProUGUI stageClearText; // ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´ í…ìŠ¤íŠ¸
 
-    // º¸½º ÄÁÆ®·Ñ·¯
-    [Header("[ º¸½º ÄÁÆ®·Ñ·¯ ]")]
-    public DrillDuckController drillDuckController; // µå¸±´ö
-    public CrocodileController crocodileController; // Å©·ÎÄ¿´ÙÀÏ
-    public IceKingController iceKingController; // ¾ÆÀÌ½ºÅ·
-    public MonsterKingController monsterKingController; // ¾ÆÀÌ½ºÅ·
+    // ë³´ìŠ¤ ì»¨íŠ¸ë¡¤ëŸ¬
+    [Header("[ ë³´ìŠ¤ ì»¨íŠ¸ë¡¤ëŸ¬ ]")]
+    public DrillDuckController drillDuckController; // ë“œë¦´ë•
+    public CrocodileController crocodileController; // í¬ë¡œì»¤ë‹¤ì¼
+    public IceKingController iceKingController; // ì•„ì´ìŠ¤í‚¹
+    public MonsterKingController monsterKingController; // ì•„ì´ìŠ¤í‚¹
 
-    // ¸Å ÇÁ·¹ÀÓ¸¶´Ù È£ÃâµÇ´Â Update ¸Ş¼­µå
+    // ë§¤ í”„ë ˆì„ë§ˆë‹¤ í˜¸ì¶œë˜ëŠ” Update ë©”ì„œë“œ
     void Update()
     {
-        // µå¸±´ö »óÅÂ ¾÷µ¥ÀÌÆ®
+        // ë“œë¦´ë• ìƒíƒœ ì—…ë°ì´íŠ¸
         UpdateDrillDuckStatus();
 
-        // Å©·ÎÄ¿´ÙÀÏ »óÅÂ ¾÷µ¥ÀÌÆ®
+        // í¬ë¡œì»¤ë‹¤ì¼ ìƒíƒœ ì—…ë°ì´íŠ¸
         UpdateCrocodileStatus();
 
-        // ¾ÆÀÌ½ºÅ· »óÅÂ ¾÷µ¥ÀÌÆ®
+        // ì•„ì´ìŠ¤í‚¹ ìƒíƒœ ì—…ë°ì´íŠ¸
         UpdateIceKingStatus();
 
-        // ¸ó½ºÅÍÅ· »óÅÂ ¾÷µ¥ÀÌÆ®
+        // ëª¬ìŠ¤í„°í‚¹ ìƒíƒœ ì—…ë°ì´íŠ¸
         UpdateMonsterKingStatus();
     }
 
-    // µå¸±´ö »óÅÂ¸¦ ¾÷µ¥ÀÌÆ® ÇÏ´Â ¸Ş¼­µå
+    // ë“œë¦´ë• ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸ í•˜ëŠ” ë©”ì„œë“œ
     void UpdateDrillDuckStatus()
     {
-        // º¸½º GameObject°¡ ¾ø´Â °æ¿ì ¸Ş¼­µå¸¦ Á¾·á
+        // ë³´ìŠ¤ GameObjectê°€ ì—†ëŠ” ê²½ìš° ë©”ì„œë“œë¥¼ ì¢…ë£Œ
         if (GameObject.Find("DrillDuck(Clone)") == null) return;
 
-        // º¸½º GameObject¸¦ Ã£¾Æ¼­ BossController ÄÄÆ÷³ÍÆ®¸¦ bossController º¯¼ö¿¡ ÇÒ´ç
+        // ë³´ìŠ¤ GameObjectë¥¼ ì°¾ì•„ì„œ BossController ì»´í¬ë„ŒíŠ¸ë¥¼ bossController ë³€ìˆ˜ì— í• ë‹¹
         drillDuckController = GameObject.Find("DrillDuck(Clone)").GetComponent<DrillDuckController>();
 
-        // º¸½ºÀÇ ÀÌ¸§ Á¤º¸¸¦ TextMeshProUGUI¿¡ Àû¿ë
-        drillDuckNameText.text = "½£ÀÇ ÁÖÀÎ µå¸±´ö";
+        // ë³´ìŠ¤ì˜ ì´ë¦„ ì •ë³´ë¥¼ TextMeshProUGUIì— ì ìš©
+        drillDuckNameText.text = "ìˆ²ì˜ ì£¼ì¸ ë“œë¦´ë•";
 
-        // º¸½ºÀÇ ÇöÀç Ã¼·ÂÀ» Ã¼·Â ¹Ù¿¡ ¹İ¿µ
+        // ë³´ìŠ¤ì˜ í˜„ì¬ ì²´ë ¥ì„ ì²´ë ¥ ë°”ì— ë°˜ì˜
         int Hp = drillDuckController.Stat.Hp;
         int MaxHp = drillDuckController.Stat.MaxHp;
         drillDuckHealthSlider.value = (float)Hp / MaxHp;
         drillDuckHealthText.text = string.Format("{0:0} / {1:0}", Hp, MaxHp);
 
-        // º¸½º°¡ »ç¸ÁÇÒ °æ¿ì º¸½º »óÅÂ Ã¢À» ºñÈ°¼ºÈ­
+        // ë³´ìŠ¤ê°€ ì‚¬ë§í•  ê²½ìš° ë³´ìŠ¤ ìƒíƒœ ì°½ì„ ë¹„í™œì„±í™”
         if (Hp <= 0)
         {
             drillDuckStatus.SetActive(false);
         }
     }
 
-    // Å©·ÎÄ¿´ÙÀÏ »óÅÂ¸¦ ¾÷µ¥ÀÌÆ® ÇÏ´Â ¸Ş¼­µå
+    // í¬ë¡œì»¤ë‹¤ì¼ ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸ í•˜ëŠ” ë©”ì„œë“œ
     void UpdateCrocodileStatus()
     {
-        // º¸½º GameObject°¡ ¾ø´Â °æ¿ì ¸Ş¼­µå¸¦ Á¾·á
+        // ë³´ìŠ¤ GameObjectê°€ ì—†ëŠ” ê²½ìš° ë©”ì„œë“œë¥¼ ì¢…ë£Œ
         if (GameObject.Find("Crocodile(Clone)") == null) return;
 
-        // º¸½º GameObject¸¦ Ã£¾Æ¼­ BossController ÄÄÆ÷³ÍÆ®¸¦ bossController º¯¼ö¿¡ ÇÒ´ç
+        // ë³´ìŠ¤ GameObjectë¥¼ ì°¾ì•„ì„œ BossController ì»´í¬ë„ŒíŠ¸ë¥¼ bossController ë³€ìˆ˜ì— í• ë‹¹
         crocodileController = GameObject.Find("Crocodile(Clone)").GetComponent<CrocodileController>();
 
-        // º¸½ºÀÇ ÀÌ¸§ Á¤º¸¸¦ TextMeshProUGUI¿¡ Àû¿ë
-        crocodileNameText.text = "ÇØº¯ÀÇ ¼öÈ£ÀÚ Å©·ÎÄ¿´ÙÀÏ";
+        // ë³´ìŠ¤ì˜ ì´ë¦„ ì •ë³´ë¥¼ TextMeshProUGUIì— ì ìš©
+        crocodileNameText.text = "í•´ë³€ì˜ ìˆ˜í˜¸ì í¬ë¡œì»¤ë‹¤ì¼";
 
-        // º¸½ºÀÇ ÇöÀç Ã¼·ÂÀ» Ã¼·Â ¹Ù¿¡ ¹İ¿µ
+        // ë³´ìŠ¤ì˜ í˜„ì¬ ì²´ë ¥ì„ ì²´ë ¥ ë°”ì— ë°˜ì˜
         int Hp = crocodileController.Stat.Hp;
         int MaxHp = crocodileController.Stat.MaxHp;
         crocodileHealthSlider.value = (float)Hp / MaxHp;
         crocodileHealthText.text = string.Format("{0:0} / {1:0}", Hp, MaxHp);
 
-        // º¸½º°¡ »ç¸ÁÇÒ °æ¿ì º¸½º »óÅÂ Ã¢À» ºñÈ°¼ºÈ­
+        // ë³´ìŠ¤ê°€ ì‚¬ë§í•  ê²½ìš° ë³´ìŠ¤ ìƒíƒœ ì°½ì„ ë¹„í™œì„±í™”
         if (Hp <= 0)
         {
             crocodileStatus.SetActive(false);
         }
     }
 
-    // ¾ÆÀÌ½ºÅ· »óÅÂ¸¦ ¾÷µ¥ÀÌÆ® ÇÏ´Â ¸Ş¼­µå
+    // ì•„ì´ìŠ¤í‚¹ ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸ í•˜ëŠ” ë©”ì„œë“œ
     void UpdateIceKingStatus()
     {
-        // º¸½º GameObject°¡ ¾ø´Â °æ¿ì ¸Ş¼­µå¸¦ Á¾·á
+        // ë³´ìŠ¤ GameObjectê°€ ì—†ëŠ” ê²½ìš° ë©”ì„œë“œë¥¼ ì¢…ë£Œ
         if (GameObject.Find("IceKing(Clone)") == null) return;
 
-        // º¸½º GameObject¸¦ Ã£¾Æ¼­ BossController ÄÄÆ÷³ÍÆ®¸¦ bossController º¯¼ö¿¡ ÇÒ´ç
+        // ë³´ìŠ¤ GameObjectë¥¼ ì°¾ì•„ì„œ BossController ì»´í¬ë„ŒíŠ¸ë¥¼ bossController ë³€ìˆ˜ì— í• ë‹¹
         iceKingController = GameObject.Find("IceKing(Clone)").GetComponent<IceKingController>();
 
-        // º¸½ºÀÇ ÀÌ¸§ Á¤º¸¸¦ TextMeshProUGUI¿¡ Àû¿ë
-        iceKingNameText.text = "¾óÀ½ ±ºÁÖ ¾ÆÀÌ½ºÅ·";
+        // ë³´ìŠ¤ì˜ ì´ë¦„ ì •ë³´ë¥¼ TextMeshProUGUIì— ì ìš©
+        iceKingNameText.text = "ì–¼ìŒ êµ°ì£¼ ì•„ì´ìŠ¤í‚¹";
 
-        // º¸½ºÀÇ ÇöÀç Ã¼·ÂÀ» Ã¼·Â ¹Ù¿¡ ¹İ¿µ
+        // ë³´ìŠ¤ì˜ í˜„ì¬ ì²´ë ¥ì„ ì²´ë ¥ ë°”ì— ë°˜ì˜
         int Hp = iceKingController.Stat.Hp;
         int MaxHp = iceKingController.Stat.MaxHp;
         iceKingHealthSlider.value = (float)Hp / MaxHp;
         iceKingHealthText.text = string.Format("{0:0} / {1:0}", Hp, MaxHp);
 
-        // º¸½º°¡ »ç¸ÁÇÒ °æ¿ì º¸½º »óÅÂ Ã¢À» ºñÈ°¼ºÈ­
+        // ë³´ìŠ¤ê°€ ì‚¬ë§í•  ê²½ìš° ë³´ìŠ¤ ìƒíƒœ ì°½ì„ ë¹„í™œì„±í™”
         if (Hp <= 0)
         {
             iceKingStatus.SetActive(false);
         }
     }
 
-    // ¸ó½ºÅÍÅ· »óÅÂ¸¦ ¾÷µ¥ÀÌÆ® ÇÏ´Â ¸Ş¼­µå
+    // ëª¬ìŠ¤í„°í‚¹ ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸ í•˜ëŠ” ë©”ì„œë“œ
     void UpdateMonsterKingStatus()
     {
-        // º¸½º GameObject°¡ ¾ø´Â °æ¿ì ¸Ş¼­µå¸¦ Á¾·á
+        // ë³´ìŠ¤ GameObjectê°€ ì—†ëŠ” ê²½ìš° ë©”ì„œë“œë¥¼ ì¢…ë£Œ
         if (GameObject.Find("MonsterKing(Clone)") == null) return;
 
-        // º¸½º GameObject¸¦ Ã£¾Æ¼­ BossController ÄÄÆ÷³ÍÆ®¸¦ bossController º¯¼ö¿¡ ÇÒ´ç
+        // ë³´ìŠ¤ GameObjectë¥¼ ì°¾ì•„ì„œ BossController ì»´í¬ë„ŒíŠ¸ë¥¼ bossController ë³€ìˆ˜ì— í• ë‹¹
         monsterKingController = GameObject.Find("MonsterKing(Clone)").GetComponent<MonsterKingController>();
 
-        // º¸½ºÀÇ ÀÌ¸§ Á¤º¸¸¦ TextMeshProUGUI¿¡ Àû¿ë
-        monsterKingNameText.text = "¸¶¿Õ";
+        // ë³´ìŠ¤ì˜ ì´ë¦„ ì •ë³´ë¥¼ TextMeshProUGUIì— ì ìš©
+        monsterKingNameText.text = "ë§ˆì™•";
 
-        // º¸½ºÀÇ ÇöÀç Ã¼·ÂÀ» Ã¼·Â ¹Ù¿¡ ¹İ¿µ
+        // ë³´ìŠ¤ì˜ í˜„ì¬ ì²´ë ¥ì„ ì²´ë ¥ ë°”ì— ë°˜ì˜
         int Hp = monsterKingController.Stat.Hp;
         int MaxHp = monsterKingController.Stat.MaxHp;
         monsterKingHealthSlider.value = (float)Hp / MaxHp;
         monsterKingHealthText.text = string.Format("{0:0} / {1:0}", Hp, MaxHp);
 
-        // º¸½º°¡ »ç¸ÁÇÒ °æ¿ì º¸½º »óÅÂ Ã¢À» ºñÈ°¼ºÈ­
+        // ë³´ìŠ¤ê°€ ì‚¬ë§í•  ê²½ìš° ë³´ìŠ¤ ìƒíƒœ ì°½ì„ ë¹„í™œì„±í™”
         if (Hp <= 0)
         {
             monsterKingStatus.SetActive(false);
 
-            // ¸ğÇè °á°ú Ã¢ ¾÷µ¥ÀÌÆ® ¹× È°¼ºÈ­
-            adventureResultsWindow.SetActive(true);
+            // ëª¨í—˜ ê²°ê³¼ ì°½ ì—…ë°ì´íŠ¸ ë° í™œì„±í™”
             finalStageIcon.SetActive(true);
-            stageClearText.text = "¸ğµç ½ºÅ×ÀÌÁö¸¦ Å¬¸®¾îÇß½À´Ï´Ù!";
+            CongratulationsImagePanel.SetActive(true);
+            CongratulationsTitleText.text = "ë§ˆì™•ì„ ë¬¼ë¦¬ì³¤ìŠµë‹ˆë‹¤!";
+            stageClearText.text = "ëª¨ë“  ìŠ¤í…Œì´ì§€ë¥¼ í´ë¦¬ì–´í–ˆìŠµë‹ˆë‹¤!";
+            adventureResultsWindow.SetActive(true);
         }
     }
 }
