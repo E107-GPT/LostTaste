@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ¾Æ¹« °Íµµ ¾È ÇÏ´Â ½ºÅ³ÀÔ´Ï´Ù.
+/// ì•„ë¬´ ê²ƒë„ ì•ˆ í•˜ëŠ” ìŠ¤í‚¬ì…ë‹ˆë‹¤.
 /// </summary>
 public class EmptySkill : Skill
 {
@@ -19,5 +19,10 @@ public class EmptySkill : Skill
 
         yield return null;
         playerController.StateMachine.ChangeState(new IdleState(playerController));
+    }
+
+    public override bool IsMonsterCastable()
+    {
+        return true;
     }
 }

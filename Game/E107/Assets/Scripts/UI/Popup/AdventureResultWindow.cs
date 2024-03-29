@@ -51,6 +51,9 @@ public class AdventureResultWindow : MonoBehaviour
 
         if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 
+        // 플레이어의 HP가 0 이하일 경우 업데이트 중지
+        if (_playerController.Stat.Hp <= 0) return;
+
         // PlayerController의 인벤토리에 접근
         _playerInventory = _playerController.Inventory;
 
