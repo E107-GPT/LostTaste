@@ -5,24 +5,24 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// ¸ğÇèÀÌ Á¾·áµÇ¸é ÆË¾÷µÇ´Â °á°úÃ¢À» °ü¸®ÇÏ´Â ÄÄÆ÷³ÍÆ®ÀÔ´Ï´Ù.
+/// ëª¨í—˜ì´ ì¢…ë£Œë˜ë©´ íŒì—…ë˜ëŠ” ê²°ê³¼ì°½ì„ ê´€ë¦¬í•˜ëŠ” ì»´í¬ë„ŒíŠ¸ì…ë‹ˆë‹¤.
 /// </summary>
 public class AdventureResultWindow : MonoBehaviour
 {
-    // ------------------------------------------------ º¯¼ö ¼±¾ğ ------------------------------------------------
+    // ------------------------------------------------ ë³€ìˆ˜ ì„ ì–¸ ------------------------------------------------
 
-    // ¾ÆÀÌÅÛ ½ºÅ³ ÄğÅ¸ÀÓ UI ¸Å´ÏÀú°¡ »ç¿ëÇÒ º¯¼ö ¼±¾ğ
-    private PlayerController _playerController; // ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯ ÂüÁ¶ º¯¼ö
-    private Item[] _playerInventory; // ÇÃ·¹ÀÌ¾îÀÇ ÀÎº¥Åä¸® ¹è¿­
+    // ì•„ì´í…œ ìŠ¤í‚¬ ì¿¨íƒ€ì„ UI ë§¤ë‹ˆì €ê°€ ì‚¬ìš©í•  ë³€ìˆ˜ ì„ ì–¸
+    private PlayerController _playerController; // í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ ì°¸ì¡° ë³€ìˆ˜
+    private Item[] _playerInventory; // í”Œë ˆì´ì–´ì˜ ì¸ë²¤í† ë¦¬ ë°°ì—´
 
-    // ¾ÆÀÌÅÛ
-    [Header("[ ¾ÆÀÌÅÛ ]")]
-    public Image firstItemIcon; // ¾ÆÀÌÅÛ 1 ¾ÆÀÌÄÜ
-    public Image secondItemIcon; // ¾ÆÀÌÅÛ 2 ¾ÆÀÌÄÜ
+    // ì•„ì´í…œ
+    [Header("[ ì•„ì´í…œ ]")]
+    public Image firstItemIcon; // ì•„ì´í…œ 1 ì•„ì´ì½˜
+    public Image secondItemIcon; // ì•„ì´í…œ 2 ì•„ì´ì½˜
 
-    // °ÔÀÓ ½Ã°£
-    [Header("[ °ÔÀÓ ½Ã°£ ]")]
-    public TextMeshProUGUI gameTimeText; // °ÔÀÓ ½Ã°£ ÅØ½ºÆ®
+    // ê²Œì„ ì‹œê°„
+    [Header("[ ê²Œì„ ì‹œê°„ ]")]
+    public TextMeshProUGUI gameTimeText; // ê²Œì„ ì‹œê°„ í…ìŠ¤íŠ¸
 
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
@@ -33,7 +33,7 @@ public class AdventureResultWindow : MonoBehaviour
         int minutes = Mathf.FloorToInt(gameTime / 60);
         int seconds = Mathf.FloorToInt(gameTime % 60);
 
-        gameTimeText.text = string.Format("{0:0}ºĞ {1:00}ÃÊ", minutes, seconds);
+        gameTimeText.text = string.Format("{0:0}ë¶„ {1:00}ì´ˆ", minutes, seconds);
     }
 
     void Update()
@@ -41,31 +41,31 @@ public class AdventureResultWindow : MonoBehaviour
         UpdateInventory();
     }
 
-    // ------------------------------------------------ »ç¿ëÀÚ Á¤ÀÇ ¸Ş¼­µå ------------------------------------------------
+    // ------------------------------------------------ ì‚¬ìš©ì ì •ì˜ ë©”ì„œë“œ ------------------------------------------------
 
-    // ÀÎº¥Åä¸®¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ¸Ş¼­µå
+    // ì¸ë²¤í† ë¦¬ë¥¼ ì—…ë°ì´íŠ¸í•˜ëŠ” ë©”ì„œë“œ
     void UpdateInventory()
     {
-        // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ¼­ ÂüÁ¶
+        // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•„ì„œ ì°¸ì¡°
         _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        if (_playerController == null) return; // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾øÀ» ¶§
+        if (_playerController == null) return; // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ì„ ë•Œ
 
-        // ÇÃ·¹ÀÌ¾îÀÇ HP°¡ 0 ÀÌÇÏÀÏ °æ¿ì ¾÷µ¥ÀÌÆ® ÁßÁö
-        if (_playerController.Stat.Hp <= 0) return;
-
-        // PlayerControllerÀÇ ÀÎº¥Åä¸®¿¡ Á¢±Ù
+        // PlayerControllerì˜ ì¸ë²¤í† ë¦¬ì— ì ‘ê·¼
         _playerInventory = _playerController.Inventory;
 
-        // ¾ÆÀÌÅÛ Á¤º¸ ¾÷µ¥ÀÌÆ®
+        // ì•„ì´í…œ ì •ë³´ ì—…ë°ì´íŠ¸
         UpdateItemIcon(firstItemIcon, _playerInventory[1]);
         UpdateItemIcon(secondItemIcon, _playerInventory[2]);
+
+        // í”Œë ˆì´ì–´ì˜ HPê°€ 0 ì´í•˜ì¼ ê²½ìš° ì—…ë°ì´íŠ¸ ì¤‘ì§€
+        if (_playerController.Stat.Hp <= 0) return;
     }
 
-    // ¾ÆÀÌÅÛ ¾ÆÀÌÄÜ ¾÷µ¥ÀÌÆ® ¸Ş¼­µå
+    // ì•„ì´í…œ ì•„ì´ì½˜ ì—…ë°ì´íŠ¸ ë©”ì„œë“œ
     void UpdateItemIcon(Image itemIcon, Item item)
     {
-        // ¾ÆÀÌÅÛ ¾ÆÀÌÄÜ ¾÷µ¥ÀÌÆ®
+        // ì•„ì´í…œ ì•„ì´ì½˜ ì—…ë°ì´íŠ¸
         itemIcon.sprite = item.Icon;
     }
 

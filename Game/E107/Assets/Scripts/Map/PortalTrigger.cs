@@ -130,7 +130,7 @@ public class PortalTrigger : MonoBehaviour
             if (!string.IsNullOrEmpty(bgmName))
             {
 
-                Managers.Sound.Clear();
+                //Managers.Sound.Clear();
                 Managers.Sound.Play(bgmName, Define.Sound.BGM, 1.0f, 0.3f);
                 
             }

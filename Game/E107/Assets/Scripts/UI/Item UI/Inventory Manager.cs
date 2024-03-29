@@ -3,77 +3,78 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 /// <summary>
-/// ÀÎº¥Åä¸® ¸Å´ÏÀú´Â ÇÃ·¹ÀÌ¾îÀÇ ÀÎº¥Åä¸®¸¦ °ü¸®ÇÏ°í ±× ³»¿ëÀ» È®ÀÎÇÏ´Â ±â´ÉÀ» Á¦°øÇÕ´Ï´Ù.
-/// ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯¸¦ Ã£¾Æ¼­ ÀÎº¥Åä¸®¿¡ Á¢±ÙÇÏ¸ç, Ã¹ ¹øÂ°¿Í µÎ ¹øÂ° ¾ÆÀÌÅÛÀÇ Á¤º¸¸¦ È°¿ëÇÕ´Ï´Ù.
+/// ì¸ë²¤í† ë¦¬ ë§¤ë‹ˆì €ëŠ” í”Œë ˆì´ì–´ì˜ ì¸ë²¤í† ë¦¬ë¥¼ ê´€ë¦¬í•˜ê³  ê·¸ ë‚´ìš©ì„ í™•ì¸í•˜ëŠ” ê¸°ëŠ¥ì„ ì œê³µí•©ë‹ˆë‹¤.
+/// í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ì°¾ì•„ì„œ ì¸ë²¤í† ë¦¬ì— ì ‘ê·¼í•˜ë©°, ì²« ë²ˆì§¸ì™€ ë‘ ë²ˆì§¸ ì•„ì´í…œì˜ ì •ë³´ë¥¼ í™œìš©í•©ë‹ˆë‹¤.
 /// </summary>
 public class InventoryManager : MonoBehaviour
 {
-    // ------------------------------------------------ º¯¼ö ¼±¾ğ ------------------------------------------------
+    // ------------------------------------------------ ë³€ìˆ˜ ì„ ì–¸ ------------------------------------------------
 
-    // ÀÎº¥Åä¸® ¸Å´ÏÀú°¡ »ç¿ëÇÒ º¯¼ö ¼±¾ğ
-    private PlayerController _playerController; // ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯ ÂüÁ¶ º¯¼ö
-    private Item[] _playerInventory; // ÇÃ·¹ÀÌ¾îÀÇ ÀÎº¥Åä¸® ¹è¿­
-    private int _currentItemNum; // ÇöÀç ÀåÂøÇÑ ¹«±â
+    // ì¸ë²¤í† ë¦¬ ë§¤ë‹ˆì €ê°€ ì‚¬ìš©í•  ë³€ìˆ˜ ì„ ì–¸
+    private PlayerController _playerController; // í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ ì°¸ì¡° ë³€ìˆ˜
+    private Item[] _playerInventory; // í”Œë ˆì´ì–´ì˜ ì¸ë²¤í† ë¦¬ ë°°ì—´
+    private int _currentItemNum; // í˜„ì¬ ì¥ì°©í•œ ë¬´ê¸°
 
-    // ¾ÆÀÌÅÛ 1
-    [Header("[ ¾ÆÀÌÅÛ 1 ]")]
-    public Image firstItemIcon; // ¾ÆÀÌÅÛ 1 ¾ÆÀÌÄÜ
-    public GameObject firstItemUsed; // ¾ÆÀÌÅÛ 1 »ç¿ë ¿©ºÎ
-    public TextMeshProUGUI firstItemName; // ¾ÆÀÌÅÛ 1 ÀÌ¸§
-    public TextMeshProUGUI firstItemRightSkillMana; // ¾ÆÀÌÅÛ 1 ¿À¸¥ÂÊ ½ºÅ³ ¸¶³ª
-    public TextMeshProUGUI firstItemRightSkillCoolDown; // ¾ÆÀÌÅÛ 1 ¿À¸¥ÂÊ ½ºÅ³ ÄğÅ¸ÀÓ
+    // ì•„ì´í…œ 1
+    [Header("[ ì•„ì´í…œ 1 ]")]
+    public Image firstItemIcon; // ì•„ì´í…œ 1 ì•„ì´ì½˜
+    public GameObject firstItemUsed; // ì•„ì´í…œ 1 ì‚¬ìš© ì—¬ë¶€
+    public TextMeshProUGUI firstItemName; // ì•„ì´í…œ 1 ì´ë¦„
+    public TextMeshProUGUI firstItemRightSkillMana; // ì•„ì´í…œ 1 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ë§ˆë‚˜
+    public TextMeshProUGUI firstItemRightSkillCoolDown; // ì•„ì´í…œ 1 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ì¿¨íƒ€ì„
 
-    // ¾ÆÀÌÅÛ 2
-    [Header("[ ¾ÆÀÌÅÛ 2 ]")]
-    public Image secondItemIcon; // ¾ÆÀÌÅÛ 2 ¾ÆÀÌÄÜ
-    public GameObject secondItemUsed; // ¾ÆÀÌÅÛ 2 »ç¿ë ¿©ºÎ
-    public TextMeshProUGUI secondItemName; // ¾ÆÀÌÅÛ 2 ÀÌ¸§
-    public TextMeshProUGUI secondItemRightSkillMana; // ¾ÆÀÌÅÛ 2 ¿À¸¥ÂÊ ½ºÅ³ ¸¶³ª
-    public TextMeshProUGUI secondItemRightSkillCoolDown; // ¾ÆÀÌÅÛ 2 ¿À¸¥ÂÊ ½ºÅ³ ÄğÅ¸ÀÓ
+    // ì•„ì´í…œ 2
+    [Header("[ ì•„ì´í…œ 2 ]")]
+    public Image secondItemIcon; // ì•„ì´í…œ 2 ì•„ì´ì½˜
+    public GameObject secondItemUsed; // ì•„ì´í…œ 2 ì‚¬ìš© ì—¬ë¶€
+    public TextMeshProUGUI secondItemName; // ì•„ì´í…œ 2 ì´ë¦„
+    public TextMeshProUGUI secondItemRightSkillMana; // ì•„ì´í…œ 2 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ë§ˆë‚˜
+    public TextMeshProUGUI secondItemRightSkillCoolDown; // ì•„ì´í…œ 2 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ì¿¨íƒ€ì„
 
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Update()
     {
-        // ÀÎº¥Åä¸® ¾÷µ¥ÀÌÆ®
+        // ì¸ë²¤í† ë¦¬ ì—…ë°ì´íŠ¸
         UpdateInventory();
 
-        // »ç¿ëÁßÀÎ ¾ÆÀÌÅÛ °­Á¶ Ç¥½Ã
+        // ì‚¬ìš©ì¤‘ì¸ ì•„ì´í…œ ê°•ì¡° í‘œì‹œ
         ItemChange();
     }
 
 
-    // ------------------------------------------------ »ç¿ëÀÚ Á¤ÀÇ ¸Ş¼­µå ------------------------------------------------
+    // ------------------------------------------------ ì‚¬ìš©ì ì •ì˜ ë©”ì„œë“œ ------------------------------------------------
 
-    // ÀÎº¥Åä¸®¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ¸Ş¼­µå
+    // ì¸ë²¤í† ë¦¬ë¥¼ ì—…ë°ì´íŠ¸í•˜ëŠ” ë©”ì„œë“œ
     void UpdateInventory()
     {
-        // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ¼­ ÂüÁ¶
+        // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•„ì„œ ì°¸ì¡°
         _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        if (_playerController == null) return; // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾øÀ» ¶§
+        if (_playerController == null) return; // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ì„ ë•Œ
 
-        // PlayerControllerÀÇ ÀÎº¥Åä¸®¿¡ Á¢±Ù
+        // PlayerControllerì˜ ì¸ë²¤í† ë¦¬ì— ì ‘ê·¼
         _playerInventory = _playerController.Inventory;
         _currentItemNum = _playerController.CurrentItemNum;
 
-        // ¾ÆÀÌÅÛ Á¤º¸ ¾÷µ¥ÀÌÆ®
+        // ì•„ì´í…œ ì •ë³´ ì—…ë°ì´íŠ¸
         UpdateItemUI(firstItemIcon, firstItemName, firstItemRightSkillMana, firstItemRightSkillCoolDown, _playerInventory[1]);
         UpdateItemUI(secondItemIcon, secondItemName, secondItemRightSkillMana, secondItemRightSkillCoolDown, _playerInventory[2]);
     }
 
-    // ¾ÆÀÌÅÛ UI ¾÷µ¥ÀÌÆ® ¸Ş¼­µå
+    // ì•„ì´í…œ UI ì—…ë°ì´íŠ¸ ë©”ì„œë“œ
     void UpdateItemUI(Image itemIcon, TextMeshProUGUI itemName, TextMeshProUGUI skillMana, TextMeshProUGUI skillCoolDown, Item item)
     {
-        // ¾ÆÀÌÅÛ ¾ÆÀÌÄÜ ¹× ÀÌ¸§ ¾÷µ¥ÀÌÆ®
+        // ì•„ì´í…œ ì•„ì´ì½˜ ë° ì´ë¦„ ì—…ë°ì´íŠ¸
         itemIcon.sprite = item.Icon;
-        itemName.text = $"<color={GetTierColor(item.Tier)}>{item.Name}</color>"; // ¾ÆÀÌÅÛ ÀÌ¸§¿¡ »ö»ó Àû¿ë
+        itemName.text = $"<color={GetTierColor(item.Tier)}>{item.Name}</color>"; // ì•„ì´í…œ ì´ë¦„ì— ìƒ‰ìƒ ì ìš©
 
-        // ½ºÅ³ Á¤º¸ ¾÷µ¥ÀÌÆ®
-        if (float.IsInfinity(item.RightSkill.SkillCoolDownTime))
+        // ìŠ¤í‚¬ ì •ë³´ ì—…ë°ì´íŠ¸
+        if (item.RightSkill is EmptySkill)
         {
             skillMana.text = "-";
             skillCoolDown.text = "-";
@@ -85,7 +86,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // Æ¼¾î¿¡ µû¸¥ »ö»ó ¹İÈ¯ÇÏ´Â ¸Ş¼­µå
+    // í‹°ì–´ì— ë”°ë¥¸ ìƒ‰ìƒ ë°˜í™˜í•˜ëŠ” ë©”ì„œë“œ
     string GetTierColor(ItemTier tier)
     {
         switch (tier)
@@ -103,14 +104,14 @@ public class InventoryManager : MonoBehaviour
             case ItemTier.BOSS:
                 return "#E74C3C";
             default:
-                return "#FFFFFF"; // ±âº» °ªÀ¸·Î Èò»ö ¹İÈ¯
+                return "#FFFFFF"; // ê¸°ë³¸ ê°’ìœ¼ë¡œ í°ìƒ‰ ë°˜í™˜
         }
     }
 
-    // »ç¿ë ÁßÀÎ ¾ÆÀÌÅÛ¿¡ °­Á¶Ç¥½Ã¸¦ ÇÏ´Â ¸Ş¼­µå
+    // ì‚¬ìš© ì¤‘ì¸ ì•„ì´í…œì— ê°•ì¡°í‘œì‹œë¥¼ í•˜ëŠ” ë©”ì„œë“œ
     void ItemChange()
     {
-        // ¹«±â ±³Ã¼
+        // ë¬´ê¸° êµì²´
         if (_currentItemNum == 1)
         {
             firstItemUsed.SetActive(true);
