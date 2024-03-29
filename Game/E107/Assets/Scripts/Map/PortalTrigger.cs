@@ -136,10 +136,11 @@ public class PortalTrigger : MonoBehaviour
                 }
             }
 
-            MonsterManager.Instance.portalTrigger = this;
+            MonsterManager.Instance._curMap = targetMapName;
             if (!PhotonNetwork.IsMasterClient)
             {
                 MonsterManager.Instance.SendMonsterSpawnMsg(targetMapName);
+                
                 return;
             }
 
@@ -155,34 +156,34 @@ public class PortalTrigger : MonoBehaviour
     }
 
     // ��� �÷��̾ ��Ż ��ó�� ������ ����
-    private void CheckAllPlayersInPortal()
-    {
-        if (playersInPortal.Count == totalPlayers)
-        {
-            Debug.Log(playersInPortal.Count + " / " + totalPlayers);
+    //private void CheckAllPlayersInPortal()
+    //{
+    //    if (playersInPortal.Count == totalPlayers)
+    //    {
+    //        Debug.Log(playersInPortal.Count + " / " + totalPlayers);
 
-            // ��� �÷��̾ ��ǥ ��Ż ��ġ�� �̵�
-            foreach (KeyValuePair<string, GameObject> player in playersInPortal)
-            {
-                NavMeshAgent agent = player.Value.GetComponent<NavMeshAgent>();
-                Debug.Log($"{agent.gameObject.name}");
-                if (agent.transform.GetComponent<PlayerController>().photonView.IsMine == false) continue;
-                //Debug.Log($"{agent.gameObject.name}");
-                if (agent != null)
-                {
-                    Debug.Log("있는가?" + player.Value.GetComponent<NavMeshAgent>());
+    //        // ��� �÷��̾ ��ǥ ��Ż ��ġ�� �̵�
+    //        foreach (KeyValuePair<string, GameObject> player in playersInPortal)
+    //        {
+    //            NavMeshAgent agent = player.Value.GetComponent<NavMeshAgent>();
+    //            Debug.Log($"{agent.gameObject.name}");
+    //            if (agent.transform.GetComponent<PlayerController>().photonView.IsMine == false) continue;
+    //            //Debug.Log($"{agent.gameObject.name}");
+    //            if (agent != null)
+    //            {
+    //                Debug.Log("있는가?" + player.Value.GetComponent<NavMeshAgent>());
 
-                    //agent.Warp(targetPortalLocation.position);
-                    agent.transform.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
-                }
-            }
-            portal.SetActive(false);
-            MonsterManager.Instance.portalTrigger = this;
-            MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
-            Debug.Log("몬스터 생성 완료");
-            MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
-        }
-    }
+    //                //agent.Warp(targetPortalLocation.position);
+    //                agent.transform.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
+    //            }
+    //        }
+    //        portal.SetActive(false);
+    //        MonsterManager.Instance.portalTrigger = this;
+    //        MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+    //        Debug.Log("몬스터 생성 완료");
+    //        MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
+    //    }
+    //}
 
     public void Clear()
     {

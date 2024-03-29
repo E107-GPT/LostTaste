@@ -7,6 +7,7 @@ using Photon.Pun;
 
 public class PlayerController : BaseController
 {
+    public bool isStarted = false;
     //Stat
     PlayerStat _stat;
 
@@ -343,7 +344,7 @@ public class PlayerController : BaseController
 
         }
 
-        if (Input.GetKeyDown(KeyCode.B))
+        if (isStarted && Input.GetKeyDown(KeyCode.B))
         {
             Item currentItem = _inventory[_currentItemNum];
             // 맨손이면 못버린다.
@@ -445,8 +446,8 @@ public class PlayerController : BaseController
 
     void OnDashFinishedEvent()
     {
-        
 
+        if (PhotonNetwork.InRoom && !photonView.IsMine) return;
         _statemachine.ChangeState(new MoveState(this));
         //if (photonView.IsMine) photonView.RPC("ChangeIdleState", RpcTarget.Others);
     }

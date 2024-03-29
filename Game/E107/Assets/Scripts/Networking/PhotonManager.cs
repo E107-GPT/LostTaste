@@ -144,6 +144,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.MaxPlayers = 4;
         room.IsVisible = false;
         room.IsOpen = false;
+        room.CleanupCacheOnLeave = false;
 
         // 시드 생성
         int seed = (int)System.DateTime.Now.Ticks;
@@ -153,7 +154,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed" };
 
         PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
-        PhotonNetwork.CreateRoom(roomName+ seed, room);
+        roomName = roomName + "`" + seed;
+        PhotonNetwork.CreateRoom(roomName, room);
 
     }
 
@@ -173,6 +175,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         room.MaxPlayers = maxplayersPerRoom;
         room.IsVisible = true;
         room.IsOpen = true;
+        room.CleanupCacheOnLeave = false;
 
         bool ispassword = manager.GetIsPassword();
         string password = manager.GetPassword();
@@ -203,18 +206,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public void ClickRoom(int roomNumber)
     {
         selectRoom = roomlist[roomNumber];
-        roomEnter();
-        return;
         string printRoomName = selectRoom.Name;
         int lastIndex = printRoomName.LastIndexOf("`");
         if (lastIndex != -1)
             printRoomName = printRoomName.Substring(0, lastIndex);
         if ((bool)selectRoom.CustomProperties["ispassword"])
         {
+            passwordPanel.SetActive(true);
+            Debug.Log(GameObject.Find("Party Joining PW Content Text"));
             GameObject.Find("Party Joining PW Content Text").GetComponent<TextMeshProUGUI>().text = printRoomName + "파티에 참여하시겠습니까?";
+            
             //password panel open
             GameObject.Find("Party Joining Window").SetActive(false);
-            passwordPanel.SetActive(true);
         }
         else
             GameObject.Find("Party Joining Content Text").GetComponent<TextMeshProUGUI>().text = printRoomName + "파티에 참여하시겠습니까?";
@@ -240,6 +243,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         if ((string)selectRoom.CustomProperties["password"] == pw)
         {
             PhotonNetwork.JoinRoom(selectRoom.Name);
+            partyUI.SetActive(false);
         }
     }
 
@@ -297,7 +301,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         for(int i = 0; i<4; i++)
         {
-            partyMemberInfo[i].text = "닉네임";
+            partyMemberInfo[i].text = "파티원 모집중...";
         }
         int idx = 0;
         // 이거 체크해보기
@@ -309,10 +313,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             Debug.Log(player.Key);
-            partyMemberInfo[idx].text = player.Value.NickName;
-            idx++;
+            partyMemberInfo[(int)player.Value.CustomProperties["Number"]].text = player.Value.NickName;
+            //idx++;
         }
     }
+
     #endregion
 
     #region MonoBehaviourPunCallbacks callbacks
@@ -408,7 +413,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 player.name = "Player";
                 GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player;
 
-                Managers.Player.SetLocalPlayerInfo(Define.ClassType.Warrior);
+    
+                Managers.Player.SetLocalPlayerInfo(player.GetComponent<PhotonView>().ViewID, Define.ClassType.Warrior);
                 Managers.Player.LoadPlayersInfoInCurrentRoom();
             }
         }
@@ -427,7 +433,23 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Managers.Player.Clear();
-        PhotonNetwork.JoinLobby();
+        
+        Debug.Log("방에서 나갔습니다.");
+        PlayerController[] list = GameObject.FindObjectsOfType<PlayerController>();
+
+        //object viewIDObj;
+        //PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("ViewID", out viewIDObj);
+
+        //foreach (PlayerController p in list)
+        //{
+
+        //    if (p.GetComponent<PhotonView>().ViewID != (int)viewIDObj)
+        //    {
+        //        PhotonNetwork.Destroy(p.gameObject);
+        //    }
+        //}
+        Managers.Scene.LoadScene(Define.Scene.Dungeon, true);
+
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -449,10 +471,42 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Managers.Player.RemovePlayer(otherPlayer);
         Managers.Player.LoadPlayersInfoInCurrentRoom();
-        PhotonNetwork.JoinLobby();
+
+        PlayerController[] list = GameObject.FindObjectsOfType<PlayerController>();
+        object viewIDObj;
+        otherPlayer.CustomProperties.TryGetValue("ViewID", out viewIDObj);
+
+        foreach (PlayerController p in list)
+        {
+            
+            if (p.GetComponent<PhotonView>().ViewID == (int)viewIDObj)
+            {
+                PhotonNetwork.Destroy(p.gameObject);
+            }
+        }
+
+        Debug.Log("anyone left");
+        
 
     }
 
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if(PhotonNetwork.LocalPlayer == newMasterClient)
+        {
+            MonsterManager.Instance.ReStartManage();
+        }
+        
+        
+    }
+
+
+
+
+
+
 
     #endregion
+
+    // 마스터 클라이언트가 변경되었을 때 호출되는 메소드
 }

@@ -31,6 +31,7 @@ public class MonsterKingJumpStartPattern : Pattern
         Vector3 rootUp = Root.TransformDirection(Vector3.up * 0.5f);
         _cylinderLoc.position = Root.position + rootUp;
         ParticleSystem _particle = Managers.Effect.Play(Define.Effect.KingJumpStartEffect, _cylinderLoc);
+        Managers.Sound.Play("Monster/KingJumpStartEffect", Define.Sound.Effect);
 
         yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(_cylinderLoc.gameObject);

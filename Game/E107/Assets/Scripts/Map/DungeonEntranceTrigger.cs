@@ -19,7 +19,7 @@ public class DungeonEntranceTrigger : MonoBehaviour
         //totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
         //totalPlayers = 1;
         //portal.SetActive(false);
-        //Debug.Log("Æ÷Å» ºñÈ°¼ºÈ­");
+        //Debug.Log("í¬íƒˆ ë¹„í™œì„±í™”");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +27,7 @@ public class DungeonEntranceTrigger : MonoBehaviour
         Debug.Log(other.gameObject.name);
         if (other.gameObject.CompareTag("Player"))
         {
-            //Debug.Log("ÇÃ·¹ÀÌ¾î°¡ Æ÷Å»¿¡ ÁøÀÔÇÔ");
+            //Debug.Log("í”Œë ˆì´ì–´ê°€ í¬íƒˆì— ì§„ì…í•¨");
             //string playerName = other.gameObject.name;
             //playersInPortal.Add(playerName);
 
@@ -38,12 +38,17 @@ public class DungeonEntranceTrigger : MonoBehaviour
             //    portalActivated = true;
             //}
             //portal.SetActive(true);
+            other.GetComponent<PlayerController>().isStarted = true;
 
             foreach (var p in portal)
             {
                 p.SetActive(true);
             }
 
+            foreach(var p in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                p.GetComponent<PlayerController>().isStarted = true;
+            }
         }
     }
 
