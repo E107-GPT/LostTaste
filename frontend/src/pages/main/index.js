@@ -14,8 +14,17 @@ const MainPage = () => {
                     backgroundPosition: "center", // 이미지 위치 설정
                 }}
             >
-                <Stack direction={"column"} alignItems={"center"} justifyContent={"center"}>
-                    <Box marginY={15} bgcolor={"rgba(0,0,0,0.5)"} padding={10} borderRadius={"20px"}>
+                <Stack
+                    direction={"column"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                >
+                    <Box
+                        marginY={"3%"}
+                        bgcolor={"rgba(0,0,0,0.5)"}
+                        padding={"3%"}
+                        borderRadius={"20px"}
+                    >
                         <img src={LogoImg}></img>
                     </Box>
                     <Box
@@ -27,7 +36,12 @@ const MainPage = () => {
                             boxShadow: `0px 7px #121212`,
                         }}
                     >
-                        <Stack minWidth={"15vw"} direction={"column"} alignItems={"center"} justifyContent={"center"}>
+                        <Stack
+                            minWidth={"15vw"}
+                            direction={"column"}
+                            alignItems={"center"}
+                            justifyContent={"center"}
+                        >
                             <Button
                                 color="inherit"
                                 fullWidth
@@ -38,7 +52,10 @@ const MainPage = () => {
                                     fontWeight: 700,
                                 }}
                             >
-                                <a href="https://j10e107.p.ssafy.io/file/download/LostTaste.zip" download={"LostTaste.zip"}>
+                                <a
+                                    href="https://j10e107.p.ssafy.io/file/download/LostTaste.zip"
+                                    download={"LostTaste.zip"}
+                                >
                                     게임 다운로드
                                 </a>
                             </Button>
