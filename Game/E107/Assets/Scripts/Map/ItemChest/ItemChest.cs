@@ -5,6 +5,9 @@ using UnityEngine;
 
 public abstract class ItemChest : MonoBehaviour, IPlayerInteractable
 {
+    [field: SerializeField]
+    public string Name { get; set; }
+
     public void OnInteracted(GameObject player)
     {
         GameObject itemObject = Instantiate(GetItemPrefab());
