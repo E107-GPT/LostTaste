@@ -4,56 +4,41 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    // Ä«¸Ş¶ó À§Ä¡ ¹è¿­
+    // ì¹´ë©”ë¼ ìœ„ì¹˜ ë°°ì—´
     private Vector3[] positions = new Vector3[]
     {
-        new Vector3(309.53f, 7.52f, -10.43f), // Ã¹ ¹øÂ° ½ºÅä¸® À§Ä¡
-        new Vector3(309.53f, 7.52f, 16.5f), // µÎ ¹øÂ° ½ºÅä¸® À§Ä¡
-        new Vector3(309.53f, 7.52f, 41.07f)  // ¼¼ ¹øÂ° ½ºÅä¸® À§Ä¡
+        new Vector3(7.0f, 2.0f, 50.0f), // ì²« ë²ˆì§¸ ìŠ¤í† ë¦¬ ìœ„ì¹˜
+        new Vector3(7.0f, 2.0f, 100.0f), 
+        new Vector3(7.0f, 2.0f, 150.0f),
+        new Vector3(7.0f, 2.0f, 200.0f),
+        new Vector3(7.0f, 2.0f, 250.0f),
     };
 
-    private int currentPositionIndex = 0; // ÇöÀç Ä«¸Ş¶ó À§Ä¡ ÀÎµ¦½º
+    private int currentPositionIndex = 0; // í˜„ì¬ ì¹´ë©”ë¼ ìœ„ì¹˜ ì¸ë±ìŠ¤
 
     private void Start()
     {
-        // ½ÃÀÛ ½Ã Ã¹ ¹øÂ° ½ºÅä¸® À§Ä¡·Î Ä«¸Ş¶ó ÀÌµ¿
-        MoveCameraToPosition(0);
+        StartCoroutine(MoveCameraPeriodically());
     }
 
-    public void MoveToNextPosition()
+    IEnumerator MoveCameraPeriodically()
     {
-        // ´ÙÀ½ ½ºÅä¸® À§Ä¡·Î ÀÌµ¿
-        if (currentPositionIndex + 1 < positions.Length)
+        while (true)
         {
-            currentPositionIndex++;
             MoveCameraToPosition(currentPositionIndex);
-        }
-    }
-
-    public void MoveToPreviousPosition()
-    {
-        // ÀÌÀü ½ºÅä¸® À§Ä¡·Î ÀÌµ¿
-        if (currentPositionIndex - 1 >= 0)
-        {
-            currentPositionIndex--;
+            // í˜„ì¬ ìœ„ì¹˜ì—ì„œ ë‹¤ìŒ ìœ„ì¹˜ë¡œ ì¸ë±ìŠ¤ ì—…ë°ì´íŠ¸
+            currentPositionIndex = (currentPositionIndex + 1) % positions.Length;
+            // ì¹´ë©”ë¼ ìœ„ì¹˜ ì´ë™
             MoveCameraToPosition(currentPositionIndex);
+            // 3ì´ˆ ëŒ€ê¸°
+            yield return new WaitForSeconds(3f);
         }
     }
 
     private void MoveCameraToPosition(int positionIndex)
     {
-        // ÁöÁ¤µÈ ÀÎµ¦½ºÀÇ À§Ä¡·Î Ä«¸Ş¶ó ÀÌµ¿
+        // ì§€ì •ëœ ì¸ë±ìŠ¤ì˜ ìœ„ì¹˜ë¡œ ì¹´ë©”ë¼ ì´ë™
         transform.position = positions[positionIndex];
     }
 
-    // Å×½ºÆ®¿ë ±â´É: ´ÙÀ½, ÀÌÀü ¹öÆ°¿¡ ¿¬°á
-    public void NextButtonClicked()
-    {
-        MoveToNextPosition();
-    }
-
-    public void PrevButtonClicked()
-    {
-        MoveToPreviousPosition();
-    }
 }
