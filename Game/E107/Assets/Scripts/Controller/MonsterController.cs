@@ -315,6 +315,7 @@ public class MonsterController : BaseController
 
     public override void TakeDamage(int skillObjectId, int damage)
     {
+        if (PhotonNetwork.IsMasterClient == false) return;
         base.TakeDamage(skillObjectId, damage);
         if (CurState is DieState)
         {
@@ -342,7 +343,7 @@ public class MonsterController : BaseController
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;
         lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
-
+        photonView.RPC("RPC_MonsterAttacked", RpcTarget.Others, damage);
         if (_stat.Hp <= 0)
         {
             _statemachine.ChangeState(new DieState(this));
@@ -365,6 +366,20 @@ public class MonsterController : BaseController
             _allRenderers[i].material.color = _originalColors[i];
         }
     }
+    [PunRPC]
+    void RPC_MonsterAttacked(int damage)
+    {
+        StartCoroutine(ChangeColorFromDamage());
 
+        // 보스는 피격음이 없다.
+        if (_audioSource.Length == (int)SoundOrder.LENGTH)
+        {
+            _audioSource[(int)SoundOrder.ATTACKED].Play();
+        }
+
+        _stat.Hp -= damage;
+        if (_stat.Hp < 0) _stat.Hp = 0;
+
+    }
 }
 
