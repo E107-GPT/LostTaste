@@ -4,122 +4,167 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using static UnityEditor.Progress;
-using UnityEditor.Experimental.GraphView;
 
 /// <summary>
-/// ¾ÆÀÌÅÛ ½ºÅ³ ÄğÅ¸ÀÓ UI ¸Å´ÏÀú´Â ÄğÅ¸ÀÓÀÌ ÀÖ´Â ¾ÆÀÌÅÛ ½ºÅ³ÀÇ ÄğÅ¸ÀÓÀ» Ç¥½ÃÇÏ´Â ±â´ÉÀ» Á¦°øÇÕ´Ï´Ù.
+/// ì•„ì´í…œ ìŠ¤í‚¬ ì¿¨íƒ€ì„ UI ë§¤ë‹ˆì €ëŠ” ì¿¨íƒ€ì„ì´ ìˆëŠ” ì•„ì´í…œ ìŠ¤í‚¬ì˜ ì¿¨íƒ€ì„ì„ í‘œì‹œí•˜ëŠ” ê¸°ëŠ¥ì„ ì œê³µí•©ë‹ˆë‹¤.
 /// </summary>
 public class ItemSkillCooldownUIManager : MonoBehaviour
 {
-    // ------------------------------------------------ º¯¼ö ¼±¾ğ ------------------------------------------------
+    // ------------------------------------------------ ë³€ìˆ˜ ì„ ì–¸ ------------------------------------------------
 
-    // ¾ÆÀÌÅÛ ½ºÅ³ ÄğÅ¸ÀÓ UI ¸Å´ÏÀú°¡ »ç¿ëÇÒ º¯¼ö ¼±¾ğ
-    private PlayerController _playerController; // ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯ ÂüÁ¶ º¯¼ö
-    private Item[] _playerInventory; // ÇÃ·¹ÀÌ¾îÀÇ ÀÎº¥Åä¸® ¹è¿­
-    private int _currentItemNum; // ÇöÀç ÀåÂøÇÑ ¹«±â
+    // ì•„ì´í…œ ìŠ¤í‚¬ ì¿¨íƒ€ì„ UI ë§¤ë‹ˆì €ê°€ ì‚¬ìš©í•  ë³€ìˆ˜ ì„ ì–¸
+    private PlayerController _playerController; // í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ ì°¸ì¡° ë³€ìˆ˜
+    private Item[] _playerInventory; // í”Œë ˆì´ì–´ì˜ ì¸ë²¤í† ë¦¬ ë°°ì—´
+    private int _currentItemNum; // í˜„ì¬ ì¥ì°©í•œ ë¬´ê¸°
 
-    // ¾ÆÀÌÅÛ 1
-    [Header("[ ¾ÆÀÌÅÛ 1 ]")]
-    public GameObject firstItemRightSkillCoolDownPanel; // ¾ÆÀÌÅÛ 1 ¿À¸¥ÂÊ ½ºÅ³ ÄğÅ¸ÀÓ ÆĞ³Î
-    public Image firstItemCoolDownImage; // ¾ÆÀÌÅÛ 1 ¿À¸¥ÂÊ ½ºÅ³ ÄğÅ¸ÀÓ ÀÌ¹ÌÁö
-    public Image firstItemKeyImage; // ¾ÆÀÌÅÛ 1 ¿À¸¥ÂÊ ½ºÅ³ Å° ÀÌ¹ÌÁö
-    public TextMeshProUGUI firstItemRightSkillCoolDownText; // ¾ÆÀÌÅÛ 1 ¿À¸¥ÂÊ ½ºÅ³ ÄğÅ¸ÀÓ
+    // ì•„ì´í…œ 1
+    [Header("[ ì•„ì´í…œ 1 ]")]
+    public GameObject firstItemRightSkillCoolDownPanel; // ì•„ì´í…œ 1 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ì¿¨íƒ€ì„ íŒ¨ë„
+    public Image firstItemCoolDownImage; // ì•„ì´í…œ 1 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ì¿¨íƒ€ì„ ì´ë¯¸ì§€
+    public Image firstItemKeyImage; // ì•„ì´í…œ 1 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ í‚¤ ì´ë¯¸ì§€
+    public TextMeshProUGUI firstItemRightSkillCoolDownText; // ì•„ì´í…œ 1 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ì¿¨íƒ€ì„
 
-    // ¾ÆÀÌÅÛ 2
-    [Header("[ ¾ÆÀÌÅÛ 2 ]")]
-    public GameObject secondItemRightSkillCoolDownPanel; // ¾ÆÀÌÅÛ 2 ¿À¸¥ÂÊ ½ºÅ³ ÄğÅ¸ÀÓ ÆĞ³Î
-    public Image secondItemCoolDownImage; // ¾ÆÀÌÅÛ 2 ¿À¸¥ÂÊ ½ºÅ³ ÄğÅ¸ÀÓ ÀÌ¹ÌÁö
-    public Image secondItemKeyImage; // ¾ÆÀÌÅÛ 2 ¿À¸¥ÂÊ ½ºÅ³ Å° ÀÌ¹ÌÁö
-    public TextMeshProUGUI secondItemRightSkillCoolDownText; // ¾ÆÀÌÅÛ 2 ¿À¸¥ÂÊ ½ºÅ³ ÄğÅ¸ÀÓ
+    // ì•„ì´í…œ 2
+    [Header("[ ì•„ì´í…œ 2 ]")]
+    public GameObject secondItemRightSkillCoolDownPanel; // ì•„ì´í…œ 2 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ì¿¨íƒ€ì„ íŒ¨ë„
+    public Image secondItemCoolDownImage; // ì•„ì´í…œ 2 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ì¿¨íƒ€ì„ ì´ë¯¸ì§€
+    public Image secondItemKeyImage; // ì•„ì´í…œ 2 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ í‚¤ ì´ë¯¸ì§€
+    public TextMeshProUGUI secondItemRightSkillCoolDownText; // ì•„ì´í…œ 2 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ì¿¨íƒ€ì„
 
-    // ³²Àº ÄğÅ¸ÀÓ ¼ıÀÚ º¯¼ö ¼±¾ğ
-    private float firstItemRightSkillCoolDown; // ¾ÆÀÌÅÛ 1 ¿À¸¥ÂÊ ½ºÅ³ ÇöÀç ÄğÅ¸ÀÓ
-    private float secondItemRightSkillCoolDown; // ¾ÆÀÌÅÛ 2 ¿À¸¥ÂÊ ½ºÅ³ ÇöÀç ÄğÅ¸ÀÓ
+    // ë‚¨ì€ ì¿¨íƒ€ì„ ìˆ«ì ë³€ìˆ˜ ì„ ì–¸
+    private float firstItemRightSkillCoolDown; // ì•„ì´í…œ 1 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ í˜„ì¬ ì¿¨íƒ€ì„
+    private float secondItemRightSkillCoolDown; // ì•„ì´í…œ 2 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ í˜„ì¬ ì¿¨íƒ€ì„
 
-    private bool _isCurrentItemCoolingDownPrev = false;
+    // ì¿¨íƒ€ì„ ì§„í–‰ ìƒíƒœë¥¼ ì¶”ì í•˜ëŠ” ë³€ìˆ˜ ì¶”ê°€
+    private bool isFirstItemCoolingDown = false;
+    private bool isSecondItemCoolingDown = false;
+
+    // ì½”ë£¨í‹´ ì°¸ì¡°ë¥¼ ì €ì¥í•  ë³€ìˆ˜
+    private Coroutine firstItemCoolDownCoroutine = null;
+    private Coroutine secondItemCoolDownCoroutine = null;
 
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Start()
     {
-        // ÃÊ±â Fill Amount¸¦ 0À¸·Î ¼³Á¤
+        // ì´ˆê¸° Fill Amountë¥¼ 0ìœ¼ë¡œ ì„¤ì •
         firstItemCoolDownImage.fillAmount = 0;
         secondItemCoolDownImage.fillAmount = 0;
         firstItemKeyImage.fillAmount = 0;
         secondItemKeyImage.fillAmount = 0;
 
-        // ÃÊ±â ÄğÅ¸ÀÓ ÅØ½ºÆ® ºó ¹®ÀÚ¿­·Î ¼³Á¤
+        // ì´ˆê¸° ì¿¨íƒ€ì„ í…ìŠ¤íŠ¸ ë¹ˆ ë¬¸ìì—´ë¡œ ì„¤ì •
         firstItemRightSkillCoolDownText.text = "";
         secondItemRightSkillCoolDownText.text = "";
     }
 
     void Update()
     {
-        // ÄğÅ¸ÀÓ ÆĞ³Î ¾÷µ¥ÀÌÆ®
+        // ì¿¨íƒ€ì„ íŒ¨ë„ ì—…ë°ì´íŠ¸
         UpdateItemCoolDownPanel();
     }
 
 
-    // ------------------------------------------------ »ç¿ëÀÚ Á¤ÀÇ ¸Ş¼­µå ------------------------------------------------
+    // ------------------------------------------------ ì‚¬ìš©ì ì •ì˜ ë©”ì„œë“œ ------------------------------------------------
 
     void UpdateItemCoolDownPanel()
     {
-        // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ¼­ ÂüÁ¶
+        // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•„ì„œ ì°¸ì¡°
         _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        if (_playerController == null) return; // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾øÀ» ¶§
+        if (_playerController == null) return; // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ì„ ë•Œ
 
-        // PlayerControllerÀÇ ÀÎº¥Åä¸®¿¡ Á¢±Ù
+        // PlayerControllerì˜ ì¸ë²¤í† ë¦¬ì— ì ‘ê·¼
         _playerInventory = _playerController.Inventory;
+        _currentItemNum = _playerController.CurrentItemNum;
 
-        Item currentItem = _playerController.Inventory[_playerController.CurrentItemNum];
+        // PlayerControllerì˜ ì¸ë²¤í† ë¦¬ì™€ í˜„ì¬ ì•„ì´í…œ ë²ˆí˜¸ë¥¼ ê°€ì ¸ì˜´
+        Item firstItem = _playerInventory[1];
+        Item secondItem = _playerInventory[2];
 
-        // ½ºÅ³ Á¸Àç ¿©ºÎ È®ÀÎ
-        bool isCurrentItemSkillExists = currentItem.RightSkill != null && !(currentItem.RightSkill is EmptySkill);
+        // ìŠ¤í‚¬ ì¡´ì¬ ì—¬ë¶€ í™•ì¸
+        bool isFirstItemSkillExists = firstItem.RightSkill != null && !(firstItem.RightSkill is EmptySkill);
+        bool isSecondItemSkillExists = secondItem.RightSkill != null && !(secondItem.RightSkill is EmptySkill);
 
-        bool isCurrentItemCoolingDown = !currentItem.RightSkill.IsPlayerCastable(_playerController);
 
-        if (isCurrentItemCoolingDown && isCurrentItemSkillExists)
+        // ì¿¨íƒ€ì„ ì •ë³´ ì—…ë°ì´íŠ¸
+        if (Input.GetMouseButton(1))
         {
-            UpdateItemSkillCoolDown(currentItem);
-        }
-        else if (!isCurrentItemCoolingDown && _isCurrentItemCoolingDownPrev)
-        {
-            ResetCoolDownUI(currentItem);
+            // ìºë¦­í„°ê°€ 'ìŠ¤í‚¬ ìƒíƒœ'ê°€ ì•„ë‹ ê²½ìš° í•¨ìˆ˜ë¥¼ ë¹ ì ¸ë‚˜ê°
+            if (_playerController.CurState is not SkillState) return;
+
+            // í˜„ì¬ ì¿¨íƒ€ì„ì´ ì§„í–‰ ì¤‘ì´ì§€ ì•Šìœ¼ë©´ì„œ, ìŠ¤í‚¬ì´ ì¡´ì¬í•  ê²½ìš° ì¿¨íƒ€ì„ì„ ì§„í–‰ì‹œí‚´
+            if (_currentItemNum == 1 && !isFirstItemCoolingDown && isFirstItemSkillExists)
+            {
+                UpdateItemSkillCoolDown(firstItem, ref isFirstItemCoolingDown, ref firstItemCoolDownCoroutine);
+            }
+            else if (_currentItemNum == 2 && !isSecondItemCoolingDown && isSecondItemSkillExists)
+            {
+                UpdateItemSkillCoolDown(secondItem, ref isSecondItemCoolingDown, ref secondItemCoolDownCoroutine);
+            }
         }
 
-        // ¹«±â ±³Ã¼¿¡ µû¸¥ ½ºÅ³ ÄğÅ¸ÀÓ ÆĞ³Î ¾÷µ¥ÀÌÆ®
+        // ë¬´ê¸° êµì²´ì— ë”°ë¥¸ ìŠ¤í‚¬ ì¿¨íƒ€ì„ íŒ¨ë„ ì—…ë°ì´íŠ¸
         ToggleSkillCoolDownPanels(_currentItemNum);
 
-        // ¾ÆÀÌÅÛ º¯°æ ¶Ç´Â ¹ö¸² °¨Áö
+        // ì•„ì´í…œ ë³€ê²½ ë˜ëŠ” ë²„ë¦¼ ê°ì§€
         if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.B))
         {
-            // Ä³¸¯ÅÍ°¡ '´ë±â »óÅÂ' ¶Ç´Â '°È±â »óÅÂ'°¡ ¾Æ´Ò °æ¿ì ÇÔ¼ö¸¦ ºüÁ®³ª°¨
+            // ìºë¦­í„°ê°€ 'ëŒ€ê¸° ìƒíƒœ' ë˜ëŠ” 'ê±·ê¸° ìƒíƒœ'ê°€ ì•„ë‹ ê²½ìš° í•¨ìˆ˜ë¥¼ ë¹ ì ¸ë‚˜ê°
             if (!(_playerController.CurState is IdleState || _playerController.CurState is MoveState)) return;
-        }
 
-        _isCurrentItemCoolingDownPrev = isCurrentItemCoolingDown;
+            // ì§„í–‰ì¤‘ì¸ ì½”ë¥´í‹´ì„ ë©ˆì¶”ê³  UIë¥¼ ì´ˆê¸°í™”í•¨
+            if (firstItemCoolDownCoroutine != null && _currentItemNum == 1)
+            {
+                StopCoroutine(firstItemCoolDownCoroutine);
+                ResetCoolDownUI(firstItem);
+            }
+            else if (secondItemCoolDownCoroutine != null && _currentItemNum == 2)
+            {
+                StopCoroutine(secondItemCoolDownCoroutine);
+                ResetCoolDownUI(secondItem);
+            }
+        }
     }
 
-    void UpdateItemSkillCoolDown(Item item)
+    void UpdateItemSkillCoolDown(Item item, ref bool isCoolingDown, ref Coroutine coolDownCoroutine)
     {
-        float remainingTime = item.RightSkill.SkillCoolDownTime - (Time.time - item.RightSkill.LastCastTime);
-        float percentage = remainingTime / item.RightSkill.SkillCoolDownTime;
-        string remainingTimeString;
-        if (remainingTime > 1.0f)
-        {
-            remainingTimeString = Mathf.Ceil(remainingTime).ToString() + "s";
-        }
-        else
-        {
-            remainingTimeString = string.Format("{0:0.0}", remainingTime) + "s";
-        }
+        // ì¿¨ë‹¤ìš´ ì¤‘ì´ê±°ë‚˜ ì•„ì´í…œì˜ ìŠ¤í‚¬ì´ ì—†ìœ¼ë©´ í•¨ìˆ˜ ì¢…ë£Œ
+        if (isCoolingDown || item.RightSkill == null) return;
 
-        UpdateCoolDownUI(item, percentage, remainingTimeString);
+        isCoolingDown = true;
+
+        // ìƒˆë¡œìš´ ì½”ë£¨í‹´ ì‹œì‘
+        coolDownCoroutine = StartCoroutine(UpdateItemCoolDownCoroutine(item));
+
+        isCoolingDown = false;
     }
 
-    // Äğ´Ù¿î UI ¾÷µ¥ÀÌÆ® ¸Ş¼­µå (»õ·Î Ãß°¡)
+    IEnumerator UpdateItemCoolDownCoroutine(Item item)
+    {
+        // ì•„ì´í…œì˜ ì¿¨íƒ€ì„ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+        float skillCoolDown = item.RightSkill.SkillCoolDownTime;
+        float elapsedTime = 0; // ê²½ê³¼ ì‹œê°„ì„ ì¶”ì í•˜ëŠ” ë³€ìˆ˜
+
+        if (skillCoolDown > 1)
+        {
+            while (elapsedTime < skillCoolDown)
+            {
+                elapsedTime += Time.deltaTime;
+                float remainingTime = skillCoolDown - elapsedTime;
+
+                // UI ì—…ë°ì´íŠ¸ ë¡œì§
+                UpdateCoolDownUI(item, remainingTime / skillCoolDown, Mathf.Ceil(remainingTime).ToString() + "s");
+                yield return null;
+            }
+        }
+
+        // ì¿¨ë‹¤ìš´ ì™„ë£Œ í›„ UI ì´ˆê¸°í™”
+        ResetCoolDownUI(item);
+    }
+
+    // ì¿¨ë‹¤ìš´ UI ì—…ë°ì´íŠ¸ ë©”ì„œë“œ
     void UpdateCoolDownUI(Item item, float fillAmount, string text)
     {
         if (item == _playerInventory[1])
@@ -136,7 +181,7 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
         }
     }
 
-    // ÄÚ·çÆ¾ÀÌ ³¡³­ µÚ ÄğÅ¸ÀÓ ÆĞ³ÎÀ» ÃÊ±âÈ­ ÇÏ´Â ¸Ş¼­µå
+    // ì½”ë£¨í‹´ì´ ëë‚œ ë’¤ ì¿¨íƒ€ì„ íŒ¨ë„ì„ ì´ˆê¸°í™” í•˜ëŠ” ë©”ì„œë“œ
     void ResetCoolDownUI(Item item)
     {
         if (item == _playerInventory[1])
@@ -153,7 +198,7 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
         }
     }
 
-    // ÇöÀç ¼±ÅÃµÈ ¾ÆÀÌÅÛ¿¡ µû¶ó ÄğÅ¸ÀÓ ÆĞ³ÎÀ» Åä±ÛÇÏ´Â ¸Ş¼­µå
+    // í˜„ì¬ ì„ íƒëœ ì•„ì´í…œì— ë”°ë¼ ì¿¨íƒ€ì„ íŒ¨ë„ì„ í† ê¸€í•˜ëŠ” ë©”ì„œë“œ
     void ToggleSkillCoolDownPanels(int currentItemNum)
     {
         if (currentItemNum == 1)
