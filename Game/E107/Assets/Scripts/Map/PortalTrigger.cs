@@ -129,11 +129,10 @@ public class PortalTrigger : MonoBehaviour
 
             if (!string.IsNullOrEmpty(bgmName))
             {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    Managers.Sound.Clear();
-                    Managers.Sound.Play(bgmName, Define.Sound.BGM, 1.0f, 0.3f);
-                }
+
+                Managers.Sound.Clear();
+                Managers.Sound.Play(bgmName, Define.Sound.BGM, 1.0f, 0.3f);
+                
             }
 
             MonsterManager.Instance._curMap = targetMapName;
