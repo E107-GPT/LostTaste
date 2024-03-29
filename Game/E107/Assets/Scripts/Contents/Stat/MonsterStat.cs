@@ -41,7 +41,7 @@ public class MonsterStat : Stat
                 _patternDamage = 40;
                 break;
             case UnitType.MonsterKing:
-                _detectRange = 20.0f;
+                _detectRange = 30.0f;
                 _patternDamage = 40;
                 break;
 

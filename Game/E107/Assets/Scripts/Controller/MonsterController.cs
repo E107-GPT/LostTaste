@@ -86,7 +86,7 @@ public class MonsterController : BaseController
     {
         _ray.origin = transform.position;
         Gizmos.color = Color.red;
-        if (CurState is MoveState) Gizmos.DrawWireSphere(_ray.origin, _stat.DetectRange);
+        if (CurState is IdleState) Gizmos.DrawWireSphere(_ray.origin, _stat.DetectRange);
     }
 
     #region State Method
