@@ -28,7 +28,7 @@ public class TurtleSlimeAttackSkill : Skill
 
         yield return new WaitForSeconds(0.3f);
 
-        // SkillObject¿¡¼­ °ü¸®
+        // SkillObjectì—ì„œ ê´€ë¦¬
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
 
