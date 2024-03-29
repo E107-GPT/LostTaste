@@ -459,6 +459,7 @@ public class PlayerController : BaseController
     {
         // 대쉬 중에 무적
         if (CurState is DashState) return;
+        if (photonView.IsMine == false) return;
 
         base.TakeDamage(skillObjectId, damage);
 
@@ -470,14 +471,20 @@ public class PlayerController : BaseController
             // 쿨다운 중이므로 피해를 주지 않음
             return;
         }
-
+        lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
         StartCoroutine(ChangeColorTemporarily());
         Managers.Sound.Play("Player/Attacked",Define.Sound.Effect, 1.0f);
 
+        
+        // 내꺼가 아니면 데미지 안받음, 즉 죽지않음
+        // 죽는 것은 포톤으로만
+
+        photonView.RPC("RPC_Attacked", RpcTarget.Others, damage);
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;
-        lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
+        
         //Debug.Log($"{_stat.Hp}!!!");
+        
 
         if (_stat.Hp <= 0)
         {
@@ -639,6 +646,19 @@ public class PlayerController : BaseController
         _agent.Warp(position);
     }
 
-    
+    [PunRPC]
+    void RPC_Attacked(int damage)
+    {
+        StartCoroutine(ChangeColorTemporarily());
+        Managers.Sound.Play("Player/Attacked", Define.Sound.Effect, 1.0f);
+
+
+        _stat.Hp -= damage;
+        if (_stat.Hp < 0) _stat.Hp = 0; // 해당 공격자의 마지막 공격 시간 업데이트
+                                                    //Debug.Log($"{_stat.Hp}!!!");
+    }
+
+
+
 
 }
