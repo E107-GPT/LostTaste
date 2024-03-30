@@ -109,7 +109,7 @@ public class PlayerClass : MonoBehaviour
         _clothes["PriestBody"].SetActive(true);
         _clothes["PriestHat"].SetActive(true);
 
-        _classSkill = gameObject.GetOrAddComponent<EmptySkill>();
+        _classSkill = gameObject.GetOrAddComponent<PriestClassSkill>();
     }
     void DressUpMageSet()
     {

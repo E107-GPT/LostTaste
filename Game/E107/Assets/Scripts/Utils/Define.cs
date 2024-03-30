@@ -95,6 +95,8 @@ public class Define
         NinjaClassSkillStartEffect,
         MageClassSkillEffect,
         MageClassSkillAuraEffect,
+        HealOnceEffect,
+        PriestClassSkillEffect,
         MaxCount
     }
 

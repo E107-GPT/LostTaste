@@ -12690,6 +12690,7 @@ GameObject:
   - component: {fileID: 7419873428290177027}
   - component: {fileID: 7013568030851262919}
   - component: {fileID: 6827091201380110933}
+  - component: {fileID: 4322787744715334866}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -12957,9 +12958,28 @@ MonoBehaviour:
   <Description>k__BackingField: "\uD558\uB298\uC5D0\uC11C \uB808\uC774\uC800\uAC00
     \uBE57\uBC1C\uCE69\uB2C8\uB2E4."
   <Icon>k__BackingField: {fileID: 0}
-  <SkillCoolDownTime>k__BackingField: 60
+  <SkillCoolDownTime>k__BackingField: 120
   <RequiredMp>k__BackingField: 200
   <Damage>k__BackingField: 40
+--- !u!114 &4322787744715334866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460575400253774540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d03abba2f7624443b640bb167b53f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: 
+  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 0}
+  <SkillCoolDownTime>k__BackingField: 180
+  <RequiredMp>k__BackingField: 150
+  <HealMount>k__BackingField: 5
+  <HealCount>k__BackingField: 10
 --- !u!1 &5484749937077794716
 GameObject:
   m_ObjectHideFlags: 0
