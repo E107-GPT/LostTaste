@@ -15,36 +15,23 @@ public class PlayerManager
     {
         _playerList = new Player[4];
 
-        // Æ÷Åæ¿¡¼­ ÇÃ·¹ÀÌ¾î Á¤º¸ ¹Ş¾Æ¿Í¼­ ³Ö¾îÁà¾ßÇÔ
-        // ÃÊ±â Á¤º¸(Á÷¾÷ Á¤º¸)µµ ¹Ş¾Æ¿Í¾ß ÇÑ´Ù.
+        // í¬í†¤ì—ì„œ í”Œë ˆì´ì–´ ì •ë³´ ë°›ì•„ì™€ì„œ ë„£ì–´ì¤˜ì•¼í•¨
+        // ì´ˆê¸° ì •ë³´(ì§ì—… ì •ë³´)ë„ ë°›ì•„ì™€ì•¼ í•œë‹¤.
 
         //_currentPlayerNumber = SetLocalPlayerInfo(Define.ClassType.Warrior);
     }
 
 
-    // ÇöÀç ¹æÀÇ À¯Àú Á¤º¸¸¦ °¡Á®¿É´Ï´Ù.
+    // í˜„ì¬ ë°©ì˜ ìœ ì € ì •ë³´ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
     public void LoadPlayersInfoInCurrentRoom()
     {
-        //foreach (KeyValuePair<int, Player> playerInfo in PhotonNetwork.CurrentRoom.Players)
-        //{
-        //    Player player = playerInfo.Value;
-        //    Debug.Log(player.CustomProperties);
-        //    object numObj;
-        //    if(player.CustomProperties.TryGetValue("Number", out numObj))
-        //    {
-        //        Debug.Log(numObj);
-        //        int num = (int)numObj;
-        //        _playerList[num] = player;
-        //    }
-
-        //}
         foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
         {
             if (player.CustomProperties.TryGetValue("Number", out object numberObj))
             {
                 int number = (int)numberObj;
                 _playerList[number] = player;
-                // ¿©±â¿¡¼­ ÇÃ·¹ÀÌ¾îÀÇ Á÷¾÷ Á¤º¸ µîÀ» Ãß°¡·Î Ã³¸®ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+                // ì—¬ê¸°ì—ì„œ í”Œë ˆì´ì–´ì˜ ì§ì—… ì •ë³´ ë“±ì„ ì¶”ê°€ë¡œ ì²˜ë¦¬í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
                 Debug.Log($"{player}   {number}");
             }
@@ -71,7 +58,7 @@ public class PlayerManager
             {
                 usedNumbers[number] = 0;
 
-                // ¹æÀÇ Ä¿½ºÅÒ ÇÁ·ÎÆÛÆ¼ ¾÷µ¥ÀÌÆ®
+                // ë°©ì˜ ì»¤ìŠ¤í…€ í”„ë¡œí¼í‹° ì—…ë°ì´íŠ¸
                 var roomProperties = new ExitGames.Client.Photon.Hashtable { { "UsedNumbers", usedNumbers } };
                 PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
                 _playerList[number] = null;
@@ -86,40 +73,44 @@ public class PlayerManager
     {
         var usedNumbers = PhotonNetwork.CurrentRoom.CustomProperties["UsedNumbers"] as int[] ?? new int[4];
         int myNumber = FindAvailableNumber(usedNumbers);
+        _currentPlayerNumber = myNumber;
+        _playerList[myNumber] = PhotonNetwork.LocalPlayer;
+        
         var myProperties = new ExitGames.Client.Photon.Hashtable { { "Number", myNumber }, { "Class", type }, {"ViewID", viewID } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(myProperties);
 
-        // ¹æÀÇ Ä¿½ºÅÒ ÇÁ·ÎÆÛÆ¼ ¾÷µ¥ÀÌÆ®
-        usedNumbers[myNumber] = 1; // ¹øÈ£ »ç¿ë Ç¥½Ã
+        // ë°©ì˜ ì»¤ìŠ¤í…€ í”„ë¡œí¼í‹° ì—…ë°ì´íŠ¸
+        usedNumbers[myNumber] = 1; // ë²ˆí˜¸ ì‚¬ìš© í‘œì‹œ
         var roomProperties = new ExitGames.Client.Photon.Hashtable { { "UsedNumbers", usedNumbers } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
+
+
     }
 
     int FindAvailableNumber(int[] usedNumbers)
     {
         for (int i = 0; i < usedNumbers.Length; i++)
         {
-            if (usedNumbers[i] == 0) // »ç¿ëµÇÁö ¾ÊÀº ¹øÈ£ Ã£±â
+            if (usedNumbers[i] == 0) // ì‚¬ìš©ë˜ì§€ ì•Šì€ ë²ˆí˜¸ ì°¾ê¸°
                 return i;
         }
-        return -1; // ¸ğµç ¹øÈ£°¡ »ç¿ë Áß
+        return -1; // ëª¨ë“  ë²ˆí˜¸ê°€ ì‚¬ìš© ì¤‘
     }
 
-    // Á÷¾÷ ¹Ù²Ü ‹š ¾÷µ¥ÀÌÆ® ½ÃÄÑ¾ßÇÔ
+    // ì§ì—… ë°”ê¿€ ë–„ ì—…ë°ì´íŠ¸ ì‹œì¼œì•¼í•¨
     public void UpdateLocalPlayerInfo(Define.ClassType type)
     {
         Player player = _playerList[_currentPlayerNumber];
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable
         {
-            { "Number", _currentPlayerNumber}, // ¹øÈ£ ÁöÁ¤
-            { "Class", type }  // Á÷¾÷ ÁöÁ¤
+            { "Class", type }  // ì§ì—… ì§€ì •
         };
         player.SetCustomProperties(props);
     }
 
 
 
-    // ´Ù¸¥ »ç¶÷ÀÌ ¹æ¿¡¼­ ³ª°¡¸é?
+    // ë‹¤ë¥¸ ì‚¬ëŒì´ ë°©ì—ì„œ ë‚˜ê°€ë©´?
     public void DeletePlayerInfo(int num)
     {
         //_playerList[num].CustomProperties = null;
@@ -128,7 +119,7 @@ public class PlayerManager
     }
 
 
-    // _playerList ¿¡¼­ ºó°ø°£ Ã£±â
+    // _playerList ì—ì„œ ë¹ˆê³µê°„ ì°¾ê¸°
     private int FindBlankNumber()
     {
         for(int i = 0; i < 4; i++)
@@ -140,10 +131,10 @@ public class PlayerManager
     }
 
 
-    // ¹æ¿¡¼­ ³ª°¬À» ¶§ ½ÇÇà
+    // ë°©ì—ì„œ ë‚˜ê°”ì„ ë•Œ ì‹¤í–‰
     public void Clear()
     {
-        // ¹æ³ª°¥‹š Å¬¸®¾î ÇØÁà¾ßÇÔ
+        // ë°©ë‚˜ê°ˆë–„ í´ë¦¬ì–´ í•´ì¤˜ì•¼í•¨
         for(int i = 0; i < 4; i++)
         {
             DeletePlayerInfo(i);
