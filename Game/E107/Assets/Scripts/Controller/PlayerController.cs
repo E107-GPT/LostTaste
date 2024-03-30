@@ -16,7 +16,7 @@ public class PlayerController : BaseController
     Item[] _inventory;
     int _currentItemNum;
     IPlayerInteractable _detectedInteractable;
-    GameObject _righthand;
+    public GameObject _righthand;
     Coroutine _mpRecoverCoroutine;
     private float _lastDashTime;
     float _dashCoolDownTime = 1.0f;
@@ -800,6 +800,59 @@ public class PlayerController : BaseController
     }
 
 
+    IEnumerator HealEffect()
+    {
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.HealOnceEffect, transform);
+        ps.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        ps.transform.position += transform.up * 2.0f;
 
+        yield return new WaitForSeconds(0.4f);
+    }
+
+    public void TakeHeal(int heal)
+    {
+        if (photonView.IsMine == false) return;
+
+        StartCoroutine(HealEffect());
+
+        photonView.RPC("RPC_Healed", RpcTarget.Others, heal);
+        _stat.Hp += heal;
+        if (_stat.Hp >= _stat.MaxHp) _stat.Hp = _stat.MaxHp;
+
+        
+
+        //float lastAttackTime;
+        //lastAttackTimes.TryGetValue(skillObjectId, out lastAttackTime);
+
+        //if (Time.time - lastAttackTime < damageCooldown)
+        //{
+        //    // 쿨다운 중이므로 피해를 주지 않음
+        //    return;
+        //}
+        //lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
+        //StartCoroutine(ChangeColorTemporarily());
+        //Managers.Sound.Play("Player/Attacked", Define.Sound.Effect, 1.0f);
+
+
+        // 내꺼가 아니면 데미지 안받음, 즉 죽지않음
+        // 죽는 것은 포톤으로만
+
+
+
+        //Debug.Log($"{_stat.Hp}!!!");
+    }
+
+    [PunRPC]
+    void RPC_Healed(int heal)
+    {
+        // 힐 이펙트 넣고
+        // 힐 사운드 넣기
+        //StartCoroutine(ChangeColorTemporarily());
+        //Managers.Sound.Play("Player/Attacked", Define.Sound.Effect, 1.0f);
+
+        StartCoroutine(HealEffect());
+        _stat.Hp += heal;
+        if (_stat.Hp >= _stat.MaxHp) _stat.Hp = _stat.MaxHp;
+    }
 
 }

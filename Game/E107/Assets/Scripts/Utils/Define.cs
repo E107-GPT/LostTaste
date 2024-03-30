@@ -91,6 +91,12 @@ public class Define
         KingJumpEndEffect,
         MushroomAttackEffect,
         TurtleSlimeAttackEffect,
+        NinjaClassSkillFinishEffect,
+        NinjaClassSkillStartEffect,
+        MageClassSkillEffect,
+        MageClassSkillAuraEffect,
+        HealOnceEffect,
+        PriestClassSkillEffect,
         MaxCount
     }
 

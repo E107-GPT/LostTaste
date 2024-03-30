@@ -8,6 +8,7 @@ public class PlayerClass : MonoBehaviour
 
     Dictionary<string, GameObject> _clothes = new Dictionary<string, GameObject>();
     Skill _classSkill;
+    PlayerStat playerStat;
     PhotonView photonView;
     
     
@@ -26,6 +27,7 @@ public class PlayerClass : MonoBehaviour
 
     void Init()
     {
+        playerStat = gameObject.GetComponent<PlayerController>().Stat;
 
         string[] names = System.Enum.GetNames(typeof(Define.Clothes));
 
@@ -75,6 +77,12 @@ public class PlayerClass : MonoBehaviour
     }
     void DressUpNoneSet()
     {
+        // stat
+
+        playerStat.MaxHp = 100;
+        playerStat.Hp = 100;
+
+
         _clothes["NoneBody"].SetActive(true);
 
         _classSkill = gameObject.GetOrAddComponent<EmptySkill>();
@@ -83,6 +91,9 @@ public class PlayerClass : MonoBehaviour
 
     void DressUpWarriorSet()
     {
+        playerStat.MaxHp = 300;
+        playerStat.Hp = 300;
+
         _clothes["WarriorBody"].SetActive(true);
         _clothes["WarriorHat"].SetActive(true);
 
@@ -90,25 +101,45 @@ public class PlayerClass : MonoBehaviour
     }
     void DressUpPriestSet()
     {
+        playerStat.MaxHp = 150;
+        playerStat.Hp = 150;
+        playerStat.MaxMp = 200;
+        playerStat.Mp = 200;
+
         _clothes["PriestBody"].SetActive(true);
         _clothes["PriestHat"].SetActive(true);
 
-        _classSkill = gameObject.GetOrAddComponent<EmptySkill>();
+        _classSkill = gameObject.GetOrAddComponent<PriestClassSkill>();
     }
     void DressUpMageSet()
     {
+
+        playerStat.MaxHp = 100;
+        playerStat.Hp = 100;
+        playerStat.MaxMp = 300;
+        playerStat.Mp = 300;
+
         _clothes["MageBody"].SetActive(true);
         _clothes["MageHat"].SetActive(true);
 
-        _classSkill = gameObject.GetOrAddComponent<EmptySkill>();
+        _classSkill = gameObject.GetOrAddComponent<MageClassSkill>();
     }
     void DressUpNinjaSet()
     {
+        playerStat.MaxHp = 100;
+        playerStat.Hp = 100;
+
+        playerStat.MaxMp = 150;
+        playerStat.Mp = 150;
+        playerStat.MoveSpeed = 6.5f;
+
+
+
         _clothes["NinjaBody"].SetActive(true);
         _clothes["NinjaHair"].SetActive(true);
         _clothes["NinjaMask"].SetActive(true);
 
-        _classSkill = gameObject.GetOrAddComponent<EmptySkill>();
+        _classSkill = gameObject.GetOrAddComponent<NinjaClassSkill>();
     }
 
 
