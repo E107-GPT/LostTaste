@@ -38,9 +38,12 @@ public class GalaxyZzzSkill : Skill
         skillObj.transform.position = Root.position;
         skillObj.transform.rotation = Root.rotation;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         
         Managers.Resource.Destroy(skillObj.gameObject);
+
+        yield return new WaitForSeconds(0.3f);
+
         Managers.Effect.Stop(ps);
     }
 
