@@ -21,6 +21,7 @@ public class PlayerController : BaseController
     private float _lastDashTime;
     float _dashCoolDownTime = 1.0f;
     Define.SkillType _curSkill = Define.SkillType.None;
+    PlayerClass _playerClass;
 
 
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
@@ -36,6 +37,7 @@ public class PlayerController : BaseController
 
     void LoadItemList()
     {
+        
         UnityEngine.Object[] objects = Resources.LoadAll("Prefabs/Weapons");
         foreach (UnityEngine.Object obj in objects)
         {
@@ -57,8 +59,11 @@ public class PlayerController : BaseController
     /// </summary>
     public override void Init()
     {
-        
+
         // 캐릭터의 모든 Renderer 컴포넌트를 찾음
+
+        _playerClass = gameObject.GetOrAddComponent<PlayerClass>();
+
         _allRenderers = GetComponentsInChildren<Renderer>();
         _originalColors = new Color[_allRenderers.Length];
 
@@ -72,22 +77,11 @@ public class PlayerController : BaseController
         _stat = new PlayerStat(Define.UnitType.Player);
         _stat.InitStat(Define.UnitType.Player);
 
-        
-
-        
-
-
 
         _inventory = new Item[3];
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
         LoadItemList();
-        //Item first = Managers.Resource.Instantiate("Weapons/0028_BubbleWand", _righthand.transform).GetComponent<Item>();
-        //first.OnEquipped();
-        //Item second = Managers.Resource.Instantiate("Weapons/0000_Fist", _righthand.transform).GetComponent<Item>();
-        //second.OnEquipped();
-        //_inventory[1] = first;
-        //_inventory[2] = second;
 
         _inventory[1] = _itemList["0028_BubbleWand"];
         _inventory[1].gameObject.SetActive(true);
@@ -250,7 +244,8 @@ public class PlayerController : BaseController
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.RightSkill, gameObject.transform.rotation);
                 break;
             case Define.SkillType.ClassSkill:
-                gameObject.GetComponent<WarriorClassSkill>().Cast();
+                _playerClass.ClassSkill.Cast();
+                //gameObject.GetComponent<WarriorClassSkill>().Cast();
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.ClassSkill, gameObject.transform.rotation);
                 break;
         }
@@ -397,20 +392,49 @@ public class PlayerController : BaseController
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            float lastSkillCastTime = GetComponent<WarriorClassSkill>().LastCastTime;
-            if (lastSkillCastTime != 0 && Time.time - lastSkillCastTime < GetComponent<WarriorClassSkill>().SkillCoolDownTime) return;
-
+            if (!_playerClass.ClassSkill.IsPlayerCastable(this)) return;
             _curSkill = Define.SkillType.ClassSkill;
             _statemachine.ChangeState(new SkillState(this));
             //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
         }
 
 
+        // 여기 잠시 임시키 넣어야할듯
 
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            ChangeClass(Define.ClassType.Warrior);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            ChangeClass(Define.ClassType.Priest);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            ChangeClass(Define.ClassType.Mage);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            ChangeClass(Define.ClassType.Ninja);
+        }
     }
+
+    public void ChangeClass(Define.ClassType classType)
+    {
+        _playerClass.ChangeClass(classType);
+        if (photonView.IsMine) photonView.RPC("RPC_ChangeClass", RpcTarget.Others, classType);
+    }
+
     #endregion
 
     #region PunRPC
+
+    [PunRPC]
+    void RPC_ChangeClass(Define.ClassType classType)
+    {
+        _playerClass.ChangeClass(classType);
+    }
+
     [PunRPC]
     void ChangeMoveState()
     {

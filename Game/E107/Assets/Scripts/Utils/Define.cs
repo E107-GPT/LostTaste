@@ -110,32 +110,24 @@ public class Define
     public enum ClassType
     {
         None,
-        Warrior
+        Warrior,
+        Priest,
+        Mage,
+        Ninja
+
     }
 
-    public enum Weapons
+    public enum Clothes
     {
-        _0000_Fist,
-        _0001_Cucumber,
-        _0004_Boomerang,
-        _0008_SemUmbrella,
-        _0012_HeroSword,
-        _0014_GalaxyZzz,
-        _0019_FryingPan,
-        _0020_SixTimesBibimbap,
-        _0021_FiveTimesBibimbap,
-        _0022_FourTimesBibimbap,
-        _0023_ThreeTimesBibimbap,
-        _0024_TwoTimesBibimbap,
-        _0025_Bibimbap,
-        _0027_Log,
-        _0028_BubbleWand,
-        _0029_RareSteak,
-        _0031_MiniDrill,
-        _0035_BoredApple,
-        _0039_GmHand,
-        _0041_CrocodileSword,
-        _0042_IcePearlStaff,
-        _0043_NoEnterSign,
+        NoneBody,
+        WarriorHat,
+        WarriorBody,
+        PriestHat,
+        PriestBody,
+        MageHat,
+        MageBody,
+        NinjaHair,
+        NinjaMask,
+        NinjaBody
     }
 }

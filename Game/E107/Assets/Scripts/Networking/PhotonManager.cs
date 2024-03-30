@@ -448,7 +448,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //        PhotonNetwork.Destroy(p.gameObject);
         //    }
         //}
-        Managers.Scene.LoadScene(Define.Scene.Dungeon, true);
+        Managers.Scene.LoadScene(Define.Scene.Dungeon);
 
     }
 
