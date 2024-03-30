@@ -128,10 +128,13 @@ public class Define
         NoneBody,
         WarriorHat,
         WarriorBody,
+        WarriorShield,
+        WarriorCloak,
         PriestHat,
         PriestBody,
         MageHat,
         MageBody,
+        MageBackPack,
         NinjaHair,
         NinjaMask,
         NinjaBody
