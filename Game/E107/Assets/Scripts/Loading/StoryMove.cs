@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMove : MonoBehaviour
+public class StoryMove : MonoBehaviour
 {
     // 카메라 위치 배열
     private Vector3[] positions = new Vector3[]
@@ -12,7 +12,7 @@ public class CameraMove : MonoBehaviour
         new Vector3(4.49f, 2.29f, 99.94f),  // 마왕의 저주
         new Vector3(5.22f, 3.293f, 149.316f),   // 중간 보스들
         new Vector3(3.45f, 1.39f, 201.08f),    // 용사들의 결집
-        new Vector3(5.96f, 1.1f, 247.63f),    // 모험의 시작
+        new Vector3(5.96f, 1.1f, 297.63f),    // 모험의 시작
     };
 
     // 카메라 회전 배열
