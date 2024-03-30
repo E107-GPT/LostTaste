@@ -357,13 +357,13 @@ public class PlayerController : BaseController
 
 
         // 무기 교체
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (isStarted && Input.GetKey(KeyCode.Alpha1))
         {
             ChangeToItem(1);
 
             //if (photonView.IsMine) photonView.RPC("ChangeFirstItem", RpcTarget.Others);
         }
-        else if (Input.GetKey(KeyCode.Alpha2))
+        else if (isStarted && Input.GetKey(KeyCode.Alpha2))
         {
             ChangeToItem(2);
             //if (photonView.IsMine) photonView.RPC("ChangeSecondItem", RpcTarget.Others);
