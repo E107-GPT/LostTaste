@@ -61,12 +61,11 @@ public class DashSkillCooldownUIManager : MonoBehaviour
         // 쿨타임 정보 업데이트
         if (Input.GetKey(KeyCode.Space) && !isDashCoolingDown)
         {
-            // 쿨타임 정보 업데이트
+            // 캐릭터가 '대시 상태'가 아닐 경우 함수를 빠져나감
             if (_playerController.CurState is not DashState) return;
         
             StartCoroutine(UpdateDashCoolDown(dashSkillCoolDown, dashCoolDownText, dashCoolDownImage, dashSkillKeyImage));
         }
-            
     }
 
     IEnumerator UpdateDashCoolDown(float dashCoolDown, TextMeshProUGUI dashCoolDownText, Image coolDownImage, Image keyImage)

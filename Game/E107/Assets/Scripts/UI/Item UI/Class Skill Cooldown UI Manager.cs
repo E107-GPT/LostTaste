@@ -27,6 +27,8 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
     // 쿨타임 진행 상태를 추적하는 변수 추가
     private bool isClassSkillCoolingDown = false;
 
+    private Coroutine classSkillDownCoroutine = null;
+
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
 
@@ -59,16 +61,15 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
         // 현재 직업 및 직업스킬 쿨타임 가져옴
         _playerClass = _playerController.PlayerClass;
         classSkillCoolDown = _playerClass.ClassSkill.SkillCoolDownTime;
-
+        
         // 쿨타임 정보 업데이트
         if (Input.GetKey(KeyCode.Q) && !isClassSkillCoolingDown)
         {
             // 캐릭터가 '스킬 상태'가 아닐 경우 함수를 빠져나감
             if (_playerController.CurState is not SkillState) return;
 
-            StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
+            classSkillDownCoroutine = StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
         }
-            
     }
 
     IEnumerator UpdateClassSkillCoolDown(float skillCoolDown, TextMeshProUGUI skillCoolDownText, Image coolDownImage, Image keyImage)
