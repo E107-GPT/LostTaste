@@ -30,6 +30,7 @@ public class MonsterController : BaseController
     private Color[] _originalColors;          // 원래의 머티리얼 색상 저장용 배열
     private AudioSource[] _audioSource;       // MainCamera의 Audio Listener가 필요
 
+    [SerializeField]
     private bool _isDie;
 
     public MonsterStat Stat { get { return _stat; } }
@@ -41,7 +42,6 @@ public class MonsterController : BaseController
 
     public override void Init()
     {
-        // BaseController
         _agent.stoppingDistance = 1.0f;
         _agent.angularSpeed = 500.0f;
         _agent.acceleration = 40.0f;
@@ -119,6 +119,10 @@ public class MonsterController : BaseController
     public override void ExitIdle()
     {
         base.ExitIdle();
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
     }
 
     // MOVE
@@ -190,8 +194,11 @@ public class MonsterController : BaseController
         // 상태 전환이 완벽하게 이뤄졌을 때 "Attack" 애니메이션이 끝났는지 확인
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
-            if (CurState is DieState) _statemachine.ChangeState(new DieState(this));
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (CurState is DieState)
+            {
+                _statemachine.ChangeState(new DieState(this));
+            }
 
             if (aniTime >= 1.0f)
             {
@@ -212,13 +219,11 @@ public class MonsterController : BaseController
 
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
-        //GetComponent<Collider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
 
         _audioSource[(int)SoundOrder.DIE].Play();
         _animator.Play("Die", -1);
-        ////_animator.SetBool("isDie", true);
-        //_isDie = true;
-        //PrintText($"{_isDie}");
+        _isDie = true;
 
         Destroy(gameObject, 3.0f);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDieState", RpcTarget.Others);
@@ -317,11 +322,6 @@ public class MonsterController : BaseController
     {
         if (PhotonNetwork.IsMasterClient == false) return;
         base.TakeDamage(skillObjectId, damage);
-        if (CurState is DieState)
-        {
-            //PrintText($"현재 상태: {CurState}");
-            return;
-        }
 
         float lastAttackTime;
         lastAttackTimes.TryGetValue(skillObjectId, out lastAttackTime);

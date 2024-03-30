@@ -21,39 +21,46 @@ public class ToxicFlowerAttackSkill : Skill
 
         yield return new WaitForSeconds(SkillCoolDownTime);
 
-        Vector3 dir = Root.forward;
-        dir = new Vector3(dir.x, 0, dir.z);
-        Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
-
-        yield return new WaitForSeconds(0.3f);
-
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
-        Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
-
-        ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
-
-        skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
-        skillObj.position = Root.transform.position;
-        skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
-        skillObj.rotation.SetLookRotation(dir);
-
-        float moveDuration = 1.1f; // ≈ıªÁ√º∞° ≥Øæ∆∞°¥¬ Ω√∞£¿ª º≥¡§«’¥œ¥Ÿ.
-        float timer = 0; // ≈∏¿Ã∏” √ ±‚»≠
-        float speed = 10.0f; // ≈ıªÁ√º¿« º”µµ∏¶ º≥¡§«’¥œ¥Ÿ.
-
-        while (timer < moveDuration)
+        if (Root.GetComponent<MonsterController>().IsDie)
         {
-            // ≈ıªÁ√ºøÕ ∆ƒ∆º≈¨ Ω√Ω∫≈€¿ª æ’¿∏∑Œ øÚ¡˜¿‘¥œ¥Ÿ.
-            Vector3 moveStep = dir * speed * Time.deltaTime;
-            skillObj.position += moveStep;
-            ps.transform.position += moveStep;
-
-            timer += Time.deltaTime; // ≈∏¿Ã∏”∏¶ æ˜µ•¿Ã∆Æ«’¥œ¥Ÿ.
-            yield return null; // ¥Ÿ¿Ω «¡∑π¿”±Ó¡ˆ ¥Î±‚«’¥œ¥Ÿ.
+            Root.GetComponent<Animator>().CrossFade("Die", 0.3f, -1, 0);
         }
+        else
+        {
+            Vector3 dir = Root.forward;
+            dir = new Vector3(dir.x, 0, dir.z);
+            Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
 
-        Managers.Resource.Destroy(skillObj.gameObject);
-        Managers.Effect.Stop(ps);
+            yield return new WaitForSeconds(0.3f);
+
+            ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
+            Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+            skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
+
+            ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
+
+            skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+            skillObj.position = Root.transform.position;
+            skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
+            skillObj.rotation.SetLookRotation(dir);
+
+            float moveDuration = 1.1f; // Ìà¨ÏÇ¨Ï≤¥Í∞Ä ÎÇ†ÏïÑÍ∞ÄÎäî ÏãúÍ∞ÑÏùÑ ÏÑ§Ï†ïÌï©ÎãàÎã§.
+            float timer = 0; // ÌÉÄÏù¥Î®∏ Ï¥àÍ∏∞Ìôî
+            float speed = 10.0f; // Ìà¨ÏÇ¨Ï≤¥Ïùò ÏÜçÎèÑÎ•º ÏÑ§Ï†ïÌï©ÎãàÎã§.
+
+            while (timer < moveDuration)
+            {
+                // Ìà¨ÏÇ¨Ï≤¥ÏôÄ ÌååÌã∞ÌÅ¥ ÏãúÏä§ÌÖúÏùÑ ÏïûÏúºÎ°ú ÏõÄÏßÅÏûÖÎãàÎã§.
+                Vector3 moveStep = dir * speed * Time.deltaTime;
+                skillObj.position += moveStep;
+                ps.transform.position += moveStep;
+
+                timer += Time.deltaTime; // ÌÉÄÏù¥Î®∏Î•º ÏóÖÎç∞Ïù¥Ìä∏Ìï©ÎãàÎã§.
+                yield return null; // Îã§Ïùå ÌîÑÎ†àÏûÑÍπåÏßÄ ÎåÄÍ∏∞Ìï©ÎãàÎã§.
+            }
+
+            Managers.Resource.Destroy(skillObj.gameObject);
+            Managers.Effect.Stop(ps);
+        }
     }
 }

@@ -82,8 +82,7 @@ public class CrocodileController : MonsterController
     {
         if (CurState is DieState)
         {
-            //_monsterInfo.Patterns[0].DeActiveCollider();
-            return;
+            _statemachine.ChangeState(new DieState(this));
         }
 
         base.ExcuteCrocodileSwordState();

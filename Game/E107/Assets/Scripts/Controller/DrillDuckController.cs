@@ -45,6 +45,33 @@ public class DrillDuckController : MonsterController
         }
     }
 
+    public override void ExcuteSkill()
+    {
+        _animator.SetFloat("AttackSpeed", 0.2f);
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            
+            if (aniTime <= 0.2f)
+            {
+                _animator.SetFloat("AttackSpeed", 0.2f);
+            }
+            else if (aniTime <= 0.4f)
+            {
+                _animator.SetFloat("AttackSpeed", 0.8f);
+            }
+            else if (aniTime <= 1.0f)
+            {
+                _animator.SetFloat("AttackSpeed", 1.0f);
+            }
+            else if (aniTime >= 1.0f)
+            {
+                _animator.SetFloat("AttackSpeed", 1.0f);
+                _statemachine.ChangeState(new IdleState(this));
+            }
+        }
+    }
+
     // Before Slide
     public override void EnterDrillDuckSlideBeforeState()
     {
@@ -65,8 +92,7 @@ public class DrillDuckController : MonsterController
     {
         if (CurState is DieState)
         {
-            //_monsterInfo.Patterns[1].DeActiveCollider();
-            return;
+            _statemachine.ChangeState(new DieState(this));
         }
 
         _animator.SetFloat("BeforeSlideSpeed", 0.5f);
@@ -103,8 +129,7 @@ public class DrillDuckController : MonsterController
     {
         if (CurState is DieState)
         {
-            //_monsterInfo.Patterns[0].DeActiveCollider();
-            return;
+            _statemachine.ChangeState(new DieState(this));
         }
 
         _animator.SetFloat("SlideSpeed", 0.5f);
@@ -120,13 +145,12 @@ public class DrillDuckController : MonsterController
             {
                 _agent.speed = _stat.MoveSpeed * 3.0f;
             }
-            else if (aniTime < 1.0f)
+            else if (aniTime <= 0.7f)
             {
-                _agent.speed = _stat.MoveSpeed / 2;
+                _monsterInfo.Patterns[0].DeActiveCollider();
             }
             else if (aniTime >= 1.0f)
             {
-                _monsterInfo.Patterns[0].DeActiveCollider();
                 _statemachine.ChangeState(new IdleState(this));
             }
         }
