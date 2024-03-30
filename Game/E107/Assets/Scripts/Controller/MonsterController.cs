@@ -369,6 +369,12 @@ public class MonsterController : BaseController
     [PunRPC]
     void RPC_MonsterAttacked(int damage)
     {
+        MonsterAttacked(damage);
+
+    }
+
+    protected void MonsterAttacked(int damage)
+    {
         StartCoroutine(ChangeColorFromDamage());
 
         // 보스는 피격음이 없다.
@@ -379,7 +385,6 @@ public class MonsterController : BaseController
 
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;
-
     }
 }
 

@@ -16,7 +16,7 @@ public abstract class BaseController : MonoBehaviour
 	protected NavMeshAgent _agent;
 
 	protected Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
-	protected float damageCooldown = 0.3f;
+	protected float damageCooldown = 0.5f;
 	
 	
 	// ���� ��Ʈ��ũ

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ½ºÅ³À» »ç¿ëÇÏ¸é ¾ÆÀÌÅÛÀ» ¼Ò¸ğÇÏ°Å³ª ´Ù¸¥ ¾ÆÀÌÅÛÀ¸·Î ¹Ù²î´Â ½ºÅ³ÀÔ´Ï´Ù.
+/// ìŠ¤í‚¬ì„ ì‚¬ìš©í•˜ë©´ ì•„ì´í…œì„ ì†Œëª¨í•˜ê±°ë‚˜ ë‹¤ë¥¸ ì•„ì´í…œìœ¼ë¡œ ë°”ë€ŒëŠ” ìŠ¤í‚¬ì…ë‹ˆë‹¤.
 /// </summary>
 public abstract class ConsumingSkill : Skill
 {
@@ -29,7 +29,8 @@ public abstract class ConsumingSkill : Skill
 
         yield return null;
 
-        Managers.Resource.Destroy(gameObject);
+        //Managers.Resource.Destroy(gameObject);
+        
 
         Managers.Coroutine.Run(OnConsume(playerController));
 

@@ -91,6 +91,12 @@ public class Define
         KingJumpEndEffect,
         MushroomAttackEffect,
         TurtleSlimeAttackEffect,
+        NinjaClassSkillFinishEffect,
+        NinjaClassSkillStartEffect,
+        MageClassSkillEffect,
+        MageClassSkillAuraEffect,
+        HealOnceEffect,
+        PriestClassSkillEffect,
         MaxCount
     }
 
@@ -110,6 +116,24 @@ public class Define
     public enum ClassType
     {
         None,
-        Warrior
+        Warrior,
+        Priest,
+        Mage,
+        Ninja
+
+    }
+
+    public enum Clothes
+    {
+        NoneBody,
+        WarriorHat,
+        WarriorBody,
+        PriestHat,
+        PriestBody,
+        MageHat,
+        MageBody,
+        NinjaHair,
+        NinjaMask,
+        NinjaBody
     }
 }

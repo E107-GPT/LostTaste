@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,7 +9,6 @@ public class LoadingSceneManager : MonoBehaviour
 {
     public GameObject skipButton; 
     private AsyncOperation asyncLoad; // 비동기 씬 로딩을 위한 AsyncOperation
-    public Slider loadingBar; 
     private bool storyComplete = false; // 스토리 완료 체크
 
     void Start()
@@ -26,12 +26,11 @@ public class LoadingSceneManager : MonoBehaviour
         while (!asyncLoad.isDone)
         {
             float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f); // 진행률 계산
-            Debug.Log($"Loading progress: {progress * 100}%");
-            loadingBar.value = progress;
 
             // 로딩 완료 시 스킵 버튼 활성화
             if (asyncLoad.progress >= 0.9f)
             {
+                yield return new WaitForSeconds(2);
                 skipButton.SetActive(true);
             }
 

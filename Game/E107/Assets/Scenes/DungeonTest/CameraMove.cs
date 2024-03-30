@@ -1,59 +1,72 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    // Ä«¸Ş¶ó À§Ä¡ ¹è¿­
+    // ì¹´ë©”ë¼ ìœ„ì¹˜ ë°°ì—´
     private Vector3[] positions = new Vector3[]
     {
-        new Vector3(309.53f, 7.52f, -10.43f), // Ã¹ ¹øÂ° ½ºÅä¸® À§Ä¡
-        new Vector3(309.53f, 7.52f, 16.5f), // µÎ ¹øÂ° ½ºÅä¸® À§Ä¡
-        new Vector3(309.53f, 7.52f, 41.07f)  // ¼¼ ¹øÂ° ½ºÅä¸® À§Ä¡
+        new Vector3(9.444f, 5.65f, 49.65f), // í‰í™”ë¡œìš´ ë§ˆì„
+        new Vector3(4.49f, 2.29f, 99.94f),  // ë§ˆì™•ì˜ ì €ì£¼
+        new Vector3(5.22f, 3.293f, 149.316f),   // ì¤‘ê°„ ë³´ìŠ¤ë“¤
+        new Vector3(3.45f, 1.39f, 201.08f),    // ìš©ì‚¬ë“¤ì˜ ê²°ì§‘
+        new Vector3(5.96f, 1.1f, 247.63f),    // ëª¨í—˜ì˜ ì‹œì‘
     };
 
-    private int currentPositionIndex = 0; // ÇöÀç Ä«¸Ş¶ó À§Ä¡ ÀÎµ¦½º
+    // ì¹´ë©”ë¼ íšŒì „ ë°°ì—´
+    private Quaternion[] rotations = new Quaternion[]
+    {
+        Quaternion.Euler(44.261f, -90f, 0),
+        Quaternion.Euler(-16.847f, -90f, 0),
+        Quaternion.Euler(12.621f, -79.192f, -1.285f),
+        Quaternion.Euler(0, -90f, 0),
+        Quaternion.Euler(-15.902f, -71.791f, 0),
+    };
+
+    private int currentPositionIndex = 0; // í˜„ì¬ ì¹´ë©”ë¼ ìœ„ì¹˜ ì¸ë±ìŠ¤
+
+    public LoadingSceneManager loadingSceneManager;
 
     private void Start()
     {
-        // ½ÃÀÛ ½Ã Ã¹ ¹øÂ° ½ºÅä¸® À§Ä¡·Î Ä«¸Ş¶ó ÀÌµ¿
-        MoveCameraToPosition(0);
+        MoveCameraToPosition(currentPositionIndex);
+
+        StartCoroutine(MoveCameraPeriodically());
     }
 
-    public void MoveToNextPosition()
+    IEnumerator MoveCameraPeriodically()
     {
-        // ´ÙÀ½ ½ºÅä¸® À§Ä¡·Î ÀÌµ¿
-        if (currentPositionIndex + 1 < positions.Length)
+        while (currentPositionIndex < positions.Length - 1)
         {
+            // ì¼ì • ì‹œê°„ ëŒ€ê¸°
+            yield return new WaitForSeconds(3f);
+
+            // í˜„ì¬ ìœ„ì¹˜ì—ì„œ ë‹¤ìŒ ìœ„ì¹˜ë¡œ ì¸ë±ìŠ¤ ì—…ë°ì´íŠ¸
             currentPositionIndex++;
-            MoveCameraToPosition(currentPositionIndex);
-        }
-    }
 
-    public void MoveToPreviousPosition()
-    {
-        // ÀÌÀü ½ºÅä¸® À§Ä¡·Î ÀÌµ¿
-        if (currentPositionIndex - 1 >= 0)
-        {
-            currentPositionIndex--;
-            MoveCameraToPosition(currentPositionIndex);
+            // ì¹´ë©”ë¼ ìœ„ì¹˜ ì´ë™
+            if (currentPositionIndex < positions.Length)
+            {
+                MoveCameraToPosition(currentPositionIndex);
+            }
+            if (currentPositionIndex == positions.Length - 1)
+            {
+                yield return new WaitForSeconds(3f);
+                loadingSceneManager.CompleteStory(); // ìŠ¤í† ë¦¬ ì™„ë£Œ ì²˜ë¦¬
+            }
         }
     }
 
     private void MoveCameraToPosition(int positionIndex)
     {
-        // ÁöÁ¤µÈ ÀÎµ¦½ºÀÇ À§Ä¡·Î Ä«¸Ş¶ó ÀÌµ¿
-        transform.position = positions[positionIndex];
+        // ì§€ì •ëœ ì¸ë±ìŠ¤ì˜ ìœ„ì¹˜ë¡œ ì¹´ë©”ë¼ ì´ë™
+        if (positionIndex >= 0 && positionIndex < positions.Length)
+        {
+            transform.position = positions[positionIndex];
+            transform.rotation = rotations[positionIndex];
+        }
     }
 
-    // Å×½ºÆ®¿ë ±â´É: ´ÙÀ½, ÀÌÀü ¹öÆ°¿¡ ¿¬°á
-    public void NextButtonClicked()
-    {
-        MoveToNextPosition();
-    }
-
-    public void PrevButtonClicked()
-    {
-        MoveToPreviousPosition();
-    }
 }

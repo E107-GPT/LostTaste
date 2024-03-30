@@ -4,21 +4,53 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour, IPlayerInteractable
 {
-    
+    public DialogueUI dialogueUI;
+    public string dialogueNpcName;
+    public string[] dialogueTexts;
+
     [SerializeField]
     public Define.NPCType _npcType;
-    // EnumÀ¸·Î °ü¸®ÇÒÁö »ó¼Ó ¹Ş¾Æ ¾µÁö °í¹Î
-    
+    // Enumìœ¼ë¡œ ê´€ë¦¬í• ì§€ ìƒì† ë°›ì•„ ì“¸ì§€ ê³ ë¯¼
+
+    private int currentDialogueIndex = 0; // í˜„ì¬ ëŒ€ì‚¬ ì¸ë±ìŠ¤
+    private bool playerInRange = false;
+
     public virtual void OnInteracted(GameObject player)
     {
-        Debug.Log("NPC");
-        // ÇÃ·¹ÀÌ¾î°¡ EÅ°¸¦ ´­·¶À» ¶§ ÇÒ Çàµ¿ ¶Ç´Â UI
+        if (currentDialogueIndex < dialogueTexts.Length)
+        {
+            dialogueUI.ShowDialogue(dialogueNpcName, dialogueTexts[currentDialogueIndex]);
+            currentDialogueIndex++; // ë‹¤ìŒ ëŒ€ì‚¬ë¡œ ì¸ë±ìŠ¤ ì—…ë°ì´íŠ¸
+        }
+        else
+        {
+            // ëª¨ë“  ëŒ€ì‚¬ê°€ í‘œì‹œëœ í›„ ëŒ€í™”ì°½ì„ ìˆ¨ê¹€
+            dialogueUI.HideDialogue();
+            currentDialogueIndex = 0; // ì¸ë±ìŠ¤ ì´ˆê¸°í™”
+        }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Player")) return;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
 
-        // ÇÃ·¹ÀÌ¾î°¡ ´Ù°¡¿ÔÀ» ¶§ ÇÒ Çàµ¿ ¶Ç´Â UI
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        {
+            OnInteracted(GameObject.FindWithTag("Player"));
+        }
     }
 }

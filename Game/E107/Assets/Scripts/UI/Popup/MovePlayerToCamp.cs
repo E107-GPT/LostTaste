@@ -2,54 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AI; // NavMeshAgent »ç¿ëÀ» À§ÇØ ÇÊ¿ä
+using UnityEngine.AI; // NavMeshAgent ì‚¬ìš©ì„ ìœ„í•´ í•„ìš”
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class MovePlayerToCamp : MonoBehaviour
 {
-    // Ä·ÇÁ À§Ä¡
-    [Header("[ Ä·ÇÁ À§Ä¡ ]")]
-    public Transform campLocation; // Ä·ÇÁ À§Ä¡¸¦ ÀúÀåÇÏ´Â º¯¼ö
+    // ìº í”„ ìœ„ì¹˜
+    [Header("[ ìº í”„ ìœ„ì¹˜ ]")]
+    public Transform campLocation; // ìº í”„ ìœ„ì¹˜ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
 
-    // È®ÀÎ ¹öÆ°
-    [Header("[ È®ÀÎ ¹öÆ° ]")]
+    // í™•ì¸ ë²„íŠ¼
+    [Header("[ í™•ì¸ ë²„íŠ¼ ]")]
     public Button confirmButton;
 
-    // ½ºÅ©¸³Æ®°¡ È°¼ºÈ­µÇ¾úÀ» ¶§ È£ÃâµÇ´Â ¸Ş¼­µå
+    // ìŠ¤í¬ë¦½íŠ¸ê°€ í™œì„±í™”ë˜ì—ˆì„ ë•Œ í˜¸ì¶œë˜ëŠ” ë©”ì„œë“œ
     private void Awake()
     {
-        // ¹öÆ°¿¡ Å¬¸¯ ÀÌº¥Æ®¸¦ Ãß°¡
+        // ë²„íŠ¼ì— í´ë¦­ ì´ë²¤íŠ¸ë¥¼ ì¶”ê°€
         if (confirmButton != null)
             this.confirmButton.onClick.AddListener(LoadCampScene);
     }
 
-    // Camp SceneÀ» ·ÎµåÇÏ´Â ¸Ş¼­µå
+    // Camp Sceneì„ ë¡œë“œí•˜ëŠ” ë©”ì„œë“œ
     public void LoadCampScene()
     {
-        // "Dungeon" ¾ÀÀ» LoadSceneMode.Single ¸ğµå·Î ·ÎµåÇÕ´Ï´Ù.
+        // "Dungeon" ì”¬ì„ LoadSceneMode.Single ëª¨ë“œë¡œ ë¡œë“œí•©ë‹ˆë‹¤.
         //SceneManager.LoadScene("Dungeon", LoadSceneMode.Single);
         PhotonNetwork.LeaveRoom();
-        Managers.Scene.LoadScene(Define.Scene.Dungeon, true);
+        Managers.Scene.LoadScene(Define.Scene.Dungeon);
         
         
     }
 
-    // 'È®ÀÎ' ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÉ ¸Ş¼­µå
+    // 'í™•ì¸' ë²„íŠ¼ í´ë¦­ ì‹œ í˜¸ì¶œë  ë©”ì„œë“œ
     //public void OnConfirmButtonClicked()
     //{
-    //    GameObject player = GameObject.FindGameObjectWithTag("Player"); // ÇÃ·¹ÀÌ¾î ÅÂ±×¸¦ »ç¿ëÇÏ¿© ÇÃ·¹ÀÌ¾î °´Ã¼ Ã£±â
+    //    GameObject player = GameObject.FindGameObjectWithTag("Player"); // í”Œë ˆì´ì–´ íƒœê·¸ë¥¼ ì‚¬ìš©í•˜ì—¬ í”Œë ˆì´ì–´ ê°ì²´ ì°¾ê¸°
     //    if (player != null)
     //    {
     //        NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
     //        if (agent != null)
     //        {
-    //            // NavMeshAgent°¡ ÀÖ´Â °æ¿ì, Warp ¸Ş¼­µå¸¦ »ç¿ëÇÏ¿© Ä·ÇÁ À§Ä¡·Î ÀÌµ¿
+    //            // NavMeshAgentê°€ ìˆëŠ” ê²½ìš°, Warp ë©”ì„œë“œë¥¼ ì‚¬ìš©í•˜ì—¬ ìº í”„ ìœ„ì¹˜ë¡œ ì´ë™
     //            agent.Warp(campLocation.position);
     //        }
     //        else
     //        {
-    //            // NavMeshAgent°¡ ¾ø´Â °æ¿ì, Á÷Á¢ À§Ä¡¸¦ ¼³Á¤
+    //            // NavMeshAgentê°€ ì—†ëŠ” ê²½ìš°, ì§ì ‘ ìœ„ì¹˜ë¥¼ ì„¤ì •
     //            player.transform.position = campLocation.position;
     //        }
     //    }

@@ -419,12 +419,12 @@ GameObject:
   - component: {fileID: 1759252272454543774}
   - component: {fileID: 6560382981664885937}
   m_Layer: 7
-  m_Name: Body12
+  m_Name: PriestBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1759252272454543774
 Transform:
   m_ObjectHideFlags: 0
@@ -1011,12 +1011,12 @@ GameObject:
   - component: {fileID: 6669275746909730731}
   - component: {fileID: 747089595153250477}
   m_Layer: 7
-  m_Name: Body09
+  m_Name: MageBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6669275746909730731
 Transform:
   m_ObjectHideFlags: 0
@@ -2132,12 +2132,12 @@ GameObject:
   - component: {fileID: 8606102263752423335}
   - component: {fileID: 2377257282885777138}
   m_Layer: 7
-  m_Name: Body06
+  m_Name: NinjaBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8606102263752423335
 Transform:
   m_ObjectHideFlags: 0
@@ -3733,12 +3733,12 @@ GameObject:
   - component: {fileID: 3289992624121749794}
   - component: {fileID: 540635403621821196}
   m_Layer: 7
-  m_Name: Hat05
+  m_Name: PriestHat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7292755873464597697
 Transform:
   m_ObjectHideFlags: 0
@@ -4423,12 +4423,12 @@ GameObject:
   - component: {fileID: 7765188086661541980}
   - component: {fileID: 3752400532408884816}
   m_Layer: 7
-  m_Name: Hat08
+  m_Name: MageHat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3636977626849622508
 Transform:
   m_ObjectHideFlags: 0
@@ -9628,12 +9628,12 @@ GameObject:
   - component: {fileID: 2016228341719983560}
   - component: {fileID: 2249479179455190588}
   m_Layer: 7
-  m_Name: Hair13
+  m_Name: NinjaHair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8371268376370929966
 Transform:
   m_ObjectHideFlags: 0
@@ -9711,12 +9711,12 @@ GameObject:
   - component: {fileID: 4765748799686722116}
   - component: {fileID: 4839560136413168072}
   m_Layer: 7
-  m_Name: AC08_NinjaMask04
+  m_Name: NinjaMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3300318796683433309
 Transform:
   m_ObjectHideFlags: 0
@@ -11488,7 +11488,7 @@ GameObject:
   - component: {fileID: 7488265852461981165}
   - component: {fileID: 2895645089271286399}
   m_Layer: 7
-  m_Name: Body01
+  m_Name: NoneBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11502,8 +11502,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5014001012135253561}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12687,6 +12687,10 @@ GameObject:
   - component: {fileID: -1502292895877167693}
   - component: {fileID: -7893281695181731296}
   - component: {fileID: 744391383111373278}
+  - component: {fileID: 7419873428290177027}
+  - component: {fileID: 7013568030851262919}
+  - component: {fileID: 6827091201380110933}
+  - component: {fileID: 4322787744715334866}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -12886,6 +12890,7 @@ MonoBehaviour:
   photonView: {fileID: 0}
   entityName: 
   isStarted: 0
+  _righthand: {fileID: 0}
 --- !u!114 &744391383111373278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12906,6 +12911,75 @@ MonoBehaviour:
   <Duration>k__BackingField: 5
   <DetectionRadius>k__BackingField: 20
   <DrawingVelocity>k__BackingField: 10
+--- !u!114 &7419873428290177027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460575400253774540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9644aa02407c304aa5846160ec573a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7013568030851262919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460575400253774540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e73e9128b9491a448ca7b8f55073deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uB1CC\uC808"
+  <Description>k__BackingField: "\uAC15\uB825\uD55C \uC804\uAE30\uB97C \uBAA8\uC544
+    \uD130\uB728\uB9BD\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 0}
+  <SkillCoolDownTime>k__BackingField: 60
+  <RequiredMp>k__BackingField: 100
+  <Damage>k__BackingField: 250
+--- !u!114 &6827091201380110933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460575400253774540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e58f6599c24504e8c2587d1f5c415c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uC138\uD2C0\uB77C\uC774\uD2B8\uBE54"
+  <Description>k__BackingField: "\uD558\uB298\uC5D0\uC11C \uB808\uC774\uC800\uAC00
+    \uBE57\uBC1C\uCE69\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 0}
+  <SkillCoolDownTime>k__BackingField: 120
+  <RequiredMp>k__BackingField: 200
+  <Damage>k__BackingField: 40
+--- !u!114 &4322787744715334866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460575400253774540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d03abba2f7624443b640bb167b53f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: 
+  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 0}
+  <SkillCoolDownTime>k__BackingField: 180
+  <RequiredMp>k__BackingField: 150
+  <HealMount>k__BackingField: 5
+  <HealCount>k__BackingField: 10
 --- !u!1 &5484749937077794716
 GameObject:
   m_ObjectHideFlags: 0
@@ -16603,12 +16677,12 @@ GameObject:
   - component: {fileID: 6321771244695349226}
   - component: {fileID: 2282951384104392406}
   m_Layer: 7
-  m_Name: Hat14
+  m_Name: WarriorHat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6504702411216520957
 Transform:
   m_ObjectHideFlags: 0
@@ -20195,12 +20269,12 @@ GameObject:
   - component: {fileID: 1938586545252678424}
   - component: {fileID: 7022519584515233115}
   m_Layer: 7
-  m_Name: Body13
+  m_Name: WarriorBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1938586545252678424
 Transform:
   m_ObjectHideFlags: 0
