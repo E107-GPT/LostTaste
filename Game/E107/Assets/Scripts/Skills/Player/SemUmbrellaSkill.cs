@@ -39,13 +39,13 @@ public class SemUmbrellaSkill : Skill
         yield return new WaitForSeconds(0.2f);
 
         Washout(player, Color.white);
+        Managers.Resource.Destroy(skillObj.gameObject);
 
         yield return new WaitForSeconds(0.8f);
 
         item.IsOpen = false;
 
         yield return new WaitForSeconds(3.0f);
-        Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
     }
 
