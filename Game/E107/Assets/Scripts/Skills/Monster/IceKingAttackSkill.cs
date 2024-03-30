@@ -25,22 +25,14 @@ public class IceKingAttackSkill : Skill
 
         yield return new WaitForSeconds(0.5f);
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.IceKingCleaveEffect, Root);
-
-        // skillObject를 날아가는 방식으로 변경
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
         skillObj.rotation = Root.rotation;
-        //skillObj.transform.parent = _controller.transform;
-
         Vector3 rootForward = Root.TransformDirection(Vector3.forward);
-        //Vector3 rootRight = Root.TransformDirection(Vector3.right);
         skillObj.transform.position = Root.position + rootForward;
+        skillObj.localScale = new Vector3(1.0f, 3.0f, _range / 2);
 
-        skillObj.localScale = new Vector3(1.0f, 3.0f, _range / 2);    // _range + 3.0f
-        //skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_range - 1.0f));
-        //skillObj.position = new Vector3(skillObj.position.x, Root.position.y, skillObj.position.z);
-
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.IceKingCleaveEffect, Root);
         ps.transform.position = skillObj.transform.position - skillObj.transform.forward * 3.0f;
 
         float moveDuration = 0.33f;
