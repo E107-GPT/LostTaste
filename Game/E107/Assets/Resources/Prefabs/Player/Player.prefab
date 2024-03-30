@@ -12686,8 +12686,8 @@ GameObject:
   - component: {fileID: -2222246906417925215}
   - component: {fileID: -1502292895877167693}
   - component: {fileID: -7893281695181731296}
-  - component: {fileID: 744391383111373278}
   - component: {fileID: 7419873428290177027}
+  - component: {fileID: 744391383111373278}
   - component: {fileID: 7013568030851262919}
   - component: {fileID: 6827091201380110933}
   - component: {fileID: 4322787744715334866}
@@ -12891,6 +12891,18 @@ MonoBehaviour:
   entityName: 
   isStarted: 0
   _righthand: {fileID: 0}
+--- !u!114 &7419873428290177027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460575400253774540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9644aa02407c304aa5846160ec573a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &744391383111373278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12904,25 +12916,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Name>k__BackingField: "\uB3C4\uBC1C"
-  <Description>k__BackingField: "\uC8FC\uBCC0 \uD50C\uB808\uC774\uC5B4\uB97C \uB04C\uC5B4\uB2F9\uAE41\uB2C8\uB2E4."
+  <Description>k__BackingField: "\uC8FC\uBCC0 \uBAAC\uC2A4\uD130\uB97C \uB04C\uC5B4\uB2F9\uAE41\uB2C8\uB2E4."
   <Icon>k__BackingField: {fileID: 21300000, guid: c8e27998fc0db3340bf4562a0229a528, type: 3}
   <SkillCoolDownTime>k__BackingField: 60
   <RequiredMp>k__BackingField: 0
   <Duration>k__BackingField: 5
-  <DetectionRadius>k__BackingField: 20
-  <DrawingVelocity>k__BackingField: 10
---- !u!114 &7419873428290177027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5460575400253774540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9644aa02407c304aa5846160ec573a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  <DetectionRadius>k__BackingField: 4
+  <DrawingVelocity>k__BackingField: 3
 --- !u!114 &7013568030851262919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12939,7 +12939,7 @@ MonoBehaviour:
   <Description>k__BackingField: "\uAC15\uB825\uD55C \uC804\uAE30\uB97C \uBAA8\uC544
     \uD130\uB728\uB9BD\uB2C8\uB2E4."
   <Icon>k__BackingField: {fileID: 0}
-  <SkillCoolDownTime>k__BackingField: 60
+  <SkillCoolDownTime>k__BackingField: 30
   <RequiredMp>k__BackingField: 100
   <Damage>k__BackingField: 250
 --- !u!114 &6827091201380110933
@@ -12954,7 +12954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82e58f6599c24504e8c2587d1f5c415c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: "\uC138\uD2C0\uB77C\uC774\uD2B8\uBE54"
+  <Name>k__BackingField: "\uC138\uD2C0\uB77C\uC774\uD2B8 \uBE54"
   <Description>k__BackingField: "\uD558\uB298\uC5D0\uC11C \uB808\uC774\uC800\uAC00
     \uBE57\uBC1C\uCE69\uB2C8\uB2E4."
   <Icon>k__BackingField: {fileID: 0}
@@ -12973,8 +12973,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d03abba2f7624443b640bb167b53f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: 
-  <Description>k__BackingField: 
+  <Name>k__BackingField: "\uAD6C\uC6D0"
+  <Description>k__BackingField: "\uC8FC\uBCC0 \uD50C\uB808\uC774\uC5B4\uB4E4\uC758
+    \uCCB4\uB825\uC744 \uD68C\uBCF5\uC2DC\uD0B5\uB2C8\uB2E4."
   <Icon>k__BackingField: {fileID: 0}
   <SkillCoolDownTime>k__BackingField: 180
   <RequiredMp>k__BackingField: 150
