@@ -34,6 +34,13 @@ public class PlayerController : BaseController
     public int CurrentItemNum { get { return _currentItemNum; } }
     public float DashCoolDownTime { get { return _dashCoolDownTime; } }
     public IPlayerInteractable DetectedInteractable { get { return _detectedInteractable; } }
+    public Define.SkillType GetCurrentSkill()
+    {
+        return _curSkill;
+    }
+    public PlayerClass PlayerClass { get { return _playerClass; } }
+
+
 
 
     void LoadItemList()

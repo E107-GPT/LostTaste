@@ -84,7 +84,7 @@ public class DashSkillCooldownUIManager : MonoBehaviour
             keyImage.fillAmount = (dashCoolDown - elapsedTime) / dashCoolDown;
             if (dashCoolDown - elapsedTime > 1)
             {
-                dashCoolDownText.text = Mathf.Ceil(dashCoolDown - elapsedTime).ToString("F1") + "s";
+                dashCoolDownText.text = Mathf.Ceil(dashCoolDown - elapsedTime).ToString() + "s";
             }
             else
             {
