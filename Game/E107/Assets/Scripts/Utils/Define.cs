@@ -93,6 +93,8 @@ public class Define
         TurtleSlimeAttackEffect,
         NinjaClassSkillFinishEffect,
         NinjaClassSkillStartEffect,
+        MageClassSkillEffect,
+        MageClassSkillAuraEffect,
         MaxCount
     }
 

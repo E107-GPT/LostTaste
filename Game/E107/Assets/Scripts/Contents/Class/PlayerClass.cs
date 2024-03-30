@@ -122,7 +122,7 @@ public class PlayerClass : MonoBehaviour
         _clothes["MageBody"].SetActive(true);
         _clothes["MageHat"].SetActive(true);
 
-        _classSkill = gameObject.GetOrAddComponent<EmptySkill>();
+        _classSkill = gameObject.GetOrAddComponent<MageClassSkill>();
     }
     void DressUpNinjaSet()
     {
