@@ -20,14 +20,18 @@ public class WarriorClassSkill : Skill
         Root = transform.root;
 
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
+        ParticleSystem magnet = Managers.Effect.Play(Define.Effect.WarriorClassSkillMagnetEffect, Root);
+        magnet.transform.parent = Root.transform;
+        magnet.transform.position += Root.up * 2.0f;
+        magnet.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         yield return new WaitForSeconds(0.3f);
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.WarriorClassSkillEffect, Root);
         ps.transform.parent = Root;
 
-        float timer = 0; // ≈∏¿Ã∏” √ ±‚»≠
+        float timer = 0; // ÌÉÄÏù¥Î®∏ Ï¥àÍ∏∞Ìôî
         while (timer < Duration)
         {
-            // ≈ıªÁ√ºøÕ ∆ƒ∆º≈¨ Ω√Ω∫≈€¿ª æ’¿∏∑Œ øÚ¡˜¿‘¥œ¥Ÿ.
+            // Ìà¨ÏÇ¨Ï≤¥ÏôÄ ÌååÌã∞ÌÅ¥ ÏãúÏä§ÌÖúÏùÑ ÏïûÏúºÎ°ú ÏõÄÏßÅÏûÖÎãàÎã§.
             Collider[] monsters = Physics.OverlapSphere(Root.position, DetectionRadius, LayerMask.GetMask("Monster"));
             
             foreach (var monster in monsters)
@@ -39,12 +43,13 @@ public class WarriorClassSkill : Skill
                 mon.Agent.Move(dir * Time.deltaTime * DrawingVelocity);
             }
 
-            timer += Time.deltaTime; // ≈∏¿Ã∏”∏¶ æ˜µ•¿Ã∆Æ«’¥œ¥Ÿ.
-            yield return null; // ¥Ÿ¿Ω «¡∑π¿”±Ó¡ˆ ¥Î±‚«’¥œ¥Ÿ.
+            timer += Time.deltaTime; // ÌÉÄÏù¥Î®∏Î•º ÏóÖÎç∞Ïù¥Ìä∏Ìï©ÎãàÎã§.
+            yield return null; // Îã§Ïùå ÌîÑÎ†àÏûÑÍπåÏßÄ ÎåÄÍ∏∞Ìï©ÎãàÎã§.
         }
 
         //yield return new WaitForSeconds(0.3f);
         Managers.Effect.Stop(ps);
+        Managers.Effect.Stop(magnet);
 
 
 
