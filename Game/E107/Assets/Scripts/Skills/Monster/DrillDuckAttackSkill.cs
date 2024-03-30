@@ -57,12 +57,7 @@ public class DrillDuckAttackSkill : Skill
             rootUp = Root.TransformDirection(Vector3.up * 1.5f);
 
             skillObj.position = Root.position + rootForward + rootRight + rootUp;
-            
-
-            //skillObj.transform.parent = _controller.transform;
             skillObj.localScale = new Vector3(1.7f, 6.0f, _range);    // 5.0f
-            //skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_range / 3));
-            //skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 1.5f, skillObj.position.z);
             
 
             yield return new WaitForSeconds(0.15f);

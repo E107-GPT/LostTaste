@@ -33,9 +33,13 @@ public class IceKingSpikePattern : Pattern
 
         _particleSystem = Managers.Effect.Play(Define.Effect.IceKingSpikeEffect, Root);
         _particleSystem.transform.position = _sectorLoc.transform.position;
-        yield return new WaitForSeconds(2.0f);
+
+        yield return new WaitForSeconds(0.4f);
 
         Managers.Resource.Destroy(_sectorLoc.gameObject);
+
+        yield return new WaitForSeconds(1.6f);
+
         Managers.Effect.Stop(_particleSystem);
     }
 
