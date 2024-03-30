@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class CameraMove : MonoBehaviour
+public class StoryMove : MonoBehaviour
 {
     // 카메라 위치 배열
     private Vector3[] positions = new Vector3[]
@@ -12,7 +13,7 @@ public class CameraMove : MonoBehaviour
         new Vector3(4.49f, 2.29f, 99.94f),  // 마왕의 저주
         new Vector3(5.22f, 3.293f, 149.316f),   // 중간 보스들
         new Vector3(3.45f, 1.39f, 201.08f),    // 용사들의 결집
-        new Vector3(5.96f, 1.1f, 247.63f),    // 모험의 시작
+        new Vector3(5.96f, 1.1f, 297.63f),    // 모험의 시작
     };
 
     // 카메라 회전 배열
@@ -29,6 +30,17 @@ public class CameraMove : MonoBehaviour
 
     public LoadingSceneManager loadingSceneManager;
 
+    public TextMeshProUGUI storyText;
+
+    private string[] storyContents = new string[]
+    {
+        "평화로운 시대, 사람들은 서로 평화롭게 지내고 있었다.",
+        "그러나 마왕 성에서, 마왕의 저주가 세계를 덮치고 / 모든 이의 미각을 앗아갔다.",
+        "저주와 함께, 어둠의 군대가 세계를 집어삼키기 시작했다. / 희망이라곤 찾아볼 수 없는...",
+        "평화를 되찾기 위한 여정, 용사들이 한데 모여 저주를 깨뜨리고 / 마왕을 무찌르기 위한 대모험을 준비한다.",
+        "결전의 서막이 올랐다. 용사들의 끝나지 않는 여정, / 그 첫걸음이 이제 막 시작되었다."
+    };
+
     private void Start()
     {
         MoveCameraToPosition(currentPositionIndex);
@@ -41,7 +53,7 @@ public class CameraMove : MonoBehaviour
         while (currentPositionIndex < positions.Length - 1)
         {
             // 일정 시간 대기
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(10f);
 
             // 현재 위치에서 다음 위치로 인덱스 업데이트
             currentPositionIndex++;
@@ -53,7 +65,7 @@ public class CameraMove : MonoBehaviour
             }
             if (currentPositionIndex == positions.Length - 1)
             {
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(10f);
                 loadingSceneManager.CompleteStory(); // 스토리 완료 처리
             }
         }
@@ -66,6 +78,8 @@ public class CameraMove : MonoBehaviour
         {
             transform.position = positions[positionIndex];
             transform.rotation = rotations[positionIndex];
+            string processedText = storyContents[positionIndex].Replace("/", "\n");
+            storyText.text = processedText;
         }
     }
 
