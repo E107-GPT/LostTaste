@@ -12688,6 +12688,7 @@ GameObject:
   - component: {fileID: -7893281695181731296}
   - component: {fileID: 744391383111373278}
   - component: {fileID: 7419873428290177027}
+  - component: {fileID: 7013568030851262919}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -12887,6 +12888,7 @@ MonoBehaviour:
   photonView: {fileID: 0}
   entityName: 
   isStarted: 0
+  _righthand: {fileID: 0}
 --- !u!114 &744391383111373278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12919,6 +12921,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9644aa02407c304aa5846160ec573a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7013568030851262919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460575400253774540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e73e9128b9491a448ca7b8f55073deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uB1CC\uC808"
+  <Description>k__BackingField: "\uAC15\uB825\uD55C \uC804\uAE30\uB97C \uBAA8\uC544
+    \uD130\uB728\uB9BD\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 0}
+  <SkillCoolDownTime>k__BackingField: 60
+  <RequiredMp>k__BackingField: 100
+  <Duration>k__BackingField: 0
+  <Damage>k__BackingField: 250
 --- !u!1 &5484749937077794716
 GameObject:
   m_ObjectHideFlags: 0

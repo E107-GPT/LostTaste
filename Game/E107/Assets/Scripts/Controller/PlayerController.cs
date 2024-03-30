@@ -16,7 +16,7 @@ public class PlayerController : BaseController
     Item[] _inventory;
     int _currentItemNum;
     IPlayerInteractable _detectedInteractable;
-    GameObject _righthand;
+    public GameObject _righthand;
     Coroutine _mpRecoverCoroutine;
     private float _lastDashTime;
     float _dashCoolDownTime = 1.0f;

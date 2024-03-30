@@ -91,6 +91,8 @@ public class Define
         KingJumpEndEffect,
         MushroomAttackEffect,
         TurtleSlimeAttackEffect,
+        NinjaClassSkillFinishEffect,
+        NinjaClassSkillStartEffect,
         MaxCount
     }
 
