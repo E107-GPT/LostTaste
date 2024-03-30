@@ -9,10 +9,7 @@ const NavBar = () => {
     const currentPage = window.location.pathname.substring(1);
     const [curPage, setCurPage] = useState(currentPage === "" ? "home" : currentPage);
 
-    const pageList = [
-        { pageName: "home", path: "/", content: "홈" },
-        { pageName: "board", path: "/board", content: "게시판" },
-    ];
+    const pageList = [{ pageName: "home", path: "/", content: "HOME" }];
     const navigate = useNavigate();
 
     return (

@@ -3,7 +3,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const BoardAccordion = () => {
@@ -11,6 +11,26 @@ const BoardAccordion = () => {
         { name: "건의", color: "#0EB4FC", value: "question" },
         { name: "버그제보", color: "#F05650", value: "report" },
     ];
+
+    const getBoard = async () => {
+        const response = await axios.get("https://j10e107.p.ssafy.io/api/board?limit=10");
+        const data = response.data;
+
+        const newList = [];
+        data.map((e) => {
+            const obj = {
+                num: e.id,
+                type: e.categoryCode === "BCT_0001" ? "question" : "report",
+                title: e.title,
+                content: "",
+            };
+            newList.push();
+        });
+    };
+
+    useEffect(() => {
+        getBoard();
+    }, []);
 
     const [boardList, setBoardList] = useState([
         {
