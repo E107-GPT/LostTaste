@@ -19,7 +19,8 @@ public class SemUmbrellaSkill : Skill
         PlayerController playerController = player.GetComponent<PlayerController>();
         SemUmbrellaItem item = gameObject.GetComponent<SemUmbrellaItem>();
 
-        Debug.Log("SEM Umbrella Attack");
+        yield return null;  // 쿨타임 실행을 위해 1틱 대기
+
         playerController.StateMachine.ChangeState(new IdleState(playerController));
         
         item.IsOpen = true;
