@@ -268,7 +268,7 @@ public class PlayerController : BaseController
     public override void EnterDie()
     {
         base.EnterDie();
-        _animator.CrossFade("DIE", 0.1f);
+        _animator.CrossFade("Die", 0.1f);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDieState", RpcTarget.Others);
 
         // 추가한 부분

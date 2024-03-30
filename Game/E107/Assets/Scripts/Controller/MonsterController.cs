@@ -217,11 +217,12 @@ public class MonsterController : BaseController
         _audioSource[(int)SoundOrder.DIE].Play();
         _animator.Play("Die", -1);
         ////_animator.SetBool("isDie", true);
-        //_isDie = true;
+        _isDie = true;
         //PrintText($"{_isDie}");
 
         Destroy(gameObject, 3.0f);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDieState", RpcTarget.Others);
+
     }
     public override void ExcuteDie()
     {
