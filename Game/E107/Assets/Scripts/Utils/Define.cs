@@ -64,6 +64,7 @@ public class Define
         StrongSwingEffect,
         GalaxyZzzSkillEffect,
         WarriorClassSkillEffect,
+        WarriorClassSkillMagnetEffect,
         SemUmbrellaSkillEffect,
         BoomerangSkillEffect,
         ToxicFlowerMissileEffect,
