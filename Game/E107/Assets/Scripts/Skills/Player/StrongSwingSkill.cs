@@ -2,11 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrongSwingSkill : Skill
+public class StrongSwingSkill : AttackSkill
 {
-    [field: SerializeField]
-    public int Damage { get; set; }
-
     [field: SerializeField]
     private Vector3 Scale = new Vector3(5.0f, 2.0f, 5.0f);
 

@@ -1,11 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class CrocodileSwordSkill : Skill
+public class CrocodileSwordSkill : AttackSkill
 {
-    [field: SerializeField]
-    public int Damage { get; set; }
-
     [field: SerializeField]
     public Vector3 Scale = new Vector3(5.0f, 2.0f, 5.0f);
 
