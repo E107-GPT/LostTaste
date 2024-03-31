@@ -1226,7 +1226,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8736963729061956148}
-  - component: {fileID: 4353775805104463017}
   m_Layer: 11
   m_Name: Item Info
   m_TagString: Untagged
@@ -1254,34 +1253,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4353775805104463017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5086955870155003568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fc399e043f17064295a41d413754d7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemInfoUI: {fileID: 7890328581533509747}
-  itemNameText: {fileID: 4584002057717230018}
-  itemTierText: {fileID: 3415664760542986458}
-  itemFlavorText: {fileID: 5007264131822091741}
-  itemIcon: {fileID: 5968929110516202707}
-  itemSkillNameText: {fileID: 333087279917301076}
-  itemSkillDescriptionText: {fileID: 7930821796713758818}
-  itemSkillIcon: {fileID: 130367245957496121}
-  damagePanel: {fileID: 2711833171642896183}
-  hpRecoveryPanel: {fileID: 557931996645470285}
-  mpRecoveryPanel: {fileID: 4454124833779585900}
-  itemSkillDamageText: {fileID: 8294133010016083292}
-  itemSkillHpRecoveryText: {fileID: 3905001005057038816}
-  itemSkillMpRecoveryText: {fileID: 2922943368369577107}
-  itemSkillManaText: {fileID: 3721760803085373447}
-  itemSkillCoolDownText: {fileID: 1581525932335907727}
 --- !u!1 &5247762221015005280
 GameObject:
   m_ObjectHideFlags: 0
@@ -2375,7 +2346,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 7156d2e50e3c56944b37676c3955f7b3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
