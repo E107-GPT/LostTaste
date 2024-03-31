@@ -6,50 +6,29 @@ public class SunFlowerSkill : Skill
 {
     [field: SerializeField]
     public int Damage { get; set; }
+    [field: SerializeField]
+    private Vector3 Scale = new Vector3(5.0f, 5.0f, 5.0f);
 
     protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
     {
+        // Ìï¥Îãπ ÌîåÎ†àÏù¥Ïñ¥ ÏúÑÏπòÏóê Îñ®Ïñ¥Îú®Î¶¨Í∏∞
         Root = transform.root;
+        GameObject player = transform.root.gameObject;
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        player.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0, 1.5f);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SunFallEffect, Root);
+        yield return new WaitForSeconds(1.0f);
 
-        Vector3 dir = Root.forward;
-        Root.GetComponent<Animator>().CrossFade("ATTACK2", 0.1f, -1, 0);
-        dir = new Vector3(dir.x, 0, dir.z);
+        Transform trans = Root;
+        trans.position += new Vector3(0, 10, 0);
 
-        yield return new WaitForSeconds(0.3f);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BubbleWandSkillEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
-        ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
-
-        skillObj.localScale = new Vector3(0.7f, 0.7f, 0.7f);
-
-        skillObj.position = Root.transform.position;
-        skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
-        skillObj.rotation.SetLookRotation(dir);
-
-        float moveDuration = 1.5f; // ≈ıªÁ√º∞° ≥Øæ∆∞°¥¬ Ω√∞£¿ª º≥¡§«’¥œ¥Ÿ.
-        float timer = 0; // ≈∏¿Ã∏” √ ±‚»≠
-        float speed = 10.0f; // ≈ıªÁ√º¿« º”µµ∏¶ º≥¡§«’¥œ¥Ÿ.
-
-        while (timer < moveDuration)
-        {
-            // ≈ıªÁ√ºøÕ ∆ƒ∆º≈¨ Ω√Ω∫≈€¿ª æ’¿∏∑Œ øÚ¡˜¿‘¥œ¥Ÿ.
-            Vector3 moveStep = dir * speed * Time.deltaTime;
-            skillObj.position += moveStep;
-            ps.transform.position += moveStep;
-
-            timer += Time.deltaTime; // ≈∏¿Ã∏”∏¶ æ˜µ•¿Ã∆Æ«’¥œ¥Ÿ.
-            yield return null; // ¥Ÿ¿Ω «¡∑π¿”±Ó¡ˆ ¥Î±‚«’¥œ¥Ÿ.
-        }
-
-
+        skillObj.localScale = Scale;
+        skillObj.position = Root.position;
         Managers.Resource.Destroy(skillObj.gameObject);
-        Managers.Effect.Stop(ps);
-
-
-
     }
 }

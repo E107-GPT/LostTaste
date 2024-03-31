@@ -91,6 +91,7 @@ public class Define
         KingJumpEndEffect,
         MushroomAttackEffect,
         TurtleSlimeAttackEffect,
+        SunFallEffect,
         MaxCount
     }
 
