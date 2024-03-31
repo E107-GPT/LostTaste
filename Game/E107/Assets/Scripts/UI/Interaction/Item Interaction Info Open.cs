@@ -34,7 +34,12 @@ public class ItemInteractionInfoOpen : MonoBehaviour
 
     // 스킬 스텟
     [Header("[ 스킬 스텟 ]")]
+    public GameObject damagePanel; // 데미지 패널
+    public GameObject hpRecoveryPanel; // 회복 패널
+    public GameObject mpRecoveryPanel; // 회복 패널
     public TextMeshProUGUI itemSkillDamageText; // 스킬 데미지 텍스트
+    public TextMeshProUGUI itemSkillHpRecoveryText; // 스킬 회복 텍스트
+    public TextMeshProUGUI itemSkillMpRecoveryText; // 스킬 회복 텍스트
     public TextMeshProUGUI itemSkillManaText; // 스킬 마나 텍스트
     public TextMeshProUGUI itemSkillCoolDownText; // 스킬 쿨타임 텍스트
 
@@ -70,7 +75,7 @@ public class ItemInteractionInfoOpen : MonoBehaviour
         }
         else
         {
-            // 감지된 대상이 없으면 UI 비활성화 및 UI 초기화
+            // 감지된 대상이 없으면 UI 비활성화
             itemInfoUI.SetActive(false);
         }
     }
@@ -133,8 +138,28 @@ public class ItemInteractionInfoOpen : MonoBehaviour
         // 아이템 스킬 아이콘 업데이트
         itemSkillIcon.sprite = item.RightSkill.Icon;
 
-        // 아이템 스킬 데미지 텍스트 업데이트
-        // itemSkillDamageText.text = item.RightSkill.Damage.ToString();
+        // 아이템 스킬 데미지/회복 패널 및 텍스트 업데이트
+        if (item.RightSkill is ConsumingSkill)
+        {
+            // 회복 패널 활성화
+            damagePanel.SetActive(false);
+            hpRecoveryPanel.SetActive(true);
+            mpRecoveryPanel.SetActive(true);
+
+            Debug.Log($"회복 아이템임 {item.RightSkill}");
+            //itemSkillHpRecoveryText.text = item.RightSkill.HpRecoveryAmount.ToString();
+            //itemSkillMpRecoveryText.text = item.RightSkill.MpRecoveryAmount.ToString();
+        }
+        else
+        {
+            // 데미지 패널 활성화
+            damagePanel.SetActive(true);
+            hpRecoveryPanel.SetActive(false);
+            mpRecoveryPanel.SetActive(false);
+
+            Debug.Log($"공격 아이템임 {item.RightSkill}");
+            //itemSkillDamageText.text = item.RightSkill.Damage.ToString();
+        }
 
         // 아이템 스킬 마나 텍스트 업데이트
         itemSkillManaText.text = item.RightSkill.RequiredMp.ToString();
