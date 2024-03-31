@@ -23,6 +23,8 @@ public class PlayerController : BaseController
     Define.SkillType _curSkill = Define.SkillType.None;
     PlayerClass _playerClass;
 
+    ParticleSystem _moveEffect;
+
 
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
     private Color[] _originalColors; // 원래의 머티리얼 색상 저장용 배열
