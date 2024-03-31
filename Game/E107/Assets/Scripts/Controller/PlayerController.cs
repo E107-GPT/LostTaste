@@ -148,6 +148,7 @@ public class PlayerController : BaseController
         base.EnterMove();
         _animator.CrossFade("RUN", 0.3f);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeMoveState", RpcTarget.Others);
+
     }
     public override void ExcuteMove()
     {
@@ -211,6 +212,11 @@ public class PlayerController : BaseController
             //if (PhotonNetwork.IsConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
         }
 
+    }
+    public override void ExitMove()
+    {
+        base.ExitMove();
+        
     }
 
 

@@ -124,6 +124,19 @@ public class PortalTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            ParticleSystem[] particleSystems = other.gameObject.GetComponentsInChildren<ParticleSystem>();
+            ParticleSystem moveEffect = null;
+            foreach(var ps in particleSystems)
+            {
+                if(ps.name == "PlayerWalkEffect")
+                {
+                    ps.gameObject.SetActive(false);
+                    moveEffect = ps;
+                    break;
+                }
+            }
+
+
             other.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
             ChangeCameraBackgroundColor();
 
@@ -136,6 +149,7 @@ public class PortalTrigger : MonoBehaviour
             }
 
             MonsterManager.Instance._curMap = targetMapName;
+            moveEffect.gameObject.SetActive(true);
             if (!PhotonNetwork.IsMasterClient)
             {
                 MonsterManager.Instance.SendMonsterSpawnMsg(targetMapName);
