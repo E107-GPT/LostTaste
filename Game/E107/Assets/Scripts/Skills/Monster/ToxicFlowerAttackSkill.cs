@@ -21,46 +21,83 @@ public class ToxicFlowerAttackSkill : Skill
 
         yield return new WaitForSeconds(SkillCoolDownTime);
 
-        if (Root.GetComponent<MonsterController>().IsDie)
+        Vector3 dir = Root.forward;
+        dir = new Vector3(dir.x, 0, dir.z);
+        Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
+
+        yield return new WaitForSeconds(0.3f);
+
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
+        Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+        skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
+
+        ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
+
+        skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+        skillObj.position = Root.transform.position;
+        skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
+        skillObj.rotation.SetLookRotation(dir);
+
+        float moveDuration = 1.1f; // 투사체가 날아가는 시간을 설정합니다.
+        float timer = 0; // 타이머 초기화
+        float speed = 10.0f; // 투사체의 속도를 설정합니다.
+
+        while (timer < moveDuration)
         {
-            Root.GetComponent<Animator>().CrossFade("Die", 0.3f, -1, 0);
+            // 투사체와 파티클 시스템을 앞으로 움직입니다.
+            Vector3 moveStep = dir * speed * Time.deltaTime;
+            skillObj.position += moveStep;
+            ps.transform.position += moveStep;
+
+            timer += Time.deltaTime; // 타이머를 업데이트합니다.
+            yield return null; // 다음 프레임까지 대기합니다.
         }
-        else
-        {
-            Vector3 dir = Root.forward;
-            dir = new Vector3(dir.x, 0, dir.z);
-            Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
 
-            yield return new WaitForSeconds(0.3f);
+        Managers.Resource.Destroy(skillObj.gameObject);
+        Managers.Effect.Stop(ps);
 
-            ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
-            Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-            skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
+        #region CheckDie
+        //if (Root.GetComponent<MonsterController>().IsDie)
+        //{
+        //    Root.GetComponent<Animator>().CrossFade("Die", 0.3f, -1, 0);
+        //}
+        //else
+        //{
+        //    Vector3 dir = Root.forward;
+        //    dir = new Vector3(dir.x, 0, dir.z);
+        //    Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
 
-            ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
+        //    yield return new WaitForSeconds(0.3f);
 
-            skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
-            skillObj.position = Root.transform.position;
-            skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
-            skillObj.rotation.SetLookRotation(dir);
+        //    ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
+        //    Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+        //    skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
 
-            float moveDuration = 1.1f; // 투사체가 날아가는 시간을 설정합니다.
-            float timer = 0; // 타이머 초기화
-            float speed = 10.0f; // 투사체의 속도를 설정합니다.
+        //    ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 
-            while (timer < moveDuration)
-            {
-                // 투사체와 파티클 시스템을 앞으로 움직입니다.
-                Vector3 moveStep = dir * speed * Time.deltaTime;
-                skillObj.position += moveStep;
-                ps.transform.position += moveStep;
+        //    skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+        //    skillObj.position = Root.transform.position;
+        //    skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
+        //    skillObj.rotation.SetLookRotation(dir);
 
-                timer += Time.deltaTime; // 타이머를 업데이트합니다.
-                yield return null; // 다음 프레임까지 대기합니다.
-            }
+        //    float moveDuration = 1.1f; // 투사체가 날아가는 시간을 설정합니다.
+        //    float timer = 0; // 타이머 초기화
+        //    float speed = 10.0f; // 투사체의 속도를 설정합니다.
 
-            Managers.Resource.Destroy(skillObj.gameObject);
-            Managers.Effect.Stop(ps);
-        }
+        //    while (timer < moveDuration)
+        //    {
+        //        // 투사체와 파티클 시스템을 앞으로 움직입니다.
+        //        Vector3 moveStep = dir * speed * Time.deltaTime;
+        //        skillObj.position += moveStep;
+        //        ps.transform.position += moveStep;
+
+        //        timer += Time.deltaTime; // 타이머를 업데이트합니다.
+        //        yield return null; // 다음 프레임까지 대기합니다.
+        //    }
+
+        //    Managers.Resource.Destroy(skillObj.gameObject);
+        //    Managers.Effect.Stop(ps);
+        //}
+        #endregion
     }
 }
