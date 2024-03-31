@@ -75,7 +75,11 @@ public abstract class BaseController : MonoBehaviour
 	}
     void Update()
 	{
-
+        if(CurState is DieState)
+        {
+            _animator.Play("Die", 0);
+            return;
+        }
 		_statemachine.Execute();
 	}
 

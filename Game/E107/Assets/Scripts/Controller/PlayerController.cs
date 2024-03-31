@@ -34,6 +34,13 @@ public class PlayerController : BaseController
     public int CurrentItemNum { get { return _currentItemNum; } }
     public float DashCoolDownTime { get { return _dashCoolDownTime; } }
     public IPlayerInteractable DetectedInteractable { get { return _detectedInteractable; } }
+    public Define.SkillType GetCurrentSkill()
+    {
+        return _curSkill;
+    }
+    public PlayerClass PlayerClass { get { return _playerClass; } }
+
+
 
 
     void LoadItemList()
@@ -268,7 +275,7 @@ public class PlayerController : BaseController
     public override void EnterDie()
     {
         base.EnterDie();
-        _animator.CrossFade("DIE", 0.1f);
+        _animator.CrossFade("Die", 0.1f);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDieState", RpcTarget.Others);
 
         // 추가한 부분

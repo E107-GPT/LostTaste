@@ -211,6 +211,7 @@ public class MonsterController : BaseController
 
         Destroy(gameObject, 3.0f);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDieState", RpcTarget.Others);
+
     }
     public override void ExcuteDie()
     {
