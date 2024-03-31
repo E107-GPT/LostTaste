@@ -102,6 +102,7 @@ public class MonsterKingController : MonsterController
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
@@ -169,12 +170,14 @@ public class MonsterKingController : MonsterController
     public override void ExitMonsterKingHitDownState() 
     {
         _monsterInfo.Patterns[6].DeActiveCollider();
+        _agent.avoidancePriority = 50;
     }
 
     public override void EnterMonsterKingSlashState()           // Slash
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
@@ -236,12 +239,14 @@ public class MonsterKingController : MonsterController
     }
     public override void ExitMonsterKingSlashState() 
     {
+        _agent.avoidancePriority = 50;
     }
 
     public override void EnterMonsterKingStabState()            // Stab
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
@@ -304,12 +309,17 @@ public class MonsterKingController : MonsterController
             }
         }
     }
-    public override void ExitMonsterKingStabState() { }
+    public override void ExitMonsterKingStabState() 
+    {
+        _agent.avoidancePriority = 50;
+    }
 
     public override void EnterMonsterKingJumpStartState()       // JumpStart
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
+
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
             //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
@@ -437,6 +447,7 @@ public class MonsterKingController : MonsterController
     {
         _jumpLastTime = Time.time;
         GetComponent<Collider>().enabled = true;
+        _agent.avoidancePriority = 50;
     }
 
     #endregion
