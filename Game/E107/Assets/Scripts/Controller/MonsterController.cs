@@ -178,10 +178,10 @@ public class MonsterController : BaseController
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            //if (CurState is DieState)
-            //{
-            //    _statemachine.ChangeState(new DieState(this));
-            //}
+            if (CurState is DieState)
+            {
+                _statemachine.ChangeState(new DieState(this));
+            }
 
             if (aniTime >= 1.0f)
             {
