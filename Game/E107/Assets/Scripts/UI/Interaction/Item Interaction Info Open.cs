@@ -72,7 +72,6 @@ public class ItemInteractionInfoOpen : MonoBehaviour
         {
             // 감지된 대상이 없으면 UI 비활성화 및 UI 초기화
             itemInfoUI.SetActive(false);
-            // UI 초기화 함수 필요
         }
     }
 
