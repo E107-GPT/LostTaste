@@ -104,6 +104,7 @@ public class Define
     public enum NPCType
     {
         Normal,
+        Manual,
     }
 
     public enum SkillType
