@@ -4,11 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GalaxyZzzSkill : Skill
+public class GalaxyZzzSkill : AttackSkill
 {
-    [field: SerializeField]
-    public int Damage { get; set; }
-
     protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
