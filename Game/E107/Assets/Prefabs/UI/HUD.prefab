@@ -13600,6 +13600,7 @@ MonoBehaviour:
   classSkillInfoUI: {fileID: 0}
   classSkillNameText: {fileID: 0}
   classSkillIcon: {fileID: 0}
+  classSkillIconInterface: {fileID: 0}
   classSkillDescriptionText: {fileID: 0}
   warriorSkillPanel: {fileID: 0}
   ninjaMageSkillPanel: {fileID: 0}
@@ -17200,6 +17201,7 @@ GameObject:
   - component: {fileID: 7530411139787975610}
   - component: {fileID: 1042470494249882155}
   - component: {fileID: 5286552323918938366}
+  - component: {fileID: 7709293962900612838}
   m_Layer: 5
   m_Name: Dash Container
   m_TagString: Untagged
@@ -17268,6 +17270,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7709293962900612838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6093278641590249055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a3fc494cdb3b942aae6c72222621f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSkillInfoUI: {fileID: 0}
 --- !u!1 &6094422557611453766
 GameObject:
   m_ObjectHideFlags: 0

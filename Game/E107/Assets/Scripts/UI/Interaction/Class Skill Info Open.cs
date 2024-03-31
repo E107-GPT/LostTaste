@@ -7,7 +7,7 @@ using TMPro;
 
 
 /// <summary>
-/// 아이템 근처에서 아이템 정보 UI가 나오도록 하는 클래스입니다.
+/// 직업 스킬 위에 마우스를 올려서 스킬 정보 UI가 나오도록 하는 클래스입니다.
 /// </summary>
 public class ClassSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {

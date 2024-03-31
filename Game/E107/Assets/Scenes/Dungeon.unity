@@ -2011,6 +2011,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 7709293962900612838, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: dashSkillInfoUI
+      value: 
+      objectReference: {fileID: 563817560}
     - target: {fileID: 7739312702702434790, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -2440,6 +2444,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4873579834367171291, guid: 3270c38f3ec4cf848bfd1edbf610d8cb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6152377686360303659, guid: 3270c38f3ec4cf848bfd1edbf610d8cb, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2650,6 +2658,11 @@ PrefabInstance:
 --- !u!224 &563817559 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8736963729061956148, guid: 707488b424ea7074395a9604e8c61cc7, type: 3}
+  m_PrefabInstance: {fileID: 563817558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &563817560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7890328581533509747, guid: 707488b424ea7074395a9604e8c61cc7, type: 3}
   m_PrefabInstance: {fileID: 563817558}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &628696786 stripped
@@ -8152,7 +8165,7 @@ PrefabInstance:
     - target: {fileID: 9211577138896182539, guid: 76832f3175c3d7c499e74a0138e0c474, type: 3}
       propertyPath: itemBox.Array.data[0]
       value: 
-      objectReference: {fileID: 1203130661}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
