@@ -117,7 +117,7 @@ public class NPC : MonoBehaviour, IPlayerInteractable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && other.name == "Player")
         {
             playerInRange = true;
             ShowNPCName(true);
@@ -141,7 +141,7 @@ public class NPC : MonoBehaviour, IPlayerInteractable
     //}
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && other.name == "Player")
         {
             playerInRange = false;
             ShowNPCName(false);
