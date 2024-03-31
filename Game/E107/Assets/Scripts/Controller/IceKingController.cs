@@ -34,7 +34,7 @@ public class IceKingController : MonsterController
     private void RandomPatternSelector()
     {
         int rand = Random.Range(0, 101);
-        if (rand <= 30)
+        if (rand <= 100)
         {
             _statemachine.ChangeState(new IceKingSpikeState(this));
         }
@@ -96,7 +96,7 @@ public class IceKingController : MonsterController
             {
                 _animator.SetFloat("SpikeSpeed", 1.0f);
             }
-            else if (aniTime <= 0.9f)
+            else if (aniTime <= 0.68f)
             {
                 _animator.SetFloat("SpikeSpeed", 0.8f);
                 _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
