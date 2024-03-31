@@ -3599,6 +3599,7 @@ MonoBehaviour:
   photonView: {fileID: 0}
   entityName: 
   _detectPlayer: {fileID: 0}
+  _isDie: 0
 --- !u!136 &-7462142561957068251
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3685,9 +3686,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 66b267454fbcf7f46a5715ed848ebd54, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

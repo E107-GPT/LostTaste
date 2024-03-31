@@ -6,6 +6,7 @@ using UnityEngine;
 public class DrillDuckAttackSkill : Skill
 {
     private DrillDuckController _controller;
+    private Animator _animator;
 
     [field: SerializeField]
     private int _damage;
@@ -15,8 +16,9 @@ public class DrillDuckAttackSkill : Skill
 
     protected override void Init()
     {
-        SkillCoolDownTime = 0;
+        SkillCoolDownTime = 0.2f;
         _controller = GetComponent<DrillDuckController>();
+        _animator = _controller.GetComponent<Animator>();
 
         _damage = Root.GetComponent<MonsterController>().Stat.AttackDamage;
         _range = Root.GetComponent<MonsterController>().Stat.AttackRange;
@@ -24,26 +26,47 @@ public class DrillDuckAttackSkill : Skill
 
     protected override IEnumerator SkillCoroutine()
     {
-        Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
+        _animator.CrossFade("AttackBefore", 0.3f, -1, 0);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(SkillCoolDownTime);
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.DrillDuckAttackEffect, Root);
-        Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.transform.parent = _controller.transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
+        if (Root.GetComponent<MonsterController>().IsDie)
+        {
+            _animator.CrossFade("Die", 0.3f, -1, 0);
+        }
+        else
+        {
+            _animator.CrossFade("Attack", 0.3f, -1, 0);
 
-        skillObj.localScale = new Vector3(1.0f, 3.0f, _range / 2);    // 5.0f
-        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_range / 3));
-        skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 1.5f, skillObj.position.z);
-        skillObj.rotation = Root.rotation;
+            yield return new WaitForSeconds(0.8f);
 
-        ps.transform.parent = skillObj.transform;
-        ps.transform.position = skillObj.transform.position + skillObj.transform.right * 3.0f;
-        ps.transform.position = skillObj.transform.position + skillObj.transform.forward * 1.0f;
+            ParticleSystem ps = Managers.Effect.Play(Define.Effect.DrillDuckAttackEffect, Root);
+            Vector3 rootForward = Root.TransformDirection(Vector3.forward * _range);
+            Vector3 rootRight = Root.TransformDirection(Vector3.right * 0.8f);
+            Vector3 rootUp = Root.TransformDirection(Vector3.up * 1.5f);
+            ps.transform.position = Root.position + rootForward + rootRight + rootUp;
 
-        yield return new WaitForSeconds(0.8f);
-        Managers.Resource.Destroy(skillObj.gameObject);
-        Managers.Effect.Stop(ps);
+            yield return new WaitForSeconds(0.2f);
+
+            Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+            skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
+
+            skillObj.rotation = Root.rotation;
+            rootForward = Root.TransformDirection(Vector3.forward * (_range / 2));
+            rootRight = Root.TransformDirection(Vector3.right * 0.8f);
+            rootUp = Root.TransformDirection(Vector3.up * 1.5f);
+
+            skillObj.position = Root.position + rootForward + rootRight + rootUp;
+            skillObj.localScale = new Vector3(1.7f, 6.0f, _range);    // 5.0f
+            
+
+            yield return new WaitForSeconds(0.15f);
+            Managers.Resource.Destroy(skillObj.gameObject);
+
+            yield return new WaitForSeconds(0.8f);
+            Managers.Effect.Stop(ps);
+
+
+        }
     }
 }

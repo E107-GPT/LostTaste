@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
-// Executeø°º≠ Collider∞° « ø‰«— º¯∞£ø°∏∏ ªÁøÎ
-// ex. µµ≥¢∏¶ ≥ª∑¡¬Ô∞Ì ∆¯πﬂ ¿Ã∆Â∆Æ∞° ª˝±‰ Ω√¡° -> ∞¯∞› ∆«¡§
+// ExecuteÏóêÏÑú ColliderÍ∞Ä ÌïÑÏöîÌïú ÏàúÍ∞ÑÏóêÎßå ÏÇ¨Ïö©
+// ex. ÎèÑÎÅºÎ•º ÎÇ¥Î†§Ï∞çÍ≥† Ìè≠Î∞ú Ïù¥ÌéôÌä∏Í∞Ä ÏÉùÍ∏¥ ÏãúÏ†ê -> Í≥µÍ≤© ÌåêÏ†ï
 public class MonsterKingHitDownPattern : Pattern
 {
     private MonsterKingController _controller;
@@ -25,7 +25,7 @@ public class MonsterKingHitDownPattern : Pattern
             StopCoroutine(_coroutine);
             _coroutine = null;
             if (_particle != null) Managers.Effect.Stop(_particle);
-            if (_cylinderLoc != null) Managers.Resource.Destroy(_cylinderLoc.gameObject);
+            //if (_cylinderLoc != null) Managers.Resource.Destroy(_cylinderLoc.gameObject);
         }
     }
 
@@ -38,7 +38,6 @@ public class MonsterKingHitDownPattern : Pattern
         _cylinderLoc.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
         _cylinderLoc.rotation = Quaternion.identity;
 
-        // pattern obj ¿ßƒ°
         Vector3 rootForward = Root.TransformDirection(Vector3.forward * 5.0f);
         _cylinderLoc.position = Root.position + rootForward;
         Vector3 tempCylinder = _cylinderLoc.position;
@@ -47,6 +46,9 @@ public class MonsterKingHitDownPattern : Pattern
 
         _particle = Managers.Effect.Play(Define.Effect.KingHitDownEndEffect, _cylinderLoc);
         Managers.Sound.Play("Monster/KingHitDownEndEffect", Define.Sound.Effect);
+
+        yield return new WaitForSeconds(0.2f);
+        Managers.Resource.Destroy(_cylinderLoc.gameObject);
     }
 
     public override void SetCollider(int attackDamage)

@@ -62,7 +62,6 @@ public class IceKingController : MonsterController
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
 
-        // 둘 다 똑같음
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
             Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
@@ -75,7 +74,10 @@ public class IceKingController : MonsterController
 
     public override void ExcuteIceKingSpikeState()
     {
-        if (CurState is DieState) return;
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
 
         _animator.SetFloat("SpikeSpeed", 1.0f);
 
