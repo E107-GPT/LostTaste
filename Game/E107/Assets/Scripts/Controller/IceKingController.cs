@@ -9,7 +9,6 @@ public class IceKingController : MonsterController
     {
         base.Init();
 
-        // Other Class
         _stat = new MonsterStat(_unitType);
         
     }
@@ -49,38 +48,43 @@ public class IceKingController : MonsterController
     public override void EnterSkill()
     {
         base.EnterSkill();
-
+        _agent.avoidancePriority = 1;
     }
 
     public override void ExcuteSkill()
     {
         base.ExcuteSkill();
     }
+    public override void ExitSkill()
+    {
+        base.ExitSkill();
+        _agent.avoidancePriority = 50;
+    }
+
 
     // IceSpike
     public override void EnterIceKingSpikeState()
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
-        // 둘 다 똑같음
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
-            //ToDetectPlayer(0.8f);
             Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeIceKingSpikeState", RpcTarget.Others);
         }
-        
-        //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTarget.normalized, Vector3.up), 0.8f);
 
         _animator.CrossFade("Spike", 0.2f, -1, 0);
     }
 
     public override void ExcuteIceKingSpikeState()
     {
-        if (CurState is DieState) return;
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
 
         _animator.SetFloat("SpikeSpeed", 1.0f);
 
@@ -105,6 +109,12 @@ public class IceKingController : MonsterController
             }
         }
     }
+    public override void ExitIceKingSpikeState()
+    {
+        base.ExitIceKingSpikeState();
+        _agent.avoidancePriority = 50;
+    }
+
     [PunRPC]
     void RPC_ChangeIceKingSpikeState()
     {
@@ -123,13 +133,19 @@ public class IceKingController : MonsterController
     [PunRPC]
     void RPC_ChangeSkillState()
     {
-        // ???�ٲ�� ������
         _statemachine.ChangeState(new SkillState(this));
     }
     [PunRPC]
     void RPC_ChangeDieState()
     {
         _statemachine.ChangeState(new DieState(this));
+    }
+
+    [PunRPC]
+    void RPC_MonsterAttacked(int damage)
+    {
+        MonsterAttacked(damage);
+
     }
 
 }

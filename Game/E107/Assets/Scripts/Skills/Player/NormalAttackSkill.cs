@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalAttackSkill : Skill
+public class NormalAttackSkill : Skill, IAttackSkill
 {
-    [SerializeField]
-    private int Damage = 50;
+    [field: SerializeField]
+    public int Damage { get; set; }
 
     [field: SerializeField]
     private Vector3 Scale = new Vector3(3.0f, 2.0f, 3.0f);
 
-    protected override void Init() { }
+    protected override void Init() {
+        if (Damage == 0)
+        {
+            Damage = 50;
+        }
+    }
 
     protected override IEnumerator SkillCoroutine()
     {

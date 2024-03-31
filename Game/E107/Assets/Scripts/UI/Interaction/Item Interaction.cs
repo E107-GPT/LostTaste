@@ -4,74 +4,74 @@ using UnityEngine;
 using TMPro;
 
 /// <summary>
-/// ¾ÆÀÌÅÛ ±ÙÃ³¿¡¼­ »óÈ£ÀÛ¿ë UI°¡ ³ª¿Àµµ·Ï ÇÏ´Â Å¬·¡½ºÀÔ´Ï´Ù.
+/// ì•„ì´í…œ ê·¼ì²˜ì—ì„œ ìƒí˜¸ì‘ìš© UIê°€ ë‚˜ì˜¤ë„ë¡ í•˜ëŠ” í´ë˜ìŠ¤ì…ë‹ˆë‹¤.
 /// </summary>
 public class ItemInteraction : MonoBehaviour
 {
-    // ------------------------------------------------ º¯¼ö ¼±¾ğ ------------------------------------------------
+    // ------------------------------------------------ ë³€ìˆ˜ ì„ ì–¸ ------------------------------------------------
 
-    // ¾ÆÀÌÅÛ ÀÎÅÍ·º¼Ç Å¬·¡½º°¡ »ç¿ëÇÒ º¯¼ö ¼±¾ğ
-    private PlayerController _playerController; // ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯ ÂüÁ¶ º¯¼ö
-    private IPlayerInteractable _detectedInteractable; // ÇÃ·¹ÀÌ¾î Á¢ÃË »óÈ£ÀÛ¿ë
+    // ì•„ì´í…œ ì¸í„°ë ‰ì…˜ í´ë˜ìŠ¤ê°€ ì‚¬ìš©í•  ë³€ìˆ˜ ì„ ì–¸
+    private PlayerController _playerController; // í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ ì°¸ì¡° ë³€ìˆ˜
+    private IPlayerInteractable _detectedInteractable; // í”Œë ˆì´ì–´ ì ‘ì´‰ ìƒí˜¸ì‘ìš©
 
-    // »óÈ£ÀÛ¿ë UI
-    [Header("[ »óÈ£ÀÛ¿ë UI ]")]
+    // ìƒí˜¸ì‘ìš© UI
+    [Header("[ ìƒí˜¸ì‘ìš© UI ]")]
     public GameObject interactionUI;
-    public TextMeshProUGUI nameText; // ÀÌ¸§ ÅØ½ºÆ®
+    public TextMeshProUGUI nameText; // ì´ë¦„ í…ìŠ¤íŠ¸
 
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Update()
     {
-        // »óÈ£ÀÛ¿ë UI ¾÷µ¥ÀÌÆ®
+        // ìƒí˜¸ì‘ìš© UI ì—…ë°ì´íŠ¸
         UpdateInteractionUI();
     }
 
 
-    // ------------------------------------------------ »ç¿ëÀÚ Á¤ÀÇ ¸Ş¼­µå ------------------------------------------------
+    // ------------------------------------------------ ì‚¬ìš©ì ì •ì˜ ë©”ì„œë“œ ------------------------------------------------
 
-    // ÀÎÅÍ·º¼Ç UI¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ¸Ş¼­µå
+    // ì¸í„°ë ‰ì…˜ UIë¥¼ ì—…ë°ì´íŠ¸í•˜ëŠ” ë©”ì„œë“œ
     void UpdateInteractionUI()
     {
-        // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ¼­ ÂüÁ¶
+        // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•„ì„œ ì°¸ì¡°
         _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        if (_playerController == null) return; // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾øÀ» ¶§
+        if (_playerController == null) return; // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ì„ ë•Œ
 
-        // PlayerControllerÀÇ ÀÎÅÍ·º¼Ç¿¡ Á¢±Ù
+        // PlayerControllerì˜ ì¸í„°ë ‰ì…˜ì— ì ‘ê·¼
         _detectedInteractable = _playerController.DetectedInteractable;
 
         if (_detectedInteractable != null)
         {
-            // »óÈ£ÀÛ¿ë °¡´ÉÇÑ ´ë»óÀÌ °¨ÁöµÇ¸é UI ¾÷µ¥ÀÌÆ®
+            // ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œ ëŒ€ìƒì´ ê°ì§€ë˜ë©´ UI ì—…ë°ì´íŠ¸
             interactionUI.SetActive(true);
             DisplayInteractableInfo();
         }
         else
         {
-            // °¨ÁöµÈ ´ë»óÀÌ ¾øÀ¸¸é UI ºñÈ°¼ºÈ­ ¹× ÅØ½ºÆ® ÃÊ±âÈ­
+            // ê°ì§€ëœ ëŒ€ìƒì´ ì—†ìœ¼ë©´ UI ë¹„í™œì„±í™” ë° í…ìŠ¤íŠ¸ ì´ˆê¸°í™”
             interactionUI.SetActive(false);
             nameText.text = "";
         }
     }
 
-    // »óÈ£ÀÛ¿ë °¡´ÉÇÑ ´ë»ó¿¡ µû¶ó UI¿¡ Á¤º¸¸¦ Ç¥½Ã
+    // ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œ ëŒ€ìƒì— ë”°ë¼ UIì— ì •ë³´ë¥¼ í‘œì‹œ
     void DisplayInteractableInfo()
     {
         if (_detectedInteractable is Item)
         {
-            // ¾ÆÀÌÅÛÀÏ °æ¿ì ¾ÆÀÌÅÛ Á¤º¸ Ç¥½Ã
+            // ì•„ì´í…œì¼ ê²½ìš° ì•„ì´í…œ ì •ë³´ í‘œì‹œ
             DisplayItemInfo(_detectedInteractable as Item);
         }
         else if (_detectedInteractable is RandomItemChest)
         {
-            // ¾ÆÀÌÅÛ »óÀÚÀÏ °æ¿ì »óÀÚ Á¤º¸ Ç¥½Ã
+            // ì•„ì´í…œ ìƒìì¼ ê²½ìš° ìƒì ì •ë³´ í‘œì‹œ
             DisplayChestInfo(_detectedInteractable as RandomItemChest);
         }
     }
 
-    // ¾ÆÀÌÅÛ Á¤º¸¸¦ UI¿¡ Ç¥½Ã
+    // ì•„ì´í…œ ì •ë³´ë¥¼ UIì— í‘œì‹œ
     void DisplayItemInfo(Item item)
     {
         string colorHex = "";
@@ -97,14 +97,14 @@ public class ItemInteraction : MonoBehaviour
                 colorHex = "#E74C3C";
                 break;
             default:
-                colorHex = "#FFFFFF"; // ±âº» °ªÀ¸·Î Èò»ö ¹İÈ¯
+                colorHex = "#FFFFFF"; // ê¸°ë³¸ ê°’ìœ¼ë¡œ í°ìƒ‰ ë°˜í™˜
                 break;
         }
 
         nameText.text = $"<color={colorHex}>{item.Name}</color>";
     }
 
-    // ¾ÆÀÌÅÛ »óÀÚ Á¤º¸¸¦ UI¿¡ Ç¥½Ã
+    // ì•„ì´í…œ ìƒì ì •ë³´ë¥¼ UIì— í‘œì‹œ
     void DisplayChestInfo(RandomItemChest itemChest)
     {
         string chestTypeName = "";
@@ -113,16 +113,16 @@ public class ItemInteraction : MonoBehaviour
         switch (itemChest.ChestType)
         {
             case ItemChestType.WOODEN:
-                chestTypeName = "Çã¸§ÇÑ ³ª¹« »óÀÚ";
-                colorHex = "#FFFFFF"; // Èò»ö
+                chestTypeName = "í—ˆë¦„í•œ ë‚˜ë¬´ ìƒì";
+                colorHex = "#FFFFFF"; // í°ìƒ‰
                 break;
             case ItemChestType.BETTER:
-                chestTypeName = "Æ°Æ°ÇÑ ³ª¹« »óÀÚ";
-                colorHex = "#4682B4"; // Ã»»ö
+                chestTypeName = "íŠ¼íŠ¼í•œ ë‚˜ë¬´ ìƒì";
+                colorHex = "#4682B4"; // ì²­ìƒ‰
                 break;
             case ItemChestType.GOLDEN:
-                chestTypeName = "Âù¶õÇÑ È²±İ »óÀÚ";
-                colorHex = "#FFD700"; // ±İ»ö
+                chestTypeName = "ì°¬ë€í•œ í™©ê¸ˆ ìƒì";
+                colorHex = "#FFD700"; // ê¸ˆìƒ‰
                 break;
             default:
                 break;

@@ -45,9 +45,10 @@ public class DungeonEntranceTrigger : MonoBehaviour
                 p.SetActive(true);
             }
 
-            foreach(var p in GameObject.FindGameObjectsWithTag("Player"))
+            foreach(var p in GameObject.FindObjectsOfType<PlayerController>())
             {
-                p.GetComponent<PlayerController>().isStarted = true;
+
+                p.isStarted = true;
             }
         }
     }

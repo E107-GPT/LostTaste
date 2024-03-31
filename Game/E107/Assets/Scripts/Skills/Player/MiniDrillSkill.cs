@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MiniDrillSkill : Skill
+public class MiniDrillSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }

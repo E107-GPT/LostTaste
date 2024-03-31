@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 6437546287180896591}
   - component: {fileID: 187512872418184853}
   - component: {fileID: 4208725828119770345}
+  - component: {fileID: 6139313888325922661}
   m_Layer: 9
   m_Name: 0004_Boomerang
   m_TagString: Untagged
@@ -136,6 +137,7 @@ MonoBehaviour:
   <Icon>k__BackingField: {fileID: 21300000, guid: 7d9c2548a1041cb41b8f2d75385c6a16, type: 3}
   <LeftSkill>k__BackingField: {fileID: 0}
   <RightSkill>k__BackingField: {fileID: 4208725828119770345}
+  <IsHidden>k__BackingField: 0
   isDropped: 1
 --- !u!114 &4208725828119770345
 MonoBehaviour:
@@ -154,8 +156,30 @@ MonoBehaviour:
     \uBD80\uBA54\uB791\uC744 \uB358\uC9D1\uB2C8\uB2E4."
   <Icon>k__BackingField: {fileID: 21300000, guid: 7d9c2548a1041cb41b8f2d75385c6a16, type: 3}
   <SkillCoolDownTime>k__BackingField: 4
-  <RequiredMp>k__BackingField: 30
-  <Damage>k__BackingField: 100
+  <RequiredMp>k__BackingField: 50
+  <Damage>k__BackingField: 25
   <Scale>k__BackingField: {x: 2, y: 1, z: 2}
-  StartVelocity: 10
-  Acceleration: -10
+  StartVelocity: 15
+  Acceleration: -30
+--- !u!114 &6139313888325922661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3570330387622359733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

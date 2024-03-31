@@ -18,7 +18,7 @@ public class MonsterKingSlashPattern : Pattern
     {
         if (_coroutine != null)
         {
-            // wait for seconds·Î ¾ø¾Ö´Â Å¸ÀÌ¹ÖÀ» ¸ÂÃß±â Èûµé´Ù
+            // wait for secondsë¡œ ì—†ì• ëŠ” íƒ€ì´ë°ì„ ë§ì¶”ê¸° í˜ë“¤ë‹¤
             StopCoroutine(_coroutine);
             _coroutine = null;
             if (_particle != null) Managers.Effect.Stop(_particle);
@@ -37,15 +37,15 @@ public class MonsterKingSlashPattern : Pattern
         _sectorLoc.rotation = Root.rotation;
 
         Transform[] patternObjs = _sectorLoc.GetComponentsInChildren<Transform>();
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         for (int i = 1; i < patternObjs.Length; i++)
         {
             patternObjs[i].position = Root.position;
-            patternObjs[i].GetComponent<PatternObject>().Init(Root, attackDamage, _seq);    // ºÎ¸ğ °´Ã¼¿¡¼­ ÇÑ ¹ø¿¡ Àû¿ë ¸øÇÔ
+            patternObjs[i].GetComponent<PatternObject>().Init(Root, attackDamage, _seq);    // ë¶€ëª¨ ê°ì²´ì—ì„œ í•œ ë²ˆì— ì ìš© ëª»í•¨
             patternObjs[i].localScale = new Vector3(patternObjs[i].localScale.x, patternObjs[i].localScale.y, 1.0f * 5.0f);
         }
 
-        // °¢ colliderÀÇ zÃàÀ» ±âÁØÀ¸·Î ¾ÕÀ¸·Î ÀÌµ¿
+        // ê° colliderì˜ zì¶•ì„ ê¸°ì¤€ìœ¼ë¡œ ì•ìœ¼ë¡œ ì´ë™
         float speed = 50.0f;
         while(true)
         {

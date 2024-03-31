@@ -1,9 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GalaxyZzzSkill : Skill
+public class GalaxyZzzSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }
@@ -13,7 +14,15 @@ public class GalaxyZzzSkill : Skill
     protected override IEnumerator SkillCoroutine()
     {
         Debug.Log("GalaxyZZZ Attack");
+
+        PhotonView photonView = transform.root.GetComponent<PhotonView>();
         Root = RaycastGround();
+        if (photonView.IsMine == false)
+        {
+            yield break;
+        }
+
+        photonView.RPC("RPC_StartCoroutine", RpcTarget.Others, Root.position, Damage, _seq);
         if (Root == null) yield break;
 
         Debug.Log("GalaxyZZZ Not breaked");
@@ -29,9 +38,12 @@ public class GalaxyZzzSkill : Skill
         skillObj.transform.position = Root.position;
         skillObj.transform.rotation = Root.rotation;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         
         Managers.Resource.Destroy(skillObj.gameObject);
+
+        yield return new WaitForSeconds(0.3f);
+
         Managers.Effect.Stop(ps);
     }
 
@@ -44,4 +56,34 @@ public class GalaxyZzzSkill : Skill
         if (!isHit) return null;
         return raycastHit.transform;
     }
+
+    //[PunRPC]
+    //void RPC_StartCoroutine(Vector3 position)
+    //{
+    //    StartCoroutine(RpcCast(position));
+    //}
+
+
+    //IEnumerator RpcCast(Vector3 position)
+    //{
+    //    GameObject player = transform.root.gameObject;
+
+    //    player.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0, 1.5f);
+    //    yield return new WaitForSeconds(0.5f);
+
+    //    ParticleSystem ps = Managers.Effect.Play(Define.Effect.GalaxyZzzSkillEffect, player.transform);
+    //    ps.transform.position = position;
+    //    GameObject skillObj = Managers.Resource.Instantiate("Skills/SkillObject");
+    //    skillObj.GetComponent<SkillObject>().SetUp(player.transform, Damage, _seq);
+
+    //    skillObj.transform.position = position;
+    //    skillObj.transform.rotation = new Quaternion();
+
+    //    yield return new WaitForSeconds(0.5f);
+
+    //    Managers.Resource.Destroy(skillObj.gameObject);
+    //    Managers.Effect.Stop(ps);
+    //}
+
+
 }

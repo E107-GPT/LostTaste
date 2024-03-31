@@ -3482,6 +3482,7 @@ GameObject:
   - component: {fileID: 6093412481255899584}
   - component: {fileID: 6195312436366289615}
   - component: {fileID: 407798235238209184}
+  - component: {fileID: -8636033048762344737}
   m_Layer: 6
   m_Name: DrillDuck
   m_TagString: Monster
@@ -3599,6 +3600,7 @@ MonoBehaviour:
   photonView: {fileID: 0}
   entityName: 
   _detectPlayer: {fileID: 0}
+  _isDie: 0
 --- !u!136 &-7462142561957068251
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3685,9 +3687,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 66b267454fbcf7f46a5715ed848ebd54, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3771,6 +3773,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8636033048762344737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137786495578628170}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 2, y: 3, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
+  m_Area: 3
+  m_AffectedAgents: 00000000
 --- !u!1 &3153326930071574659
 GameObject:
   m_ObjectHideFlags: 0

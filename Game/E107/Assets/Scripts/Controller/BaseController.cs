@@ -14,17 +14,15 @@ public abstract class BaseController : MonoBehaviour
 	protected Animator _animator;
 	protected Rigidbody _rigidbody;
 	protected NavMeshAgent _agent;
-	// �������� ������ ���� �ð��� �����ϴ� ����
+
 	protected Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
-	protected float damageCooldown = 0.3f; // ���ظ� �ٽ� �ޱ������ ��� �ð�(��)
+	protected float damageCooldown = 0.5f;
 	
 	
 	// ���� ��Ʈ��ũ
 	[SerializeField]
 	protected bool isConnected = false;
 	public PhotonView photonView;
-
-	bool isDied;
 
     // protected bool _isDie;
     protected StateMachine _statemachine;
@@ -77,7 +75,11 @@ public abstract class BaseController : MonoBehaviour
 	}
     void Update()
 	{
-
+        if(CurState is DieState)
+        {
+            _animator.Play("Die", 0);
+            return;
+        }
 		_statemachine.Execute();
 	}
 
@@ -121,7 +123,9 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void ExcuteSkill() {
 		if (CurState is DieState) _statemachine.ChangeState(new DieState(this));
 	}
-	public virtual void ExitSkill() { }
+	public virtual void ExitSkill() {
+        if (CurState is DieState) _statemachine.ChangeState(new DieState(this));
+    }
 
 	// MOVE
 	public virtual void EnterMove() { }

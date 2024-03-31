@@ -414,8 +414,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player;
 
     
-                Managers.Player.SetLocalPlayerInfo(player.GetComponent<PhotonView>().ViewID, Define.ClassType.Warrior);
+                Managers.Player.SetLocalPlayerInfo(player.GetComponent<PhotonView>().ViewID, Define.ClassType.None);
                 Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+
+
+
+
+
             }
         }
 
@@ -448,7 +454,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //        PhotonNetwork.Destroy(p.gameObject);
         //    }
         //}
-        Managers.Scene.LoadScene(Define.Scene.Dungeon, true);
+        Managers.Scene.LoadScene(Define.Scene.Dungeon);
 
     }
 
@@ -464,6 +470,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
         Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+
 
     }
 
@@ -499,6 +507,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         
         
     }
+
+    
 
 
 

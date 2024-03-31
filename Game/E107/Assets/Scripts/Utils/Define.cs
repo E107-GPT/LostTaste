@@ -63,7 +63,9 @@ public class Define
         DrillDuckAttackEffect,
         StrongSwingEffect,
         GalaxyZzzSkillEffect,
+        WarriorClassSkillStartEffect,
         WarriorClassSkillEffect,
+        WarriorClassSkillDrawEffect,
         SemUmbrellaSkillEffect,
         BoomerangSkillEffect,
         ToxicFlowerMissileEffect,
@@ -92,12 +94,20 @@ public class Define
         MushroomAttackEffect,
         TurtleSlimeAttackEffect,
         SunFallEffect,
+        NinjaClassSkillFinishEffect,
+        NinjaClassSkillStartEffect,
+        MageClassSkillEffect,
+        MageClassSkillAuraEffect,
+        HealOnceEffect,
+        PriestClassSkillEffect,
+        PlayerWalkEffect,
         MaxCount
     }
 
     public enum NPCType
     {
         Normal,
+        Manual,
     }
 
     public enum SkillType
@@ -111,6 +121,27 @@ public class Define
     public enum ClassType
     {
         None,
-        Warrior
+        Warrior,
+        Priest,
+        Mage,
+        Ninja
+
+    }
+
+    public enum Clothes
+    {
+        NoneBody,
+        WarriorHat,
+        WarriorBody,
+        WarriorShield,
+        WarriorCloak,
+        PriestHat,
+        PriestBody,
+        MageHat,
+        MageBody,
+        MageBackPack,
+        NinjaHair,
+        NinjaMask,
+        NinjaBody
     }
 }

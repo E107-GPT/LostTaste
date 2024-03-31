@@ -12,12 +12,18 @@ public class PlayerController : BaseController
     PlayerStat _stat;
 
     // Item 관련 변수
+    Dictionary<string, Item> _itemList = new Dictionary<string, Item>();
     Item[] _inventory;
     int _currentItemNum;
     IPlayerInteractable _detectedInteractable;
-    GameObject _righthand;
+    public GameObject _righthand;
     Coroutine _mpRecoverCoroutine;
+    private float _lastDashTime;
+    float _dashCoolDownTime = 1.0f;
     Define.SkillType _curSkill = Define.SkillType.None;
+    PlayerClass _playerClass;
+
+    ParticleSystem _moveEffect;
 
 
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
@@ -28,11 +34,46 @@ public class PlayerController : BaseController
     public PlayerStat Stat { get { return _stat; } }
     public Item[] Inventory { get { return _inventory; } }
     public int CurrentItemNum { get { return _currentItemNum; } }
+    public float DashCoolDownTime { get { return _dashCoolDownTime; } }
     public IPlayerInteractable DetectedInteractable { get { return _detectedInteractable; } }
+    public Define.SkillType GetCurrentSkill()
+    {
+        return _curSkill;
+    }
+    public PlayerClass PlayerClass { get { return _playerClass; } }
 
+
+
+
+    void LoadItemList()
+    {
+        
+        UnityEngine.Object[] objects = Resources.LoadAll("Prefabs/Weapons");
+        foreach (UnityEngine.Object obj in objects)
+        {
+            if (!(obj is GameObject)) continue;
+
+            GameObject gameObject = obj as GameObject;
+
+            string weaponName = gameObject.name;
+            Item loadedItem = Managers.Resource.Instantiate($"Weapons/{weaponName}", _righthand.transform).GetComponent<Item>();
+            loadedItem.OnEquipped();
+            _itemList.Add(weaponName, loadedItem);
+            loadedItem.gameObject.SetActive(false);
+        }
+
+
+    }
+    /// <summary>
+    /// ////////////////////////////////////////////////
+    /// </summary>
     public override void Init()
     {
+
         // 캐릭터의 모든 Renderer 컴포넌트를 찾음
+
+        _playerClass = gameObject.GetOrAddComponent<PlayerClass>();
+
         _allRenderers = GetComponentsInChildren<Renderer>();
         _originalColors = new Color[_allRenderers.Length];
 
@@ -46,22 +87,20 @@ public class PlayerController : BaseController
         _stat = new PlayerStat(Define.UnitType.Player);
         _stat.InitStat(Define.UnitType.Player);
 
-        ///
+
         _inventory = new Item[3];
         _righthand = Util.FindChild(gameObject, "weapon_r", true);
 
-        Item first = Managers.Resource.Instantiate("Weapons/0028_BubbleWand", _righthand.transform).GetComponent<Item>();
-        first.OnEquipped();
-        Item second = Managers.Resource.Instantiate("Weapons/0000_Fist", _righthand.transform).GetComponent<Item>();
-        second.OnEquipped();
-        _inventory[1] = first;
-        _inventory[2] = second;
+        LoadItemList();
+
+        _inventory[1] = _itemList["0028_BubbleWand"];
+        _inventory[1].gameObject.SetActive(true);
+        _inventory[2] = _itemList["0000_Fist"];
 
         _currentItemNum = 1;
 
-        second.gameObject.SetActive(false);
+        //second.gameObject.SetActive(false);
 
-        ///
 
         Managers.Input.KeyAction -= OnKeyboard;
         Managers.Input.KeyAction += OnKeyboard;
@@ -109,6 +148,7 @@ public class PlayerController : BaseController
         base.EnterMove();
         _animator.CrossFade("RUN", 0.3f);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeMoveState", RpcTarget.Others);
+
     }
     public override void ExcuteMove()
     {
@@ -173,6 +213,11 @@ public class PlayerController : BaseController
         }
 
     }
+    public override void ExitMove()
+    {
+        base.ExitMove();
+        
+    }
 
 
 
@@ -182,6 +227,7 @@ public class PlayerController : BaseController
         if (photonView.IsMine || !PhotonNetwork.IsConnected || PhotonNetwork.InLobby) LookMousePosition();
 
         _animator.Play("DASH", -1, 0);
+        _lastDashTime = Time.time;
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDashState", RpcTarget.Others);
 
     }
@@ -214,7 +260,8 @@ public class PlayerController : BaseController
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.RightSkill, gameObject.transform.rotation);
                 break;
             case Define.SkillType.ClassSkill:
-                gameObject.GetComponent<WarriorClassSkill>().Cast();
+                _playerClass.ClassSkill.Cast();
+                //gameObject.GetComponent<WarriorClassSkill>().Cast();
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.ClassSkill, gameObject.transform.rotation);
                 break;
         }
@@ -223,7 +270,7 @@ public class PlayerController : BaseController
     public override void ExcuteSkill()
     {
         base.ExcuteSkill();
-        if (Input.GetKeyDown(KeyCode.Space)) _statemachine.ChangeState(new DashState(this));
+        if (Input.GetKeyDown(KeyCode.Space) && (Time.time - _lastDashTime >= _dashCoolDownTime || _lastDashTime == 0)) _statemachine.ChangeState(new DashState(this));
     }
 
     public override void ExitSkill()
@@ -236,7 +283,7 @@ public class PlayerController : BaseController
     public override void EnterDie()
     {
         base.EnterDie();
-        _animator.CrossFade("DIE", 0.1f);
+        _animator.CrossFade("Die", 0.1f);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDieState", RpcTarget.Others);
 
         // 추가한 부분
@@ -305,7 +352,7 @@ public class PlayerController : BaseController
 
         if (_statemachine.CurState is DieState || CurState is DashState || CurState is SkillState) return;
 
-
+        // Move
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             if (_statemachine.CurState is not MoveState)
@@ -315,22 +362,26 @@ public class PlayerController : BaseController
             }
 
         }
-        if (Input.GetKey(KeyCode.Space))
+        // Dash
+        if (Input.GetKey(KeyCode.Space) && (Time.time - _lastDashTime >= _dashCoolDownTime || _lastDashTime == 0))
         {
             _statemachine.ChangeState(new DashState(this));
+            
             //if (isConnected) photonView.RPC("ChangeDashState", RpcTarget.Others);
         }
+
+
         // 무기 교체
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (isStarted && Input.GetKey(KeyCode.Alpha1))
         {
             ChangeToItem(1);
 
-            if (photonView.IsMine) photonView.RPC("ChangeFirstItem", RpcTarget.Others);
+            //if (photonView.IsMine) photonView.RPC("ChangeFirstItem", RpcTarget.Others);
         }
-        else if (Input.GetKey(KeyCode.Alpha2))
+        else if (isStarted && Input.GetKey(KeyCode.Alpha2))
         {
             ChangeToItem(2);
-            if (photonView.IsMine) photonView.RPC("ChangeSecondItem", RpcTarget.Others);
+            //if (photonView.IsMine) photonView.RPC("ChangeSecondItem", RpcTarget.Others);
         }
 
         // 상호작용
@@ -351,26 +402,55 @@ public class PlayerController : BaseController
             if (currentItem.gameObject.name == "0000_Fist") return;
 
             DropCurrentItem();
-            ObtainWeapon("0000_Fist");
+            //ObtainWeapon("0000_Fist");
 
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            float lastSkillCastTime = GetComponent<WarriorClassSkill>().LastCastTime;
-            if (lastSkillCastTime != 0 && Time.time - lastSkillCastTime < GetComponent<WarriorClassSkill>().SkillCoolDownTime) return;
-
+            if (!_playerClass.ClassSkill.IsPlayerCastable(this)) return;
             _curSkill = Define.SkillType.ClassSkill;
             _statemachine.ChangeState(new SkillState(this));
             //if (isConnected) photonView.RPC("ChageSkillState", RpcTarget.Others);
         }
 
 
+        // 여기 잠시 임시키 넣어야할듯
 
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            ChangeClass(Define.ClassType.Warrior);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            ChangeClass(Define.ClassType.Priest);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            ChangeClass(Define.ClassType.Mage);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            ChangeClass(Define.ClassType.Ninja);
+        }
     }
+
+    public void ChangeClass(Define.ClassType classType)
+    {
+        _playerClass.ChangeClass(classType);
+        if (photonView.IsMine) photonView.RPC("RPC_ChangeClass", RpcTarget.Others, classType);
+    }
+
     #endregion
 
     #region PunRPC
+
+    [PunRPC]
+    void RPC_ChangeClass(Define.ClassType classType)
+    {
+        _playerClass.ChangeClass(classType);
+    }
+
     [PunRPC]
     void ChangeMoveState()
     {
@@ -414,33 +494,52 @@ public class PlayerController : BaseController
         ChangeToItem(2);
     }
     [PunRPC]
-    void EquipItemRPC(string itemName)
+    void RPC_EquipItem(int inventoryNum, string itemName, int viewID)
     {
 
+        // 이미 바닥에 아이템은 버려진 상태임 왜냐하면 이 메세지를 보낸 녀석이 Instantiate 해버렸기 떄문
+        // 그러니까 여기서 해야할 일은 itemName을 이용해서 내 손에 켜주면됨
+
+        // 손을 비워준다.
+        _inventory[CurrentItemNum].gameObject.SetActive(false);
+        // 인벤 정보 바꿔주고
+        _inventory[CurrentItemNum] = _itemList[itemName];
+        // 실제로 껴준다.
+        _inventory[CurrentItemNum].gameObject.SetActive(true);
+
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            foreach(var item in GameObject.FindObjectsOfType<PhotonView>())
+            {
+                if(item.ViewID == viewID)
+                {
+                    PhotonNetwork.Destroy(item.gameObject);
+                    break;
+                }
+            }
+        }
+
+
+
+        
+
+
         //ObtainWeapon(itemName);
-        _detectedInteractable.OnInteracted(this.gameObject);
+        //_detectedInteractable.OnInteracted(this.gameObject);
         //GameObject go = Managers.Resource.Instantiate($"Weapons/{itemName}", _righthand.transform);
     }
 
     [PunRPC]
     void OpenChestRPC()
     {
+        // 추후 수정
+        // todo 이름 받아와서 열까?
+        //
         _detectedInteractable.OnInteracted(this.gameObject);
     }
 
     [PunRPC]
-    void DropCurrentItemRPC()
-    {
-        Item currentItem = _inventory[_currentItemNum];
-        ObtainWeapon("0000_Fist");
-        GameObject go = Managers.Resource.Instantiate($"Weapons/{currentItem.gameObject.name}", gameObject.transform);
-        go.transform.position = gameObject.transform.position;
-        go.transform.SetParent(null);
-        go.transform.rotation = new Quaternion();
-        go.GetComponent<Item>().OnDropped();
-
-        Managers.Resource.Destroy(currentItem.gameObject);
-    }
 
     #endregion
 
@@ -456,6 +555,7 @@ public class PlayerController : BaseController
     {
         // 대쉬 중에 무적
         if (CurState is DashState) return;
+        if (photonView.IsMine == false) return;
 
         base.TakeDamage(skillObjectId, damage);
 
@@ -467,14 +567,20 @@ public class PlayerController : BaseController
             // 쿨다운 중이므로 피해를 주지 않음
             return;
         }
-
+        lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
         StartCoroutine(ChangeColorTemporarily());
         Managers.Sound.Play("Player/Attacked",Define.Sound.Effect, 1.0f);
 
+        
+        // 내꺼가 아니면 데미지 안받음, 즉 죽지않음
+        // 죽는 것은 포톤으로만
+
+        photonView.RPC("RPC_Attacked", RpcTarget.Others, damage);
         _stat.Hp -= damage;
         if (_stat.Hp < 0) _stat.Hp = 0;
-        lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
+        
         //Debug.Log($"{_stat.Hp}!!!");
+        
 
         if (_stat.Hp <= 0)
         {
@@ -522,46 +628,92 @@ public class PlayerController : BaseController
         if (_inventory[_currentItemNum] != null) _inventory[_currentItemNum].gameObject.SetActive(false);
 
         _currentItemNum = num;
+
+        if (photonView.IsMine) photonView.RPC("RPC_ItemChanged", RpcTarget.Others, CurrentItemNum,_inventory[CurrentItemNum].gameObject.name);
+    }
+
+    [PunRPC]
+    void RPC_ItemChanged(int inventoryNum, string itemName)
+    {
+        _inventory[_currentItemNum].gameObject.SetActive(false);
+        _inventory[inventoryNum] = _itemList[itemName];
+        _inventory[inventoryNum].gameObject.SetActive(true);
+
+        _currentItemNum = inventoryNum;
     }
 
     public void EquipItem(Item item)
     {
-        item.transform.parent = _righthand.transform;
-        item.transform.SetParent(_righthand.transform);
-
-        Debug.Log(_righthand.transform.root.name);
-
         Item currentItem = _inventory[_currentItemNum];
 
-        if (currentItem.gameObject.name == "0000_Fist")
-        {
-            Destroy(currentItem);
-        }
-        else
+        currentItem.gameObject.SetActive(false);
+
+
+        // 내가 가진것 일단 바닥에 둠
+        if(currentItem.gameObject.name != "0000_Fist")
         {
             DropCurrentItem();
         }
+        // 주먹 상태
+        string dropItemName = item.gameObject.name.Replace("(Clone)", "");
+        _inventory[_currentItemNum].gameObject.SetActive(false);
+        _inventory[_currentItemNum] = _itemList[dropItemName];
+        _inventory[_currentItemNum].gameObject.SetActive(true);
 
-        _inventory[_currentItemNum] = item;
-        item.OnEquipped();
+        int viewID = item.GetComponent<PhotonView>().ViewID;
         Debug.Log($"{_inventory[_currentItemNum].gameObject.name} Equipped");
-        if (photonView.IsMine) photonView.RPC("EquipItemRPC", RpcTarget.Others, item.gameObject.name);
+        if(PhotonNetwork.IsMasterClient)PhotonNetwork.Destroy(item.gameObject);
+        if (photonView.IsMine) photonView.RPC("RPC_EquipItem", RpcTarget.Others, _currentItemNum, dropItemName, viewID);
+
     }
 
-    public Item DropCurrentItem()
+    public void DropCurrentItem()
     {
+        // 현재 아이템 끄기
         Item currentItem = _inventory[_currentItemNum];
+        currentItem.gameObject.SetActive(false);
 
-        currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
-        currentItem.gameObject.transform.parent = null;
-        currentItem.gameObject.transform.position = gameObject.transform.root.position;
-        currentItem.gameObject.transform.rotation = new Quaternion();
-        currentItem.OnDropped();
+        // 현재아이템 주먹으로 바꾸기
+        _inventory[_currentItemNum] = _itemList["0000_Fist"];
+        _inventory[_currentItemNum].gameObject.SetActive(true);
 
-        if (photonView.IsMine) photonView.RPC("DropCurrentItemRPC", RpcTarget.Others);
-        return currentItem;
+        // 바닥에 생성 해주기
+
+        // TODO : 마스터에서 생성해야하나?
+
+        //int ViewID = go.GetComponent<PhotonView>().ViewID;
+
+        //currentItem.gameObject.transform.parent = Managers.Scene.CurrentScene.transform;
+        //currentItem.gameObject.transform.parent = null;
+        //currentItem.gameObject.transform.position = gameObject.transform.root.position;
+        //currentItem.gameObject.transform.rotation = new Quaternion();
+        //currentItem.OnDropped();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate($"Prefabs/Weapons/{currentItem.gameObject.name}", transform.position, new Quaternion());
+        }
+        if (photonView.IsMine) photonView.RPC("RPC_DropCurrentItem", RpcTarget.Others, currentItem.gameObject.name, transform.position);
+
     }
 
+    [PunRPC]
+    void RPC_DropCurrentItem(string itemName, Vector3 position)
+    {
+        // 보낸쪽에서 이미 바닥에아이템 생성해뒀음;
+        Item currentItem = _inventory[_currentItemNum];
+        currentItem.gameObject.SetActive(false);
+
+        // 현재아이템 주먹으로 바꾸기
+        _inventory[_currentItemNum] = _itemList["0000_Fist"];
+        _inventory[_currentItemNum].gameObject.SetActive(true);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate($"Prefabs/Weapons/{itemName}", position, new Quaternion());
+        }
+    }
+
+    
     public void LookMousePosition()
     {
         LayerMask mask = LayerMask.GetMask("Ground");
@@ -580,8 +732,23 @@ public class PlayerController : BaseController
 
     public void ObtainWeapon(string weaponName)
     {
-        _inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/" + weaponName, _righthand.transform).GetComponent<Item>();
-        _inventory[_currentItemNum].OnEquipped();
+        //_inventory[_currentItemNum] = Managers.Resource.Instantiate("Weapons/" + weaponName, _righthand.transform).GetComponent<Item>();
+
+        _inventory[_currentItemNum].gameObject.SetActive(false);
+        _inventory[_currentItemNum] = _itemList[weaponName];
+        _inventory[_currentItemNum].gameObject.SetActive(true);
+
+        if (photonView.IsMine)
+        {
+            photonView.RPC("RPC_ObtainWeapon", RpcTarget.Others, weaponName);
+        }
+        //_inventory[_currentItemNum].OnEquipped();
+    }
+
+    [PunRPC]
+    void RPC_ObtainWeapon(string weaponName)
+    {
+        ObtainWeapon(weaponName);
     }
 
     public void StartMpRecover()
@@ -636,6 +803,82 @@ public class PlayerController : BaseController
         _agent.Warp(position);
     }
 
-    
+    [PunRPC]
+    void RPC_Attacked(int damage)
+    {
+        StartCoroutine(ChangeColorTemporarily());
+        Managers.Sound.Play("Player/Attacked", Define.Sound.Effect, 1.0f);
+
+
+        _stat.Hp -= damage;
+        if (_stat.Hp < 0) _stat.Hp = 0; // 해당 공격자의 마지막 공격 시간 업데이트
+                                                    //Debug.Log($"{_stat.Hp}!!!");
+    }
+
+
+    IEnumerator HealEffect()
+    {
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.HealOnceEffect, transform);
+        ps.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        ps.transform.position += transform.up * 2.0f;
+
+        yield return new WaitForSeconds(0.4f);
+    }
+
+    public void TakeHeal(int heal)
+    {
+        if (photonView.IsMine == false) return;
+
+        StartCoroutine(HealEffect());
+
+        photonView.RPC("RPC_Healed", RpcTarget.Others, heal);
+        _stat.Hp += heal;
+        if (_stat.Hp >= _stat.MaxHp) _stat.Hp = _stat.MaxHp;
+
+       
+    }
+
+    [PunRPC]
+    void RPC_Healed(int heal)
+    {
+        // 힐 이펙트 넣고
+        // 힐 사운드 넣기
+        //StartCoroutine(ChangeColorTemporarily());
+        //Managers.Sound.Play("Player/Attacked", Define.Sound.Effect, 1.0f);
+
+        StartCoroutine(HealEffect());
+        _stat.Hp += heal;
+        if (_stat.Hp >= _stat.MaxHp) _stat.Hp = _stat.MaxHp;
+    }
+
+
+    // 마우스 방향 스킬 떄문에 생긴것
+    [PunRPC]
+    void RPC_StartCoroutine(Vector3 position, int damage, int _seq)
+    {
+        StartCoroutine(RpcCast(position, damage, _seq));
+    }
+
+
+    IEnumerator RpcCast(Vector3 position, int damage, int _seq)
+    {
+        GameObject player = transform.root.gameObject;
+
+        player.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0, 1.5f);
+        yield return new WaitForSeconds(0.5f);
+
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.GalaxyZzzSkillEffect, player.transform);
+        ps.transform.position = position;
+        GameObject skillObj = Managers.Resource.Instantiate("Skills/SkillObject");
+        skillObj.GetComponent<SkillObject>().SetUp(player.transform, damage, _seq);
+
+        skillObj.transform.position = position;
+        skillObj.transform.rotation = new Quaternion();
+
+        yield return new WaitForSeconds(0.5f);
+
+        Managers.Resource.Destroy(skillObj.gameObject);
+        Managers.Effect.Stop(ps);
+    }
 
 }
