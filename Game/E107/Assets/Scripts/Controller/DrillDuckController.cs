@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +13,6 @@ public class DrillDuckController : MonsterController
 
         _stat = new MonsterStat(_unitType);
     }
-
 
     protected override void ChangeStateFromMove()
     {
@@ -45,6 +45,12 @@ public class DrillDuckController : MonsterController
         }
     }
 
+    public override void EnterSkill()
+    {
+        base.EnterSkill();
+        _agent.avoidancePriority = 1;
+    }
+
     public override void ExcuteSkill()
     {
         _animator.SetFloat("AttackSpeed", 0.2f);
@@ -71,12 +77,18 @@ public class DrillDuckController : MonsterController
             }
         }
     }
+    public override void ExitSkill()
+    {
+        base.ExitSkill();
+        _agent.avoidancePriority = 50;
+    }
 
     // Before Slide
     public override void EnterDrillDuckSlideBeforeState()
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
@@ -117,7 +129,6 @@ public class DrillDuckController : MonsterController
         // 경로상의 플레이어를 밀쳐내면서 돌진
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         _agent.radius *= 2;
-        _agent.avoidancePriority = 0;
 
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
 
