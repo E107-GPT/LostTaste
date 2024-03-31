@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BubbleWandSkill : AttackSkill
+public class BubbleWandSkill : Skill, IAttackSkill
 {
+    [field: SerializeField]
+    public int Damage { get; set; }
     protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()

@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SunFlowerSkill : AttackSkill
+public class SunFlowerSkill : Skill, IAttackSkill
 {
+    [field: SerializeField]
+    public int Damage { get; set; }
+
     protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
