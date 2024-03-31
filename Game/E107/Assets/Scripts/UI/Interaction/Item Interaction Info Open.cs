@@ -141,24 +141,68 @@ public class ItemInteractionInfoOpen : MonoBehaviour
         // 아이템 스킬 데미지/회복 패널 및 텍스트 업데이트
         if (item.RightSkill is ConsumingSkill)
         {
-            // 회복 패널 활성화
+            // 데미지 패널 비활성화
             damagePanel.SetActive(false);
-            hpRecoveryPanel.SetActive(true);
-            mpRecoveryPanel.SetActive(true);
 
             Debug.Log($"회복 아이템임 {item.RightSkill}");
-            //itemSkillHpRecoveryText.text = item.RightSkill.HpRecoveryAmount.ToString();
-            //itemSkillMpRecoveryText.text = item.RightSkill.MpRecoveryAmount.ToString();
+
+            if (item.RightSkill is BibimbapSkill)
+            {
+                // Hp 회복 패널 활성화
+                hpRecoveryPanel.SetActive(true);
+                mpRecoveryPanel.SetActive(false);
+
+                // 회복량 업데이트
+                BibimbapSkill bibimbapSkill = (BibimbapSkill)item.RightSkill;
+                int hpRecoveryAmount = bibimbapSkill.HpRecoveryAmount;
+                itemSkillHpRecoveryText.text = hpRecoveryAmount.ToString();
+            }
+            else if (item.RightSkill is RareSteakSkill)
+            {
+                // Hp 회복 패널 활성화
+                hpRecoveryPanel.SetActive(true);
+                mpRecoveryPanel.SetActive(false);
+
+                // 회복량 업데이트
+                RareSteakSkill rareSteakSkill = (RareSteakSkill)item.RightSkill;
+                int hpRecoveryAmount = rareSteakSkill.HpRecoveryAmount;
+                itemSkillHpRecoveryText.text = hpRecoveryAmount.ToString();
+            }
+            else if (item.RightSkill is BoredAppleSkill)
+            {
+                // Mp 회복 패널 활성화
+                hpRecoveryPanel.SetActive(false);
+                mpRecoveryPanel.SetActive(true);
+
+                // 회복량 업데이트
+                BoredAppleSkill boredAppleSkill = (BoredAppleSkill)item.RightSkill;
+                float recoveryPeriod = boredAppleSkill.RecoveryPeriod;
+                int mpRecoveryAmountPerPeriod = boredAppleSkill.MpRecoveryAmountPerPeriod;
+                itemSkillMpRecoveryText.text = $"{mpRecoveryAmountPerPeriod / recoveryPeriod}Mp/s";
+            }
+            else if (item.RightSkill is CucumberSkill)
+            {
+                // Mp 회복 패널 활성화
+                hpRecoveryPanel.SetActive(false);
+                mpRecoveryPanel.SetActive(true);
+
+                // 회복량 업데이트
+                CucumberSkill cucumberSkill = (CucumberSkill)item.RightSkill;
+                int mpRecoveryAmount = cucumberSkill.MpRecoveryAmount;
+                itemSkillMpRecoveryText.text = mpRecoveryAmount.ToString();
+            }
+
         }
-        else
+        else if (item.RightSkill is IAttackSkill)
         {
             // 데미지 패널 활성화
             damagePanel.SetActive(true);
             hpRecoveryPanel.SetActive(false);
             mpRecoveryPanel.SetActive(false);
 
-            Debug.Log($"공격 아이템임 {item.RightSkill}");
-            //itemSkillDamageText.text = item.RightSkill.Damage.ToString();
+            IAttackSkill attackSkill = (IAttackSkill)item.RightSkill;
+            int damage = attackSkill.Damage;
+            itemSkillDamageText.text = damage.ToString();
         }
 
         // 아이템 스킬 마나 텍스트 업데이트
