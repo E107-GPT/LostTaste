@@ -5,86 +5,109 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// Á÷¾÷ ½ºÅ³ ÄğÅ¸ÀÓ UI ¸Å´ÏÀú´Â Á÷¾÷ ½ºÅ³ÀÇ ÄğÅ¸ÀÓÀ» Ç¥½ÃÇÏ´Â ±â´ÉÀ» Á¦°øÇÕ´Ï´Ù.
+/// ì§ì—… ìŠ¤í‚¬ ì¿¨íƒ€ì„ UI ë§¤ë‹ˆì €ëŠ” ì§ì—… ìŠ¤í‚¬ì˜ ì¿¨íƒ€ì„ì„ í‘œì‹œí•˜ëŠ” ê¸°ëŠ¥ì„ ì œê³µí•©ë‹ˆë‹¤.
 /// </summary>
 public class ClassSkillCooldownUIManager : MonoBehaviour
 {
-    // ------------------------------------------------ º¯¼ö ¼±¾ğ ------------------------------------------------
+    // ------------------------------------------------ ë³€ìˆ˜ ì„ ì–¸ ------------------------------------------------
 
-    // Á÷¾÷ ½ºÅ³ ÄğÅ¸ÀÓ UI ¸Å´ÏÀú°¡ »ç¿ëÇÒ º¯¼ö ¼±¾ğ
-    private PlayerController _playerController; // ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯ ÂüÁ¶ º¯¼ö
+    // ì§ì—… ìŠ¤í‚¬ ì¿¨íƒ€ì„ UI ë§¤ë‹ˆì €ê°€ ì‚¬ìš©í•  ë³€ìˆ˜ ì„ ì–¸
+    private PlayerController _playerController; // í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ ì°¸ì¡° ë³€ìˆ˜
+    private PlayerClass _playerClass;
 
-    // Á÷¾÷ ½ºÅ³ ÆĞ³Î
-    [Header("[ Á÷¾÷ ½ºÅ³ ÆĞ³Î ]")]
-    public Image classSkillCoolDownImage; // Á÷¾÷ ½ºÅ³ ÄğÅ¸ÀÓ ÀÌ¹ÌÁö
-    public Image classSkillKeyImage; // Á÷¾÷ ½ºÅ³ Å° ÀÌ¹ÌÁö
-    public TextMeshProUGUI classSkillCoolDownText; // Á÷¾÷ ½ºÅ³ ÄğÅ¸ÀÓ
+    // ì§ì—… ìŠ¤í‚¬ íŒ¨ë„
+    [Header("[ ì§ì—… ìŠ¤í‚¬ íŒ¨ë„ ]")]
+    public Image classSkillCoolDownImage; // ì§ì—… ìŠ¤í‚¬ ì¿¨íƒ€ì„ ì´ë¯¸ì§€
+    public Image classSkillKeyImage; // ì§ì—… ìŠ¤í‚¬ í‚¤ ì´ë¯¸ì§€
+    public TextMeshProUGUI classSkillCoolDownText; // ì§ì—… ìŠ¤í‚¬ ì¿¨íƒ€ì„
 
-    // ³²Àº ÄğÅ¸ÀÓ ¼ıÀÚ º¯¼ö ¼±¾ğ
-    private float classSkillCoolDown; // Á÷¾÷ ½ºÅ³ ÇöÀç ÄğÅ¸ÀÓ
+    // ë‚¨ì€ ì¿¨íƒ€ì„ ìˆ«ì ë³€ìˆ˜ ì„ ì–¸
+    private float classSkillCoolDown; // ì§ì—… ìŠ¤í‚¬ í˜„ì¬ ì¿¨íƒ€ì„
 
-    // ÄğÅ¸ÀÓ ÁøÇà »óÅÂ¸¦ ÃßÀûÇÏ´Â º¯¼ö Ãß°¡
+    // ì¿¨íƒ€ì„ ì§„í–‰ ìƒíƒœë¥¼ ì¶”ì í•˜ëŠ” ë³€ìˆ˜ ì¶”ê°€
     private bool isClassSkillCoolingDown = false;
+
+    private Coroutine classSkillDownCoroutine = null;
 
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Start()
     {
-        // ÃÊ±â Fill Amount¸¦ 0À¸·Î ¼³Á¤
+        // ì´ˆê¸° Fill Amountë¥¼ 0ìœ¼ë¡œ ì„¤ì •
         classSkillCoolDownImage.fillAmount = 0;
         classSkillKeyImage.fillAmount = 0;
 
-        // ÃÊ±â ÄğÅ¸ÀÓ ÅØ½ºÆ® ºó ¹®ÀÚ¿­·Î ¼³Á¤
+        // ì´ˆê¸° ì¿¨íƒ€ì„ í…ìŠ¤íŠ¸ ë¹ˆ ë¬¸ìì—´ë¡œ ì„¤ì •
         classSkillCoolDownText.text = "";
     }
 
     void Update()
     {
-        // Á÷¾÷ ½ºÅ³ ÄğÅ¸ÀÓ ÆĞ³Î ¾÷µ¥ÀÌÆ®
+        // ì§ì—… ìŠ¤í‚¬ ì¿¨íƒ€ì„ íŒ¨ë„ ì—…ë°ì´íŠ¸
         UpdateClassSkillCoolDownPanel();
     }
 
 
-    // ------------------------------------------------ »ç¿ëÀÚ Á¤ÀÇ ¸Ş¼­µå ------------------------------------------------
+    // ------------------------------------------------ ì‚¬ìš©ì ì •ì˜ ë©”ì„œë“œ ------------------------------------------------
 
     void UpdateClassSkillCoolDownPanel()
     {
-        // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ¼­ ÂüÁ¶
+        // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•„ì„œ ì°¸ì¡°
         _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        if (_playerController == null) return; // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾øÀ» ¶§
+        if (_playerController == null) return; // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ì„ ë•Œ
 
-        classSkillCoolDown = 60.0f;
-
-        // ÄğÅ¸ÀÓ Á¤º¸ ¾÷µ¥ÀÌÆ®
+        // í˜„ì¬ ì§ì—… ë° ì§ì—…ìŠ¤í‚¬ ì¿¨íƒ€ì„ ê°€ì ¸ì˜´
+        _playerClass = _playerController.PlayerClass;
+        classSkillCoolDown = _playerClass.ClassSkill.SkillCoolDownTime;
+        
+        // ì¿¨íƒ€ì„ ì •ë³´ ì—…ë°ì´íŠ¸
         if (Input.GetKey(KeyCode.Q) && !isClassSkillCoolingDown)
         {
-            // Ä³¸¯ÅÍ°¡ '½ºÅ³ »óÅÂ'°¡ ¾Æ´Ò °æ¿ì ÇÔ¼ö¸¦ ºüÁ®³ª°¨
+            // ìºë¦­í„°ê°€ 'ìŠ¤í‚¬ ìƒíƒœ'ê°€ ì•„ë‹ ê²½ìš° í•¨ìˆ˜ë¥¼ ë¹ ì ¸ë‚˜ê°
             if (_playerController.CurState is not SkillState) return;
 
-            StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
+            classSkillDownCoroutine = StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
         }
-            
     }
 
     IEnumerator UpdateClassSkillCoolDown(float skillCoolDown, TextMeshProUGUI skillCoolDownText, Image coolDownImage, Image keyImage)
     {
-        // ÄğÅ¸ÀÓÀÌ ½ÃÀÛµÉ ¶§ÀÇ »óÅÂ º¯°æ
+        // ì¿¨íƒ€ì„ì´ ì‹œì‘ë  ë•Œì˜ ìƒíƒœ ë³€ê²½
         isClassSkillCoolingDown = true;
 
-        while (skillCoolDown > 0.0f)
+        // ê²½ê³¼ ì‹œê°„ì„ ì¶”ì í•˜ëŠ” ë³€ìˆ˜
+        float elapsedTime = 0;
+
+        while (elapsedTime < skillCoolDown)
         {
             skillCoolDown -= Time.deltaTime;
-            coolDownImage.fillAmount = skillCoolDown / 60.0f;
-            keyImage.fillAmount = skillCoolDown / 60.0f;
-            skillCoolDownText.text = Mathf.Ceil(skillCoolDown).ToString() + "s";
+            coolDownImage.fillAmount = (skillCoolDown - elapsedTime) / skillCoolDown;
+            keyImage.fillAmount = (skillCoolDown - elapsedTime) / skillCoolDown;
+            if (skillCoolDown - elapsedTime > 1)
+            {
+                skillCoolDownText.text = Mathf.Ceil(skillCoolDown - elapsedTime).ToString() + "s";
+            }
+            else
+            {
+                skillCoolDownText.text = (skillCoolDown - elapsedTime).ToString("F1");
+            }
             yield return new WaitForFixedUpdate();
         }
 
-        skillCoolDownText.text = ""; // ÄğÅ¸ÀÓÀÌ ¿ÏÀüÈ÷ ³¡³µÀ» ¶§, ÅØ½ºÆ®¸¦ ºó ¹®ÀÚ¿­·Î ¼³Á¤
+        // ì½”ë£¨í‹´ì´ ëë‚œ ë’¤ ì¿¨íƒ€ì„ íŒ¨ë„ì„ ì´ˆê¸°í™”
+        ResetCoolDownUI(skillCoolDownText, coolDownImage, keyImage);
 
-        // ÄğÅ¸ÀÓÀÌ Á¾·áµÉ ¶§ÀÇ »óÅÂ º¯°æ
+        // ì¿¨íƒ€ì„ì´ ì¢…ë£Œë  ë•Œì˜ ìƒíƒœ ë³€ê²½
         isClassSkillCoolingDown = false;
+    }
+
+    // ì½”ë£¨í‹´ì´ ëë‚œ ë’¤ ì¿¨íƒ€ì„ íŒ¨ë„ì„ ì´ˆê¸°í™” í•˜ëŠ” ë©”ì„œë“œ
+    void ResetCoolDownUI(TextMeshProUGUI dashCoolDownText, Image coolDownImage, Image keyImage)
+    {
+        dashCoolDownText.text = "";
+        coolDownImage.fillAmount = 0;
+        keyImage.fillAmount = 0;
     }
 }

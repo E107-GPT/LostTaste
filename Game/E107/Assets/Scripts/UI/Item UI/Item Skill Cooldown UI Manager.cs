@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 /// <summary>
 /// 아이템 스킬 쿨타임 UI 매니저는 쿨타임이 있는 아이템 스킬의 쿨타임을 표시하는 기능을 제공합니다.
@@ -86,7 +87,6 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
         bool isFirstItemSkillExists = firstItem.RightSkill != null && !(firstItem.RightSkill is EmptySkill);
         bool isSecondItemSkillExists = secondItem.RightSkill != null && !(secondItem.RightSkill is EmptySkill);
 
-
         // 쿨타임 정보 업데이트
         if (Input.GetMouseButton(1))
         {
@@ -133,7 +133,7 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
         if (isCoolingDown || item.RightSkill == null) return;
 
         isCoolingDown = true;
-
+        
         // 새로운 코루틴 시작
         coolDownCoroutine = StartCoroutine(UpdateItemCoolDownCoroutine(item));
 
@@ -154,7 +154,7 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
                 float remainingTime = skillCoolDown - elapsedTime;
 
                 // UI 업데이트 로직
-                UpdateCoolDownUI(item, remainingTime / skillCoolDown, Mathf.Ceil(remainingTime).ToString() + "s");
+                UpdateCoolDownUI(item, remainingTime / skillCoolDown, remainingTime);
                 yield return null;
             }
         }
@@ -164,8 +164,19 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
     }
 
     // 쿨다운 UI 업데이트 메서드
-    void UpdateCoolDownUI(Item item, float fillAmount, string text)
+    void UpdateCoolDownUI(Item item, float fillAmount, float remainingTime)
     {
+        string text;
+
+        if (remainingTime > 1)
+        {
+            text = Mathf.Ceil(remainingTime).ToString() + "s";
+        }
+        else
+        {
+            text = (remainingTime).ToString("F1");
+        }
+
         if (item == _playerInventory[1])
         {
             firstItemRightSkillCoolDownText.text = text;
