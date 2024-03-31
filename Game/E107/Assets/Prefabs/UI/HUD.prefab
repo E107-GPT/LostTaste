@@ -9786,7 +9786,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c8e27998fc0db3340bf4562a0229a528, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1c03d6f593454094a92ffa201aaf476f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13516,6 +13516,7 @@ GameObject:
   - component: {fileID: 8215783298598346273}
   - component: {fileID: 4357540729675226192}
   - component: {fileID: 457470196722876356}
+  - component: {fileID: 1966014481088623229}
   m_Layer: 5
   m_Name: Job Active Skill Container
   m_TagString: Untagged
@@ -13584,6 +13585,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1966014481088623229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594077152298069613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc7411c056296b74cb29b849e859db03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  classSkillInfoUI: {fileID: 0}
+  classSkillNameText: {fileID: 0}
+  classSkillIcon: {fileID: 0}
+  classSkillDescriptionText: {fileID: 0}
+  warriorSkillPanel: {fileID: 0}
+  ninjaMageSkillPanel: {fileID: 0}
+  priestSkillPanel: {fileID: 0}
+  classSkillDurationText: {fileID: 0}
+  classSkillDamageText: {fileID: 0}
+  classSkillHpRecoveryText: {fileID: 0}
+  classSkillManaText: {fileID: 0}
+  classSkillCoolDownText: {fileID: 0}
 --- !u!1 &4644123513969971638
 GameObject:
   m_ObjectHideFlags: 0
