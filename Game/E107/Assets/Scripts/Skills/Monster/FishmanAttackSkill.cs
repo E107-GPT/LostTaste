@@ -25,21 +25,47 @@ public class FishmanAttackSkill : Skill
 
         yield return new WaitForSeconds(SkillCoolDownTime);
 
-        Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
+        //Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
 
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.FishmanAttackEffect, Root);
-        Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
+        //ParticleSystem ps = Managers.Effect.Play(Define.Effect.FishmanAttackEffect, Root);
+        //Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+        //skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
 
-        skillObj.localScale = new Vector3(1.0f, 5.0f, _range);    // 1.1f
-        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_range / 2));
-        skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
-        skillObj.rotation = Root.rotation;
+        //skillObj.localScale = new Vector3(1.0f, 5.0f, _range);    // 1.1f
+        //skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_range / 2));
+        //skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
+        //skillObj.rotation = Root.rotation;
 
-        yield return new WaitForSeconds(0.5f);
-        Managers.Resource.Destroy(skillObj.gameObject);
-        Managers.Effect.Stop(ps);
+        //yield return new WaitForSeconds(0.5f);
+        //Managers.Resource.Destroy(skillObj.gameObject);
+        //Managers.Effect.Stop(ps);
+
+        #region CheckDie
+        if (Root.GetComponent<MonsterController>().IsDie)
+        {
+            Root.GetComponent<Animator>().CrossFade("Die", 0.3f, -1, 0);
+        }
+        else
+        {
+            Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
+
+            yield return new WaitForSeconds(0.5f);
+
+            ParticleSystem ps = Managers.Effect.Play(Define.Effect.FishmanAttackEffect, Root);
+            Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+            skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
+
+            skillObj.localScale = new Vector3(1.0f, 5.0f, _range);    // 1.1f
+            skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_range / 2));
+            skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
+            skillObj.rotation = Root.rotation;
+
+            yield return new WaitForSeconds(0.5f);
+            Managers.Resource.Destroy(skillObj.gameObject);
+            Managers.Effect.Stop(ps);
+        }
+        #endregion
     }
 }

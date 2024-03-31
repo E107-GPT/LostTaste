@@ -93,6 +93,8 @@ public class Define
         KingJumpEndEffect,
         MushroomAttackEffect,
         TurtleSlimeAttackEffect,
+        SunFallEffect,
+        ExplosionSunFallEffect,
         NinjaClassSkillFinishEffect,
         NinjaClassSkillStartEffect,
         MageClassSkillEffect,
