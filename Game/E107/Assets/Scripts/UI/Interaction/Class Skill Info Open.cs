@@ -7,7 +7,7 @@ using TMPro;
 
 
 /// <summary>
-/// 직업 스킬 위에 마우스를 올려서 스킬 정보 UI가 나오도록 하는 클래스입니다.
+/// 아이템 스킬 정보 UI가 나오도록 하는 클래스입니다.
 /// </summary>
 public class ClassSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -78,8 +78,6 @@ public class ClassSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerE
 
         // 현재 플레이어의 직업 정보 가져오기
         _playerClass = _playerController.PlayerClass;
-
-        Debug.Log($"{_playerClass}@@@@@@@@@@@@@@2");
 
         // 직업스킬 UI 업데이트
         if (_playerClass.ClassSkill is not EmptySkill)

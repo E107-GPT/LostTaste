@@ -6,22 +6,16 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 /// <summary>
-/// 아이템 스킬 위에 마우스를 올려서 아이템 정보 UI가 나오도록 하는 클래스입니다.
+/// 두번째 아이템 스킬 위에 마우스를 올려서 아이템 정보 UI가 나오도록 하는 클래스입니다.
 /// </summary>
-public class ItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class secondItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // ------------------------------------------------ 변수 선언 ------------------------------------------------
 
     // 클래스가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
-    private IPlayerInteractable _detectedInteractable; // 플레이어 접촉 상호작용
     private Item[] _playerInventory; // 플레이어의 인벤토리 배열
-    private int _currentItemNum; // 현재 장착한 무기
-
-    // 마우스 hover 상태
-    private bool isMouseHover = false;
-    private bool isFirstItemMouseHover;
-    private bool isSecondItemMouseHover;
+    public bool isSecondItemMouseHover = false;
 
     // 상호작용 UI
     [Header("[ 상호작용 UI ]")]
@@ -66,7 +60,7 @@ public class ItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (itemInfoUI != null)
         {
             itemInfoUI.SetActive(true); // 게임 오브젝트 활성화
-            isMouseHover = true;
+            isSecondItemMouseHover = true;
         }
     }
 
@@ -76,7 +70,7 @@ public class ItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (itemInfoUI != null)
         {
             itemInfoUI.SetActive(false); // 게임 오브젝트 비활성화
-            isMouseHover = false;
+            isSecondItemMouseHover = false;
         }
     }
 
@@ -91,61 +85,26 @@ public class ItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 
-        // PlayerController의 인터렉션에 접근
-        _detectedInteractable = _playerController.DetectedInteractable;
-
         // PlayerController의 인벤토리에 접근
         _playerInventory = _playerController.Inventory;
-        _currentItemNum = _playerController.CurrentItemNum;
 
-        // 현재 아이템 정보를 가져옴
-        Item currentItem = _playerInventory[_currentItemNum];
+        // 두번째 아이템 정보를 가져옴
+        Item secondtItem = _playerInventory[2];
 
         // 스킬 존재 여부 확인
-        bool isCurrentItemSkillExists = currentItem.RightSkill != null && !(currentItem.RightSkill is EmptySkill);
+        bool isCurrentItemSkillExists = secondtItem.RightSkill != null && !(secondtItem.RightSkill is EmptySkill);
 
-        if (isMouseHover)
+        if (isSecondItemMouseHover)
         {
-            UpdateItemInfo(currentItem);
+            UpdateItemInfo(secondtItem);
 
             if (isCurrentItemSkillExists)
             {
-                UpdateItemSkillInfo(currentItem);
+                UpdateItemSkillInfo(secondtItem);
             }
             else
             {
                 UpdateNoneSkillInfo();
-            }
-        }
-
-        // 첫번째 또는 두번째 인벤토리에 마우스 hover 상태인지 확인
-        firstItemSkillInfoOpen firstItemSkill = GameObject.FindObjectOfType<firstItemSkillInfoOpen>();
-        secondItemSkillInfoOpen secondItemSkill = GameObject.FindObjectOfType<secondItemSkillInfoOpen>();
-        isFirstItemMouseHover = firstItemSkill.isFirstItemMouseHover;
-        isSecondItemMouseHover = secondItemSkill.isSecondItemMouseHover;
-
-        // 마우스가 hover 상태가 아닐 때만 작동
-        if (!isMouseHover && !isFirstItemMouseHover && !isSecondItemMouseHover)
-        {
-            if (_detectedInteractable != null && _detectedInteractable is Item)
-            {
-                // 상호작용 가능한 대상이 감지되면 UI 업데이트
-                itemInfoUI.SetActive(true);
-                UpdateItemInfo(_detectedInteractable as Item);
-
-                if ((_detectedInteractable as Item).RightSkill != null && !((_detectedInteractable as Item).RightSkill is EmptySkill))
-                {
-                    UpdateItemSkillInfo(_detectedInteractable as Item);
-                }
-                else
-                {
-                    UpdateNoneSkillInfo();
-                }
-            }
-            else
-            {
-                // 감지된 대상이 없으면 UI 비활성화
-                itemInfoUI.SetActive(false);
             }
         }
     }

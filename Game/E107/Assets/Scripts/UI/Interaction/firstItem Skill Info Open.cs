@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 /// <summary>
-/// 아이템 근처에서 아이템 정보 UI가 나오도록 하는 클래스입니다.
+/// 첫번째 아이템 스킬 위에 마우스를 올려서 아이템 정보 UI가 나오도록 하는 클래스입니다.
 /// </summary>
-public class ItemInteractionInfoOpen : MonoBehaviour
+public class firstItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // ------------------------------------------------ 변수 선언 ------------------------------------------------
 
-    // 아이템 인터렉션 클래스가 사용할 변수 선언
+    // 클래스가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
-    private IPlayerInteractable _detectedInteractable; // 플레이어 접촉 상호작용
+    private Item[] _playerInventory; // 플레이어의 인벤토리 배열
+    public bool isFirstItemMouseHover = false;
 
     // 상호작용 UI
     [Header("[ 상호작용 UI ]")]
@@ -52,6 +54,26 @@ public class ItemInteractionInfoOpen : MonoBehaviour
         UpdateInteractionInfoUI();
     }
 
+    // 마우스가 UI 요소 위에 올라왔을 때 호출될 메서드
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (itemInfoUI != null)
+        {
+            itemInfoUI.SetActive(true); // 게임 오브젝트 활성화
+            isFirstItemMouseHover = true;
+        }
+    }
+
+    // 마우스가 UI 요소에서 벗어났을 때 호출될 메서드
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (itemInfoUI != null)
+        {
+            itemInfoUI.SetActive(false); // 게임 오브젝트 비활성화
+            isFirstItemMouseHover = false;
+        }
+    }
+
 
     // ------------------------------------------------ 사용자 정의 메서드 ------------------------------------------------
 
@@ -63,20 +85,27 @@ public class ItemInteractionInfoOpen : MonoBehaviour
 
         if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 
-        // PlayerController의 인터렉션에 접근
-        _detectedInteractable = _playerController.DetectedInteractable;
+        // PlayerController의 인벤토리에 접근
+        _playerInventory = _playerController.Inventory;
 
-        if (_detectedInteractable != null && _detectedInteractable is Item)
+        // 첫번째 아이템 정보를 가져옴
+        Item firsttItem = _playerInventory[1];
+
+        // 스킬 존재 여부 확인
+        bool isCurrentItemSkillExists = firsttItem.RightSkill != null && !(firsttItem.RightSkill is EmptySkill);
+
+        if (isFirstItemMouseHover)
         {
-            // 상호작용 가능한 대상이 감지되면 UI 업데이트
-            itemInfoUI.SetActive(true);
-            UpdateItemInfo(_detectedInteractable as Item);
-            UpdateItemSkillInfo(_detectedInteractable as Item);
-        }
-        else
-        {
-            // 감지된 대상이 없으면 UI 비활성화
-            itemInfoUI.SetActive(false);
+            UpdateItemInfo(firsttItem);
+
+            if (isCurrentItemSkillExists)
+            {
+                UpdateItemSkillInfo(firsttItem);
+            }
+            else
+            {
+                UpdateNoneSkillInfo();
+            }
         }
     }
 
@@ -210,5 +239,31 @@ public class ItemInteractionInfoOpen : MonoBehaviour
 
         // 아이템 스킬 쿨타임 텍스트 업데이트
         itemSkillCoolDownText.text = $"{item.RightSkill.SkillCoolDownTime}s";
+    }
+
+    // 스킬 없는 아이템 정보 업데이트
+    void UpdateNoneSkillInfo()
+    {
+        // 아이템 스킬 이름 업데이트
+        itemSkillNameText.text = "스킬 없음";
+
+        // 아이템 스킬 설명 업데이트
+        itemSkillDescriptionText.text = "눈에 띄는 스킬은 없을지 몰라도, 이 아이템에는 숨겨진 재능이 있을지도 몰라요. 마치 당신처럼 말이죠.";
+
+        // 아이템 스킬 아이콘 업데이트
+        itemSkillIcon.sprite = null;
+
+        // 데미지 패널 활성화
+        damagePanel.SetActive(true);
+        hpRecoveryPanel.SetActive(false);
+        mpRecoveryPanel.SetActive(false);
+
+        itemSkillDamageText.text = "-";
+
+        // 아이템 스킬 마나 텍스트 업데이트
+        itemSkillManaText.text = "-";
+
+        // 아이템 스킬 쿨타임 텍스트 업데이트
+        itemSkillCoolDownText.text = "-";
     }
 }

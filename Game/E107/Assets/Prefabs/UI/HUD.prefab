@@ -2815,6 +2815,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6956869002813449296}
+  - component: {fileID: 2242691003827349245}
   m_Layer: 5
   m_Name: Item 2
   m_TagString: Untagged
@@ -2847,6 +2848,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &2242691003827349245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767699554234944141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29418002e14eb3647bed52f4319468a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSecondItemMouseHover: 0
+  itemInfoUI: {fileID: 0}
+  itemNameText: {fileID: 0}
+  itemTierText: {fileID: 0}
+  itemFlavorText: {fileID: 0}
+  itemIcon: {fileID: 0}
+  itemSkillNameText: {fileID: 0}
+  itemSkillDescriptionText: {fileID: 0}
+  itemSkillIcon: {fileID: 0}
+  damagePanel: {fileID: 0}
+  hpRecoveryPanel: {fileID: 0}
+  mpRecoveryPanel: {fileID: 0}
+  itemSkillDamageText: {fileID: 0}
+  itemSkillHpRecoveryText: {fileID: 0}
+  itemSkillMpRecoveryText: {fileID: 0}
+  itemSkillManaText: {fileID: 0}
+  itemSkillCoolDownText: {fileID: 0}
 --- !u!1 &768979530609695847
 GameObject:
   m_ObjectHideFlags: 0
@@ -18433,6 +18463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2910367817819909403}
+  - component: {fileID: 7304866158694098572}
   m_Layer: 5
   m_Name: Item 1
   m_TagString: Untagged
@@ -18465,6 +18496,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &7304866158694098572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6692278054705867382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75cc058cb643bd847ac8f6fa20dfda8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFirstItemMouseHover: 0
+  itemInfoUI: {fileID: 0}
+  itemNameText: {fileID: 0}
+  itemTierText: {fileID: 0}
+  itemFlavorText: {fileID: 0}
+  itemIcon: {fileID: 0}
+  itemSkillNameText: {fileID: 0}
+  itemSkillDescriptionText: {fileID: 0}
+  itemSkillIcon: {fileID: 0}
+  damagePanel: {fileID: 0}
+  hpRecoveryPanel: {fileID: 0}
+  mpRecoveryPanel: {fileID: 0}
+  itemSkillDamageText: {fileID: 0}
+  itemSkillHpRecoveryText: {fileID: 0}
+  itemSkillMpRecoveryText: {fileID: 0}
+  itemSkillManaText: {fileID: 0}
+  itemSkillCoolDownText: {fileID: 0}
 --- !u!1 &6703785356979729507
 GameObject:
   m_ObjectHideFlags: 0
