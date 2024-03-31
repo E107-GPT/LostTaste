@@ -20,18 +20,17 @@ public class MonsterController : BaseController
 {
     protected MonsterStat _stat;
     protected MonsterInfo _monsterInfo;
-    private string _curSkillName;             // 현재 공격의 이름 - Info에서 가져옴
-    private float _lastDetectTime;
+    private AudioSource[] _audioSource;       // MainCamera의 Audio Listener가 필요
 
     [SerializeField]
     protected Transform _detectPlayer;        // 이동 타겟팅, 일반 공격 범위를 벗어나면 랜덤한 플레이어에게 이동 -> 지금은 가까운 플레이어에게 이동
     protected Ray _ray;                       // Gizmos에 사용
     private Renderer[] _allRenderers;         // 캐릭터의 모든 Renderer 컴포넌트 -> 모든 render의 색을 변경!
     private Color[] _originalColors;          // 원래의 머티리얼 색상 저장용 배열
-    private AudioSource[] _audioSource;       // MainCamera의 Audio Listener가 필요
 
     [SerializeField]
     private bool _isDie;
+    private float _lastDetectTime;
 
     public MonsterStat Stat { get { return _stat; } }
     public MonsterInfo MonsterInfo { get { return _monsterInfo; } }

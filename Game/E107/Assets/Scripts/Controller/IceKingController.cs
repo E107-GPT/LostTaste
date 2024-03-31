@@ -48,19 +48,26 @@ public class IceKingController : MonsterController
     public override void EnterSkill()
     {
         base.EnterSkill();
-
+        _agent.avoidancePriority = 1;
     }
 
     public override void ExcuteSkill()
     {
         base.ExcuteSkill();
     }
+    public override void ExitSkill()
+    {
+        base.ExitSkill();
+        _agent.avoidancePriority = 50;
+    }
+
 
     // IceSpike
     public override void EnterIceKingSpikeState()
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
@@ -102,6 +109,12 @@ public class IceKingController : MonsterController
             }
         }
     }
+    public override void ExitIceKingSpikeState()
+    {
+        base.ExitIceKingSpikeState();
+        _agent.avoidancePriority = 50;
+    }
+
     [PunRPC]
     void RPC_ChangeIceKingSpikeState()
     {
