@@ -29,15 +29,6 @@ public abstract class Skill : MonoBehaviour
 
     public Transform Root { get; set; }
 
-    private Animator _animator;
-    protected StateMachine _statemachine;
-    public State CurState
-    {
-        get { return _statemachine.CurState; }
-        set { CurState = value; }
-    }
-    public Animator Animator { get => _animator; set => _animator = value; }
-
     private void Start()
     {
         Root = transform.root;
@@ -45,11 +36,6 @@ public abstract class Skill : MonoBehaviour
         // TOOD: Sprite�� null�̸� �⺻ Sprite �Ҵ�
 
         Init();
-    }
-
-    void Update()
-    {
-        _statemachine.Execute();
     }
 
     protected abstract void Init();
@@ -72,13 +58,4 @@ public abstract class Skill : MonoBehaviour
     {
         return IsMonsterCastable() && (playerController.Stat.Mp >= RequiredMp);
     }
-
-    #region WeaponState
-    public virtual void EnterIdle() { }
-    public virtual void ExecuteIdle() { }
-    public virtual void ExitIdle() { }
-    public virtual void EnterAttack() { }
-    public virtual void ExecuteAttack() { }
-    public virtual void ExitAttack() { }
-    #endregion
 }

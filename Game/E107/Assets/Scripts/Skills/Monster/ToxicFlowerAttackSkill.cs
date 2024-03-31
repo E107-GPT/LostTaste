@@ -27,77 +27,71 @@ public class ToxicFlowerAttackSkill : Skill
 
         yield return new WaitForSeconds(0.3f);
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
-        Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
+        //ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
+        //Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+        //skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
 
-        ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
+        //ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 
-        skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
-        skillObj.position = Root.transform.position;
-        skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
-        skillObj.rotation.SetLookRotation(dir);
+        //skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+        //skillObj.position = Root.transform.position;
+        //skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
+        //skillObj.rotation.SetLookRotation(dir);
 
-        float moveDuration = 1.1f; // 투사체가 날아가는 시간을 설정합니다.
-        float timer = 0; // 타이머 초기화
-        float speed = 10.0f; // 투사체의 속도를 설정합니다.
+        //float moveDuration = 1.1f; // 투사체가 날아가는 시간을 설정합니다.
+        //float timer = 0; // 타이머 초기화
+        //float speed = 10.0f; // 투사체의 속도를 설정합니다.
 
-        while (timer < moveDuration)
-        {
-            // 투사체와 파티클 시스템을 앞으로 움직입니다.
-            Vector3 moveStep = dir * speed * Time.deltaTime;
-            skillObj.position += moveStep;
-            ps.transform.position += moveStep;
+        //while (timer < moveDuration)
+        //{
+        //    // 투사체와 파티클 시스템을 앞으로 움직입니다.
+        //    Vector3 moveStep = dir * speed * Time.deltaTime;
+        //    skillObj.position += moveStep;
+        //    ps.transform.position += moveStep;
 
-            timer += Time.deltaTime; // 타이머를 업데이트합니다.
-            yield return null; // 다음 프레임까지 대기합니다.
-        }
+        //    timer += Time.deltaTime; // 타이머를 업데이트합니다.
+        //    yield return null; // 다음 프레임까지 대기합니다.
+        //}
 
-        Managers.Resource.Destroy(skillObj.gameObject);
-        Managers.Effect.Stop(ps);
+        //Managers.Resource.Destroy(skillObj.gameObject);
+        //Managers.Effect.Stop(ps);
 
         #region CheckDie
-        //if (Root.GetComponent<MonsterController>().IsDie)
-        //{
-        //    Root.GetComponent<Animator>().CrossFade("Die", 0.3f, -1, 0);
-        //}
-        //else
-        //{
-        //    Vector3 dir = Root.forward;
-        //    dir = new Vector3(dir.x, 0, dir.z);
-        //    Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
+        if (Root.GetComponent<MonsterController>().IsDie)
+        {
+            Root.GetComponent<Animator>().CrossFade("Die", 0.3f, -1, 0);
+        }
+        else
+        {
+            ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
+            Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+            skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
 
-        //    yield return new WaitForSeconds(0.3f);
+            ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 
-        //    ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
-        //    Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        //    skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
+            skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+            skillObj.position = Root.transform.position;
+            skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
+            skillObj.rotation.SetLookRotation(dir);
 
-        //    ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
+            float moveDuration = 1.1f; // 투사체가 날아가는 시간을 설정합니다.
+            float timer = 0; // 타이머 초기화
+            float speed = 10.0f; // 투사체의 속도를 설정합니다.
 
-        //    skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
-        //    skillObj.position = Root.transform.position;
-        //    skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
-        //    skillObj.rotation.SetLookRotation(dir);
+            while (timer < moveDuration)
+            {
+                // 투사체와 파티클 시스템을 앞으로 움직입니다.
+                Vector3 moveStep = dir * speed * Time.deltaTime;
+                skillObj.position += moveStep;
+                ps.transform.position += moveStep;
 
-        //    float moveDuration = 1.1f; // 투사체가 날아가는 시간을 설정합니다.
-        //    float timer = 0; // 타이머 초기화
-        //    float speed = 10.0f; // 투사체의 속도를 설정합니다.
+                timer += Time.deltaTime; // 타이머를 업데이트합니다.
+                yield return null; // 다음 프레임까지 대기합니다.
+            }
 
-        //    while (timer < moveDuration)
-        //    {
-        //        // 투사체와 파티클 시스템을 앞으로 움직입니다.
-        //        Vector3 moveStep = dir * speed * Time.deltaTime;
-        //        skillObj.position += moveStep;
-        //        ps.transform.position += moveStep;
-
-        //        timer += Time.deltaTime; // 타이머를 업데이트합니다.
-        //        yield return null; // 다음 프레임까지 대기합니다.
-        //    }
-
-        //    Managers.Resource.Destroy(skillObj.gameObject);
-        //    Managers.Effect.Stop(ps);
-        //}
+            Managers.Resource.Destroy(skillObj.gameObject);
+            Managers.Effect.Stop(ps);
+        }
         #endregion
     }
 }

@@ -21,20 +21,6 @@ public abstract class State : IState
     public abstract void Exit();
 }
 
-public abstract class WeaponState : IState
-{
-    protected Skill _skill;
-    public WeaponState(Skill skill)
-    {
-        _skill = skill;
-    }
-
-    public abstract void Enter();
-    public abstract void Execute();
-    public abstract void Exit();
-}
-
-
 // 아마 필요 없어질 부분
 
 
