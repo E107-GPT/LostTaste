@@ -41,6 +41,10 @@ public class DrillDuckSlidePattern : Pattern
     public override void DeActiveCollider()
     {
         Managers.Resource.Destroy(_particleSystem.gameObject);
-        SkillObj.SetActive(false);
+        if (SkillObj.activeSelf)
+        {
+            SkillObj.SetActive(false);
+        }
+            
     }
 }

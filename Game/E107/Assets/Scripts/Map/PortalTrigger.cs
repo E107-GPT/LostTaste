@@ -6,20 +6,20 @@ using Photon.Pun;
 using Photon.Realtime;
 
 
-// �� �̵� ��Ż 
+
 
 public class PortalTrigger : MonoBehaviour
 {
-    public Transform targetPortalLocation;  // �̵��� ��Ż ��ġ
+    public Transform targetPortalLocation;  
 
     private Dictionary<string, GameObject> playersInPortal = new Dictionary<string, GameObject>();
-    public int totalPlayers = 1;    // �ʿ��� �÷��̾� ��, ���� ������ ���� ���� (������ 1��)
+    public int totalPlayers = 1;    
 
     public string targetMapName;
 
     public GameObject portal;
 
-    public GameObject itemBox;
+    public List<GameObject> itemBox;
 
     public bool isBossRoom = false;
 
@@ -30,7 +30,8 @@ public class PortalTrigger : MonoBehaviour
     {
         gameObject.SetActive(false);
         if (itemBox == null) return;
-        itemBox.SetActive(false);
+        itemBox[0].SetActive(false);
+        itemBox[1].SetActive(false);
     }
 
     private void Start()
@@ -41,7 +42,7 @@ public class PortalTrigger : MonoBehaviour
 
     public Color nextBackgroundColor; // 변경할 배경색
 
-    // ��Ż Ȱ��ȭ �� ������ ���� Ȱ��ȭ
+
     public void ActivateItemBox()
     {
         // itemBox가 할당되지 않았다면, 메서드를 종료합니다.
@@ -51,7 +52,8 @@ public class PortalTrigger : MonoBehaviour
             return;
         }
 
-        itemBox.SetActive(true);
+        itemBox[0].SetActive(true);
+        itemBox[1].SetActive(true);
 
         //itemBox.SetActive(false);
 
@@ -68,9 +70,9 @@ public class PortalTrigger : MonoBehaviour
         //{
         //    GameObject boxToActivate = null; // Ȱ��ȭ�� ����
 
-            
+
         //     boxToActivate = GetItemBoxByName("Wooden");
-            
+
 
         //    if (boxToActivate != null)
         //    {
@@ -81,17 +83,17 @@ public class PortalTrigger : MonoBehaviour
 
 
 
-    // ���� �̸����� ���� GameObject�� ã�� �޼���
-    GameObject GetItemBoxByName(string boxName)
-    {
+    
+    //GameObject GetItemBoxByName(string boxName)
+    //{
         
-        if (itemBox.name.Contains(boxName)) // ���� �̸��� Ȯ��
-        {
-            return itemBox;
-        }
+    //    if (itemBox.name.Contains(boxName)) 
+    //    {
+    //        return itemBox;
+    //    }
        
-        return null; // �ش� �̸��� ���� ���ڰ� ���� ���
-    }
+    //    return null; 
+    //}
 
     private void ChangeCameraBackgroundColor()
     {
@@ -103,27 +105,40 @@ public class PortalTrigger : MonoBehaviour
         portal.SetActive(isActive);
         Debug.Log("ActivatePortal called with " + isActive);
 
-        // ��Ż�� Ȱ��ȭ�� �� ������ ���ڵ� �Բ� ó��
+        
         if (isActive)
         {
             //ChangeCameraBackgroundColor();
-            ActivateItemBox(); // ��Ż Ȱ��ȭ �� ������ ���� Ȱ��ȭ
+            ActivateItemBox(); 
         }
         else
         {
-            // ��Ż�� ��Ȱ��ȭ�� �� ��� ������ ���ڸ� ��Ȱ��ȭ
 
-            
-            itemBox.SetActive(false);
-            
+
+
+            itemBox[0].SetActive(false);
+            itemBox[1].SetActive(false);
         }
     }
 
-    // Ʈ���� �����ȿ� ������ �ο��� üũ
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            ParticleSystem[] particleSystems = other.gameObject.GetComponentsInChildren<ParticleSystem>();
+            ParticleSystem moveEffect = null;
+            foreach(var ps in particleSystems)
+            {
+                if(ps.name == "PlayerWalkEffect")
+                {
+                    ps.gameObject.SetActive(false);
+                    moveEffect = ps;
+                    break;
+                }
+            }
+
+
             other.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
             ChangeCameraBackgroundColor();
 
@@ -136,6 +151,7 @@ public class PortalTrigger : MonoBehaviour
             }
 
             MonsterManager.Instance._curMap = targetMapName;
+            moveEffect.gameObject.SetActive(true);
             if (!PhotonNetwork.IsMasterClient)
             {
                 MonsterManager.Instance.SendMonsterSpawnMsg(targetMapName);
@@ -149,7 +165,7 @@ public class PortalTrigger : MonoBehaviour
         }
     }
 
-    // Ʈ���� ���� ������ ������ �ο��� üũ
+   
     private void OnTriggerExit(Collider other)
     {
     }

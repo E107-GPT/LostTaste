@@ -447,7 +447,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player;
 
     
-                Managers.Player.SetLocalPlayerInfo(player.GetComponent<PhotonView>().ViewID, Define.ClassType.Warrior);
+                Managers.Player.SetLocalPlayerInfo(player.GetComponent<PhotonView>().ViewID, Define.ClassType.None);
                 Managers.Player.LoadPlayersInfoInCurrentRoom();
 
                 PrintPartyStatus();
@@ -500,6 +500,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Managers.Player.LoadPlayersInfoInCurrentRoom();
         PrintPartyStatus();
 
+
+
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -516,7 +518,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             
             if (p.GetComponent<PhotonView>().ViewID == (int)viewIDObj)
             {
-                PhotonNetwork.Destroy(p.gameObject);
+                // 마스터가 지워라.
+                if(PhotonNetwork.IsMasterClient) PhotonNetwork.Destroy(p.gameObject);
             }
         }
 
@@ -538,6 +541,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 파티 다 찼을 때 경고 줘야함
         //JoiningWarning.SetActive(true);
     }
+
+    
 
 
 

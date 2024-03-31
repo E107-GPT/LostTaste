@@ -23,6 +23,8 @@ public class PlayerController : BaseController
     Define.SkillType _curSkill = Define.SkillType.None;
     PlayerClass _playerClass;
 
+    ParticleSystem _moveEffect;
+
 
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
     private Color[] _originalColors; // 원래의 머티리얼 색상 저장용 배열
@@ -34,6 +36,13 @@ public class PlayerController : BaseController
     public int CurrentItemNum { get { return _currentItemNum; } }
     public float DashCoolDownTime { get { return _dashCoolDownTime; } }
     public IPlayerInteractable DetectedInteractable { get { return _detectedInteractable; } }
+    public Define.SkillType GetCurrentSkill()
+    {
+        return _curSkill;
+    }
+    public PlayerClass PlayerClass { get { return _playerClass; } }
+
+
 
 
     void LoadItemList()
@@ -139,6 +148,7 @@ public class PlayerController : BaseController
         base.EnterMove();
         _animator.CrossFade("RUN", 0.3f);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeMoveState", RpcTarget.Others);
+
     }
     public override void ExcuteMove()
     {
@@ -202,6 +212,11 @@ public class PlayerController : BaseController
             //if (PhotonNetwork.IsConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
         }
 
+    }
+    public override void ExitMove()
+    {
+        base.ExitMove();
+        
     }
 
 
@@ -268,7 +283,7 @@ public class PlayerController : BaseController
     public override void EnterDie()
     {
         base.EnterDie();
-        _animator.CrossFade("DIE", 0.1f);
+        _animator.CrossFade("Die", 0.1f);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeDieState", RpcTarget.Others);
 
         // 추가한 부분
@@ -357,13 +372,13 @@ public class PlayerController : BaseController
 
 
         // 무기 교체
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (isStarted && Input.GetKey(KeyCode.Alpha1))
         {
             ChangeToItem(1);
 
             //if (photonView.IsMine) photonView.RPC("ChangeFirstItem", RpcTarget.Others);
         }
-        else if (Input.GetKey(KeyCode.Alpha2))
+        else if (isStarted && Input.GetKey(KeyCode.Alpha2))
         {
             ChangeToItem(2);
             //if (photonView.IsMine) photonView.RPC("ChangeSecondItem", RpcTarget.Others);
@@ -820,27 +835,7 @@ public class PlayerController : BaseController
         _stat.Hp += heal;
         if (_stat.Hp >= _stat.MaxHp) _stat.Hp = _stat.MaxHp;
 
-        
-
-        //float lastAttackTime;
-        //lastAttackTimes.TryGetValue(skillObjectId, out lastAttackTime);
-
-        //if (Time.time - lastAttackTime < damageCooldown)
-        //{
-        //    // 쿨다운 중이므로 피해를 주지 않음
-        //    return;
-        //}
-        //lastAttackTimes[skillObjectId] = Time.time; // 해당 공격자의 마지막 공격 시간 업데이트
-        //StartCoroutine(ChangeColorTemporarily());
-        //Managers.Sound.Play("Player/Attacked", Define.Sound.Effect, 1.0f);
-
-
-        // 내꺼가 아니면 데미지 안받음, 즉 죽지않음
-        // 죽는 것은 포톤으로만
-
-
-
-        //Debug.Log($"{_stat.Hp}!!!");
+       
     }
 
     [PunRPC]
@@ -854,6 +849,36 @@ public class PlayerController : BaseController
         StartCoroutine(HealEffect());
         _stat.Hp += heal;
         if (_stat.Hp >= _stat.MaxHp) _stat.Hp = _stat.MaxHp;
+    }
+
+
+    // 마우스 방향 스킬 떄문에 생긴것
+    [PunRPC]
+    void RPC_StartCoroutine(Vector3 position, int damage, int _seq)
+    {
+        StartCoroutine(RpcCast(position, damage, _seq));
+    }
+
+
+    IEnumerator RpcCast(Vector3 position, int damage, int _seq)
+    {
+        GameObject player = transform.root.gameObject;
+
+        player.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0, 1.5f);
+        yield return new WaitForSeconds(0.5f);
+
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.GalaxyZzzSkillEffect, player.transform);
+        ps.transform.position = position;
+        GameObject skillObj = Managers.Resource.Instantiate("Skills/SkillObject");
+        skillObj.GetComponent<SkillObject>().SetUp(player.transform, damage, _seq);
+
+        skillObj.transform.position = position;
+        skillObj.transform.rotation = new Quaternion();
+
+        yield return new WaitForSeconds(0.5f);
+
+        Managers.Resource.Destroy(skillObj.gameObject);
+        Managers.Effect.Stop(ps);
     }
 
 }

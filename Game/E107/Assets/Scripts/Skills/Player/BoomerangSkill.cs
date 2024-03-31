@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoomerangSkill : Skill
+public class BoomerangSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }
@@ -43,13 +43,13 @@ public class BoomerangSkill : Skill
         float prevVel = StartVelocity;
         while (vel > -StartVelocity)
         {
-            // Åõ»çÃ¼¿Í ÆÄÆ¼Å¬ ½Ã½ºÅÛÀ» ¾ÕÀ¸·Î ¿òÁ÷ÀÔ´Ï´Ù.
+            // íˆ¬ì‚¬ì²´ì™€ íŒŒí‹°í´ ì‹œìŠ¤í…œì„ ì•žìœ¼ë¡œ ì›€ì§ìž…ë‹ˆë‹¤.
             Vector3 moveStep = Time.deltaTime * vel * dir;
             skillObj.position += moveStep;
             ps.transform.position += moveStep;
 
             prevVel = vel;
-            vel += Acceleration * Time.deltaTime;   // ¼Óµµ¸¦ º¯È­½ÃÅµ´Ï´Ù
+            vel += Acceleration * Time.deltaTime;   // ì†ë„ë¥¼ ë³€í™”ì‹œí‚µë‹ˆë‹¤
 
             if (prevVel >= 0 && vel < 0)
             {
@@ -63,7 +63,7 @@ public class BoomerangSkill : Skill
                 skillObj = newSkillObj;
             }
 
-            yield return null; // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±âÇÕ´Ï´Ù.
+            yield return null; // ë‹¤ìŒ í”„ë ˆìž„ê¹Œì§€ ëŒ€ê¸°í•©ë‹ˆë‹¤.
         }
         Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);

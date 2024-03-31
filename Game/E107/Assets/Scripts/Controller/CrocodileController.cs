@@ -18,6 +18,11 @@ public class CrocodileController : MonsterController
     
     protected override void ChangeStateFromMove()
     {
+        if (_detectPlayer == null)
+        {
+            _statemachine.ChangeState(new IdleState(this));
+            return;
+        }
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
 
         _agent.SetDestination(_detectPlayer.position);
@@ -52,12 +57,14 @@ public class CrocodileController : MonsterController
     {
         base.EnterSkill();
         _swordPS.Play();
+        _agent.avoidancePriority = 1;
     }
 
     public override void ExitSkill()
     {
         base.ExitSkill();
         _swordPS.Stop();
+        _agent.avoidancePriority = 50;
     }
 
     // Sword
@@ -74,6 +81,7 @@ public class CrocodileController : MonsterController
 
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
         _swordPS.Play();
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("Sword", 0.2f, -1, 0);
@@ -82,8 +90,7 @@ public class CrocodileController : MonsterController
     {
         if (CurState is DieState)
         {
-            //_monsterInfo.Patterns[0].DeActiveCollider();
-            return;
+            _statemachine.ChangeState(new DieState(this));
         }
 
         base.ExcuteCrocodileSwordState();
@@ -117,6 +124,7 @@ public class CrocodileController : MonsterController
     {
         base.ExitCrocodileSwordState();
         _swordPS.Stop();
+        _agent.avoidancePriority = 50;
     }
 
     [PunRPC]

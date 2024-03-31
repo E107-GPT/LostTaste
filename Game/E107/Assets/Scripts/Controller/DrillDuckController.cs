@@ -13,9 +13,13 @@ public class DrillDuckController : MonsterController
         _stat = new MonsterStat(_unitType);
     }
 
-
     protected override void ChangeStateFromMove()
     {
+        if (_detectPlayer == null)
+        {
+            _statemachine.ChangeState(new IdleState(this));
+            return;
+        }
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
 
         _agent.SetDestination(_detectPlayer.position);
@@ -45,11 +49,50 @@ public class DrillDuckController : MonsterController
         }
     }
 
+    public override void EnterSkill()
+    {
+        base.EnterSkill();
+        _agent.avoidancePriority = 1;
+    }
+
+    public override void ExcuteSkill()
+    {
+        _animator.SetFloat("AttackSpeed", 0.2f);
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            
+            if (aniTime <= 0.2f)
+            {
+                _animator.SetFloat("AttackSpeed", 0.2f);
+            }
+            else if (aniTime <= 0.4f)
+            {
+                _animator.SetFloat("AttackSpeed", 0.8f);
+            }
+            else if (aniTime <= 1.0f)
+            {
+                _animator.SetFloat("AttackSpeed", 1.0f);
+            }
+            else if (aniTime >= 1.0f)
+            {
+                _animator.SetFloat("AttackSpeed", 1.0f);
+                _statemachine.ChangeState(new IdleState(this));
+            }
+        }
+    }
+    public override void ExitSkill()
+    {
+        base.ExitSkill();
+        _agent.avoidancePriority = 50;
+    }
+
     // Before Slide
     public override void EnterDrillDuckSlideBeforeState()
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
@@ -65,8 +108,7 @@ public class DrillDuckController : MonsterController
     {
         if (CurState is DieState)
         {
-            //_monsterInfo.Patterns[1].DeActiveCollider();
-            return;
+            _statemachine.ChangeState(new DieState(this));
         }
 
         _animator.SetFloat("BeforeSlideSpeed", 0.5f);
@@ -91,7 +133,6 @@ public class DrillDuckController : MonsterController
         // 경로상의 플레이어를 밀쳐내면서 돌진
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         _agent.radius *= 2;
-        _agent.avoidancePriority = 0;
 
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
 
@@ -103,8 +144,7 @@ public class DrillDuckController : MonsterController
     {
         if (CurState is DieState)
         {
-            //_monsterInfo.Patterns[0].DeActiveCollider();
-            return;
+            _statemachine.ChangeState(new DieState(this));
         }
 
         _animator.SetFloat("SlideSpeed", 0.5f);
@@ -120,13 +160,12 @@ public class DrillDuckController : MonsterController
             {
                 _agent.speed = _stat.MoveSpeed * 3.0f;
             }
-            else if (aniTime < 1.0f)
+            else if (aniTime <= 0.7f)
             {
-                _agent.speed = _stat.MoveSpeed / 2;
+                _monsterInfo.Patterns[0].DeActiveCollider();
             }
             else if (aniTime >= 1.0f)
             {
-                _monsterInfo.Patterns[0].DeActiveCollider();
                 _statemachine.ChangeState(new IdleState(this));
             }
         }

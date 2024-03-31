@@ -35,6 +35,11 @@ public class MonsterKingController : MonsterController
 
     protected override void ChangeStateFromMove()
     {
+        if (_detectPlayer == null)
+        {
+            _statemachine.ChangeState(new IdleState(this));
+            return;
+        }
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
 
         _agent.SetDestination(_detectPlayer.position);
@@ -102,6 +107,7 @@ public class MonsterKingController : MonsterController
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
@@ -120,7 +126,10 @@ public class MonsterKingController : MonsterController
     }      
     public override void ExecuteMonsterKingHitDownState() 
     {
-        if (CurState is DieState) return;
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
 
         _animator.SetFloat("HitDownSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("HitDown"))
@@ -166,12 +175,14 @@ public class MonsterKingController : MonsterController
     public override void ExitMonsterKingHitDownState() 
     {
         _monsterInfo.Patterns[6].DeActiveCollider();
+        _agent.avoidancePriority = 50;
     }
 
     public override void EnterMonsterKingSlashState()           // Slash
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
@@ -190,7 +201,10 @@ public class MonsterKingController : MonsterController
     }
     public override void ExecuteMonsterKingSlashState() 
     {
-        if (CurState is DieState) return;
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
 
         _animator.SetFloat("SlashSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slash"))
@@ -230,12 +244,14 @@ public class MonsterKingController : MonsterController
     }
     public override void ExitMonsterKingSlashState() 
     {
+        _agent.avoidancePriority = 50;
     }
 
     public override void EnterMonsterKingStabState()            // Stab
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
@@ -254,7 +270,10 @@ public class MonsterKingController : MonsterController
     }         
     public override void ExecuteMonsterKingStabState() 
     {
-        if (CurState is DieState) return;
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
 
         _animator.SetFloat("StabSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Stab"))
@@ -295,12 +314,17 @@ public class MonsterKingController : MonsterController
             }
         }
     }
-    public override void ExitMonsterKingStabState() { }
+    public override void ExitMonsterKingStabState() 
+    {
+        _agent.avoidancePriority = 50;
+    }
 
     public override void EnterMonsterKingJumpStartState()       // JumpStart
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
+
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
             //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
@@ -312,7 +336,10 @@ public class MonsterKingController : MonsterController
     }    
     public override void ExecuteMonsterKingJumpStartState() 
     {
-        if (CurState is DieState) return;
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
 
         _animator.SetFloat("JumpStartSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("JumpStart"))
@@ -425,6 +452,7 @@ public class MonsterKingController : MonsterController
     {
         _jumpLastTime = Time.time;
         GetComponent<Collider>().enabled = true;
+        _agent.avoidancePriority = 50;
     }
 
     #endregion

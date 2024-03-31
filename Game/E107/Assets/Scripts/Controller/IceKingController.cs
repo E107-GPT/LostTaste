@@ -15,6 +15,11 @@ public class IceKingController : MonsterController
 
     protected override void ChangeStateFromMove()
     {
+        if (_detectPlayer == null)
+        {
+            _statemachine.ChangeState(new IdleState(this));
+            return;
+        }
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
 
         _agent.SetDestination(_detectPlayer.position);
@@ -34,7 +39,7 @@ public class IceKingController : MonsterController
     private void RandomPatternSelector()
     {
         int rand = Random.Range(0, 101);
-        if (rand <= 30)
+        if (rand <= 100)
         {
             _statemachine.ChangeState(new IceKingSpikeState(this));
         }
@@ -48,21 +53,27 @@ public class IceKingController : MonsterController
     public override void EnterSkill()
     {
         base.EnterSkill();
-
+        _agent.avoidancePriority = 1;
     }
 
     public override void ExcuteSkill()
     {
         base.ExcuteSkill();
     }
+    public override void ExitSkill()
+    {
+        base.ExitSkill();
+        _agent.avoidancePriority = 50;
+    }
+
 
     // IceSpike
     public override void EnterIceKingSpikeState()
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
+        _agent.avoidancePriority = 1;
 
-        // 둘 다 똑같음
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
             Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
@@ -75,7 +86,10 @@ public class IceKingController : MonsterController
 
     public override void ExcuteIceKingSpikeState()
     {
-        if (CurState is DieState) return;
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
 
         _animator.SetFloat("SpikeSpeed", 1.0f);
 
@@ -87,7 +101,7 @@ public class IceKingController : MonsterController
             {
                 _animator.SetFloat("SpikeSpeed", 1.0f);
             }
-            else if (aniTime <= 0.9f)
+            else if (aniTime <= 0.68f)
             {
                 _animator.SetFloat("SpikeSpeed", 0.8f);
                 _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
@@ -100,6 +114,12 @@ public class IceKingController : MonsterController
             }
         }
     }
+    public override void ExitIceKingSpikeState()
+    {
+        base.ExitIceKingSpikeState();
+        _agent.avoidancePriority = 50;
+    }
+
     [PunRPC]
     void RPC_ChangeIceKingSpikeState()
     {

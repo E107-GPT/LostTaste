@@ -24,8 +24,6 @@ public abstract class BaseController : MonoBehaviour
 	protected bool isConnected = false;
 	public PhotonView photonView;
 
-	bool isDied;
-
     // protected bool _isDie;
     protected StateMachine _statemachine;
 
@@ -77,7 +75,11 @@ public abstract class BaseController : MonoBehaviour
 	}
     void Update()
 	{
-
+        //if(CurState is DieState)
+        //{
+        //    _animator.Play("Die", 0);
+        //    return;
+        //}
 		_statemachine.Execute();
 	}
 

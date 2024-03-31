@@ -1,13 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
-public class IcePearlStaffSkill : Skill
+public class IcePearlStaffSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }
 
     [field: SerializeField]
-    public Vector3 Scale { get; set; }
+    public float Duration { get; set; }
+
+    [field: SerializeField]
+    public Vector3 StartScale { get; set; }
+
+    [field: SerializeField]
+    public Vector3 ScaleDelta { get; set; } // 초당 Scale 변화량
 
     protected override void Init() { }
 
@@ -23,13 +29,23 @@ public class IcePearlStaffSkill : Skill
         GameObject skillObj = Managers.Resource.Instantiate("Skills/SkillObject");
         skillObj.GetComponent<SkillObject>().SetUp(player.transform, Damage, _seq);
 
-        skillObj.transform.position = player.transform.TransformPoint(Vector3.forward * (Scale.z / 2)) + new Vector3(0, 0.5f, 0);
-        skillObj.transform.rotation = player.transform.rotation;
-        skillObj.transform.localScale = Scale;
+        float timer = 0.0f;
+        Vector3 scale = StartScale;
+        while (timer < Duration)
+        {
+            skillObj.transform.position = player.transform.TransformPoint(Vector3.forward * (scale.z / 2)) + new Vector3(0, 0.5f, 0);
+            skillObj.transform.rotation = player.transform.rotation;
+            skillObj.transform.localScale = scale;
+
+            yield return null;  // 다음 프레임
+            timer += Time.deltaTime;
+            scale += ScaleDelta * Time.deltaTime;
+        }
+
+        Managers.Resource.Destroy(skillObj.gameObject);
 
         yield return new WaitForSeconds(0.5f);
 
-        Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
     }
 }

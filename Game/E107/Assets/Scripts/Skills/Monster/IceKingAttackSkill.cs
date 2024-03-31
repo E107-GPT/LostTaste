@@ -25,24 +25,32 @@ public class IceKingAttackSkill : Skill
 
         yield return new WaitForSeconds(0.5f);
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.IceKingCleaveEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.transform.parent = _controller.transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
-
-        skillObj.localScale = new Vector3(1.0f, 3.0f, _range + 3.0f);    // 5.0f
-        skillObj.position = Root.transform.TransformPoint(Vector3.forward * (_range - 1.0f));
-        skillObj.position = new Vector3(skillObj.position.x, Root.position.y, skillObj.position.z);
         skillObj.rotation = Root.rotation;
+        Vector3 rootForward = Root.TransformDirection(Vector3.forward);
+        skillObj.transform.position = Root.position + rootForward;
+        skillObj.localScale = new Vector3(1.0f, 3.0f, _range / 2);
 
-        ps.transform.parent = skillObj.transform;
-        //ps.transform.position = new Vector3(skillObj.position.x - 5.0f, skillObj.position.y, skillObj.position.z - 0.9f);
-        //ps.transform.position = skillObj.transform.position + skillObj.transform.right * 3.0f;
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.IceKingCleaveEffect, Root);
         ps.transform.position = skillObj.transform.position - skillObj.transform.forward * 3.0f;
-        //ps.position = skillObj.position / 10.0f;
 
-        yield return new WaitForSeconds(1.0f);
+        float moveDuration = 0.33f;
+        float timer = 0;
+        float speed = 20.0f;
+        while (timer < moveDuration)
+        {
+            Vector3 moveStep = skillObj.forward * speed * Time.deltaTime;
+            skillObj.position += moveStep;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(skillObj.gameObject);
+
+        yield return new WaitForSeconds(0.6f);
         Managers.Effect.Stop(ps);
     }
 }

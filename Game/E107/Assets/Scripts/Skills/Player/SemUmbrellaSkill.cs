@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SemUmbrellaSkill : Skill
+public class SemUmbrellaSkill : Skill, IAttackSkill
 {
-    [SerializeField]
-    private int Damage = 300;
+    [field: SerializeField]
+    public int Damage { get; set; }
 
     [field: SerializeField]
     private Vector3 Scale = new Vector3(5.0f, 5.0f, 5.0f);
@@ -19,7 +19,8 @@ public class SemUmbrellaSkill : Skill
         PlayerController playerController = player.GetComponent<PlayerController>();
         SemUmbrellaItem item = gameObject.GetComponent<SemUmbrellaItem>();
 
-        Debug.Log("SEM Umbrella Attack");
+        yield return null;  // 쿨타임 실행을 위해 1틱 대기
+
         playerController.StateMachine.ChangeState(new IdleState(playerController));
         
         item.IsOpen = true;
@@ -39,13 +40,13 @@ public class SemUmbrellaSkill : Skill
         yield return new WaitForSeconds(0.2f);
 
         Washout(player, Color.white);
+        Managers.Resource.Destroy(skillObj.gameObject);
 
         yield return new WaitForSeconds(0.8f);
 
         item.IsOpen = false;
 
         yield return new WaitForSeconds(3.0f);
-        Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
     }
 

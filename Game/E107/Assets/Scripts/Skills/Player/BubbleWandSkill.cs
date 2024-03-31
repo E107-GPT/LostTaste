@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BubbleWandSkill :Skill
+public class BubbleWandSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }
-
     protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
@@ -31,19 +30,19 @@ public class BubbleWandSkill :Skill
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation.SetLookRotation(dir);
 
-        float moveDuration = 1.5f; // Åõ»çÃ¼°¡ ³¯¾Æ°¡´Â ½Ã°£À» ¼³Á¤ÇÕ´Ï´Ù.
-        float timer = 0; // Å¸ÀÌ¸Ó ÃÊ±âÈ­
-        float speed = 10.0f; // Åõ»çÃ¼ÀÇ ¼Óµµ¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+        float moveDuration = 1.5f; // íˆ¬ì‚¬ì²´ê°€ ë‚ ì•„ê°€ëŠ” ì‹œê°„ì„ ì„¤ì •í•©ë‹ˆë‹¤.
+        float timer = 0; // íƒ€ì´ë¨¸ ì´ˆê¸°í™”
+        float speed = 10.0f; // íˆ¬ì‚¬ì²´ì˜ ì†ë„ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
 
         while (timer < moveDuration)
         {
-            // Åõ»çÃ¼¿Í ÆÄÆ¼Å¬ ½Ã½ºÅÛÀ» ¾ÕÀ¸·Î ¿òÁ÷ÀÔ´Ï´Ù.
+            // íˆ¬ì‚¬ì²´ì™€ íŒŒí‹°í´ ì‹œìŠ¤í…œì„ ì•ìœ¼ë¡œ ì›€ì§ì…ë‹ˆë‹¤.
             Vector3 moveStep = dir * speed * Time.deltaTime;
             skillObj.position += moveStep;
             ps.transform.position += moveStep;
 
-            timer += Time.deltaTime; // Å¸ÀÌ¸Ó¸¦ ¾÷µ¥ÀÌÆ®ÇÕ´Ï´Ù.
-            yield return null; // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±âÇÕ´Ï´Ù.
+            timer += Time.deltaTime; // íƒ€ì´ë¨¸ë¥¼ ì—…ë°ì´íŠ¸í•©ë‹ˆë‹¤.
+            yield return null; // ë‹¤ìŒ í”„ë ˆì„ê¹Œì§€ ëŒ€ê¸°í•©ë‹ˆë‹¤.
         }
 
         

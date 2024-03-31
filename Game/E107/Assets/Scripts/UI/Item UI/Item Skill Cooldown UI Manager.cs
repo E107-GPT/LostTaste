@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 /// <summary>
 /// 아이템 스킬 쿨타임 UI 매니저는 쿨타임이 있는 아이템 스킬의 쿨타임을 표시하는 기능을 제공합니다.
@@ -82,10 +83,41 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
         Item firstItem = _playerInventory[1];
         Item secondItem = _playerInventory[2];
 
+        // '맨손'일 경우 UI 초기화 (사용 아이템 사용 시 UI 초기화하는 기능)
+        if (firstItem != null && firstItem.name == "0000_Fist")
+        {
+            ResetCoolDownUI(firstItem);
+        }
+        else if (secondItem != null && secondItem.name == "0000_Fist")
+        {
+            ResetCoolDownUI(secondItem);
+        }
+
+        // 육회 비빔밥 사용시 쿨타임 UI 미적용
+        if (firstItem != null &&
+            (firstItem.name == "0020_SixTimesBibimbap" ||
+             firstItem.name == "0021_FiveTimesBibimbap" ||
+             firstItem.name == "0022_FourTimesBibimbap" ||
+             firstItem.name == "0023_ThreeTimesBibimbap" ||
+             firstItem.name == "0024_TwoTimesBibimbap" ||
+             firstItem.name == "0025_Bibimbap"))
+        {
+            ResetCoolDownUI(firstItem);
+        }
+        else if (secondItem != null &&
+            (secondItem.name == "0020_SixTimesBibimbap" ||
+             secondItem.name == "0021_FiveTimesBibimbap" ||
+             secondItem.name == "0022_FourTimesBibimbap" ||
+             secondItem.name == "0023_ThreeTimesBibimbap" ||
+             secondItem.name == "0024_TwoTimesBibimbap" ||
+             secondItem.name == "0025_Bibimbap"))
+        {
+            ResetCoolDownUI(secondItem);
+        }
+
         // 스킬 존재 여부 확인
         bool isFirstItemSkillExists = firstItem.RightSkill != null && !(firstItem.RightSkill is EmptySkill);
         bool isSecondItemSkillExists = secondItem.RightSkill != null && !(secondItem.RightSkill is EmptySkill);
-
 
         // 쿨타임 정보 업데이트
         if (Input.GetMouseButton(1))
@@ -133,7 +165,7 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
         if (isCoolingDown || item.RightSkill == null) return;
 
         isCoolingDown = true;
-
+        
         // 새로운 코루틴 시작
         coolDownCoroutine = StartCoroutine(UpdateItemCoolDownCoroutine(item));
 
@@ -146,26 +178,34 @@ public class ItemSkillCooldownUIManager : MonoBehaviour
         float skillCoolDown = item.RightSkill.SkillCoolDownTime;
         float elapsedTime = 0; // 경과 시간을 추적하는 변수
 
-        if (skillCoolDown > 1)
+        while (elapsedTime < skillCoolDown)
         {
-            while (elapsedTime < skillCoolDown)
-            {
-                elapsedTime += Time.deltaTime;
-                float remainingTime = skillCoolDown - elapsedTime;
+            elapsedTime += Time.deltaTime;
+            float remainingTime = skillCoolDown - elapsedTime;
 
-                // UI 업데이트 로직
-                UpdateCoolDownUI(item, remainingTime / skillCoolDown, Mathf.Ceil(remainingTime).ToString() + "s");
-                yield return null;
-            }
+            // UI 업데이트 로직
+            UpdateCoolDownUI(item, remainingTime / skillCoolDown, remainingTime);
+            yield return null;
         }
-
+        
         // 쿨다운 완료 후 UI 초기화
         ResetCoolDownUI(item);
     }
 
     // 쿨다운 UI 업데이트 메서드
-    void UpdateCoolDownUI(Item item, float fillAmount, string text)
+    void UpdateCoolDownUI(Item item, float fillAmount, float remainingTime)
     {
+        string text;
+
+        if (remainingTime > 1)
+        {
+            text = Mathf.Ceil(remainingTime).ToString() + "s";
+        }
+        else
+        {
+            text = (remainingTime).ToString("F1");
+        }
+
         if (item == _playerInventory[1])
         {
             firstItemRightSkillCoolDownText.text = text;

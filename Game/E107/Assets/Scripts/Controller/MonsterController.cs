@@ -20,17 +20,17 @@ public class MonsterController : BaseController
 {
     protected MonsterStat _stat;
     protected MonsterInfo _monsterInfo;
-    private string _curSkillName;             // 현재 공격의 이름 - Info에서 가져옴
-    private float _lastDetectTime;
+    private AudioSource[] _audioSource;       // MainCamera의 Audio Listener가 필요
 
     [SerializeField]
     protected Transform _detectPlayer;        // 이동 타겟팅, 일반 공격 범위를 벗어나면 랜덤한 플레이어에게 이동 -> 지금은 가까운 플레이어에게 이동
     protected Ray _ray;                       // Gizmos에 사용
     private Renderer[] _allRenderers;         // 캐릭터의 모든 Renderer 컴포넌트 -> 모든 render의 색을 변경!
     private Color[] _originalColors;          // 원래의 머티리얼 색상 저장용 배열
-    private AudioSource[] _audioSource;       // MainCamera의 Audio Listener가 필요
 
+    [SerializeField]
     private bool _isDie;
+    private float _lastDetectTime;
 
     public MonsterStat Stat { get { return _stat; } }
     public MonsterInfo MonsterInfo { get { return _monsterInfo; } }
@@ -41,7 +41,6 @@ public class MonsterController : BaseController
 
     public override void Init()
     {
-        // BaseController
         _agent.stoppingDistance = 1.0f;
         _agent.angularSpeed = 500.0f;
         _agent.acceleration = 40.0f;
@@ -65,22 +64,6 @@ public class MonsterController : BaseController
             audio.Stop();
         }
     }
-
-    //private void FixedUpdate()
-    //{
-    //    FreezeVelocity();
-    //}
-
-    //// 캐릭터에게 물리력을 받아도 밀려나는 가속도로 인해 이동에 방해받지 않는다.
-    //protected void FreezeVelocity()
-    //{
-    //    _rigidbody.velocity = Vector3.zero;
-    //}
-
-    //private void OnDestroy()
-    //{
-        
-    //}
 
     protected void OnDrawGizmos()
     {
@@ -119,6 +102,10 @@ public class MonsterController : BaseController
     public override void ExitIdle()
     {
         base.ExitIdle();
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
     }
 
     // MOVE
@@ -190,8 +177,11 @@ public class MonsterController : BaseController
         // 상태 전환이 완벽하게 이뤄졌을 때 "Attack" 애니메이션이 끝났는지 확인
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
-            if (CurState is DieState) _statemachine.ChangeState(new DieState(this));
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (CurState is DieState)
+            {
+                _statemachine.ChangeState(new DieState(this));
+            }
 
             if (aniTime >= 1.0f)
             {
@@ -212,16 +202,15 @@ public class MonsterController : BaseController
 
         _agent.speed = 0;
         _agent.velocity = Vector3.zero;
-        //GetComponent<Collider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
 
         _audioSource[(int)SoundOrder.DIE].Play();
         _animator.Play("Die", -1);
-        ////_animator.SetBool("isDie", true);
-        //_isDie = true;
-        //PrintText($"{_isDie}");
+        _isDie = true;
 
         Destroy(gameObject, 3.0f);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDieState", RpcTarget.Others);
+
     }
     public override void ExcuteDie()
     {
@@ -296,6 +285,11 @@ public class MonsterController : BaseController
     // Move 상태에서 다른 상태로 바꾸는 조건
     protected virtual void ChangeStateFromMove()
     {
+        if(_detectPlayer == null)
+        {
+            _statemachine.ChangeState(new IdleState(this));
+            return;
+        }
         float distanceToPlayer = (transform.position - _detectPlayer.position).magnitude;
 
         _agent.SetDestination(_detectPlayer.position);
@@ -317,11 +311,6 @@ public class MonsterController : BaseController
     {
         if (PhotonNetwork.IsMasterClient == false) return;
         base.TakeDamage(skillObjectId, damage);
-        if (CurState is DieState)
-        {
-            //PrintText($"현재 상태: {CurState}");
-            return;
-        }
 
         float lastAttackTime;
         lastAttackTimes.TryGetValue(skillObjectId, out lastAttackTime);

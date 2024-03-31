@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SunFlowerSkill : Skill
+public class SunFlowerSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }
+    [field: SerializeField]
+    private Vector3 Scale = new Vector3(1.0f, 1.0f, 0.5f);
 
     protected override void Init() { }
 
@@ -17,39 +19,36 @@ public class SunFlowerSkill : Skill
         Root.GetComponent<Animator>().CrossFade("ATTACK2", 0.1f, -1, 0);
         dir = new Vector3(dir.x, 0, dir.z);
 
-        yield return new WaitForSeconds(0.3f);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BubbleWandSkillEffect, Root);
-        Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SunFallEffect, Root);
 
-        ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
+        ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y +10f, ps.transform.position.z);
 
-        skillObj.localScale = new Vector3(0.7f, 0.7f, 0.7f);
 
-        skillObj.position = Root.transform.position;
-        skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
-        skillObj.rotation.SetLookRotation(dir);
-
-        float moveDuration = 1.5f; // ≈ıªÁ√º∞° ≥Øæ∆∞°¥¬ Ω√∞£¿ª º≥¡§«’¥œ¥Ÿ.
-        float timer = 0; // ≈∏¿Ã∏” √ ±‚»≠
-        float speed = 10.0f; // ≈ıªÁ√º¿« º”µµ∏¶ º≥¡§«’¥œ¥Ÿ.
+        float moveDuration = 1.0f; // Ìà¨ÏÇ¨Ï≤¥Í∞Ä ÎÇ†ÏïÑÍ∞ÄÎäî ÏãúÍ∞ÑÏùÑ ÏÑ§Ï†ïÌï©ÎãàÎã§.
+        float timer = 0; // ÌÉÄÏù¥Î®∏ Ï¥àÍ∏∞Ìôî
+        float speed = 10.0f; // Ìà¨ÏÇ¨Ï≤¥Ïùò ÏÜçÎèÑÎ•º ÏÑ§Ï†ïÌï©ÎãàÎã§.
 
         while (timer < moveDuration)
         {
-            // ≈ıªÁ√ºøÕ ∆ƒ∆º≈¨ Ω√Ω∫≈€¿ª æ’¿∏∑Œ øÚ¡˜¿‘¥œ¥Ÿ.
-            Vector3 moveStep = dir * speed * Time.deltaTime;
-            skillObj.position += moveStep;
-            ps.transform.position += moveStep;
+            ps.transform.Translate(Vector3.forward * Time.deltaTime * speed);
 
-            timer += Time.deltaTime; // ≈∏¿Ã∏”∏¶ æ˜µ•¿Ã∆Æ«’¥œ¥Ÿ.
-            yield return null; // ¥Ÿ¿Ω «¡∑π¿”±Ó¡ˆ ¥Î±‚«’¥œ¥Ÿ.
+            timer += Time.deltaTime; // ÌÉÄÏù¥Î®∏Î•º ÏóÖÎç∞Ïù¥Ìä∏Ìï©ÎãàÎã§.
+            yield return null; // Îã§Ïùå ÌîÑÎ†àÏûÑÍπåÏßÄ ÎåÄÍ∏∞Ìï©ÎãàÎã§.
         }
+        Managers.Sound.Play("Monster/KingHitDownAfterEffect");
+        Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
+        skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
+        skillObj.localScale = new Vector3(3f, 0.5f, 3f);
 
+        skillObj.position = ps.transform.position;
+        skillObj.position = new Vector3(skillObj.position.x, Root.position.y, skillObj.position.z);
+        skillObj.rotation.SetLookRotation(dir);
 
+        ParticleSystem explosion = Managers.Effect.Play(Define.Effect.ExplosionSunFallEffect, skillObj);
+        yield return new WaitForSeconds(0.5f);
         Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
-
-
+        Managers.Effect.Stop(explosion);
 
     }
 }
