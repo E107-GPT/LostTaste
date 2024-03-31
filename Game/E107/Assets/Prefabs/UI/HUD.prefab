@@ -2939,7 +2939,6 @@ MonoBehaviour:
   secondItemRightSkillPanel: {fileID: 272770242958024649}
   secondItemRightSkillIcon: {fileID: 5868911047385992505}
   skillNonePanel: {fileID: 3555889421795255098}
-  classSkillIcon: {fileID: 2959345889829788965}
 --- !u!1 &794495045894246477
 GameObject:
   m_ObjectHideFlags: 0
@@ -9786,7 +9785,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1c03d6f593454094a92ffa201aaf476f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c13322240ca3a4847b37e05e5d881984, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19731,6 +19730,7 @@ GameObject:
   - component: {fileID: 8193883228284390578}
   - component: {fileID: 6511735748245350069}
   - component: {fileID: 6068737310386643911}
+  - component: {fileID: 6099160738129960601}
   m_Layer: 5
   m_Name: Item Skill Container
   m_TagString: Untagged
@@ -19801,6 +19801,34 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6099160738129960601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7072071595352198538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd04fb21ba84d64380e4d964ea6087b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemInfoUI: {fileID: 0}
+  itemNameText: {fileID: 0}
+  itemTierText: {fileID: 0}
+  itemFlavorText: {fileID: 0}
+  itemIcon: {fileID: 0}
+  itemSkillNameText: {fileID: 0}
+  itemSkillDescriptionText: {fileID: 0}
+  itemSkillIcon: {fileID: 0}
+  damagePanel: {fileID: 0}
+  hpRecoveryPanel: {fileID: 0}
+  mpRecoveryPanel: {fileID: 0}
+  itemSkillDamageText: {fileID: 0}
+  itemSkillHpRecoveryText: {fileID: 0}
+  itemSkillMpRecoveryText: {fileID: 0}
+  itemSkillManaText: {fileID: 0}
+  itemSkillCoolDownText: {fileID: 0}
 --- !u!1 &7107578184669372014
 GameObject:
   m_ObjectHideFlags: 0

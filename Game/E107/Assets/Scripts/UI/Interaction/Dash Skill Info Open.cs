@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-
 /// <summary>
 /// 대쉬 스킬 위에 마우스를 올려서 스킬 정보 UI가 나오도록 하는 클래스입니다.
 /// </summary>

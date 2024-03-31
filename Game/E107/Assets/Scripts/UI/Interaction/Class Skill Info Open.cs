@@ -79,8 +79,11 @@ public class ClassSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerE
         // 현재 플레이어의 직업 정보 가져오기
         _playerClass = _playerController.PlayerClass;
 
+        Debug.Log($"{_playerClass}@@@@@@@@@@@@@@2");
+
         // 직업스킬 UI 업데이트
-        UpdateClassSkillInfo();
+        if (_playerClass.ClassSkill is not EmptySkill)
+            UpdateClassSkillInfo();
     }
 
     // 직업스킬 정보를 UI에 표시

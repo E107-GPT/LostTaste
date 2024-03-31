@@ -5,88 +5,78 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// ÄÁÆ®·Ñ ÀÎÅÍÆäÀÌ½º ¸Å´ÏÀú´Â ¾ÆÀÌÅÛ ½ºÅ³À» Ç¥½ÃÇÏ´Â ±â´ÉÀ» Á¦°øÇÕ´Ï´Ù.
+/// ì»¨íŠ¸ë¡¤ ì¸í„°í˜ì´ìŠ¤ ë§¤ë‹ˆì €ëŠ” ì•„ì´í…œ ìŠ¤í‚¬ì„ í‘œì‹œí•˜ëŠ” ê¸°ëŠ¥ì„ ì œê³µí•©ë‹ˆë‹¤.
 /// </summary>
 public class ControlInterfaceManager : MonoBehaviour
 {
-    // ------------------------------------------------ º¯¼ö ¼±¾ğ ------------------------------------------------
+    // ------------------------------------------------ ë³€ìˆ˜ ì„ ì–¸ ------------------------------------------------
 
-    // ÄÁÆ®·Ñ ÀÎÅÍÆäÀÌ½º ¸Å´ÏÀú°¡ »ç¿ëÇÒ º¯¼ö ¼±¾ğ
-    private PlayerController _playerController; // ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯ ÂüÁ¶ º¯¼ö
-    private Item[] _playerInventory; // ÇÃ·¹ÀÌ¾îÀÇ ÀÎº¥Åä¸® ¹è¿­
-    private int _currentItemNum; // ÇöÀç ÀåÂøÇÑ ¹«±â
+    // ì»¨íŠ¸ë¡¤ ì¸í„°í˜ì´ìŠ¤ ë§¤ë‹ˆì €ê°€ ì‚¬ìš©í•  ë³€ìˆ˜ ì„ ì–¸
+    private PlayerController _playerController; // í”Œë ˆì´ì–´ ì»¨íŠ¸ë¡¤ëŸ¬ ì°¸ì¡° ë³€ìˆ˜
+    private Item[] _playerInventory; // í”Œë ˆì´ì–´ì˜ ì¸ë²¤í† ë¦¬ ë°°ì—´
+    private int _currentItemNum; // í˜„ì¬ ì¥ì°©í•œ ë¬´ê¸°
 
-    // ¾ÆÀÌÅÛ 1
-    [Header("[ ¾ÆÀÌÅÛ 1 ]")]
-    public GameObject firstItemRightSkillPanel; // ¾ÆÀÌÅÛ 1 ¿À¸¥ÂÊ ½ºÅ³ ÆĞ³Î
-    public Image firstItemRightSkillIcon; // ¾ÆÀÌÅÛ 1 ¿À¸¥ÂÊ ½ºÅ³ ¾ÆÀÌÄÜ
+    // ì•„ì´í…œ 1
+    [Header("[ ì•„ì´í…œ 1 ]")]
+    public GameObject firstItemRightSkillPanel; // ì•„ì´í…œ 1 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ íŒ¨ë„
+    public Image firstItemRightSkillIcon; // ì•„ì´í…œ 1 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ì•„ì´ì½˜
 
-    // ¾ÆÀÌÅÛ 2
-    [Header("[ ¾ÆÀÌÅÛ 2 ]")]
-    public GameObject secondItemRightSkillPanel; // ¾ÆÀÌÅÛ 2 ¿À¸¥ÂÊ ½ºÅ³ ÆĞ³Î
-    public Image secondItemRightSkillIcon; // ¾ÆÀÌÅÛ 2 ¿À¸¥ÂÊ ½ºÅ³ ¾ÆÀÌÄÜ
+    // ì•„ì´í…œ 2
+    [Header("[ ì•„ì´í…œ 2 ]")]
+    public GameObject secondItemRightSkillPanel; // ì•„ì´í…œ 2 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ íŒ¨ë„
+    public Image secondItemRightSkillIcon; // ì•„ì´í…œ 2 ì˜¤ë¥¸ìª½ ìŠ¤í‚¬ ì•„ì´ì½˜
 
-    // ½ºÅ³ ¾øÀ½ ¾ÆÀÌÄÜ
-    [Header("[ ½ºÅ³ ¾øÀ½]")]
-    public GameObject skillNonePanel; // ½ºÅ³ ¾øÀ½ ÆĞ³Î
-
-    // Á÷¾÷ ½ºÅ³
-    [Header("[ Á÷¾÷ ½ºÅ³ ]")]
-    public Image classSkillIcon; // Á÷¾÷ ½ºÅ³ ¾ÆÀÌÄÜ
+    // ìŠ¤í‚¬ ì—†ìŒ ì•„ì´ì½˜
+    [Header("[ ìŠ¤í‚¬ ì—†ìŒ]")]
+    public GameObject skillNonePanel; // ìŠ¤í‚¬ ì—†ìŒ íŒ¨ë„
 
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
 
     void Update()
     {
-        // ÄÁÆ®·Ñ ÀÎÅÍÆäÀÌ½º ¾÷µ¥ÀÌÆ®
+        // ì»¨íŠ¸ë¡¤ ì¸í„°í˜ì´ìŠ¤ ì—…ë°ì´íŠ¸
         UpdateControlInterface();
     }
 
 
-    // ------------------------------------------------ »ç¿ëÀÚ Á¤ÀÇ ¸Ş¼­µå ------------------------------------------------
+    // ------------------------------------------------ ì‚¬ìš©ì ì •ì˜ ë©”ì„œë“œ ------------------------------------------------
 
-    // ÄÁÆ®·Ñ ÀÎÅÍÆäÀÌ½º¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ¸Ş¼­µå
+    // ì»¨íŠ¸ë¡¤ ì¸í„°í˜ì´ìŠ¤ë¥¼ ì—…ë°ì´íŠ¸í•˜ëŠ” ë©”ì„œë“œ
     void UpdateControlInterface()
     {
-        // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ¼­ ÂüÁ¶
+        // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•„ì„œ ì°¸ì¡°
         _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        if (_playerController == null) return; // PlayerController ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾øÀ» ¶§
+        if (_playerController == null) return; // PlayerController ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ì„ ë•Œ
 
-        // PlayerControllerÀÇ ÀÎº¥Åä¸®¿¡ Á¢±Ù
+        // PlayerControllerì˜ ì¸ë²¤í† ë¦¬ì— ì ‘ê·¼
         _playerInventory = _playerController.Inventory;
         _currentItemNum = _playerController.CurrentItemNum;
 
-        // PlayerControllerÀÇ ÀÎº¥Åä¸®¿Í ÇöÀç ¾ÆÀÌÅÛ ¹øÈ£¸¦ °¡Á®¿È
+        // PlayerControllerì˜ ì¸ë²¤í† ë¦¬ì™€ í˜„ì¬ ì•„ì´í…œ ë²ˆí˜¸ë¥¼ ê°€ì ¸ì˜´
         Item firstItem = _playerInventory[1];
         Item secondItem = _playerInventory[2];
 
-        // ½ºÅ³ Á¸Àç ¿©ºÎ È®ÀÎ
-        bool isFirstItemSkillExists = !float.IsInfinity(firstItem.RightSkill.SkillCoolDownTime);
-        bool isSecondItemSkillExists = !float.IsInfinity(secondItem.RightSkill.SkillCoolDownTime);
+        // ìŠ¤í‚¬ ì¡´ì¬ ì—¬ë¶€ í™•ì¸
+        bool isFirstItemSkillExists = firstItem.RightSkill != null && !(firstItem.RightSkill is EmptySkill);
+        bool isSecondItemSkillExists = secondItem.RightSkill != null && !(secondItem.RightSkill is EmptySkill);
 
-        // ½ºÅ³ ¾ÆÀÌÄÜ ¾÷µ¥ÀÌÆ®
+        // ìŠ¤í‚¬ ì•„ì´ì½˜ ì—…ë°ì´íŠ¸
         UpdateSkillIcon(firstItem, firstItemRightSkillIcon, isFirstItemSkillExists);
         UpdateSkillIcon(secondItem, secondItemRightSkillIcon, isSecondItemSkillExists);
 
-        // ¹«±â ±³Ã¼¿¡ µû¸¥ ½ºÅ³ ÆĞ³Î ¾÷µ¥ÀÌÆ®
+        // ë¬´ê¸° êµì²´ì— ë”°ë¥¸ ìŠ¤í‚¬ íŒ¨ë„ ì—…ë°ì´íŠ¸
         ToggleSkillPanels(_currentItemNum, isFirstItemSkillExists, isSecondItemSkillExists);
-
-        //// Á÷¾÷ ¾ÆÀÌÄÜ ¾÷µ¥ÀÌÆ®
-        //if (warriorSkill != null)
-        //{
-        //    UpdateClassSkillIcon(classSkillIcon, warriorSkillIcon);
-        //}
     }
 
-    // ½ºÅ³ ¾ÆÀÌÄÜÀ» ¾÷µ¥ÀÌÆ®ÇÏ´Â ¸Ş¼­µå
+    // ìŠ¤í‚¬ ì•„ì´ì½˜ì„ ì—…ë°ì´íŠ¸í•˜ëŠ” ë©”ì„œë“œ
     void UpdateSkillIcon(Item item, Image skillIcon, bool isSkillExists)
     {
         if (isSkillExists) skillIcon.sprite = item.RightSkill.Icon;
     }
 
-    // ÇöÀç ¼±ÅÃµÈ ¾ÆÀÌÅÛ¿¡ µû¶ó ÆĞ³ÎÀ» Åä±ÛÇÏ´Â ¸Ş¼­µå, ½ºÅ³ Á¸Àç ¿©ºÎ¸¦ °í·Á
+    // í˜„ì¬ ì„ íƒëœ ì•„ì´í…œì— ë”°ë¼ íŒ¨ë„ì„ í† ê¸€í•˜ëŠ” ë©”ì„œë“œ, ìŠ¤í‚¬ ì¡´ì¬ ì—¬ë¶€ë¥¼ ê³ ë ¤
     void ToggleSkillPanels(int currentItemNum, bool isFirstItemSkillExists, bool isSecondItemSkillExists)
     {
         bool isSkillPanelActive = false;
@@ -106,10 +96,4 @@ public class ControlInterfaceManager : MonoBehaviour
 
         skillNonePanel.SetActive(!isSkillPanelActive);
     }
-
-    //// Á÷¾÷ ½ºÅ³ ¾ÆÀÌÄÜÀ» ¾÷µ¥ÀÌÆ®ÇÏ´Â ¸Ş¼­µå
-    //void UpdateClassSkillIcon(Image skillIcon, Sprite warriorSkillIcon)
-    //{
-    //    skillIcon.sprite = warriorSkillIcon;
-    //}
 }
