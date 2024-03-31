@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SemUmbrellaSkill : AttackSkill
+public class SemUmbrellaSkill : Skill, IAttackSkill
 {
+    [field: SerializeField]
+    public int Damage { get; set; }
+
     [field: SerializeField]
     private Vector3 Scale = new Vector3(5.0f, 5.0f, 5.0f);
 

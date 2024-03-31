@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AttackSkill : Skill
+public interface IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }

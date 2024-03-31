@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MiniDrillSkill : AttackSkill
+public class MiniDrillSkill : Skill, IAttackSkill
 {
+    [field: SerializeField]
+    public int Damage { get; set; }
+
     [field: SerializeField]
     public float Duration { get; set; }
 

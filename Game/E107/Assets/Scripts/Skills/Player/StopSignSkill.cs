@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StopSignSkill : AttackSkill
+public class StopSignSkill : Skill, IAttackSkill
 {
+    [field: SerializeField]
+    public int Damage { get; set; }
+
     [field: SerializeField]
     private Vector3 Scale = new Vector3(5.0f, 2.0f, 5.0f);
 

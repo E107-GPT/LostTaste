@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalAttackSkill : AttackSkill
+public class NormalAttackSkill : Skill, IAttackSkill
 {
+    [field: SerializeField]
+    public int Damage { get; set; }
+
     [field: SerializeField]
     private Vector3 Scale = new Vector3(3.0f, 2.0f, 3.0f);
 
