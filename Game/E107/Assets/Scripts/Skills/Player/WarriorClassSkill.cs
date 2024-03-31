@@ -20,11 +20,14 @@ public class WarriorClassSkill : Skill
         Root = transform.root;
 
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
-        ParticleSystem magnet = Managers.Effect.Play(Define.Effect.WarriorClassSkillMagnetEffect, Root);
-        magnet.transform.parent = Root.transform;
-        magnet.transform.position += Root.up * 2.0f;
-        magnet.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        ParticleSystem start = Managers.Effect.Play(Define.Effect.WarriorClassSkillStartEffect, Root);
+        start.transform.parent = Root.transform;
+        start.transform.localScale *= 2;
         yield return new WaitForSeconds(0.3f);
+        
+        ParticleSystem draw = Managers.Effect.Play(Define.Effect.WarriorClassSkillDrawEffect, Root);
+        draw.transform.parent = Root.transform;
+        draw.transform.localScale *= 2.5f;
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.WarriorClassSkillEffect, Root);
         ps.transform.parent = Root;
 
@@ -48,8 +51,9 @@ public class WarriorClassSkill : Skill
         }
 
         //yield return new WaitForSeconds(0.3f);
+        Managers.Effect.Stop(start);
         Managers.Effect.Stop(ps);
-        Managers.Effect.Stop(magnet);
+        Managers.Effect.Stop(draw);
 
 
 

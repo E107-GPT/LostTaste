@@ -63,8 +63,9 @@ public class Define
         DrillDuckAttackEffect,
         StrongSwingEffect,
         GalaxyZzzSkillEffect,
+        WarriorClassSkillStartEffect,
         WarriorClassSkillEffect,
-        WarriorClassSkillMagnetEffect,
+        WarriorClassSkillDrawEffect,
         SemUmbrellaSkillEffect,
         BoomerangSkillEffect,
         ToxicFlowerMissileEffect,
@@ -98,6 +99,7 @@ public class Define
         MageClassSkillAuraEffect,
         HealOnceEffect,
         PriestClassSkillEffect,
+        PlayerWalkEffect,
         MaxCount
     }
 
