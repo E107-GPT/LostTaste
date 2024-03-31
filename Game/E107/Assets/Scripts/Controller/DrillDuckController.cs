@@ -15,6 +15,11 @@ public class DrillDuckController : MonsterController
 
     protected override void ChangeStateFromMove()
     {
+        if (_detectPlayer == null)
+        {
+            _statemachine.ChangeState(new IdleState(this));
+            return;
+        }
         float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
 
         _agent.SetDestination(_detectPlayer.position);
