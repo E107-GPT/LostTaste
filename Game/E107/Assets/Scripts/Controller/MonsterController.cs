@@ -285,6 +285,11 @@ public class MonsterController : BaseController
     // Move 상태에서 다른 상태로 바꾸는 조건
     protected virtual void ChangeStateFromMove()
     {
+        if(_detectPlayer == null)
+        {
+            _statemachine.ChangeState(new IdleState(this));
+            return;
+        }
         float distanceToPlayer = (transform.position - _detectPlayer.position).magnitude;
 
         _agent.SetDestination(_detectPlayer.position);

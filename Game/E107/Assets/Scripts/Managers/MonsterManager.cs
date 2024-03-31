@@ -153,11 +153,14 @@ public class MonsterManager : MonoBehaviour
 
     public void ReStartManage()
     {
-        if (_curMap == null) return;
+        Debug.Log($"Restart Manage {_curMap}");
+        if (string.IsNullOrEmpty(_curMap)) return;
         foreach(var monster in GameObject.FindGameObjectsWithTag("Monster"))
         {
             monstersInCurrentMap.Add(monster);
         }
+
+        Debug.Log("RestartCheckMonstersCoroutine");
         RestartCheckMonstersCoroutine(_curMap);
     }
 }

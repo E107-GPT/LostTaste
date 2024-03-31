@@ -489,7 +489,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             
             if (p.GetComponent<PhotonView>().ViewID == (int)viewIDObj)
             {
-                PhotonNetwork.Destroy(p.gameObject);
+                // 마스터가 지워라.
+                if(PhotonNetwork.IsMasterClient) PhotonNetwork.Destroy(p.gameObject);
             }
         }
 
