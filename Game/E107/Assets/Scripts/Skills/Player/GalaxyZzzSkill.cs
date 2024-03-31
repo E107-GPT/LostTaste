@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GalaxyZzzSkill : Skill
+public class GalaxyZzzSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }

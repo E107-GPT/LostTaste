@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class IcePearlStaffSkill : Skill
+public class IcePearlStaffSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }

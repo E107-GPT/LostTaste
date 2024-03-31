@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class CrocodileSwordSkill : Skill
+public class CrocodileSwordSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }

@@ -23,6 +23,8 @@ public class PlayerController : BaseController
     Define.SkillType _curSkill = Define.SkillType.None;
     PlayerClass _playerClass;
 
+    ParticleSystem _moveEffect;
+
 
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
     private Color[] _originalColors; // 원래의 머티리얼 색상 저장용 배열
@@ -146,6 +148,7 @@ public class PlayerController : BaseController
         base.EnterMove();
         _animator.CrossFade("RUN", 0.3f);
         if (PhotonNetwork.IsConnected && photonView.IsMine) photonView.RPC("ChangeMoveState", RpcTarget.Others);
+
     }
     public override void ExcuteMove()
     {
@@ -209,6 +212,11 @@ public class PlayerController : BaseController
             //if (PhotonNetwork.IsConnected) photonView.RPC("ChangeIdleState", RpcTarget.Others);
         }
 
+    }
+    public override void ExitMove()
+    {
+        base.ExitMove();
+        
     }
 
 

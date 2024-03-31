@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrongSwingSkill : Skill
+public class StrongSwingSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }
