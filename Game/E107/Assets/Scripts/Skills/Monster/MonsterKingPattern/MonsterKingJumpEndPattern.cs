@@ -6,7 +6,6 @@ public class MonsterKingJumpEndPattern : Pattern
 {
     private MonsterKingController _controller;
     private ParticleSystem _particle;
-    private Coroutine _coroutine;
     private Transform _cylinderLoc;
 
     protected override void Init()

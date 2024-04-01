@@ -29,7 +29,7 @@ public class MonsterKingController : MonsterController
 
         _stat = new MonsterStat(_unitType);
         _jumpCoolDown = 13;      // 15
-        _stat.Hp = _stat.MaxHp / 2;
+        //_stat.Hp = _stat.MaxHp / 2;
     }
 
     protected override void ChangeStateFromMove()
