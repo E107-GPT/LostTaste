@@ -19,7 +19,7 @@ public class IceKingSpikePattern : Pattern
 
     IEnumerator IceSpike(int attackDamage)
     {
-        //Debug.Log("HIT BOX START");
+        Debug.Log("HIT BOX START");
         //yield return new WaitForSeconds(0.5f);
         Root = _controller.transform;
 
@@ -38,13 +38,13 @@ public class IceKingSpikePattern : Pattern
         yield return new WaitForSeconds(0.2f);
 
         Managers.Resource.Destroy(_sectorLoc.gameObject);
-        //Debug.Log("HIT BOX STOP");
+        Debug.Log("HIT BOX STOP");
 
-        yield return new WaitForSeconds(1.6f);
+        yield return new WaitForSeconds(1.0f);
         
 
         Managers.Effect.Stop(_particleSystem);
-        //Debug.Log("EFFECT STOP");
+        Debug.Log("EFFECT STOP");
     }
 
     public override void DeActiveCollider()
@@ -52,10 +52,10 @@ public class IceKingSpikePattern : Pattern
         if (_coroutine != null)
         {
             // wait for seconds로 없애는 타이밍을 맞추기 힘들다
-            //StopCoroutine(_coroutine);
+            StopCoroutine(_coroutine);
             _coroutine = null;
-            //if (_particleSystem != null) Managers.Effect.Stop(_particleSystem);
-            //if (_sectorLoc != null) Managers.Resource.Destroy(_sectorLoc.gameObject);
+            if (_particleSystem != null) Managers.Effect.Stop(_particleSystem);
+            if (_sectorLoc != null) Managers.Resource.Destroy(_sectorLoc.gameObject);
             
         }
     }
