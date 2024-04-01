@@ -1,7 +1,16 @@
 import { Box, Button, Container, Stack } from "@mui/material";
 import MainPageBackGround from "../../assets/images/mainpage_background.png";
 import LogoImg from "../../assets/images/Lost Taste.png";
+import YouTube from "react-youtube";
 const MainPage = () => {
+    const opts = {
+        height: "390",
+        width: "840",
+        playerVars: {
+            // https://developers.google.com/youtube/player_parameters
+            autoplay: 1,
+        },
+    };
     return (
         <>
             <Box
@@ -22,10 +31,14 @@ const MainPage = () => {
                     <Box
                         marginY={"3%"}
                         bgcolor={"rgba(0,0,0,0.5)"}
-                        padding={"3%"}
+                        padding={"1%"}
+                        paddingTop={"3%"}
                         borderRadius={"20px"}
                     >
-                        <img src={LogoImg}></img>
+                        <Stack justifyContent={"center"} alignItems={"center"}>
+                            <YouTube videoId={"piL6PbEEgPE"} opts={opts} />;
+                            {/* <img src={LogoImg}></img> */}
+                        </Stack>
                     </Box>
                     <Box
                         color={"black"}
