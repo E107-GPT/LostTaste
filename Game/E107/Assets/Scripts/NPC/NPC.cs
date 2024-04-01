@@ -10,6 +10,7 @@ public class NPC : MonoBehaviour, IPlayerInteractable
     public string dialogueNpcName;
     public string[] dialogueTexts;
     public GameObject npcNamePanel;
+    public GameObject HUD;
 
     [SerializeField]
     private ManualBoardUI.ManualType manualType;
@@ -34,7 +35,7 @@ public class NPC : MonoBehaviour, IPlayerInteractable
             // 다음 대사가 존재할 경우
             if (currentDialogueIndex < dialogueTexts.Length)
             {
-                // 다음 대사 표시
+                
                 dialogueUI.ShowDialogue(dialogueNpcName, dialogueTexts[currentDialogueIndex]);
                 currentDialogueIndex++;
             }
@@ -57,6 +58,9 @@ public class NPC : MonoBehaviour, IPlayerInteractable
 
             if (_npcType == Define.NPCType.Normal)
             {
+
+                // 다음 대사 표시
+                HUD.SetActive(false);
                 // 첫 번째 대사 표시 (상호작용이 처음 시작될 때)
                 if (currentDialogueIndex < dialogueTexts.Length)
                 {
@@ -118,6 +122,8 @@ public class NPC : MonoBehaviour, IPlayerInteractable
 
     void FinishInteraction()
     {
+        HUD.SetActive(true);
+
         if (_npcType == Define.NPCType.Normal)
         {
             dialogueUI.HideDialogue();

@@ -90,7 +90,7 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Q) && !isClassSkillCoolingDown)
         {
             // 캐릭터가 '스킬 상태'가 아닐 경우 함수를 빠져나감
-            if (_playerController.CurState is not SkillState || currentMp < RequiredMp) return;
+            if (_playerController.CurState is not SkillState || currentMp < RequiredMp || classSkill is EmptySkill) return;
 
             classSkillDownCoroutine = StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
         }
