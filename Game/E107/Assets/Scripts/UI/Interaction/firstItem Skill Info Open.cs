@@ -102,12 +102,14 @@ public class firstItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPoin
 
             if (isCurrentItemSkillExists)
             {
-                UpdateItemSkillInfo(firsttItem);
                 skillIcon.SetActive(true);
                 skillNoneIcon.SetActive(false);
+                UpdateItemSkillInfo(firsttItem);
             }
             else
             {
+                skillIcon.SetActive(false);
+                skillNoneIcon.SetActive(true);
                 UpdateNoneSkillInfo();
             }
         }
@@ -256,8 +258,6 @@ public class firstItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPoin
 
         // 아이템 스킬 아이콘 업데이트
         itemSkillIcon.sprite = null;
-        skillIcon.SetActive(false);
-        skillNoneIcon.SetActive(true);
 
         // 데미지 패널 활성화
         damagePanel.SetActive(true);
