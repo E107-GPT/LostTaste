@@ -110,6 +110,8 @@ public class Define
         ExplosionDecalFire,
         MagicFieldWhite,
         HealOnce,
+        StormDaggerEffect,
+        StormDaggerFinishEffect,
         MaxCount
     }
 
