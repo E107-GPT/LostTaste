@@ -105,6 +105,7 @@ public class Define
         SeaPearlSkillEffect,
         DustDirtyEffect,
         IceBallEffect,
+        FireKatanaEffect,
         MaxCount
     }
 
