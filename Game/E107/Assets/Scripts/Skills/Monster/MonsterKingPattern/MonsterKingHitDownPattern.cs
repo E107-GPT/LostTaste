@@ -8,6 +8,9 @@ public class MonsterKingHitDownPattern : Pattern
     private MonsterKingController _controller;
     private Transform _cylinderLoc;
 
+    private const int _colliderCnt = 14;
+    private const float _radius = 8.0f;
+
     protected override void Init()
     {
         PatternName = "KingHitDownEndEffect";
@@ -21,6 +24,7 @@ public class MonsterKingHitDownPattern : Pattern
     IEnumerator CheckPatternObject(int attackDamage)
     {
         Root = _controller.transform;
+        Vector3 afterPos = Root.position;
         yield return new WaitForSeconds(0.1f);
 
         _cylinderLoc = Managers.Resource.Instantiate("Patterns/KingHitDownCollider").transform;
@@ -41,6 +45,34 @@ public class MonsterKingHitDownPattern : Pattern
 
         yield return new WaitForSeconds(0.8f);
         Managers.Effect.Stop(_particle);
+        
+        Transform _donutLoc = Managers.Resource.Instantiate("Patterns/KingDonutCenter").transform;
+
+        _donutLoc.position = afterPos + rootForward;
+        Vector3 tempCenter = _donutLoc.position;
+        tempCenter.y += 2.0f;
+        _donutLoc.position = tempCenter;
+
+        for (int i = 0; i < _colliderCnt; i++)
+        {
+            float angle = i * Mathf.PI * 2 / _colliderCnt;
+            Vector3 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * _radius;
+            GameObject go = Managers.Resource.Instantiate("Patterns/KingDonutCollider");
+            go.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
+            go.transform.parent = _donutLoc;
+            go.transform.localPosition = pos;
+        }
+
+        // effect를 생성 
+
+        // 소리 재생
+        Managers.Sound.Play("Monster/KingHitDownAfterEffect", Define.Sound.Effect);
+
+        yield return new WaitForSeconds(0.2f);
+        // hit box 안에 effect가 존재
+        Managers.Resource.Destroy(_donutLoc.gameObject);
+
+        // effect가 끝나는 시간까지 대기하다가 없앰
     }
 
     public override void SetCollider(int attackDamage)

@@ -12,8 +12,6 @@ public class MonsterKingController : MonsterController
     private GameObject _leftArm;
 
     private ParticleSystem _particle;
-    private Coroutine _hitDownStart;
-    private Coroutine _slashStart;
 
     private Vector3 _detectPlayerLoc;
     private float _jumpCoolDown;
@@ -30,7 +28,8 @@ public class MonsterKingController : MonsterController
         base.Init();
 
         _stat = new MonsterStat(_unitType);
-        _jumpCoolDown = 15;
+        _jumpCoolDown = 15;      // 15
+        //_stat.Hp = _stat.MaxHp / 2;
     }
 
     protected override void ChangeStateFromMove()
@@ -94,7 +93,7 @@ public class MonsterKingController : MonsterController
     }
 
     #region State Method
-    public override void EnterMonsterKingHitDownChargeState()
+    public override void EnterMonsterKingHitDownChargeState()   // HitDown Charge
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
@@ -104,7 +103,7 @@ public class MonsterKingController : MonsterController
         {
             Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
-            photonView.RPC("RPC_ChangeMonsterKingHitDownState", RpcTarget.Others);
+            photonView.RPC("RPC_ChangeMonsterKingHitDownChargeState", RpcTarget.Others);
         }
 
         _animator.SetFloat("HitDownChargeSpeed", 0.3f);
@@ -134,6 +133,11 @@ public class MonsterKingController : MonsterController
 
     public override void EnterMonsterKingHitDownState()         // HitDown
     {
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("RPC_ChangeMonsterKingHitDownState", RpcTarget.Others);
+        }
+
         _animator.SetFloat("HitDownSpeed", 1.0f);
         _animator.CrossFade("HitDown", 0.02f, -1, 0);
         _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage - 10);
@@ -158,7 +162,7 @@ public class MonsterKingController : MonsterController
     public override void ExitMonsterKingHitDownState() 
     {
         _agent.avoidancePriority = 50;
-        _monsterInfo.Patterns[2].SetCollider(_stat.PatternDamage - 10); // 후속타
+        //_monsterInfo.Patterns[2].SetCollider(_stat.PatternDamage - 10); // 후속타
     }
 
     public override void EnterMonsterKingSlashChargeState()     // Slash Charge
@@ -171,7 +175,7 @@ public class MonsterKingController : MonsterController
         {
             Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
-            photonView.RPC("RPC_ChangeMonsterKingSlashState", RpcTarget.Others);
+            photonView.RPC("RPC_ChangeMonsterKingSlashChargeState", RpcTarget.Others);
         }
 
         _animator.SetFloat("SlashChargeSpeed", 0.3f);
@@ -202,6 +206,11 @@ public class MonsterKingController : MonsterController
 
     public override void EnterMonsterKingSlashState()           // Slash
     {
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("RPC_ChangeMonsterKingSlashState", RpcTarget.Others);
+        }
+
         _animator.SetFloat("SlashSpeed", 1.0f);
         _animator.CrossFade("Slash", 0.1f, -1, 0);
         _monsterInfo.Patterns[4].SetCollider(_stat.PatternDamage - 5);
@@ -238,7 +247,7 @@ public class MonsterKingController : MonsterController
         {
             Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
-            photonView.RPC("RPC_ChangeMonsterKingStabState", RpcTarget.Others);
+            photonView.RPC("RPC_ChangeMonsterKingStabChargeState", RpcTarget.Others);
         }
 
         _monsterInfo.Patterns[5].SetCollider(_stat.PatternDamage);
@@ -272,6 +281,11 @@ public class MonsterKingController : MonsterController
 
     public override void EnterMonsterKingStabState()            // Stab
     {
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("RPC_ChangeMonsterKingStabState", RpcTarget.Others);
+        }
+
         _animator.SetFloat("StabSpeed", 1.0f);
         _animator.CrossFade("Stab", 0.3f, -1, 0);
         
@@ -314,7 +328,9 @@ public class MonsterKingController : MonsterController
             photonView.RPC("RPC_ChangeMonsterKingJumpStartState", RpcTarget.Others);
         }
 
+        _animator.SetFloat("JumpStartSpeed", 0.6f);
         _animator.CrossFade("JumpStart", 0.3f, -1, 0);
+        _monsterInfo.Patterns[7].SetCollider(_stat.PatternDamage - 30);
     }    
     public override void ExecuteMonsterKingJumpStartState() 
     {
@@ -323,25 +339,11 @@ public class MonsterKingController : MonsterController
             _statemachine.ChangeState(new DieState(this));
         }
 
-        _animator.SetFloat("JumpStartSpeed", 0.1f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("JumpStart"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime <= 0.4f)        // 점프 준비
-            {
-                _animator.SetFloat("JumpStartSpeed", 0.2f);
-            }
-            else if (aniTime <= 0.6f)   // 피격 판정
-            {
-                _animator.SetFloat("JumpStartSpeed", 1.0f);
-                _monsterInfo.Patterns[7].SetCollider(_stat.PatternDamage - 30);
-            }
-            else if (aniTime <= 1.0f)
-            {
-                _animator.SetFloat("JumpStartSpeed", 1.0f);
-            }
-            else if (aniTime > 1.0f)
+            if (aniTime >= 1.0f)
             {
                 _statemachine.ChangeState(new MonsterKingJumpAirState(this));
             }
@@ -352,9 +354,6 @@ public class MonsterKingController : MonsterController
         // 이동
         GetComponent<Collider>().enabled = false;
         Agent.Warp(new Vector3(transform.position.x, transform.position.y + 100.0f, transform.position.z));
-
-        _animator.SetFloat("JumpStartSpeed", 1.0f);
-        _monsterInfo.Patterns[7].DeActiveCollider();
     }
 
 
@@ -444,14 +443,29 @@ public class MonsterKingController : MonsterController
 
     #region RPC
     [PunRPC]
+    void RPC_ChangeMonsterKingHitDownChargeState()
+    {
+        _statemachine.ChangeState(new MonsterKingHitDownChargeState(this));
+    }
+    [PunRPC]
     void RPC_ChangeMonsterKingHitDownState()
     {
         _statemachine.ChangeState(new MonsterKingHitDownState(this));
     }
     [PunRPC]
+    void RPC_ChangeMonsterKingSlashChargeState()
+    {
+        _statemachine.ChangeState(new MonsterKingSlashChargeState(this));
+    }
+    [PunRPC]
     void RPC_ChangeMonsterKingSlashState()
     {
         _statemachine.ChangeState(new MonsterKingSlashState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMonsterKingStabChargeState()
+    {
+        _statemachine.ChangeState(new MonsterKingStabChargeState(this));
     }
     [PunRPC]
     void RPC_ChangeMonsterKingStabState()

@@ -5,11 +5,10 @@ using UnityEngine;
 public class MonsterKingStabPattern : Pattern
 {
     private MonsterKingController _controller;
-    private ParticleSystem _particle;
     private Coroutine _coroutine;
 
     private Transform _leftArm;
-    private Transform _stabLoc;
+    // private Transform _stabLoc;
 
     protected override void Init()
     {
@@ -22,8 +21,8 @@ public class MonsterKingStabPattern : Pattern
         {
             StopCoroutine(_coroutine);
             _coroutine = null;
-            if (_particle != null) Managers.Effect.Stop(_particle);
-            if (_stabLoc != null) Managers.Resource.Destroy(_stabLoc.gameObject);
+            //if (_particle != null) Managers.Effect.Stop(_particle);
+            //if (_stabLoc != null) Managers.Resource.Destroy(_stabLoc.gameObject);
         }
     }
 
@@ -34,7 +33,7 @@ public class MonsterKingStabPattern : Pattern
         yield return new WaitForSeconds(0.1f);
 
         // hit box 생성
-        _stabLoc = Managers.Resource.Instantiate("Patterns/StabCollider").transform;
+        Transform _stabLoc = Managers.Resource.Instantiate("Patterns/StabCollider").transform;
         _stabLoc.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
 
         // 왼팔 위치에 어느 방향으로 위치하는지 확인
@@ -44,7 +43,7 @@ public class MonsterKingStabPattern : Pattern
         _stabLoc.position = tempPos;
         _stabLoc.rotation = Root.rotation;
 
-        _particle = Managers.Effect.Play(Define.Effect.KingStabEffect, _stabLoc);      // stabLoc이랑 함께 이동
+        ParticleSystem _particle = Managers.Effect.Play(Define.Effect.KingStabEffect, _stabLoc);      // stabLoc이랑 함께 이동
 
 
         // 이펙트와 hit box를 찌르는 애니메이션과 맞춰서 이동
