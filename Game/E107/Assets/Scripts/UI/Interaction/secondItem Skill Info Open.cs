@@ -33,6 +33,8 @@ public class secondItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPoi
     public TextMeshProUGUI itemSkillNameText; // 스킬 이름 텍스트
     public TextMeshProUGUI itemSkillDescriptionText; // 스킬 등급 텍스트
     public Image itemSkillIcon; // 스킬 스킬 아이콘
+    public GameObject skillIcon; // 스킬 아이콘
+    public GameObject skillNoneIcon; // 스킬 없음 아이콘
 
     // 스킬 스텟
     [Header("[ 스킬 스텟 ]")]
@@ -100,10 +102,14 @@ public class secondItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPoi
 
             if (isCurrentItemSkillExists)
             {
+                skillIcon.SetActive(true);
+                skillNoneIcon.SetActive(false);
                 UpdateItemSkillInfo(secondtItem);
             }
             else
             {
+                skillIcon.SetActive(false);
+                skillNoneIcon.SetActive(true);
                 UpdateNoneSkillInfo();
             }
         }

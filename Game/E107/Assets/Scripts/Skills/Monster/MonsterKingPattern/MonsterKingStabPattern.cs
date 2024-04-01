@@ -48,23 +48,30 @@ public class MonsterKingStabPattern : Pattern
 
 
         // 이펙트와 hit box를 찌르는 애니메이션과 맞춰서 이동
+        float moveDuration = 1.5f;
+        float timer = 0;
         float speed = 43.0f;
-        while (true)
+        while (timer < moveDuration)
         {
             Vector3 moveStep = _stabLoc.forward * speed * Time.deltaTime;
             _stabLoc.position += moveStep;
             _particle.transform.position = _stabLoc.position;
 
+            timer += Time.deltaTime;
             yield return null;
         }
 
+        Managers.Resource.Destroy(_stabLoc.gameObject);
+        Managers.Effect.Stop(_particle);
     }
 
     public override void SetCollider(int attackDamage)
     {
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
-        }
+        StartCoroutine(CheckPatternObject(attackDamage));
+    }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
     }
 }

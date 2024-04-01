@@ -106,6 +106,9 @@ public class Define
         DustDirtyEffect,
         IceBallEffect,
         FireKatanaEffect,
+        GroundSlamRed,
+        ExplosionDecalFire,
+        MagicFieldWhite,
         MaxCount
     }
 

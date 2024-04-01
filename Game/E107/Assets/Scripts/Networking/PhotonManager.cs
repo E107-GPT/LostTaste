@@ -172,6 +172,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonUIManager manager = GameObject.Find("gm").GetComponent<PhotonUIManager>();
         string roomName = manager.GetDescription();
         string captainName = UserInfo.GetInstance().getNickName();
+
+        if (roomName.Length == 0) return;
         
         if(captainName == null)
             captainName = "player";

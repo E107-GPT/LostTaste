@@ -9,9 +9,32 @@ using TMPro;
 /// </summary>
 public class HUDManager : MonoBehaviour
 {
+    // 사용할 변수 선언
+    private PhotonManager photonManager;
+    private bool isGameMenuOpen = false;
+    private bool isPartyInfoOpen = false;
+
     // 모험 상태
     [Header("[ 모험 상태 ]")]
     public TextMeshProUGUI nicknameText; // 닉네임 텍스트
+
+    // 팝업 창
+    [Header("[ 팝업 창 ]")]
+    public GameObject GameMenuWindow; // 게임 메뉴 창
+    public GameObject PartyInfoWindow; // 파티 정보 창
+
+    // 열기 버튼
+    [Header("[ 열기 버튼 ]")]
+    public Button GameMenuButton;
+    public Button partyInfoButton;
+
+    // 닫기 버튼
+    [Header("[ 닫기 버튼 ]")]
+    public Button comeBackToGameCampButton; // 게임으로 돌아가기 버튼
+    public Button comeBackToGameDungeonButton; // 게임으로 돌아가기 버튼
+    public Button partyListCloseButton; // 파티 정보 닫기 버튼
+    public Button myPartyCloseButton; // 파티 정보 닫기 버튼
+    public Button partyRecruitButton;
 
     // 플레이어 상태
     [Header("[ 플레이어 상태 ]")]
@@ -35,6 +58,21 @@ public class HUDManager : MonoBehaviour
 
         // 플레이어 GameObject를 찾아서 PlayerController 컴포넌트를 playerController 변수에 할당
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        // 게임 메뉴 버튼에 클릭 이벤트 리스너 추가
+        GameMenuButton.onClick.AddListener(OpenGameMenu);
+
+        // 게임 메뉴 닫기 버튼에 클릭 이벤트 리스너 추가
+        comeBackToGameCampButton.onClick.AddListener(CloseGameMenu);
+        comeBackToGameDungeonButton.onClick.AddListener(CloseGameMenu);
+
+        // 파티 정보 버튼에 클릭 이벤트 리스너 추가
+        partyInfoButton.onClick.AddListener(OpenPartyInfo);
+
+        // 파티 정보 닫기 버튼, 파티 모집 버튼에 클릭 이벤트 리스너 추가
+        partyRecruitButton.onClick.AddListener(OnClickPartyMakeButton);
+        partyListCloseButton.onClick.AddListener(ClosePartyInfo);
+        myPartyCloseButton.onClick.AddListener(ClosePartyInfo);
     }
 
     // 매 프레임마다 호출되는 Update 메서드
@@ -42,6 +80,36 @@ public class HUDManager : MonoBehaviour
     {
         // 플레이어 상태 업데이트
         UpdatePlayerStatus();
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !isPartyInfoOpen && !isGameMenuOpen)
+        {
+            // 게임 메뉴를 여는 이벤트
+            GameMenuButton.onClick.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && !isPartyInfoOpen && isGameMenuOpen)
+        {
+            // 게임 메뉴를 닫는 이벤트
+            comeBackToGameCampButton.onClick.Invoke();
+            comeBackToGameDungeonButton.onClick.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && isPartyInfoOpen && !isGameMenuOpen)
+        {
+            // 파티 정보를 닫는 이벤트
+            partyListCloseButton.onClick.Invoke();
+            myPartyCloseButton.onClick.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab) && !isGameMenuOpen && !isPartyInfoOpen)
+        {
+            // 파티 정보를 여는 이벤트
+            partyInfoButton.onClick.Invoke();
+        } 
+        else if (Input.GetKeyDown(KeyCode.Tab) && !isGameMenuOpen && isPartyInfoOpen)
+        {
+            // 파티 정보를 닫는 이벤트
+            partyListCloseButton.onClick.Invoke();
+            myPartyCloseButton.onClick.Invoke();
+        }
     }
 
     // 사용자 정보를 UI에 업데이트하는 메서드
@@ -80,5 +148,44 @@ public class HUDManager : MonoBehaviour
         }
     }
 
+    // 게임 메뉴를 여는 메서드
+    void OpenGameMenu()
+    {
+        isGameMenuOpen = true;
+        GameMenuWindow.SetActive(true);
+    }
+
+    // 게임 메뉴를 닫는 메서드
+    void CloseGameMenu()
+    {
+        isGameMenuOpen = false;
+        GameMenuWindow.SetActive(false);
+    }
+
+    // 파티 정보를 여는 메서드
+    void OpenPartyInfo()
+    {
+        isPartyInfoOpen = true;
+        PartyInfoWindow.SetActive(true);
+    }
+
+    // 파티 정보를 닫는 메서드
+    void ClosePartyInfo()
+    {
+        isPartyInfoOpen = false; // 창 닫기
+        PartyInfoWindow.SetActive(false);
+    }
+
+    // 파티 모집 버튼이 클릭시 호출될 메서드
+    void OnClickPartyMakeButton()
+    {
+        PhotonUIManager manager = GameObject.Find("gm").GetComponent<PhotonUIManager>();
+        string roomName = manager.GetDescription();
+
+        if (roomName.Length == 0) return;
+
+        isPartyInfoOpen = false; // 창 닫기
+    }
+    
 }
 

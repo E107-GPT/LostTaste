@@ -16,7 +16,7 @@ public class CrocodileSwordPattern : Pattern
 
     IEnumerator FireSword(int attackDamage)
     {
-        yield return new WaitForSeconds(1.7f);
+        yield return new WaitForSeconds(1.0f);
         Root = _controller.transform;
         Vector3 dir = Root.forward;
 
@@ -53,11 +53,15 @@ public class CrocodileSwordPattern : Pattern
 
     public override void DeActiveCollider()
     {
-        //StopCoroutine(_fireSword);
     }
 
     public override void SetCollider(int attackDamage)
     {
         _fireSword = StartCoroutine(FireSword(attackDamage));
+    }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
     }
 }
