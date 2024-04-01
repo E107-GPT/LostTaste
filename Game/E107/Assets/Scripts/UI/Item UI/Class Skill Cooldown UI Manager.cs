@@ -14,6 +14,8 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
     // 직업 스킬 쿨타임 UI 매니저가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
     private PlayerClass _playerClass;
+    private int RequiredMp;
+    private int currentMp;
 
     // 직업 스킬 패널
     [Header("[ 직업 스킬 패널 ]")]
@@ -61,12 +63,34 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
         // 현재 직업 및 직업스킬 쿨타임 가져옴
         _playerClass = _playerController.PlayerClass;
         classSkillCoolDown = _playerClass.ClassSkill.SkillCoolDownTime;
-        
+
+        // 현재 직업 스킬
+        Skill classSkill = _playerClass.ClassSkill;
+
+        if (classSkill is WarriorClassSkill)
+        {
+            RequiredMp = 10;
+        }
+        else if (classSkill is PriestClassSkill)
+        {
+            RequiredMp = 150;
+        }
+        else if (classSkill is NinjaClassSkill)
+        {
+            RequiredMp = 100;
+        }
+        else if (classSkill is MageClassSkill)
+        {
+            RequiredMp = 200;
+        }
+
+        currentMp = _playerController.Stat.Mp;
+
         // 쿨타임 정보 업데이트
         if (Input.GetKey(KeyCode.Q) && !isClassSkillCoolingDown)
         {
             // 캐릭터가 '스킬 상태'가 아닐 경우 함수를 빠져나감
-            if (_playerController.CurState is not SkillState) return;
+            if (_playerController.CurState is not SkillState || currentMp < RequiredMp) return;
 
             classSkillDownCoroutine = StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
         }
