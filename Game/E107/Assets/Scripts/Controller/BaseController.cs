@@ -164,19 +164,27 @@ public abstract class BaseController : MonoBehaviour
     public virtual void ExitIceKingSpikeState() { }
 
     // MonsterKing - not loop
-    public virtual void EnterMonsterKingHitDownState() { }		// HitDown
+    public virtual void EnterMonsterKingHitDownChargeState() { }    // HitDown Charge
+    public virtual void ExecuteMonsterKingHitDownChargeState() { }
+    public virtual void ExitMonsterKingHitDownChargeState() { }
+    public virtual void EnterMonsterKingHitDownState() { }		    // HitDown
 	public virtual void ExecuteMonsterKingHitDownState() { }
 	public virtual void ExitMonsterKingHitDownState() { }
-	public virtual void EnterMonsterKingSlashState() { }		// Slash
+
+    public virtual void EnterMonsterKingSlashChargeState() { }      // Slash Charge
+    public virtual void ExecuteMonsterKingSlashChargeState() { }
+    public virtual void ExitMonsterKingSlashChargeState() { }
+    public virtual void EnterMonsterKingSlashState() { }		    // Slash
 	public virtual void ExecuteMonsterKingSlashState() { }
 	public virtual void ExitMonsterKingSlashState() { }
 
-    public virtual void EnterMonsterKingStabChargeState() { }   // Stab Charge
+    public virtual void EnterMonsterKingStabChargeState() { }       // Stab Charge 
     public virtual void ExecuteMonsterKingStabChargeState() { }
     public virtual void ExitMonsterKingStabChargeState() { }
 	public virtual void EnterMonsterKingStabState() { }			// Stab
 	public virtual void ExecuteMonsterKingStabState() { }
 	public virtual void ExitMonsterKingStabState() { }
+
 	public virtual void EnterMonsterKingJumpStartState() { }	// JumpStart
 	public virtual void ExecuteMonsterKingJumpStartState() { }
 	public virtual void ExitMonsterKingJumpStartState() { }

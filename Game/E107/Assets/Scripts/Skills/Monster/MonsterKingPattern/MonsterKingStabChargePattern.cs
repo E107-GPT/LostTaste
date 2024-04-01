@@ -34,4 +34,9 @@ public class MonsterKingStabChargePattern : Pattern
     {
         StartCoroutine(CheckPatternObject(attackDamage));
     }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
+    }
 }

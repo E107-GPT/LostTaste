@@ -69,4 +69,9 @@ public class MonsterKingStabPattern : Pattern
     {
         StartCoroutine(CheckPatternObject(attackDamage));
     }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
+    }
 }

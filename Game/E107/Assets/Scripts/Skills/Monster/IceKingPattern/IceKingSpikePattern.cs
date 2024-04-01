@@ -65,5 +65,9 @@ public class IceKingSpikePattern : Pattern
         }
     }
 
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
