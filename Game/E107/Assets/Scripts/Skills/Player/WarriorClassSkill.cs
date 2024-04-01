@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WarriorClassSkill : Skill
 {
-    public static event Action<bool> OnWarriorSkillCast; // 스킬 시전 여부 전달을 위한 이벤트 정의
+    public static event Action<bool, string> OnWarriorSkillCast; // 스킬 시전 여부 전달을 위한 이벤트 정의
 
     [field: SerializeField]
     public float Duration { get; set; }     // seconds
@@ -20,7 +20,7 @@ public class WarriorClassSkill : Skill
 
     protected override IEnumerator SkillCoroutine()
     {
-        OnWarriorSkillCast?.Invoke(true); // 스킬 시전 성공하면 이벤트 발생
+        OnWarriorSkillCast?.Invoke(true, transform.root.name); // 스킬 시전 성공하면 이벤트 발생
 
         Root = transform.root;
 

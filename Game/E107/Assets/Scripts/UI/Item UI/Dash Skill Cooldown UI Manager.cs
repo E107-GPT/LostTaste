@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 /// <summary>
 /// 대쉬 쿨타임 UI 매니저는 대쉬 쿨타임을 표시하는 기능을 제공합니다.
@@ -46,9 +47,9 @@ public class DashSkillCooldownUIManager : MonoBehaviour
 
     // ------------------------------------------------ 사용자 정의 메서드 ------------------------------------------------
 
-    private void HandleDashCast(bool isCasting)
+    private void HandleDashCast(bool isCasting, string name)
     {
-        if (isCasting)
+        if (isCasting && name == "Player")
         {
             // PlayerController 컴포넌트를 찾아서 참조
             _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
