@@ -21,8 +21,8 @@ public class ClassSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerE
     [Header("[ 직업스킬 UI ]")]
     public GameObject classSkillInfoUI;
 
-    // 아이템 정보
-    [Header("[ 아이템 정보 ]")]
+    // 직업 스킬 정보
+    [Header("[ 직업 스킬 정보 ]")]
     public TextMeshProUGUI classSkillNameText; // 직업스킬 이름 텍스트
     public Image classSkillIcon; // 직업스킬 아이콘
     public Image classSkillIconInterface; // 직업스킬 아이콘 (인터페이스용)

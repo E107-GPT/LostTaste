@@ -417,22 +417,22 @@ public class PlayerController : BaseController
 
         // 여기 잠시 임시키 넣어야할듯
 
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            ChangeClass(Define.ClassType.Warrior);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            ChangeClass(Define.ClassType.Priest);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            ChangeClass(Define.ClassType.Mage);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            ChangeClass(Define.ClassType.Ninja);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha6))
+        //{
+        //    ChangeClass(Define.ClassType.Warrior);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha7))
+        //{
+        //    ChangeClass(Define.ClassType.Priest);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha8))
+        //{
+        //    ChangeClass(Define.ClassType.Mage);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha9))
+        //{
+        //    ChangeClass(Define.ClassType.Ninja);
+        //}
     }
 
     public void ChangeClass(Define.ClassType classType)
@@ -536,6 +536,7 @@ public class PlayerController : BaseController
         // 추후 수정
         // todo 이름 받아와서 열까?
         //
+
         _detectedInteractable.OnInteracted(this.gameObject);
     }
 
