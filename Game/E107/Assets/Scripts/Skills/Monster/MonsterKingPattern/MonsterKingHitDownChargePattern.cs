@@ -5,6 +5,7 @@ using UnityEngine;
 public class MonsterKingHitDownChargePattern : Pattern
 {
     private MonsterKingController _controller;
+    private Transform _rightArm;
 
     protected override void Init()
     {
@@ -17,22 +18,13 @@ public class MonsterKingHitDownChargePattern : Pattern
 
     IEnumerator CheckPatternObject()
     {
-        Root = _controller.Weapon.transform;
-        ParticleSystem particle = Managers.Effect.Play(Define.Effect.KingHitDownStartEffect, Root.transform);
-        Vector3 rootBack = Root.TransformDirection(Vector3.back * 3.0f);
-        particle.transform.position += rootBack;
+        _rightArm = _controller.RightArm.transform;
 
-        float moveDuration = 2.4f;
-        float timer = 0;
-        float speed = 2.2f;
-        while (timer < moveDuration)
-        {
-            Vector3 moveStep = Vector3.up * speed * Time.deltaTime;
-            particle.transform.position += moveStep;
+        ParticleSystem particle = Managers.Effect.Play(Define.Effect.KingHitDownStartEffect, _rightArm);
+        particle.transform.parent = _rightArm;
 
-            timer += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(1.5f);
+
         Managers.Effect.Stop(particle);
     }
 

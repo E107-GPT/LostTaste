@@ -101,4 +101,4 @@ ERD이미지
 
 ## 노션
 
-![Notion 링크](https://round-tower-80e.notion.site/E107-439c9a3c4cde4e3dbc1bc20511f64965)
+[Notion 링크](https://round-tower-80e.notion.site/E107-439c9a3c4cde4e3dbc1bc20511f64965)

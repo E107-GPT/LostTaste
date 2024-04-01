@@ -6,7 +6,6 @@ public class MonsterKingJumpEndPattern : Pattern
 {
     private MonsterKingController _controller;
     private ParticleSystem _particle;
-    private Coroutine _coroutine;
     private Transform _cylinderLoc;
 
     protected override void Init()
@@ -17,7 +16,6 @@ public class MonsterKingJumpEndPattern : Pattern
 
     public override void DeActiveCollider()
     {
-        if (_coroutine != null) _coroutine = null;
     }
 
     IEnumerator CheckPatternObject(int attackDamage)
@@ -43,10 +41,7 @@ public class MonsterKingJumpEndPattern : Pattern
 
     public override void SetCollider(int attackDamage)
     {
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
-        }
+        StartCoroutine(CheckPatternObject(attackDamage));
     }
 
     public override void SetCollider()

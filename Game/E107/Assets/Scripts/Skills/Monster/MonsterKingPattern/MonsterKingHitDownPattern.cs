@@ -6,7 +6,6 @@ using static UnityEngine.ParticleSystem;
 public class MonsterKingHitDownPattern : Pattern
 {
     private MonsterKingController _controller;
-    private Transform _cylinderLoc;
 
     private const int _colliderCnt = 14;
     private const float _radius = 8.0f;
@@ -27,7 +26,7 @@ public class MonsterKingHitDownPattern : Pattern
         Vector3 afterPos = Root.position;
         yield return new WaitForSeconds(0.1f);
 
-        _cylinderLoc = Managers.Resource.Instantiate("Patterns/KingHitDownCollider").transform;
+        Transform _cylinderLoc = Managers.Resource.Instantiate("Patterns/KingHitDownCollider").transform;
         _cylinderLoc.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
         _cylinderLoc.rotation = Quaternion.identity;
 
@@ -45,8 +44,10 @@ public class MonsterKingHitDownPattern : Pattern
 
         yield return new WaitForSeconds(0.8f);
         Managers.Effect.Stop(_particle);
-        
+
+        #region HitDownAfter
         Transform _donutLoc = Managers.Resource.Instantiate("Patterns/KingDonutCenter").transform;
+        ParticleSystem[] particles = new ParticleSystem[_colliderCnt];
 
         _donutLoc.position = afterPos + rootForward;
         Vector3 tempCenter = _donutLoc.position;
@@ -61,18 +62,21 @@ public class MonsterKingHitDownPattern : Pattern
             go.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
             go.transform.parent = _donutLoc;
             go.transform.localPosition = pos;
+
+            particles[i] = Managers.Effect.Play(Define.Effect.KingHitDownAfterEffect, go.transform);
         }
 
-        // effect를 생성 
-
-        // 소리 재생
         Managers.Sound.Play("Monster/KingHitDownAfterEffect", Define.Sound.Effect);
 
         yield return new WaitForSeconds(0.2f);
-        // hit box 안에 effect가 존재
         Managers.Resource.Destroy(_donutLoc.gameObject);
 
-        // effect가 끝나는 시간까지 대기하다가 없앰
+        yield return new WaitForSeconds(particles[0].main.duration);
+        foreach (ParticleSystem ps in  particles)
+        {
+            Managers.Effect.Stop(ps);
+        }
+        #endregion
     }
 
     public override void SetCollider(int attackDamage)

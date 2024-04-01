@@ -81,7 +81,7 @@ public class Define
         CrocodileSwordTail,
         IceKingCleaveEffect,
         IceKingSpikeEffect,
-        // KingHitDownAfterEffect,
+        KingHitDownAfterEffect,
         KingHitDownEndEffect,
         KingHitDownStartEffect,
         KingSlashLurkerEffect,
@@ -112,6 +112,8 @@ public class Define
         BowSkillEffect,
         HealOnce,
         BowArrowBrokenEFfect,
+        StormDaggerEffect,
+        StormDaggerFinishEffect,
         MaxCount
     }
 
