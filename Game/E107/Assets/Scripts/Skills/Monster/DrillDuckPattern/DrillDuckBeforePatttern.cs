@@ -24,4 +24,9 @@ public class DrillDuckBeforePatttern : Pattern
         _particleSystem = Managers.Effect.Play(Define.Effect.DrillDuckBeforeEffect, Root);
         _particleSystem.transform.parent = _controller.transform;
     }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
+    }
 }

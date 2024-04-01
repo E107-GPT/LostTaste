@@ -58,6 +58,7 @@ public class CrocodileController : MonsterController
         base.EnterSkill();
         _swordPS.Play();
         _agent.avoidancePriority = 1;
+        _animator.SetFloat("AttackSpeed", 1.0f);
     }
 
     public override void ExitSkill()
@@ -84,6 +85,7 @@ public class CrocodileController : MonsterController
         _agent.avoidancePriority = 1;
         _swordPS.Play();
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
+        _animator.SetFloat("SwordSpeed", 0.5f);
         _animator.CrossFade("Sword", 0.2f, -1, 0);
     }
     public override void ExcuteCrocodileSwordState()
@@ -95,24 +97,24 @@ public class CrocodileController : MonsterController
 
         base.ExcuteCrocodileSwordState();
 
-        _animator.SetFloat("SwordSpeed", 0.1f);
+        
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Sword"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             
-            if (aniTime <= 0.2f)
-            {
-                _animator.SetFloat("SwordSpeed", 0.2f);
-            }
-            else if (aniTime <= 0.23f)
-            {
-                _animator.SetFloat("SwordSpeed", 0.06f);
-            }
-            else if (aniTime <= 1.0f)
-            {
-                _animator.SetFloat("SwordSpeed", 1.0f);
-            }
-            else if (aniTime > 1.0f)
+            //if (aniTime <= 0.2f)
+            //{
+            //    _animator.SetFloat("SwordSpeed", 0.2f);
+            //}
+            //else if (aniTime <= 0.23f)
+            //{
+            //    _animator.SetFloat("SwordSpeed", 0.06f);
+            //}
+            //else if (aniTime <= 1.0f)
+            //{
+            //    _animator.SetFloat("SwordSpeed", 1.0f);
+            //}
+            if (aniTime >= 1.0f)
             {
                 _statemachine.ChangeState(new IdleState(this));
             }
@@ -124,9 +126,7 @@ public class CrocodileController : MonsterController
         base.ExitCrocodileSwordState();
         _swordPS.Stop();
         _agent.avoidancePriority = 50;
-
-        _animator.SetFloat("SwordSpeed", 1.0f);
-        _monsterInfo.Patterns[0].DeActiveCollider();
+        //_monsterInfo.Patterns[0].DeActiveCollider();
     }
 
     [PunRPC]

@@ -48,4 +48,9 @@ public class MonsterKingJumpEndPattern : Pattern
             _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
         }
     }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
+    }
 }

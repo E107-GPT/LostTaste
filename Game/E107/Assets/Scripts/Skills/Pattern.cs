@@ -32,6 +32,7 @@ public abstract class Pattern : MonoBehaviour
         Init();
     }
 
+    public abstract void SetCollider();
     public abstract void SetCollider(int attackDamage);
     public abstract void DeActiveCollider();
 }

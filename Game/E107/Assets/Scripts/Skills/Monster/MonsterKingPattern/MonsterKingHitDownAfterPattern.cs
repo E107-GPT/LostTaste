@@ -9,8 +9,8 @@ public class MonsterKingHitDownAfterPattern : Pattern
     private Coroutine _coroutine;
     private Transform _donutLoc;
 
-    private int _colliderCnt = 14;
-    private float _radius = 8.0f;
+    private const int _colliderCnt = 14;
+    private const float _radius = 8.0f;
 
 
     protected override void Init()
@@ -21,10 +21,6 @@ public class MonsterKingHitDownAfterPattern : Pattern
 
     public override void DeActiveCollider()
     {
-        if (_coroutine != null)
-        {
-            _coroutine = null;
-        }
     }
 
     IEnumerator CheckPatternObject(int attackDamage)
@@ -49,19 +45,25 @@ public class MonsterKingHitDownAfterPattern : Pattern
             go.transform.localPosition = pos;
         }
 
+        // effect를 생성 
+
         // 소리 재생
         Managers.Sound.Play("Monster/KingHitDownAfterEffect", Define.Sound.Effect);
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         // hit box 안에 effect가 존재
         Managers.Resource.Destroy(_donutLoc.gameObject);
+
+        // effect가 끝나는 시간까지 대기하다가 없앰
     }
 
     public override void SetCollider(int attackDamage)
     {
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
-        }
+        StartCoroutine(CheckPatternObject(attackDamage));
+    }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
     }
 }

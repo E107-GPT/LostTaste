@@ -5,9 +5,6 @@ using UnityEngine;
 public class MonsterKingSlashPattern : Pattern
 {
     private MonsterKingController _controller;
-    private Coroutine _coroutine;
-    private ParticleSystem _particle;
-    private Transform _sectorLoc;
 
     protected override void Init()
     {
@@ -16,14 +13,14 @@ public class MonsterKingSlashPattern : Pattern
     }
     public override void DeActiveCollider()
     {
-        if (_coroutine != null)
-        {
-            // wait for seconds로 없애는 타이밍을 맞추기 힘들다
-            StopCoroutine(_coroutine);
-            _coroutine = null;
-            if (_particle != null) Managers.Effect.Stop(_particle);
-            if (_sectorLoc != null) Managers.Resource.Destroy(_sectorLoc.gameObject);
-        }
+        //if (_coroutine != null)
+        //{
+        //    // wait for seconds로 없애는 타이밍을 맞추기 힘들다
+        //    StopCoroutine(_coroutine);
+        //    _coroutine = null;
+        //    if (_particle != null) Managers.Effect.Stop(_particle);
+        //    if (_sectorLoc != null) Managers.Resource.Destroy(_sectorLoc.gameObject);
+        //}
     }
 
     IEnumerator CheckPatternObject(int attackDamage)
@@ -31,8 +28,8 @@ public class MonsterKingSlashPattern : Pattern
         Root = _controller.transform;
         yield return new WaitForSeconds(0.1f);
 
-        _particle = Managers.Effect.Play(Define.Effect.KingSlashLurkerEffect, Root);
-        _sectorLoc = Managers.Resource.Instantiate("Patterns/KingSlashLurkerCollider").transform;
+        ParticleSystem _particle = Managers.Effect.Play(Define.Effect.KingSlashLurkerEffect, Root);
+        Transform _sectorLoc = Managers.Resource.Instantiate("Patterns/KingSlashLurkerCollider").transform;
         _sectorLoc.position = Root.position;
         _sectorLoc.rotation = Root.rotation;
 
@@ -46,24 +43,32 @@ public class MonsterKingSlashPattern : Pattern
         }
 
         // 각 collider의 z축을 기준으로 앞으로 이동
+        float moveDuration = _particle.main.startLifetime.constant;
+        float timer = 0;
         float speed = 50.0f;
-        while(true)
+        while(timer < moveDuration)
         {
             for (int i = 1; i < patternObjs.Length; i++)
             {
                 Vector3 moveStep = patternObjs[i].forward * speed * Time.deltaTime;
                 patternObjs[i].position += moveStep;
             }
+
+            timer += Time.deltaTime;
             yield return null;
         }
 
+        Managers.Effect.Stop(_particle);
+        Managers.Resource.Destroy(_sectorLoc.gameObject);
     }
 
     public override void SetCollider(int attackDamage)
     {
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
-        }
+        StartCoroutine(CheckPatternObject(attackDamage));
+    }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
     }
 }

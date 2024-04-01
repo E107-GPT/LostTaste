@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Á¡ÇÁÇÏ±â Á÷Àü¿¡ Ä³¸¯ÅÍ °ø°İ ¹× ¸ÕÁö ÀÌÆåÆ®
+// ì í”„í•˜ê¸° ì§ì „ì— ìºë¦­í„° ê³µê²© ë° ë¨¼ì§€ ì´í™íŠ¸
 public class MonsterKingJumpStartPattern : Pattern
 {
     private MonsterKingController _controller;
@@ -46,5 +46,10 @@ public class MonsterKingJumpStartPattern : Pattern
         {
             _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
         }
+    }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
     }
 }

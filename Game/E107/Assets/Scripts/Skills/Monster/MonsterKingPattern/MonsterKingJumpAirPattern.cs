@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Controller¿¡¼­ °ü¸®
-// DectPlayerÀÇ À§Ä¡¸¦ °»½ÅÇØ¾ßÇÔ
+// Controllerì—ì„œ ê´€ë¦¬
+// DectPlayerì˜ ìœ„ì¹˜ë¥¼ ê°±ì‹ í•´ì•¼í•¨
 public class MonsterKingJumpAirPattern : Pattern
 {
     //private MonsterKingController _controller;
@@ -51,5 +51,10 @@ public class MonsterKingJumpAirPattern : Pattern
         //{
         //    _coroutine = StartCoroutine(CheckAnimationFinish());
         //}
+    }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
     }
 }

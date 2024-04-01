@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
-// Execute에서 Collider가 필요한 순간에만 사용
-// ex. 도끼를 내려찍고 폭발 이펙트가 생긴 시점 -> 공격 판정
 public class MonsterKingHitDownPattern : Pattern
 {
     private MonsterKingController _controller;
-    private ParticleSystem _particle;
-    private Coroutine _coroutine;
     private Transform _cylinderLoc;
 
     protected override void Init()
@@ -20,13 +16,6 @@ public class MonsterKingHitDownPattern : Pattern
 
     public override void DeActiveCollider()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-            _coroutine = null;
-            if (_particle != null) Managers.Effect.Stop(_particle);
-            //if (_cylinderLoc != null) Managers.Resource.Destroy(_cylinderLoc.gameObject);
-        }
     }
 
     IEnumerator CheckPatternObject(int attackDamage)
@@ -44,18 +33,23 @@ public class MonsterKingHitDownPattern : Pattern
         tempCylinder.y += 2.0f;
         _cylinderLoc.position = tempCylinder;
 
-        _particle = Managers.Effect.Play(Define.Effect.KingHitDownEndEffect, _cylinderLoc);
+        ParticleSystem _particle = Managers.Effect.Play(Define.Effect.KingHitDownEndEffect, _cylinderLoc);
         Managers.Sound.Play("Monster/KingHitDownEndEffect", Define.Sound.Effect);
 
         yield return new WaitForSeconds(0.2f);
         Managers.Resource.Destroy(_cylinderLoc.gameObject);
+
+        yield return new WaitForSeconds(0.8f);
+        Managers.Effect.Stop(_particle);
     }
 
     public override void SetCollider(int attackDamage)
     {
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
-        }
+        StartCoroutine(CheckPatternObject(attackDamage));
+    }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
     }
 }
