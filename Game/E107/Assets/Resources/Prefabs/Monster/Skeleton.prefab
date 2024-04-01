@@ -1510,12 +1510,12 @@ GameObject:
   - component: {fileID: 3326570064725347051}
   - component: {fileID: 8230271490050167800}
   - component: {fileID: 391647823842712458}
-  - component: {fileID: 2714016570052649006}
   - component: {fileID: 1900104223731753267}
   - component: {fileID: -6967019267493020139}
   - component: {fileID: -2196097796211246476}
   - component: {fileID: 4047793108009649152}
   - component: {fileID: 2225592287841039814}
+  - component: {fileID: 2770955834449803194}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Monster
@@ -1628,27 +1628,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &2714016570052649006
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7366281943995135627}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.0491441
-  m_Center: {x: 0, y: 0.9109961, z: 0.13814795}
 --- !u!114 &1900104223731753267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1894,6 +1873,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &2770955834449803194
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7366281943995135627}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7413304130850977111
 GameObject:
   m_ObjectHideFlags: 0
