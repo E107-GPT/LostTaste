@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6967,6 +6967,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4040882340218279505, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
   m_PrefabInstance: {fileID: 1507488860}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1508237677 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6176915002220371093, guid: 76832f3175c3d7c499e74a0138e0c474, type: 3}
+  m_PrefabInstance: {fileID: 954949334039589068}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1622165499
 GameObject:
   m_ObjectHideFlags: 0
@@ -8852,7 +8857,7 @@ PrefabInstance:
     - target: {fileID: 9211577138896182539, guid: 76832f3175c3d7c499e74a0138e0c474, type: 3}
       propertyPath: itemBox.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1508237677}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9655,6 +9660,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3859146488013512505}
     - target: {fileID: 539419027201300354, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
+      propertyPath: itemBox.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 539419027201300354, guid: 991df6cd39818084382c64eceb83bd8c, type: 3}
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 3497252524110175769}
@@ -9777,13 +9786,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9107678559587164125}
     - target: {fileID: 950050797252894588, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: itemBox.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 950050797252894588, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 3278620124410979649}
     - target: {fileID: 985521100300636572, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: itemBox.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 985521100300636572, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 8485243231644760604}
+    - target: {fileID: 1433182234412252226, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: itemBox.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1433182234412252226, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
@@ -9833,9 +9854,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1848693755}
     - target: {fileID: 1598740390298471782, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: itemBox.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598740390298471782, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 82393910134851442}
+    - target: {fileID: 1649188779382047433, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: itemBox.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1649188779382047433, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
@@ -9917,6 +9946,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5378079088410747981, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: itemBox.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5378079088410747981, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 7323833641181966631}
@@ -9939,6 +9972,10 @@ PrefabInstance:
     - target: {fileID: 7692796324622983203, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: portal.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340282633033717207, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: itemBox.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8340282633033717207, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: targetPortalLocation
@@ -10262,6 +10299,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4213510469073987540}
     - target: {fileID: 472863706365994869, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: itemBox.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472863706365994869, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 357627024152176308}
@@ -10397,6 +10438,10 @@ PrefabInstance:
       propertyPath: portal
       value: 
       objectReference: {fileID: 5742119062557556826}
+    - target: {fileID: 1772408543368509233, guid: e469a629f99d2324db91d84af0e08708, type: 3}
+      propertyPath: itemBox.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1772408543368509233, guid: e469a629f99d2324db91d84af0e08708, type: 3}
       propertyPath: targetPortalLocation
       value: 

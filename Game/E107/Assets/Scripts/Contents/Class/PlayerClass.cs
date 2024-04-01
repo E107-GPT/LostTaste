@@ -42,7 +42,7 @@ public class PlayerClass : MonoBehaviourPunCallbacks
 
         foreach(string name in names)
         {
-            Debug.Log(name);
+            //Debug.Log(name);
             GameObject go = Util.FindChild(gameObject, name, true);
             _clothes.Add(name, go);
             go.SetActive(false);
