@@ -8,33 +8,16 @@ public class ArrowObject : MonoBehaviour
     private int _id;
     private Transform _attacker;
 
-    [SerializeField]
-    private bool _isShot = false;
-
-    public bool IsShot { get => _isShot; set => _isShot = value; }
-
     private void Start()
     {
-        GetComponent<BoxCollider>().enabled = false;
-        StartCoroutine(Shot());
-    }
-
-    private IEnumerator Shot()
-    {
-        if (_isShot)
-        {
-            GetComponent<BoxCollider>().enabled = true;
-        }
-        yield return new WaitForSeconds(0.1f);
     }
 
     // skill script에서 Init()을 호출해서 세팅한다.
-    public void Setup(Transform attacker, int damage, int id, float speed)
+    public void Setup(Transform attacker, int damage, int id)
     {
         _damage = damage;
         _id = id;
         _attacker = attacker;
-        GetComponent<Rigidbody>().velocity = transform.forward * speed;
     }
 
     private void OnPlay()
