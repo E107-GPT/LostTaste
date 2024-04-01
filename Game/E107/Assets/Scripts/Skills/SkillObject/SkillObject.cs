@@ -8,20 +8,20 @@ public class SkillObject : MonoBehaviour
     int _damage;
     int _id;
     Transform _attacker;
-
-    private void Start()
-    {
-    }
-
+    int _penetration;
 
     public void SetUp(Transform attacker, int damage, int id)
+    {
+        SetUp(attacker, damage, id, -1);
+    }
+
+    public void SetUp(Transform attacker, int damage, int id, int penetration)
     {
         _damage = damage;
         _id = id;
         _attacker = attacker;
+        _penetration = penetration;
     }
-
-
 
 
     private void OnTriggerEnter(Collider other)
@@ -32,14 +32,21 @@ public class SkillObject : MonoBehaviour
             Debug.Log($"{other.gameObject.name}");
 
             other.gameObject.GetComponent<MonsterController>().TakeDamage(_id, _damage);
+            _penetration--;
         }
         else if (_attacker.gameObject.CompareTag("Monster") && other.gameObject.CompareTag("Player"))
         {
             Debug.Log($"Monster Target: {other.gameObject.name}");
             
             other.gameObject.GetComponent<PlayerController>().TakeDamage(_id, _damage);
+            _penetration--;
         }
 
+        if (_penetration == 0)
+        {
+            OnBreak();
+            Managers.Resource.Destroy(gameObject);
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -59,4 +66,8 @@ public class SkillObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 관통 횟수가 모두 소진되어 부서졌을 때 발동할 이벤트
+    /// </summary>
+    protected virtual void OnBreak() { }
 }

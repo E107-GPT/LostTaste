@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BowSkill : Skill, IAttackSkill
@@ -7,55 +8,46 @@ public class BowSkill : Skill, IAttackSkill
     [field: SerializeField]
     public int Damage { get; set; }
 
-    [SerializeField]
-    public GameObject _arrowSpawn;
+    [field: SerializeField]
+    public float Duration { get; set; }
 
-    private Transform _arrow;
+    [field: SerializeField]
+    public float Velocity { get; set; }
 
-    protected override void Init()
-    {
-    }
+    protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
     {
-        Root = transform.root;
+        GameObject player = transform.root.gameObject;
 
-        Vector3 dir = Root.forward;
+        Vector3 dir = player.transform.forward;
         dir = new Vector3(dir.x, 0, dir.z);
 
+        player.GetComponent<Animator>().CrossFade("BOW", 0.1f, -1, 0);
+        gameObject.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
 
-        Root.GetComponent<Animator>().CrossFade("BOW", 0.1f, -1, 0);
-        GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
-
-        // 활 쏘는 자세를 취하기 전
-        // 활이 시위를 당기는 모션이 취한 상태
         yield return new WaitForSeconds(0.3f);
-        // 활 쏘는 자세를 취하면
-        // 활 시위가 다 당겨지면
 
-        _arrow = Managers.Resource.Instantiate("Skills/ArrowObject").transform;
-        _arrow.GetComponent<ArrowObject>().Setup(transform, Damage, _seq);
-        _arrow.rotation = Quaternion.identity;
-        _arrow.parent = _arrowSpawn.transform;
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BowSkillEffect, player.transform);
+        ps.transform.position += Vector3.up * 0.5f;
 
-        Root.GetComponent<PlayerController>().StateMachine.ChangeState(new IdleState(Root.GetComponent<PlayerController>()));
-        GetComponent<Animator>().CrossFade("IDLE", 0.1f, -1, 0);
+        GameObject skillObject = Managers.Resource.Instantiate("Skills/ArrowSkillObject");
+        skillObject.GetComponent<ArrowSkillObject>().SetUp(player.transform, Damage, _seq, 1);
 
-        float moveDuration = 1.1f;
         float timer = 0;
-        float speed = 10.0f;
-
-        while (timer < moveDuration)
+        while (timer < Duration)
         {
-            Vector3 moveStep = dir * speed * Time.deltaTime;
-            _arrow.position += moveStep;
+            if (skillObject.IsDestroyed()) break;   // 화살이 터졌다면 끝
+
+            Vector3 step = dir * Velocity * Time.deltaTime;
+            ps.transform.position += step;
+            skillObject.transform.position = ps.transform.position;
 
             timer += Time.deltaTime;
             yield return null;
         }
 
-        Managers.Resource.Destroy(_arrow.gameObject);
+        Managers.Effect.Stop(ps);
+        Managers.Resource.Destroy(skillObject);
     }
-
-
 }
