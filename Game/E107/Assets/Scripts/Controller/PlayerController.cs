@@ -24,6 +24,7 @@ public class PlayerController : BaseController
     PlayerClass _playerClass;
 
     ParticleSystem _moveEffect;
+    public bool isHolding;
 
 
     private Renderer[] _allRenderers; // 캐릭터의 모든 Renderer 컴포넌트
@@ -272,12 +273,66 @@ public class PlayerController : BaseController
     {
         base.ExcuteSkill();
         if (Input.GetKeyDown(KeyCode.Space) && (Time.time - _lastDashTime >= _dashCoolDownTime || _lastDashTime == 0)) _statemachine.ChangeState(new DashState(this));
+        if (isHolding)
+        {
+            if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
+            {
+                if ((PhotonNetwork.IsConnected && photonView.IsMine == false))
+                {
+                    return;
+                }
+            }
+            Debug.Log("힐윈드");
+            if (Input.GetKey(KeyCode.W))
+            {
+                Vector3 dirTo12 = new Vector3(-1.0f, 0.0f, 1.0f).normalized;
+                //transform.position += dirTo12 * Time.deltaTime * _stat.MoveSpeed;
+
+                //transform.rotation = Quaternion.LookRotation(Vector3.forward);
+                //transform.Translate(Vector3.forward * Time.deltaTime * _stat.MoveSpeed);
+                _agent.Move(dirTo12 * Time.deltaTime * _stat.MoveSpeed);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTo12), 0.5f);
+
+
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                //transform.rotation = Quaternion.LookRotation(Vector3.back);
+                //transform.Translate(Vector3.forward * Time.deltaTime * _stat.MoveSpeed);
+                //transform.position += dirTo6 * Time.deltaTime * _stat.MoveSpeed;
+                Vector3 dirTo6 = new Vector3(1.0f, 0.0f, -1.0f).normalized;
+
+                _agent.Move(dirTo6 * Time.deltaTime * _stat.MoveSpeed);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTo6), 0.5f);
+
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                //transform.rotation = Quaternion.LookRotation(Vector3.left);
+                //transform.Translate(Vector3.forward * Time.deltaTime * _stat.MoveSpeed);
+                //transform.position += dirTo9 * Time.deltaTime * _stat.MoveSpeed;
+                Vector3 dirTo9 = new Vector3(-1.0f, 0.0f, -1.0f).normalized;
+                _agent.Move(dirTo9 * Time.deltaTime * _stat.MoveSpeed);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTo9), 0.5f);
+
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                //transform.rotation = Quaternion.LookRotation(Vector3.right);
+                //transform.Translate(Vector3.forward * Time.deltaTime * _stat.MoveSpeed);
+                //transform.position += dirTo3 * Time.deltaTime * _stat.MoveSpeed;
+                Vector3 dirTo3 = new Vector3(1.0f, 0.0f, 1.0f).normalized;
+                _agent.Move(dirTo3 * Time.deltaTime * _stat.MoveSpeed);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dirTo3), 0.5f);
+
+            }
+        }
     }
 
     public override void ExitSkill()
     {
         base.ExitSkill();
-
+        isHolding = false;
 
     }
 
