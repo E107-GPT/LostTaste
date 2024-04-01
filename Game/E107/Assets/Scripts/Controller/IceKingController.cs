@@ -39,7 +39,7 @@ public class IceKingController : MonsterController
     private void RandomPatternSelector()
     {
         int rand = Random.Range(0, 101);
-        if (rand <= 100)
+        if (rand <= 30)
         {
             _statemachine.ChangeState(new IceKingSpikeState(this));
         }
@@ -82,13 +82,12 @@ public class IceKingController : MonsterController
         }
 
         _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
+        _animator.SetFloat("SpikeSpeed", 0.8f);
         _animator.CrossFade("Spike", 0.2f, -1, 0);
     }
 
     public override void ExcuteIceKingSpikeState()
     {
-        _animator.SetFloat("SpikeSpeed", 0.8f);
-
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
