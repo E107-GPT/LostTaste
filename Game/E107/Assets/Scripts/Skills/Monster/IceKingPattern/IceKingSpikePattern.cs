@@ -7,7 +7,6 @@ using static UnityEngine.ParticleSystem;
 public class IceKingSpikePattern : Pattern
 {
     private IceKingController _controller;
-    private ParticleSystem _particleSystem;
     private Coroutine _coroutine;
     private Transform _sectorLoc;
 
@@ -20,7 +19,7 @@ public class IceKingSpikePattern : Pattern
     IEnumerator IceSpike(int attackDamage)
     {
         Debug.Log("HIT BOX START");
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.55f);
         Root = _controller.transform;
 
         // SkillObject에서 관리
@@ -32,7 +31,7 @@ public class IceKingSpikePattern : Pattern
         _sectorLoc.position = new Vector3(_sectorLoc.position.x, Root.position.y, _sectorLoc.position.z);
         _sectorLoc.rotation = Root.rotation;
 
-        _particleSystem = Managers.Effect.Play(Define.Effect.IceKingSpikeEffect, Root);
+        ParticleSystem _particleSystem = Managers.Effect.Play(Define.Effect.IceKingSpikeEffect, Root);
         _particleSystem.transform.position = _sectorLoc.transform.position;
 
         yield return new WaitForSeconds(0.2f);
@@ -40,9 +39,8 @@ public class IceKingSpikePattern : Pattern
         Managers.Resource.Destroy(_sectorLoc.gameObject);
         Debug.Log("HIT BOX STOP");
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.7f);
         
-
         Managers.Effect.Stop(_particleSystem);
         Debug.Log("EFFECT STOP");
     }
@@ -54,7 +52,7 @@ public class IceKingSpikePattern : Pattern
             // wait for seconds로 없애는 타이밍을 맞추기 힘들다
             StopCoroutine(_coroutine);
             _coroutine = null;
-            if (_particleSystem != null) Managers.Effect.Stop(_particleSystem);
+            //if (_particleSystem != null) Managers.Effect.Stop(_particleSystem);
             if (_sectorLoc != null) Managers.Resource.Destroy(_sectorLoc.gameObject);
             
         }
