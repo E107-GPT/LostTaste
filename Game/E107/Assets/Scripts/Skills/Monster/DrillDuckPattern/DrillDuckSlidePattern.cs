@@ -47,4 +47,9 @@ public class DrillDuckSlidePattern : Pattern
         }
             
     }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
+    }
 }

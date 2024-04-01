@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Á¡ÇÁÇÏ±â Á÷Àü¿¡ Ä³¸¯ÅÍ °ø°İ ¹× ¸ÕÁö ÀÌÆåÆ®
+// ì í”„í•˜ê¸° ì§ì „ì— ìºë¦­í„° ê³µê²© ë° ë¨¼ì§€ ì´í™íŠ¸
 public class MonsterKingJumpStartPattern : Pattern
 {
     private MonsterKingController _controller;
-    private Coroutine _coroutine;
 
     protected override void Init()
     {
@@ -16,11 +15,12 @@ public class MonsterKingJumpStartPattern : Pattern
 
     public override void DeActiveCollider()
     {
-        if (_controller != null ) _coroutine = null;
+        
     }
 
     IEnumerator CheckPatternObject(int attackDamage)
     {
+        yield return new WaitForSeconds(0.1f);
         Root = _controller.transform;
 
         Transform _cylinderLoc = Managers.Resource.Instantiate("Patterns/KingJumpStartCollider").transform;
@@ -33,7 +33,7 @@ public class MonsterKingJumpStartPattern : Pattern
         ParticleSystem _particle = Managers.Effect.Play(Define.Effect.KingJumpStartEffect, _cylinderLoc);
         Managers.Sound.Play("Monster/KingJumpStartEffect", Define.Sound.Effect);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         Managers.Resource.Destroy(_cylinderLoc.gameObject);
 
         yield return new WaitForSeconds(_particle.main.duration);
@@ -42,9 +42,11 @@ public class MonsterKingJumpStartPattern : Pattern
 
     public override void SetCollider(int attackDamage)
     {
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
-        }
+        StartCoroutine(CheckPatternObject(attackDamage));
+    }
+
+    public override void SetCollider()
+    {
+        throw new System.NotImplementedException();
     }
 }

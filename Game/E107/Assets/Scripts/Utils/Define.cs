@@ -105,10 +105,12 @@ public class Define
         SeaPearlSkillEffect,
         DustDirtyEffect,
         IceBallEffect,
+        FireKatanaEffect,
         GroundSlamRed,
         ExplosionDecalFire,
         MagicFieldWhite,
         BowSkillEffect,
+        HealOnce,
         MaxCount
     }
 
