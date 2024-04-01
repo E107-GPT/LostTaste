@@ -39,7 +39,7 @@ public class IceKingController : MonsterController
     private void RandomPatternSelector()
     {
         int rand = Random.Range(0, 101);
-        if (rand <= 30)
+        if (rand <= 100)
         {
             _statemachine.ChangeState(new IceKingSpikeState(this));
         }
@@ -81,32 +81,19 @@ public class IceKingController : MonsterController
             photonView.RPC("RPC_ChangeIceKingSpikeState", RpcTarget.Others);
         }
 
+        _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("Spike", 0.2f, -1, 0);
     }
 
     public override void ExcuteIceKingSpikeState()
     {
-        _animator.SetFloat("SpikeSpeed", 0.3f);
+        _animator.SetFloat("SpikeSpeed", 0.8f);
 
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Spike"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-
-            if (aniTime <= 0.68f)
-            {
-                _animator.SetFloat("SpikeSpeed", 1.0f);
-            }
-            else if (aniTime <= 0.72f)
-            {
-                _animator.SetFloat("SpikeSpeed", 0.8f);
-                // 여기서 한 번만 호출되도록 수정
-                _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
-            }
-            else if (aniTime <= 1.0f)
-            {
-                _animator.SetFloat("SpikeSpeed", 1.0f);
-            }
-            else if (aniTime > 1.0f)
+            
+            if (aniTime >= 1.0f)
             {
                 _statemachine.ChangeState(new IdleState(this));
             }
@@ -116,8 +103,6 @@ public class IceKingController : MonsterController
     {
         base.ExitIceKingSpikeState();
         _agent.avoidancePriority = 50;
-
-        _animator.SetFloat("SpikeSpeed", 1.0f);
         _monsterInfo.Patterns[0].DeActiveCollider();
     }
 
