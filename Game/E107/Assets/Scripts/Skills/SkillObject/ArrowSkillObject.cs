@@ -6,6 +6,6 @@ public class ArrowSkillObject : SkillObject
 {
     protected override void OnBreak()
     {
-
+        Debug.Log("Broken!");
     }
 }

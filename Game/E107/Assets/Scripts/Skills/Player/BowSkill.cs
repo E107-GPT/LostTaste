@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,6 +15,9 @@ public class BowSkill : Skill, IAttackSkill
     [field: SerializeField]
     public float Velocity { get; set; }
 
+    [field: SerializeField]
+    public AudioClip AudioClip { get; set; }
+
     protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
@@ -28,6 +32,10 @@ public class BowSkill : Skill, IAttackSkill
         gameObject.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
 
         yield return new WaitForSeconds(0.3f);
+
+        // 발사됨
+        Managers.Sound.Play(AudioClip);
+
         playerController.StateMachine.ChangeState(new IdleState(playerController));
         gameObject.GetComponent<Animator>().CrossFade("IDLE", 0.1f, -1, 0);
 
@@ -36,15 +44,13 @@ public class BowSkill : Skill, IAttackSkill
         ps.transform.rotation = player.transform.rotation;
 
         GameObject skillObject = Managers.Resource.Instantiate("Skills/ArrowSkillObject");
-        skillObject.GetComponent<ArrowSkillObject>().SetUp(player.transform, Damage, _seq, -1);
+        skillObject.GetComponent<ArrowSkillObject>().SetUp(player.transform, Damage, _seq, 1);
         skillObject.transform.localEulerAngles = player.transform.forward;
 
         float timer = 0;
-        Debug.Log("bow test | Duration: " + Duration);
         while (timer < Duration)
         {
-            Debug.Log(timer);
-            if (skillObject.IsDestroyed()) break;   // 화살이 터졌다면 끝
+            if (!skillObject.activeSelf) break; // 화살이 터졌다면 끝
 
             Vector3 step = dir * Velocity * Time.deltaTime;
             ps.transform.position += step;

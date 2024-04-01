@@ -51,19 +51,7 @@ public class SkillObject : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other == null) return;
-        if (_attacker.gameObject.CompareTag("Player") && other.gameObject.CompareTag("Monster"))
-        {
-            Debug.Log($"{other.gameObject.name}");
-
-            other.gameObject.GetComponent<MonsterController>().TakeDamage(_id, _damage);
-        }
-        else if (_attacker.gameObject.CompareTag("Monster") && other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log($"Monster Target: {other.gameObject.name}");
-
-            other.gameObject.GetComponent<PlayerController>().TakeDamage(_id, _damage);
-        }
+        OnTriggerEnter(other);
     }
 
     /// <summary>
