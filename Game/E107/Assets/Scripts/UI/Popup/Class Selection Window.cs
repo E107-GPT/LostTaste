@@ -13,11 +13,8 @@ public class ClassSelectionWindow : MonoBehaviour
     // ------------------------------------------------ 변수 선언 ------------------------------------------------
 
     // 사용할 변수 선언
-    private int selectedClassNum = 1; // 현재 선택 된 직업 번호
-    private Skill WarriorClassSkill;
-    private Skill MageClassSkill;
-    private Skill PriestClassSkill;
-    private Skill NinjaClassSkill;
+    private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
+    private int selectedClass = 1;
 
     // 직업선택 UI
     [Header("[ 직업선택 UI ]")]
@@ -29,6 +26,7 @@ public class ClassSelectionWindow : MonoBehaviour
     public Button mageButton; // 메이지
     public Button priestButton; // 프리스트
     public Button ninjaButton; // 닌자
+    public Button selectButton; // 선택 버튼
 
     // 선택 여부 테두리
     [Header("[ 선택 여부 테두리 ]")]
@@ -37,28 +35,19 @@ public class ClassSelectionWindow : MonoBehaviour
     public GameObject priestSelected; // 프리스트
     public GameObject ninjaSelected; // 닌자
 
-    // 직업 스탯
-    [Header("[ 직업 스탯 ]")]
-    public TextMeshProUGUI classHealthText; // 체력
-    public TextMeshProUGUI classManaText; // 마나
-    public TextMeshProUGUI classSpeedText; // 이동 속도
+    // 직업 스탯 패널
+    [Header("[ 직업 스탯 패널]")]
+    public GameObject warriorStatPanel; // 워리어
+    public GameObject mageStatPanel; // 메이지
+    public GameObject priestStatPanel; // 프리스트
+    public GameObject ninjaStatPanel; // 닌자
 
-    // 직업 스킬 정보
-    [Header("[ 직업 스킬 정보 ]")]
-    public TextMeshProUGUI classSkillNameText; // 직업스킬 이름 텍스트
-    public Image classSkillIcon; // 직업스킬 아이콘
-    public TextMeshProUGUI classSkillDescriptionText; // 직업스킬 설명 텍스트
-
-    // 스킬 스탯
-    [Header("[ 스킬 스탯 ]")]
-    public GameObject warriorSkillPanel; // 전사 스킬 패널
-    public GameObject ninjaMageSkillPanel; // 닌자 마법사 스킬 패널
-    public GameObject priestSkillPanel; // 프리스트 패널
-    public TextMeshProUGUI classSkillDurationText; // 스킬 지속시간 텍스트
-    public TextMeshProUGUI classSkillDamageText; // 스킬 데미지 텍스트
-    public TextMeshProUGUI classSkillHpRecoveryText; // 스킬 Hp 회복 텍스트
-    public TextMeshProUGUI classSkillManaText; // 직업스킬 마나 텍스트
-    public TextMeshProUGUI classSkillCoolDownText; // 직업스킬 쿨타임 텍스트
+    // 직업 스킬 패널
+    [Header("[ 직업 스킬 패널 ]")]
+    public GameObject warriorSkillPanel; // 워리어
+    public GameObject mageSkillPanel; // 메이지
+    public GameObject priestSkillPanel; // 프리스트
+    public GameObject ninjaSkillPanel; // 닌자
 
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
@@ -81,160 +70,136 @@ public class ClassSelectionWindow : MonoBehaviour
         // 버튼에 닌자 선택 클릭 이벤트를 추가
         if (ninjaButton != null)
             this.ninjaButton.onClick.AddListener(HandleNinjaButtonClick);
+
+        // 선택 버튼에 클래스 선택 클릭 이벤트를 추가
+        if (selectButton != null)
+            this.selectButton.onClick.AddListener(HandleSelectButtonClick);
     }
 
     void Update()
     {
-        // 상호작용 정보 UI 업데이트
-        UpdateClassSkillInfo();
-    }
+        // PlayerController 컴포넌트를 찾아서 참조
+        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
+        if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
+    }
 
     // ------------------------------------------------ 사용자 정의 메서드 ------------------------------------------------
 
     // 워리어 선택 시 호출되는 메서드
     public void HandleWarriorButtonClick()
     {
-        // 현재 선택 직업 업데이트
-        selectedClassNum = 1;
+        selectedClass = 1;
 
         // 선택 테두리 활성화
         warriorSelected.SetActive(true);
         mageSelected.SetActive(false);
         priestSelected.SetActive(false);
         ninjaSelected.SetActive(false);
+
+        // 스탯 패널 활성화
+        warriorStatPanel.SetActive(true);
+        mageStatPanel.SetActive(false);
+        priestStatPanel.SetActive(false);
+        ninjaStatPanel.SetActive(false);
+
+        // 스킬 패널 활성화
+        warriorSkillPanel.SetActive(true);
+        mageSkillPanel.SetActive(false);
+        priestSkillPanel.SetActive(false);
+        ninjaSkillPanel.SetActive(false);
     }
 
     // 메이지 선택 시 호출되는 메서드
     public void HandleMageButtonClick()
     {
-        // 현재 선택 직업 업데이트
-        selectedClassNum = 2;
+        selectedClass = 2;
 
         // 선택 테두리 활성화
         warriorSelected.SetActive(false);
         mageSelected.SetActive(true);
         priestSelected.SetActive(false);
         ninjaSelected.SetActive(false);
+
+        // 스탯 패널 활성화
+        warriorStatPanel.SetActive(false);
+        mageStatPanel.SetActive(true);
+        priestStatPanel.SetActive(false);
+        ninjaStatPanel.SetActive(false);
+
+        // 스킬 패널 활성화
+        warriorSkillPanel.SetActive(false);
+        mageSkillPanel.SetActive(true);
+        priestSkillPanel.SetActive(false);
+        ninjaSkillPanel.SetActive(false);
     }
 
     // 프리스트 선택 시 호출되는 메서드
     public void HandlePriestButtonClick()
     {
-        // 현재 선택 직업 업데이트
-        selectedClassNum = 3;
+        selectedClass = 3;
 
         // 선택 테두리 활성화
         warriorSelected.SetActive(false);
         mageSelected.SetActive(false);
         priestSelected.SetActive(true);
         ninjaSelected.SetActive(false);
+
+        // 스탯 패널 활성화
+        warriorStatPanel.SetActive(false);
+        mageStatPanel.SetActive(false);
+        priestStatPanel.SetActive(true);
+        ninjaStatPanel.SetActive(false);
+
+        // 스킬 패널 활성화
+        warriorSkillPanel.SetActive(false);
+        mageSkillPanel.SetActive(false);
+        priestSkillPanel.SetActive(true);
+        ninjaSkillPanel.SetActive(false);
     }
 
     // 닌자 선택 시 호출되는 메서드
     public void HandleNinjaButtonClick()
     {
-        // 현재 선택 직업 업데이트
-        selectedClassNum = 4;
+        selectedClass = 4;
 
         // 선택 테두리 활성화
         warriorSelected.SetActive(false);
         mageSelected.SetActive(false);
         priestSelected.SetActive(false);
         ninjaSelected.SetActive(true);
+
+        // 스탯 패널 활성화
+        warriorStatPanel.SetActive(false);
+        mageStatPanel.SetActive(false);
+        priestStatPanel.SetActive(false);
+        ninjaStatPanel.SetActive(true);
+
+        // 스킬 패널 활성화
+        warriorSkillPanel.SetActive(false);
+        mageSkillPanel.SetActive(false);
+        priestSkillPanel.SetActive(false);
+        ninjaSkillPanel.SetActive(true);
     }
 
-    // 직업스킬 정보를 UI에 표시
-    void UpdateClassSkillInfo()
+    // 선택 버튼 클릭 시 호출되는 메서드
+    public void HandleSelectButtonClick()
     {
-        // 사용할 변수 선언
-        Skill classSkill;
-
-        // 선택된 직업에 따라 해당 클래스의 스킬 정보를 classSkill에 할당
-        switch (selectedClassNum)
+        if (selectedClass == 1)
         {
-            case 1: // 전사
-                classSkill = WarriorClassSkill;
-                break;
-            case 2: // 메이지
-                classSkill = MageClassSkill;
-                break;
-            case 3: // 사제
-                classSkill = PriestClassSkill;
-                break;
-            case 4: // 닌자
-                classSkill = NinjaClassSkill;
-                break;
-            default:
-                classSkill = null;
-                break;
+            _playerController.ChangeClass(Define.ClassType.Warrior);
         }
-
-        Debug.Log($"{classSkill}@@@@@@@@@@@@@@@@@@@@@@@");
-
-        // 직업스킬 이름 업데이트
-        classSkillNameText.text = classSkill.Name;
-
-        // 직업스킬 설명 업데이트
-        classSkillDescriptionText.text = classSkill.Description;
-
-        // 직업스킬 아이콘 업데이트
-        classSkillIcon.sprite = classSkill.Icon;
-
-        // 직업스킬 마나 텍스트 업데이트
-        classSkillManaText.text = classSkill.RequiredMp.ToString();
-
-        // 직업스킬 쿨타임 텍스트 업데이트
-        classSkillCoolDownText.text = $"{classSkill.SkillCoolDownTime}s";
-
-        if (classSkill is WarriorClassSkill)
+        else if (selectedClass == 2)
         {
-            // 전사 스킬 패널 활성화
-            warriorSkillPanel.SetActive(true);
-            ninjaMageSkillPanel.SetActive(false);
-            priestSkillPanel.SetActive(false);
-
-            // 지속 시간 업데이트
-            WarriorClassSkill warriorClassSkill = (WarriorClassSkill)classSkill;
-            float duration = warriorClassSkill.Duration;
-            classSkillDurationText.text = duration.ToString();
+            _playerController.ChangeClass(Define.ClassType.Mage);
         }
-        else if (classSkill is PriestClassSkill)
+        else if (selectedClass == 3)
         {
-            // 프리스트 스킬 패널 활성화
-            warriorSkillPanel.SetActive(false);
-            ninjaMageSkillPanel.SetActive(false);
-            priestSkillPanel.SetActive(true);
-
-            // 회복량 업데이트
-            PriestClassSkill priestClassSkill = (PriestClassSkill)classSkill;
-            int healCount = priestClassSkill.HealCount;
-            int healMount = priestClassSkill.HealMount;
-            classSkillHpRecoveryText.text = $"{healCount}초간 초당 {healMount * 2} 회복";
+            _playerController.ChangeClass(Define.ClassType.Priest);
         }
-        else if (classSkill is NinjaClassSkill)
+        else if (selectedClass == 4)
         {
-            // 닌자, 마법사 스킬 패널 활성화
-            warriorSkillPanel.SetActive(false);
-            ninjaMageSkillPanel.SetActive(true);
-            priestSkillPanel.SetActive(false);
-
-            // 데미지 업데이트
-            NinjaClassSkill ninjaClassSkill = (NinjaClassSkill)classSkill;
-            int damage = ninjaClassSkill.Damage;
-            classSkillDamageText.text = damage.ToString();
-        }
-        else if (classSkill is MageClassSkill)
-        {
-            // 닌자, 마법사 스킬 패널 활성화
-            warriorSkillPanel.SetActive(false);
-            ninjaMageSkillPanel.SetActive(true);
-            priestSkillPanel.SetActive(false);
-
-            // 데미지 업데이트
-            MageClassSkill mageClassSkill = (MageClassSkill)classSkill;
-            int damage = mageClassSkill.Damage;
-            classSkillDamageText.text = damage.ToString();
+            _playerController.ChangeClass(Define.ClassType.Ninja);
         }
     }
 }
