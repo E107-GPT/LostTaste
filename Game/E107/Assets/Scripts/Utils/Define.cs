@@ -109,7 +109,9 @@ public class Define
         GroundSlamRed,
         ExplosionDecalFire,
         MagicFieldWhite,
+        BowSkillEffect,
         HealOnce,
+        BowArrowBrokenEFfect,
         StormDaggerEffect,
         StormDaggerFinishEffect,
         MaxCount

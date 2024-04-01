@@ -24,8 +24,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381046948253817071}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.00000017881383, y: 0.7379291, z: 0, w: 0.67487824}
+  m_LocalPosition: {x: 0.132, y: 0, z: -0.025}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36,7 +36,7 @@ Transform:
   - {fileID: 3208986711215728786}
   - {fileID: 5290297687272492503}
   m_Father: {fileID: 3505238756852739556}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &2248619243291134476
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +442,7 @@ Transform:
   m_GameObject: {fileID: 4754133259279152715}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.78, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -487,10 +487,10 @@ MonoBehaviour:
   <Name>k__BackingField: "\uC77C\uBC18\uD65C"
   <Tier>k__BackingField: 0
   <FlavorText>k__BackingField: "\uB9C8\uB098\uB85C \uD654\uC0B4\uC744 \uB9CC\uB4ED\uB2C8\uB2E4."
-  <Icon>k__BackingField: {fileID: 21300000, guid: 83ef797df43944e40b602e220b48f85f, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 77e14972daf3a164394314eed7899c15, type: 3}
   <LeftSkill>k__BackingField: {fileID: 0}
   <RightSkill>k__BackingField: {fileID: 1114128714064785279}
-  <IsHidden>k__BackingField: 1
+  <IsHidden>k__BackingField: 0
   isDropped: 1
 --- !u!114 &1114128714064785279
 MonoBehaviour:
@@ -507,11 +507,13 @@ MonoBehaviour:
   <Name>k__BackingField: "\uD654\uC0B4 \uC3D8\uAE30"
   <Description>k__BackingField: "\uD65C\uC740 \uAC00\uB9CC\uD788 \uC11C\uC11C \uC3F4\uC57C
     \uBA85\uC911\uB960\uC774 \uC88B\uC2B5\uB2C8\uB2E4."
-  <Icon>k__BackingField: {fileID: 21300000, guid: 36d7055fbcf67594c9ed9fceb9252a04, type: 3}
-  <SkillCoolDownTime>k__BackingField: 0.5
+  <Icon>k__BackingField: {fileID: 21300000, guid: 7766182687479d5468a948af4c023bc4, type: 3}
+  <SkillCoolDownTime>k__BackingField: 0
   <RequiredMp>k__BackingField: 5
-  <Damage>k__BackingField: 15
-  _arrowSpawn: {fileID: 6383915322238177947}
+  <Damage>k__BackingField: 25
+  <Duration>k__BackingField: 1.1
+  <Velocity>k__BackingField: 30
+  <AudioClip>k__BackingField: {fileID: 8300000, guid: 327abfd8802775d418b743912fa6fa57, type: 3}
 --- !u!114 &8740565764004689423
 MonoBehaviour:
   m_ObjectHideFlags: 0
