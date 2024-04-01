@@ -16,7 +16,7 @@ public class CrocodileSwordPattern : Pattern
 
     IEnumerator FireSword(int attackDamage)
     {
-        yield return new WaitForSeconds(1.7f);
+        yield return new WaitForSeconds(1.0f);
         Root = _controller.transform;
         Vector3 dir = Root.forward;
 
