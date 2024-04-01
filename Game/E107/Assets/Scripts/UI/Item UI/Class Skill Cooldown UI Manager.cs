@@ -14,6 +14,7 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
     // 직업 스킬 쿨타임 UI 매니저가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
     private PlayerClass _playerClass;
+    private State _curState;
     private int RequiredMp;
     private int currentMp;
 
@@ -85,17 +86,18 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
         }
 
         currentMp = _playerController.Stat.Mp;
+        _curState = _playerController.CurState;
 
         // 쿨타임 정보 업데이트
         if (Input.GetKey(KeyCode.Q) && !isClassSkillCoolingDown)
         {
             // 캐릭터가 '스킬 상태'가 아닐 경우 함수를 빠져나감
-            if (_playerController.CurState is not SkillState || currentMp < RequiredMp || classSkill is EmptySkill) return;
+            if (_curState is SkillState || currentMp < RequiredMp || classSkill is EmptySkill) return;
 
             classSkillDownCoroutine = StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
         }
     }
-
+    
     IEnumerator UpdateClassSkillCoolDown(float skillCoolDown, TextMeshProUGUI skillCoolDownText, Image coolDownImage, Image keyImage)
     {
         // 쿨타임이 시작될 때의 상태 변경
@@ -103,7 +105,6 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
 
         // 경과 시간을 추적하는 변수
         float elapsedTime = 0;
-
         while (elapsedTime < skillCoolDown)
         {
             skillCoolDown -= Time.deltaTime;

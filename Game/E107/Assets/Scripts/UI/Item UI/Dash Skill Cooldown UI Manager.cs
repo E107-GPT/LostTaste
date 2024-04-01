@@ -13,6 +13,7 @@ public class DashSkillCooldownUIManager : MonoBehaviour
 
     // 직업 스킬 쿨타임 UI 매니저가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
+    private PlayerClass _playerClass; // 플레이어의 직업
 
     // 직업 스킬 패널
     [Header("[ 직업 스킬 패널 ]")]

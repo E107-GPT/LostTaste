@@ -1,27 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // UI °ü·Ã ±â´ÉÀ» »ç¿ëÇÏ±â À§ÇØ Ãß°¡
+using UnityEngine.UI; // UI ê´€ë ¨ ê¸°ëŠ¥ì„ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ì¶”ê°€
 using TMPro;
 
 /// <summary>
-/// Ã¤ÆÃÃ¢À» °ü¸®ÇÏ´Â Å¬·¡½ºÀÔ´Ï´Ù.
+/// ì±„íŒ…ì°½ì„ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤ì…ë‹ˆë‹¤.
 /// </summary>
 public class ChatWindow : MonoBehaviour
 {
-    public float inactivityThreshold = 5f; // 5ÃÊ
+    public float inactivityThreshold = 5f; // 5ì´ˆ
     private float lastActivityTime;
 
-    // Ã¤ÆÃ InputField
-    [Header("[ Ã¤ÆÃ InputField ]")]
+    private bool isChatWindowOpen = false;
+    private bool isPartyInfoOpen = false;
+
+    // ì±„íŒ… InputField
+    [Header("[ ì±„íŒ… InputField ]")]
     public TMP_InputField chatInputField; // InputField
 
-    // Ã¤ÆÃ ScrollView
-    [Header("[ Ã¤ÆÃ ScrollView ]")]
+    // ì±„íŒ… ScrollView
+    [Header("[ ì±„íŒ… ScrollView ]")]
     public GameObject chatScrollView; // ScrollView
 
-    // Ã¤ÆÃ Background
-    [Header("[ Ã¤ÆÃ Background ]")]
+    // ì±„íŒ… Background
+    [Header("[ ì±„íŒ… Background ]")]
     public GameObject chatBackground; // Background
 
     void Start()
@@ -35,33 +38,33 @@ public class ChatWindow : MonoBehaviour
         CheckInactivity();
     }
 
-    // »ç¿ëÀÚ È°µ¿ °¨Áö
+    // ì‚¬ìš©ì í™œë™ ê°ì§€
     void DetectUserActivity()
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            // Ã¤ÆÃ InputField È°¼ºÈ­
+            // ì±„íŒ… InputField í™œì„±í™”
             chatInputField.ActivateInputField();
             chatInputField.Select();
 
-            // Ã¤ÆÃ ScrollView È°¼ºÈ­
+            // ì±„íŒ… ScrollView í™œì„±í™”
             chatScrollView.SetActive(true);
 
-            // Ã¤ÆÃ chatBackground È°¼ºÈ­
+            // ì±„íŒ… chatBackground í™œì„±í™”
             chatBackground.SetActive(true);
 
-            // È°µ¿ ½Ã°£ °»½Å
+            // í™œë™ ì‹œê°„ ê°±ì‹ 
             lastActivityTime = Time.time;
         }
     }
 
-    // »ç¿ëÀÚ ºñÈ°µ¿ ½Ã°£ Ã¼Å© ¹× Ã¤ÆÃÃ¢ ¼û±è Ã³¸®
+    // ì‚¬ìš©ì ë¹„í™œë™ ì‹œê°„ ì²´í¬ ë° ì±„íŒ…ì°½ ìˆ¨ê¹€ ì²˜ë¦¬
     void CheckInactivity()
     {
         float timeSinceLastActivity = Time.time - lastActivityTime;
         if (timeSinceLastActivity >= inactivityThreshold)
         {
-            // Ã¤ÆÃ ScrollView ºñÈ°¼ºÈ­
+            // ì±„íŒ… ScrollView ë¹„í™œì„±í™”
             chatScrollView.SetActive(false);
         }
     }

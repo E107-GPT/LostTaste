@@ -81,6 +81,7 @@ public class HUDManager : MonoBehaviour
         // 플레이어 상태 업데이트
         UpdatePlayerStatus();
 
+        // ESC 눌렀을 때
         if (Input.GetKeyDown(KeyCode.Escape) && !isPartyInfoOpen && !isGameMenuOpen)
         {
             // 게임 메뉴를 여는 이벤트
@@ -99,6 +100,7 @@ public class HUDManager : MonoBehaviour
             myPartyCloseButton.onClick.Invoke();
         }
 
+        // Tab 눌렀을 때
         if (Input.GetKeyDown(KeyCode.Tab) && !isGameMenuOpen && !isPartyInfoOpen)
         {
             // 파티 정보를 여는 이벤트
