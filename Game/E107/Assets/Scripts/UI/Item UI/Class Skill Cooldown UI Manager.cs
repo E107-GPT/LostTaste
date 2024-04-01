@@ -13,10 +13,6 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
 
     // 직업 스킬 쿨타임 UI 매니저가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
-    private PlayerClass _playerClass;
-    private State _curState;
-    private int RequiredMp;
-    private int currentMp;
 
     // 직업 스킬 패널
     [Header("[ 직업 스킬 패널 ]")]
@@ -45,54 +41,37 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
         classSkillCoolDownText.text = "";
     }
 
-    void Update()
+    // 각 직업 스킬의 OnSkillCast 이벤트를 구독
+    void OnEnable()
     {
-        // 직업 스킬 쿨타임 패널 업데이트
-        UpdateClassSkillCoolDownPanel();
+        MageClassSkill.OnMageSkillCast += HandleSkillCast;
+        NinjaClassSkill.OnNinjaSkillCast += HandleSkillCast;
+        WarriorClassSkill.OnWarriorSkillCast += HandleSkillCast;
+        PriestClassSkill.OnPriestSkillCast += HandleSkillCast;
+    }
+
+    void OnDisable()
+    {
+        MageClassSkill.OnMageSkillCast -= HandleSkillCast;
+        NinjaClassSkill.OnNinjaSkillCast -= HandleSkillCast;
+        WarriorClassSkill.OnWarriorSkillCast -= HandleSkillCast;
+        PriestClassSkill.OnPriestSkillCast -= HandleSkillCast;
     }
 
 
     // ------------------------------------------------ 사용자 정의 메서드 ------------------------------------------------
 
-    void UpdateClassSkillCoolDownPanel()
+    private void HandleSkillCast(bool isCasting)
     {
-        // PlayerController 컴포넌트를 찾아서 참조
-        _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-
-        if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
-
-        // 현재 직업 및 직업스킬 쿨타임 가져옴
-        _playerClass = _playerController.PlayerClass;
-        classSkillCoolDown = _playerClass.ClassSkill.SkillCoolDownTime;
-
-        // 현재 직업 스킬
-        Skill classSkill = _playerClass.ClassSkill;
-
-        if (classSkill is WarriorClassSkill)
+        if (isCasting)
         {
-            RequiredMp = 10;
-        }
-        else if (classSkill is PriestClassSkill)
-        {
-            RequiredMp = 150;
-        }
-        else if (classSkill is NinjaClassSkill)
-        {
-            RequiredMp = 100;
-        }
-        else if (classSkill is MageClassSkill)
-        {
-            RequiredMp = 200;
-        }
+            // PlayerController 컴포넌트를 찾아서 참조
+            _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        currentMp = _playerController.Stat.Mp;
-        _curState = _playerController.CurState;
+            if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 
-        // 쿨타임 정보 업데이트
-        if (Input.GetKey(KeyCode.Q) && !isClassSkillCoolingDown)
-        {
-            // 캐릭터가 '스킬 상태'가 아닐 경우 함수를 빠져나감
-            if (_curState is SkillState || currentMp < RequiredMp || classSkill is EmptySkill) return;
+            // 현재 직업 및 직업스킬 쿨타임 가져옴
+            classSkillCoolDown = _playerController.PlayerClass.ClassSkill.SkillCoolDownTime;
 
             classSkillDownCoroutine = StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
         }
@@ -107,7 +86,7 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
         float elapsedTime = 0;
         while (elapsedTime < skillCoolDown)
         {
-            skillCoolDown -= Time.deltaTime;
+            elapsedTime += Time.deltaTime;
             coolDownImage.fillAmount = (skillCoolDown - elapsedTime) / skillCoolDown;
             keyImage.fillAmount = (skillCoolDown - elapsedTime) / skillCoolDown;
             if (skillCoolDown - elapsedTime > 1)
