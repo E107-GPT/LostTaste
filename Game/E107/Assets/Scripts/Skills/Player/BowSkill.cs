@@ -33,13 +33,17 @@ public class BowSkill : Skill, IAttackSkill
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BowSkillEffect, player.transform);
         ps.transform.position += Vector3.up * 0.5f;
+        ps.transform.rotation = player.transform.rotation;
 
         GameObject skillObject = Managers.Resource.Instantiate("Skills/ArrowSkillObject");
         skillObject.GetComponent<ArrowSkillObject>().SetUp(player.transform, Damage, _seq, -1);
+        skillObject.transform.localEulerAngles = player.transform.forward;
 
         float timer = 0;
+        Debug.Log("bow test | Duration: " + Duration);
         while (timer < Duration)
         {
+            Debug.Log(timer);
             if (skillObject.IsDestroyed()) break;   // 화살이 터졌다면 끝
 
             Vector3 step = dir * Velocity * Time.deltaTime;
