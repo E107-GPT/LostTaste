@@ -6,10 +6,9 @@ using UnityEngine;
 
 public class MonsterKingController : MonsterController
 {
-    [SerializeField]
-    private GameObject _weapon;
-    [SerializeField]
-    private GameObject _leftArm;
+    [SerializeField] private GameObject _weapon;
+    [SerializeField] private GameObject _leftArm;
+    [SerializeField] private GameObject _rightArm;
 
     private ParticleSystem _particle;
 
@@ -21,6 +20,7 @@ public class MonsterKingController : MonsterController
 
     public GameObject Weapon { get => _weapon; }
     public GameObject LeftArm { get => _leftArm; }
+    public GameObject RightArm { get => _rightArm; }
     public ParticleSystem Particle { get => _particle; set => _particle = value; }
 
     public override void Init()
@@ -106,7 +106,7 @@ public class MonsterKingController : MonsterController
             photonView.RPC("RPC_ChangeMonsterKingHitDownChargeState", RpcTarget.Others);
         }
 
-        _animator.SetFloat("HitDownChargeSpeed", 0.3f);
+        _animator.SetFloat("HitDownChargeSpeed", 0.4f);
         _animator.CrossFade("HitDownCharge", 0.3f, -1, 0);
         _monsterInfo.Patterns[0].SetCollider();
     }
@@ -162,7 +162,6 @@ public class MonsterKingController : MonsterController
     public override void ExitMonsterKingHitDownState() 
     {
         _agent.avoidancePriority = 50;
-        //_monsterInfo.Patterns[2].SetCollider(_stat.PatternDamage - 10); // 후속타
     }
 
     public override void EnterMonsterKingSlashChargeState()     // Slash Charge
@@ -180,7 +179,7 @@ public class MonsterKingController : MonsterController
 
         _animator.SetFloat("SlashChargeSpeed", 0.3f);
         _animator.CrossFade("SlashCharge", 0.1f, -1, 0);
-        _monsterInfo.Patterns[3].SetCollider();
+        _monsterInfo.Patterns[2].SetCollider();
     }
     public override void ExecuteMonsterKingSlashChargeState()
     {
@@ -201,7 +200,7 @@ public class MonsterKingController : MonsterController
     }
     public override void ExitMonsterKingSlashChargeState()
     {
-        _monsterInfo.Patterns[3].DeActiveCollider();
+        _monsterInfo.Patterns[2].DeActiveCollider();
     }
 
     public override void EnterMonsterKingSlashState()           // Slash
@@ -213,7 +212,7 @@ public class MonsterKingController : MonsterController
 
         _animator.SetFloat("SlashSpeed", 1.0f);
         _animator.CrossFade("Slash", 0.1f, -1, 0);
-        _monsterInfo.Patterns[4].SetCollider(_stat.PatternDamage - 5);
+        _monsterInfo.Patterns[3].SetCollider(_stat.PatternDamage - 5);
     }
     public override void ExecuteMonsterKingSlashState() 
     {
@@ -250,10 +249,9 @@ public class MonsterKingController : MonsterController
             photonView.RPC("RPC_ChangeMonsterKingStabChargeState", RpcTarget.Others);
         }
 
-        _monsterInfo.Patterns[5].SetCollider(_stat.PatternDamage);
         _animator.SetFloat("StabChargeSpeed", 0.3f);
         _animator.CrossFade("StabCharge", 0.3f, -1, 0);
-
+        _monsterInfo.Patterns[4].SetCollider(_stat.PatternDamage);
     }
 
     public override void ExecuteMonsterKingStabChargeState()
@@ -288,8 +286,7 @@ public class MonsterKingController : MonsterController
 
         _animator.SetFloat("StabSpeed", 1.0f);
         _animator.CrossFade("Stab", 0.3f, -1, 0);
-        
-        _monsterInfo.Patterns[6].SetCollider(_stat.PatternDamage - 15);
+        _monsterInfo.Patterns[5].SetCollider(_stat.PatternDamage - 15);
     }         
     public override void ExecuteMonsterKingStabState() 
     {
@@ -330,7 +327,7 @@ public class MonsterKingController : MonsterController
 
         _animator.SetFloat("JumpStartSpeed", 0.6f);
         _animator.CrossFade("JumpStart", 0.3f, -1, 0);
-        _monsterInfo.Patterns[7].SetCollider(_stat.PatternDamage - 30);
+        _monsterInfo.Patterns[6].SetCollider(_stat.PatternDamage - 30);
     }    
     public override void ExecuteMonsterKingJumpStartState() 
     {
@@ -414,7 +411,7 @@ public class MonsterKingController : MonsterController
         }
         // 착지
         _agent.Warp(new Vector3(_detectPlayerLoc.x, _detectPlayerLoc.y, _detectPlayerLoc.z));
-        _monsterInfo.Patterns[8].SetCollider(_stat.PatternDamage + 20);
+        _monsterInfo.Patterns[7].SetCollider(_stat.PatternDamage + 20);
 
         _animator.CrossFade("JumpEnd", 0.3f, -1, 0);
     }      
@@ -435,7 +432,6 @@ public class MonsterKingController : MonsterController
         _jumpLastTime = Time.time;
         GetComponent<Collider>().enabled = true;
         _agent.avoidancePriority = 50;
-        _monsterInfo.Patterns[8].DeActiveCollider();
     }
 
     #endregion
