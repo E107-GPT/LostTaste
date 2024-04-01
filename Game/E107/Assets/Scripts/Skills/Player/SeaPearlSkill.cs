@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GiantPearlSkill : Skill, IAttackSkill
+public class SeaPearlSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }
@@ -54,7 +54,7 @@ public class GiantPearlSkill : Skill, IAttackSkill
         float radian = Mathf.Deg2Rad * angle;
         Vector3 dir = new Vector3(Mathf.Sin(radian), 0, Mathf.Cos(radian));
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.GiantPearlSkillEffect, root.transform);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.SeaPearlSkillEffect, root.transform);
         ps.transform.position += Vector3.up * 0.5f;
 
         Transform skillObject = Managers.Resource.Instantiate("Skills/SkillObject").transform;
