@@ -163,4 +163,10 @@ public class MonsterManager : MonoBehaviour
         Debug.Log("RestartCheckMonstersCoroutine");
         RestartCheckMonstersCoroutine(_curMap);
     }
+
+    public void SomeOneOpenChet()
+    {
+        PortalTrigger portal = PortalList.Find((e) => e.transform.root.name == _curMap).GetComponent<PortalTrigger>();
+
+    }
 }

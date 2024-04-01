@@ -536,6 +536,7 @@ public class PlayerController : BaseController
         // 추후 수정
         // todo 이름 받아와서 열까?
         //
+
         _detectedInteractable.OnInteracted(this.gameObject);
     }
 
