@@ -20,11 +20,8 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
     public Image classSkillKeyImage; // 직업 스킬 키 이미지
     public TextMeshProUGUI classSkillCoolDownText; // 직업 스킬 쿨타임
 
-    // 남은 쿨타임 숫자 변수 선언
-    private float classSkillCoolDown; // 직업 스킬 현재 쿨타임
-
-    // 쿨타임 진행 상태를 추적하는 변수 추가
-    private bool isClassSkillCoolingDown = false;
+    // 직업 스킬 쿨타임
+    private float classSkillCoolDown; 
 
     private Coroutine classSkillDownCoroutine = null;
 
@@ -33,12 +30,8 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
 
     void Start()
     {
-        // 초기 Fill Amount를 0으로 설정
-        classSkillCoolDownImage.fillAmount = 0;
-        classSkillKeyImage.fillAmount = 0;
-
-        // 초기 쿨타임 텍스트 빈 문자열로 설정
-        classSkillCoolDownText.text = "";
+        // 쿨타임 패널 초기화
+        ResetCoolDownUI(classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage);
     }
 
     // 각 직업 스킬의 OnSkillCast 이벤트를 구독
@@ -79,11 +72,9 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
     
     IEnumerator UpdateClassSkillCoolDown(float skillCoolDown, TextMeshProUGUI skillCoolDownText, Image coolDownImage, Image keyImage)
     {
-        // 쿨타임이 시작될 때의 상태 변경
-        isClassSkillCoolingDown = true;
-
         // 경과 시간을 추적하는 변수
         float elapsedTime = 0;
+
         while (elapsedTime < skillCoolDown)
         {
             elapsedTime += Time.deltaTime;
@@ -102,9 +93,6 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
 
         // 코루틴이 끝난 뒤 쿨타임 패널을 초기화
         ResetCoolDownUI(skillCoolDownText, coolDownImage, keyImage);
-
-        // 쿨타임이 종료될 때의 상태 변경
-        isClassSkillCoolingDown = false;
     }
 
     // 코루틴이 끝난 뒤 쿨타임 패널을 초기화 하는 메서드

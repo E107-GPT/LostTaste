@@ -32,12 +32,8 @@ public class DashSkillCooldownUIManager : MonoBehaviour
 
     void Start()
     {
-        // 초기 Fill Amount를 0으로 설정
-        dashCoolDownImage.fillAmount = 0;
-        dashSkillKeyImage.fillAmount = 0;
-
-        // 초기 쿨타임 텍스트 빈 문자열로 설정
-        dashCoolDownText.text = "";
+        // 쿨타임 패널 초기화
+        ResetCoolDownUI(dashCoolDownText, dashCoolDownImage, dashSkillKeyImage);
     }
 
     void Update()
