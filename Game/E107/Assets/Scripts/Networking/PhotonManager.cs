@@ -75,6 +75,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             partyConnect.onClick.AddListener(()=> ClickRoom(index));
         }
 
+
+        GameObject infoPartyMemeber = GameObject.Find("Party Member Layout Group");
         for(int i = 0; i<4; i++)
         {
             string partyName = "Party Member " + (i + 1);
@@ -309,9 +311,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void PrintPlayer()
     {
-
         for(int i = 0; i<4; i++)
         {
+            Debug.Log(partyMemberInfo[i]);
             partyMemberInfo[i].text = "파티원 모집중...";
         }
         int idx = 0;
@@ -324,6 +326,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             Debug.Log(player.Key);
+            Debug.Log((int)player.Value.CustomProperties["Number"]);
             partyMemberInfo[(int)player.Value.CustomProperties["Number"]].text = player.Value.NickName;
             //idx++;
         }
@@ -499,9 +502,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
         Managers.Player.LoadPlayersInfoInCurrentRoom();
         PrintPartyStatus();
-
-
-
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -523,8 +523,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             }
         }
 
+        PrintPartyStatus();
         Debug.Log("anyone left");
-
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
