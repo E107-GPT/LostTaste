@@ -60,7 +60,7 @@ public class GiantPearlSkill : Skill, IAttackSkill
         Transform skillObject = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObject.GetComponent<SkillObject>().SetUp(root.transform, Damage, _seq);
         skillObject.localScale = new Vector3(0.7f, 0.7f, 0.7f);
-        skillObject.position += Vector3.up * 0.5f;
+        skillObject.position = ps.transform.position;
         skillObject.rotation.SetLookRotation(dir);
 
         float timer = 0.0f;
