@@ -114,7 +114,6 @@ public class CrocodileController : MonsterController
             }
             else if (aniTime > 1.0f)
             {
-                _monsterInfo.Patterns[0].DeActiveCollider();
                 _statemachine.ChangeState(new IdleState(this));
             }
         }
@@ -125,6 +124,9 @@ public class CrocodileController : MonsterController
         base.ExitCrocodileSwordState();
         _swordPS.Stop();
         _agent.avoidancePriority = 50;
+
+        _animator.SetFloat("SwordSpeed", 1.0f);
+        _monsterInfo.Patterns[0].DeActiveCollider();
     }
 
     [PunRPC]
