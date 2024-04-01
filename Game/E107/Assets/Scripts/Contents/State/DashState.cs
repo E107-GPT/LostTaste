@@ -1,31 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DashState : State
 {
+    public static event Action<bool> OnDashCast; // 대쉬 시전 여부 전달을 위한 이벤트 정의
+
     public DashState(BaseController controller) : base(controller)
     {
+        OnDashCast?.Invoke(true); // 스킬 시전 성공하면 이벤트 발생
         // 생성자 내부 로직이 필요하다면 여기에 작성합니다.
     }
     public override void Enter()
     {
-        Debug.Log("1111111111111111111111");
         _controller.EnterDash();
-        Debug.Log("2222222222222222222222");
     }
 
     public override void Execute()
     {
-        Debug.Log("33333333333333333333");
         _controller.ExcuteDash();
-        Debug.Log("444444444444444444444");
     }
 
     public override void Exit()
     {
-        Debug.Log("555555555555555555");
         _controller.ExitDash();
-        Debug.Log("6666666666666666666666");
     }
 }

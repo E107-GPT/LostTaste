@@ -14,16 +14,14 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
     // 직업 스킬 쿨타임 UI 매니저가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
 
+    // 직업 스킬 쿨타임
+    private float classSkillCoolDown;
+
     // 직업 스킬 패널
     [Header("[ 직업 스킬 패널 ]")]
     public Image classSkillCoolDownImage; // 직업 스킬 쿨타임 이미지
     public Image classSkillKeyImage; // 직업 스킬 키 이미지
     public TextMeshProUGUI classSkillCoolDownText; // 직업 스킬 쿨타임
-
-    // 직업 스킬 쿨타임
-    private float classSkillCoolDown; 
-
-    private Coroutine classSkillDownCoroutine = null;
 
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
@@ -66,7 +64,7 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
             // 현재 직업 및 직업스킬 쿨타임 가져옴
             classSkillCoolDown = _playerController.PlayerClass.ClassSkill.SkillCoolDownTime;
 
-            classSkillDownCoroutine = StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
+            StartCoroutine(UpdateClassSkillCoolDown(classSkillCoolDown, classSkillCoolDownText, classSkillCoolDownImage, classSkillKeyImage));
         }
     }
     
