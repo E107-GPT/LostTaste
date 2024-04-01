@@ -35,7 +35,7 @@ public class BowSkill : Skill, IAttackSkill
         ps.transform.position += Vector3.up * 0.5f;
 
         GameObject skillObject = Managers.Resource.Instantiate("Skills/ArrowSkillObject");
-        skillObject.GetComponent<ArrowSkillObject>().SetUp(player.transform, Damage, _seq, 1);
+        skillObject.GetComponent<ArrowSkillObject>().SetUp(player.transform, Damage, _seq, -1);
 
         float timer = 0;
         while (timer < Duration)
