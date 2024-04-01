@@ -13,7 +13,7 @@ public class MonsterKingInfo : MonsterInfo
         _skill = null;
         Patterns.Add(gameObject.GetOrAddComponent<MonsterKingHitDownChargePattern>());
         Patterns.Add(gameObject.GetOrAddComponent<MonsterKingHitDownPattern>());
-        Patterns.Add(gameObject.GetOrAddComponent<MonsterKingHitDownAfterPattern>());
+        //Patterns.Add(gameObject.GetOrAddComponent<MonsterKingHitDownAfterPattern>());
 
         Patterns.Add(gameObject.GetOrAddComponent<MonsterKingSlashChargePattern>());
         Patterns.Add(gameObject.GetOrAddComponent<MonsterKingSlashPattern>());

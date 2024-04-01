@@ -44,9 +44,8 @@ public class MonsterKingHitDownPattern : Pattern
 
         yield return new WaitForSeconds(0.8f);
         Managers.Effect.Stop(_particle);
-        
-        // Pattern After
 
+        #region HitDownAfter
         Transform _donutLoc = Managers.Resource.Instantiate("Patterns/KingDonutCenter").transform;
         ParticleSystem[] particles = new ParticleSystem[_colliderCnt];
 
@@ -67,22 +66,17 @@ public class MonsterKingHitDownPattern : Pattern
             particles[i] = Managers.Effect.Play(Define.Effect.KingHitDownAfterEffect, go.transform);
         }
 
-        // effect를 생성 
-
-        // 소리 재생
         Managers.Sound.Play("Monster/KingHitDownAfterEffect", Define.Sound.Effect);
 
         yield return new WaitForSeconds(0.2f);
-        // hit box 안에 effect가 존재
         Managers.Resource.Destroy(_donutLoc.gameObject);
 
-        // effect가 끝나는 시간까지 대기하다가 없앰
         yield return new WaitForSeconds(particles[0].main.duration);
         foreach (ParticleSystem ps in  particles)
         {
             Managers.Effect.Stop(ps);
         }
-        particles = null;
+        #endregion
     }
 
     public override void SetCollider(int attackDamage)
