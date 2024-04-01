@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4024436174399745692}
   - component: {fileID: 9182376000277116421}
   - component: {fileID: 1220144120374963923}
+  - component: {fileID: 1516487327772346744}
   m_Layer: 11
   m_Name: NextButton
   m_TagString: Untagged
@@ -37,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -40, y: 40}
-  m_SizeDelta: {x: 150, y: 50}
+  m_SizeDelta: {x: 170, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &4024436174399745692
 CanvasRenderer:
@@ -121,6 +122,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1516487327772346744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21017289025502698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b64b8b5c43bd3847b003675c6d7b061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fingerCursor: {fileID: 2800000, guid: 29c29659f635567459665387c4b75d1f, type: 3}
 --- !u!1 &4019891648177434363
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,10 +430,10 @@ RectTransform:
   - {fileID: 6373538965172039530}
   m_Father: {fileID: 6047752891699863086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -10, y: 0}
-  m_SizeDelta: {x: 35, y: 35}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &1399704457563644380
 CanvasRenderer:
@@ -870,8 +884,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Next
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f25542478deae194bbbb681feaf87435, type: 2}
-  m_sharedMaterial: {fileID: 4739292851424819540, guid: f25542478deae194bbbb681feaf87435, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8788b3edddbf38e44a65c39dcdce5fd1, type: 2}
+  m_sharedMaterial: {fileID: -6751961658727634613, guid: 8788b3edddbf38e44a65c39dcdce5fd1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
