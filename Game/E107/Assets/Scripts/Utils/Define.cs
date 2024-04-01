@@ -103,6 +103,7 @@ public class Define
         PriestClassSkillEffect,
         PlayerWalkEffect,
         GiantPearlSkillEffect,
+        DustDirtyEffect,
         MaxCount
     }
 

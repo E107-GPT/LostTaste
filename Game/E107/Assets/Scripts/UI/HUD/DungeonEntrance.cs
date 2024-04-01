@@ -5,56 +5,60 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾î°¡ ´øÀü¿¡ ÀÔÀåÇÏ¸é Æ¯Á¤ UIµéÀ» È°¼ºÈ­ÇÏ°í,
-/// ½ºÅ×ÀÌÁö ÅØ½ºÆ®¸¦ ¾Ë¸Â°Ô ¾÷µ¥ÀÌÆ®ÇÏ´Â ÄÄÆ÷³ÍÆ®ÀÔ´Ï´Ù.
+/// í”Œë ˆì´ì–´ê°€ ë˜ì „ì— ì…ì¥í•˜ë©´ íŠ¹ì • UIë“¤ì„ í™œì„±í™”í•˜ê³ ,
+/// ìŠ¤í…Œì´ì§€ í…ìŠ¤íŠ¸ë¥¼ ì•Œë§ê²Œ ì—…ë°ì´íŠ¸í•˜ëŠ” ì»´í¬ë„ŒíŠ¸ì…ë‹ˆë‹¤.
 /// </summary>
 public class DungeonEntrance : MonoBehaviour
 {
     public static DungeonEntrance Instance { get; private set; }
 
     private float gameTime = 0f;
-    public float GameTime => gameTime; // ¿ÜºÎ¿¡¼­ Á¢±Ù °¡´ÉÇÏµµ·Ï °ÔÅÍ Ãß°¡
+    public float GameTime => gameTime; // ì™¸ë¶€ì—ì„œ ì ‘ê·¼ ê°€ëŠ¥í•˜ë„ë¡ ê²Œí„° ì¶”ê°€
 
     private bool isInCamp = true;
 
-    // °ÔÀÓ »óÅÂ
-    [Header("[ °ÔÀÓ »óÅÂ ]")]
-    public GameObject timeContainerPanel; // °ÔÀÓ ½Ã°£ ÆĞ³Î
-    public TextMeshProUGUI gameTimeText; // °ÔÀÓ ½Ã°£ ÅØ½ºÆ®
-    public GameObject partyListButtonPanel; // ÆÄÆ¼ ¸ğÁı ÆĞ³Î
+    // ì§ì—… ì„ íƒ ì°½
+    [Header("[ ì§ì—… ì„ íƒ ì°½ ]")]
+    public GameObject classSelectPanel; // ì§ì—… ì„ íƒ íŒ¨ë„
 
-    // Áöµµ ÆĞ³Î
-    [Header("[ Áöµµ ÆĞ³Î ]")]
-    public TextMeshProUGUI stageText; // ½ºÅ×ÀÌÁö ÅØ½ºÆ®
+    // ê²Œì„ ìƒíƒœ
+    [Header("[ ê²Œì„ ìƒíƒœ ]")]
+    public GameObject timeContainerPanel; // ê²Œì„ ì‹œê°„ íŒ¨ë„
+    public TextMeshProUGUI gameTimeText; // ê²Œì„ ì‹œê°„ í…ìŠ¤íŠ¸
+    public GameObject partyListButtonPanel; // íŒŒí‹° ëª¨ì§‘ íŒ¨ë„
 
-    // ½ºÅ×ÀÌÁö ÆĞ³Î
-    [Header("[ ½ºÅ×ÀÌÁö ÆĞ³Î ]")]
-    public GameObject stagePanel; // ½ºÅ×ÀÌÁö ÆĞ³Î
-    public TextMeshProUGUI stageLevelText; // ½ºÅ×ÀÌÁö ·¹º§ ÅØ½ºÆ®
-    public TextMeshProUGUI stageNameText; // ½ºÅ×ÀÌÁö ÀÌ¸§ ÅØ½ºÆ®
+    // ì§€ë„ íŒ¨ë„
+    [Header("[ ì§€ë„ íŒ¨ë„ ]")]
+    public TextMeshProUGUI stageText; // ìŠ¤í…Œì´ì§€ í…ìŠ¤íŠ¸
 
-    // °ÔÀÓ ¸Ş´º
-    [Header("[ °ÔÀÓ ¸Ş´º ]")]
-    public GameObject campGameMenu; // Ä·ÇÁ °ÔÀÓ ¸Ş´º
-    public GameObject dungeonGameMenu; // ´øÀü °ÔÀÓ ¸Ş´º
+    // ìŠ¤í…Œì´ì§€ íŒ¨ë„
+    [Header("[ ìŠ¤í…Œì´ì§€ íŒ¨ë„ ]")]
+    public GameObject stagePanel; // ìŠ¤í…Œì´ì§€ íŒ¨ë„
+    public TextMeshProUGUI stageLevelText; // ìŠ¤í…Œì´ì§€ ë ˆë²¨ í…ìŠ¤íŠ¸
+    public TextMeshProUGUI stageNameText; // ìŠ¤í…Œì´ì§€ ì´ë¦„ í…ìŠ¤íŠ¸
 
-    // Å¬¸®¾î ÇÑ ½ºÅ×ÀÌÁö
-    [Header("[ Å¬¸®¾î ÇÑ ½ºÅ×ÀÌÁö ]")]
-    public GameObject stageXIcon; // Å¬¸®¾î ÇÑ ½ºÅ×ÀÌÁö ¾øÀ½ ¾ÆÀÌÄÜ
-    public GameObject stage1Icon; // Stage 1 Å¬¸®¾î ¾ÆÀÌÄÜ
-    public GameObject stage2Icon; // Stage 2 Å¬¸®¾î ¾ÆÀÌÄÜ
-    public GameObject stage3Icon; // Stage 3 Å¬¸®¾î ¾ÆÀÌÄÜ
-    public GameObject finalStageIcon; // Final Stage Å¬¸®¾î ¾ÆÀÌÄÜ
-    public TextMeshProUGUI stageClearText; // ½ºÅ×ÀÌÁö Å¬¸®¾î ÅØ½ºÆ®
+    // ê²Œì„ ë©”ë‰´
+    [Header("[ ê²Œì„ ë©”ë‰´ ]")]
+    public GameObject campGameMenu; // ìº í”„ ê²Œì„ ë©”ë‰´
+    public GameObject dungeonGameMenu; // ë˜ì „ ê²Œì„ ë©”ë‰´
 
-    private bool hasEntered = false; // ÇÃ·¹ÀÌ¾î°¡ ÀÌ¹Ì ÀÔÀåÇß´ÂÁö ¿©ºÎ¸¦ ÀúÀåÇÏ´Â º¯¼ö
+    // í´ë¦¬ì–´ í•œ ìŠ¤í…Œì´ì§€
+    [Header("[ í´ë¦¬ì–´ í•œ ìŠ¤í…Œì´ì§€ ]")]
+    public GameObject stageXIcon; // í´ë¦¬ì–´ í•œ ìŠ¤í…Œì´ì§€ ì—†ìŒ ì•„ì´ì½˜
+    public GameObject stage1Icon; // Stage 1 í´ë¦¬ì–´ ì•„ì´ì½˜
+    public GameObject stage2Icon; // Stage 2 í´ë¦¬ì–´ ì•„ì´ì½˜
+    public GameObject stage3Icon; // Stage 3 í´ë¦¬ì–´ ì•„ì´ì½˜
+    public GameObject finalStageIcon; // Final Stage í´ë¦¬ì–´ ì•„ì´ì½˜
+    public TextMeshProUGUI stageClearText; // ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´ í…ìŠ¤íŠ¸
+
+    private bool hasEntered = false; // í”Œë ˆì´ì–´ê°€ ì´ë¯¸ ì…ì¥í–ˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ¼±ÅÃÀû
+            DontDestroyOnLoad(gameObject); // ì„ íƒì 
         }
         else
         {
@@ -66,12 +70,12 @@ public class DungeonEntrance : MonoBehaviour
     {
         if (isInCamp)
         {
-            // Ä·ÇÁ¿¡ ÀÖ´Â µ¿¾È ½Ã°£ ÃÊ±âÈ­
+            // ìº í”„ì— ìˆëŠ” ë™ì•ˆ ì‹œê°„ ì´ˆê¸°í™”
             gameTime = 0f;
         }
         else
         {
-            // ´øÀü¿¡ ÀÖ´Â µ¿¾È ½Ã°£ Èå¸§
+            // ë˜ì „ì— ìˆëŠ” ë™ì•ˆ ì‹œê°„ íë¦„
             gameTime += Time.deltaTime;
             int minutes = Mathf.FloorToInt(gameTime / 60);
             int seconds = Mathf.FloorToInt(gameTime % 60);
@@ -79,36 +83,38 @@ public class DungeonEntrance : MonoBehaviour
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î°¡ Ä·ÇÁ¿¡ ÁøÀÔÇÒ ¶§ È£ÃâµÇ´Â ¸Ş¼­µå
+    // í”Œë ˆì´ì–´ê°€ ìº í”„ì— ì§„ì…í•  ë•Œ í˜¸ì¶œë˜ëŠ” ë©”ì„œë“œ
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !hasEntered)
         {
+            classSelectPanel.SetActive(true); // ì§ì—… ì„ íƒ íŒ¨ë„ í™œì„±í™”
+
             isInCamp = false;
-            timeContainerPanel.SetActive(true); // °ÔÀÓ ½Ã°£ UI È°¼ºÈ­
-            partyListButtonPanel.SetActive(false); // ÆÄÆ¼ ¸ğÁı UI ºñÈ°¼ºÈ­
-            stageText.text = "STAGE 1 - ±íÀº ½£"; // ½ºÅ×ÀÌÁö ÅØ½ºÆ® ¾÷µ¥ÀÌÆ®
+            timeContainerPanel.SetActive(true); // ê²Œì„ ì‹œê°„ UI í™œì„±í™”
+            partyListButtonPanel.SetActive(false); // íŒŒí‹° ëª¨ì§‘ UI ë¹„í™œì„±í™”
+            stageText.text = "STAGE 1 - ê¹Šì€ ìˆ²"; // ìŠ¤í…Œì´ì§€ í…ìŠ¤íŠ¸ ì—…ë°ì´íŠ¸
 
-            stageLevelText.text = "STAGE 1"; // ½ºÅ×ÀÌÁö ·¹º§ ÅØ½ºÆ®¸¦ ¾÷µ¥ÀÌÆ®
-            stageNameText.text = "±íÀº ½£"; // ½ºÅ×ÀÌÁö ÀÌ¸§ ÅØ½ºÆ®¸¦ ¾÷µ¥ÀÌÆ®
+            stageLevelText.text = "STAGE 1"; // ìŠ¤í…Œì´ì§€ ë ˆë²¨ í…ìŠ¤íŠ¸ë¥¼ ì—…ë°ì´íŠ¸
+            stageNameText.text = "ê¹Šì€ ìˆ²"; // ìŠ¤í…Œì´ì§€ ì´ë¦„ í…ìŠ¤íŠ¸ë¥¼ ì—…ë°ì´íŠ¸
 
-            campGameMenu.SetActive(false); // Ä·ÇÁ °ÔÀÓ ¸Ş´º ºñÈ°¼ºÈ­
-            dungeonGameMenu.SetActive(true); // ´øÀü °ÔÀÓ ¸Ş´º È°¼ºÈ­
+            campGameMenu.SetActive(false); // ìº í”„ ê²Œì„ ë©”ë‰´ ë¹„í™œì„±í™”
+            dungeonGameMenu.SetActive(true); // ë˜ì „ ê²Œì„ ë©”ë‰´ í™œì„±í™”
 
-            stageXIcon.SetActive(true); // Å¬¸®¾î ÇÑ ½ºÅ×ÀÌÁö ¾øÀ½ ¾ÆÀÌÄÜ È°¼ºÈ­
-            stage1Icon.SetActive(false); // Stage 1 Å¬¸®¾î ¾ÆÀÌÄÜ ºñÈ°¼ºÈ­
-            stage2Icon.SetActive(false); // Stage 2 Å¬¸®¾î ¾ÆÀÌÄÜ ºñÈ°¼ºÈ­
-            stage3Icon.SetActive(false); // Stage 3 Å¬¸®¾î ¾ÆÀÌÄÜ ºñÈ°¼ºÈ­
-            finalStageIcon.SetActive(false); // Final Stage Å¬¸®¾î ¾ÆÀÌÄÜ ºñÈ°¼ºÈ­
-            stageClearText.text = "Å¬¸®¾îÇÑ ½ºÅ×ÀÌÁö°¡ ¾ø½À´Ï´Ù.";
+            stageXIcon.SetActive(true); // í´ë¦¬ì–´ í•œ ìŠ¤í…Œì´ì§€ ì—†ìŒ ì•„ì´ì½˜ í™œì„±í™”
+            stage1Icon.SetActive(false); // Stage 1 í´ë¦¬ì–´ ì•„ì´ì½˜ ë¹„í™œì„±í™”
+            stage2Icon.SetActive(false); // Stage 2 í´ë¦¬ì–´ ì•„ì´ì½˜ ë¹„í™œì„±í™”
+            stage3Icon.SetActive(false); // Stage 3 í´ë¦¬ì–´ ì•„ì´ì½˜ ë¹„í™œì„±í™”
+            finalStageIcon.SetActive(false); // Final Stage í´ë¦¬ì–´ ì•„ì´ì½˜ ë¹„í™œì„±í™”
+            stageClearText.text = "í´ë¦¬ì–´í•œ ìŠ¤í…Œì´ì§€ê°€ ì—†ìŠµë‹ˆë‹¤.";
 
             StartCoroutine(ShowStagePanel());
 
-            hasEntered = true; // ÇÃ·¹ÀÌ¾î°¡ ÀÔÀåÇßÀ½À» Ç¥½Ã
+            hasEntered = true; // í”Œë ˆì´ì–´ê°€ ì…ì¥í–ˆìŒì„ í‘œì‹œ
         }
     }
 
-    // 5ÃÊ°£ ½ºÅ×ÀÌÁö ÆĞ³ÎÀ» È°¼ºÈ­ÇÏ°í, ´Ù½Ã ºñÈ°¼ºÈ­ ÇÏ´Â ÄÚ·çÆ¾
+    // 5ì´ˆê°„ ìŠ¤í…Œì´ì§€ íŒ¨ë„ì„ í™œì„±í™”í•˜ê³ , ë‹¤ì‹œ ë¹„í™œì„±í™” í•˜ëŠ” ì½”ë£¨í‹´
     IEnumerator ShowStagePanel()
     {
         stagePanel.SetActive(true);

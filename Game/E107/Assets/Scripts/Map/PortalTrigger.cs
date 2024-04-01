@@ -30,8 +30,10 @@ public class PortalTrigger : MonoBehaviour
     {
         gameObject.SetActive(false);
         if (itemBox == null) return;
-        itemBox[0].SetActive(false);
-        itemBox[1].SetActive(false);
+        foreach(var box in itemBox)
+        {
+            box.SetActive(false);
+        }
     }
 
     private void Start()
@@ -52,8 +54,11 @@ public class PortalTrigger : MonoBehaviour
             return;
         }
 
-        itemBox[0].SetActive(true);
-        itemBox[1].SetActive(true);
+
+        foreach (var box in itemBox)
+        {
+            box.SetActive(true);
+        }
 
         //itemBox.SetActive(false);
 
