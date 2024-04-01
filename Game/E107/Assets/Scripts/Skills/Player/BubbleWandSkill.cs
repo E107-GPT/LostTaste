@@ -8,6 +8,7 @@ public class BubbleWandSkill : Skill, IAttackSkill
     [field: SerializeField]
     public int Damage { get; set; }
     protected override void Init() { }
+    public Define.Effect weaponEffect = Define.Effect.BubbleWandSkillEffect;
 
     protected override IEnumerator SkillCoroutine()
     {
@@ -18,7 +19,7 @@ public class BubbleWandSkill : Skill, IAttackSkill
         dir = new Vector3(dir.x, 0, dir.z);
         
         yield return new WaitForSeconds(0.3f);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BubbleWandSkillEffect, Root);
+        ParticleSystem ps = Managers.Effect.Play(weaponEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
