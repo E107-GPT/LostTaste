@@ -28,7 +28,6 @@ public class MonsterKingSlashChargePattern : Pattern
         if ( _particle == null )
         {
             _particle = Managers.Effect.Play(Define.Effect.KingSlashStartEffect, Root);
-            _particle.Play();
         }
     }
 

@@ -20,7 +20,6 @@ public class MonsterKingStabChargePattern : Pattern
 
     IEnumerator CheckPatternObject(int attackDamage)
     {
-        Root = _controller.transform;
         _leftArm = _controller.LeftArm.transform;
 
         ParticleSystem _particle = Managers.Effect.Play(Define.Effect.KingStabChargeEffect, _leftArm);

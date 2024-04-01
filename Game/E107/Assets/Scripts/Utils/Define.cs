@@ -81,7 +81,7 @@ public class Define
         CrocodileSwordTail,
         IceKingCleaveEffect,
         IceKingSpikeEffect,
-        // KingHitDownAfterEffect,
+        KingHitDownAfterEffect,
         KingHitDownEndEffect,
         KingHitDownStartEffect,
         KingSlashLurkerEffect,
