@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PriestClassSkill : Skill
 {
-    public static event Action<bool> OnPriestSkillCast; // 스킬 시전 여부 전달을 위한 이벤트 정의
+    public static event Action<bool, string> OnPriestSkillCast; // 스킬 시전 여부 전달을 위한 이벤트 정의
 
     [field: SerializeField]
     public int HealMount { get; set; }
@@ -16,7 +16,7 @@ public class PriestClassSkill : Skill
 
     protected override IEnumerator SkillCoroutine()
     {
-        OnPriestSkillCast?.Invoke(true); // 스킬 시전 성공하면 이벤트 발생
+        OnPriestSkillCast?.Invoke(true, transform.root.name); // 스킬 시전 성공하면 이벤트 발생
 
         Root = transform.root;
 

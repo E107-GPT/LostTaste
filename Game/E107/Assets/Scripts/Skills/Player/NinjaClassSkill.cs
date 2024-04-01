@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NinjaClassSkill : Skill, IAttackSkill
 {
-    public static event Action<bool> OnNinjaSkillCast; // 스킬 시전 여부 전달을 위한 이벤트 정의
+    public static event Action<bool, string> OnNinjaSkillCast; // 스킬 시전 여부 전달을 위한 이벤트 정의
 
     [field: SerializeField]
     public int Damage { get; set; }
@@ -14,7 +14,7 @@ public class NinjaClassSkill : Skill, IAttackSkill
 
     protected override IEnumerator SkillCoroutine()
     {
-        OnNinjaSkillCast?.Invoke(true); // 스킬 시전 성공하면 이벤트 발생
+        OnNinjaSkillCast?.Invoke(true, transform.root.name); // 스킬 시전 성공하면 이벤트 발생
 
         Root = transform.root;
         Vector3 dir = Root.forward;

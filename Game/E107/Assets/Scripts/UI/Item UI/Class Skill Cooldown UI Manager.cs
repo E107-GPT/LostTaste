@@ -52,9 +52,9 @@ public class ClassSkillCooldownUIManager : MonoBehaviour
 
     // ------------------------------------------------ 사용자 정의 메서드 ------------------------------------------------
 
-    private void HandleSkillCast(bool isCasting)
+    private void HandleSkillCast(bool isCasting, string name)
     {
-        if (isCasting)
+        if (isCasting && name == "Player")
         {
             // PlayerController 컴포넌트를 찾아서 참조
             _playerController = GameObject.Find("Player").GetComponent<PlayerController>();
