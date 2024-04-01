@@ -104,6 +104,7 @@ public class Define
         PlayerWalkEffect,
         SeaPearlSkillEffect,
         DustDirtyEffect,
+        IceBallEffect,
         MaxCount
     }
 
