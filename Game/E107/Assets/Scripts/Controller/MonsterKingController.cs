@@ -166,7 +166,6 @@ public class MonsterKingController : MonsterController
             }    
             else if (aniTime >= 1.0f)
             {
-                _monsterInfo.Patterns[0].DeActiveCollider();
                 _monsterInfo.Patterns[6].SetCollider(_stat.PatternDamage - 10);       // 후속타
                 _statemachine.ChangeState(new IdleState(this));
             }
@@ -174,8 +173,10 @@ public class MonsterKingController : MonsterController
     }
     public override void ExitMonsterKingHitDownState() 
     {
+        _monsterInfo.Patterns[0].DeActiveCollider();
         _monsterInfo.Patterns[6].DeActiveCollider();
         _agent.avoidancePriority = 50;
+        _animator.SetFloat("HitDownSpeed", 1.0f);
     }
 
     public override void EnterMonsterKingSlashState()           // Slash
@@ -237,7 +238,6 @@ public class MonsterKingController : MonsterController
             }
             else if (aniTime > 1.0f)
             {
-                _monsterInfo.Patterns[1].DeActiveCollider();
                 _statemachine.ChangeState(new IdleState(this));
             }
         }  
@@ -245,6 +245,8 @@ public class MonsterKingController : MonsterController
     public override void ExitMonsterKingSlashState() 
     {
         _agent.avoidancePriority = 50;
+        _monsterInfo.Patterns[1].DeActiveCollider();
+        _animator.SetFloat("SlashSpeed", 1.0f);
     }
 
     public override void EnterMonsterKingStabState()            // Stab
@@ -317,6 +319,7 @@ public class MonsterKingController : MonsterController
     public override void ExitMonsterKingStabState() 
     {
         _agent.avoidancePriority = 50;
+        _animator.SetFloat("StabSpeed", 1.0f);
     }
 
     public override void EnterMonsterKingJumpStartState()       // JumpStart
@@ -361,7 +364,6 @@ public class MonsterKingController : MonsterController
             }
             else if (aniTime > 1.0f)
             {
-                _monsterInfo.Patterns[4].DeActiveCollider();
                 _statemachine.ChangeState(new MonsterKingJumpAirState(this));
             }
         }
@@ -371,6 +373,9 @@ public class MonsterKingController : MonsterController
         // 이동
         GetComponent<Collider>().enabled = false;
         Agent.Warp(new Vector3(transform.position.x, transform.position.y + 100.0f, transform.position.z));
+
+        _animator.SetFloat("JumpStartSpeed", 1.0f);
+        _monsterInfo.Patterns[4].DeActiveCollider();
     }
 
 
