@@ -109,6 +109,7 @@ public class Define
         GroundSlamRed,
         ExplosionDecalFire,
         MagicFieldWhite,
+        HealOnce,
         MaxCount
     }
 
