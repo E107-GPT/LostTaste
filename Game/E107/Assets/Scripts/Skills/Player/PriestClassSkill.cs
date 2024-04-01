@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PriestClassSkill : Skill
 {
+    public static event Action<bool> OnPriestSkillCast; // 스킬 시전 여부 전달을 위한 이벤트 정의
+
     [field: SerializeField]
     public int HealMount { get; set; }
     [field: SerializeField]
@@ -13,6 +16,8 @@ public class PriestClassSkill : Skill
 
     protected override IEnumerator SkillCoroutine()
     {
+        OnPriestSkillCast?.Invoke(true); // 스킬 시전 성공하면 이벤트 발생
+
         Root = transform.root;
 
         PlayerController _playerController = gameObject.GetComponent<PlayerController>();

@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MageClassSkill : Skill, IAttackSkill
 {
+    public static event Action<bool> OnMageSkillCast; // 스킬 시전 여부 전달을 위한 이벤트 정의
+
     [field: SerializeField]
     public int Damage { get; set; }
 
@@ -11,9 +14,10 @@ public class MageClassSkill : Skill, IAttackSkill
 
     protected override IEnumerator SkillCoroutine()
     {
+        OnMageSkillCast?.Invoke(true); // 스킬 시전 성공하면 이벤트 발생
+
         Root = transform.root;
         Vector3 dir = Root.forward;
-
 
         PlayerController _playerController = gameObject.GetComponent<PlayerController>();
 
@@ -21,7 +25,6 @@ public class MageClassSkill : Skill, IAttackSkill
         start.transform.parent = Root;
         Root.GetComponent<Animator>().CrossFade("MageClassSkillAnim2", 0.2f, -1, 0);
         yield return new WaitForSeconds(0.5f);
-
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.MageClassSkillEffect, Root);
 
         Transform skillObj = Managers.Resource.Instantiate("Skills/CircleSkillObject").transform;
@@ -41,12 +44,7 @@ public class MageClassSkill : Skill, IAttackSkill
         Managers.Resource.Destroy(skillObj.gameObject);
         _playerController.StateMachine.ChangeState(new IdleState(_playerController));
 
-
         yield return new WaitForSeconds(0.5f);
         Managers.Effect.Stop(ps);
-        
-
-
-
     }
 }
