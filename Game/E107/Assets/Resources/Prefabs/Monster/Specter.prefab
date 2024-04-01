@@ -2198,12 +2198,12 @@ GameObject:
   - component: {fileID: 8244729159573553687}
   - component: {fileID: 736659151049583331}
   - component: {fileID: 7048707421613245274}
-  - component: {fileID: 2705566046811025756}
   - component: {fileID: 5905508990585171028}
   - component: {fileID: 383830459892683782}
   - component: {fileID: 1796740235359334688}
   - component: {fileID: -5750950216485590748}
   - component: {fileID: 2608387273324253740}
+  - component: {fileID: 6248175264066507090}
   m_Layer: 6
   m_Name: Specter
   m_TagString: Monster
@@ -2316,27 +2316,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &2705566046811025756
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8805547551415297548}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.2419002
-  m_Center: {x: 0, y: 1.2419002, z: 0}
 --- !u!114 &5905508990585171028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2582,6 +2561,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &6248175264066507090
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8805547551415297548}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &8913117184220937202
 GameObject:
   m_ObjectHideFlags: 0

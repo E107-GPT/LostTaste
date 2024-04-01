@@ -1483,12 +1483,12 @@ GameObject:
   - component: {fileID: 8192888137734689756}
   - component: {fileID: 5653767636750045667}
   - component: {fileID: 657649204003355772}
-  - component: {fileID: 631742789658539850}
   - component: {fileID: 6713624687190917648}
   - component: {fileID: -6838234963847210721}
   - component: {fileID: 5723798916133225933}
   - component: {fileID: -5393749846232637572}
   - component: {fileID: 41817069690064792}
+  - component: {fileID: 6424939044919562926}
   m_Layer: 6
   m_Name: Crab
   m_TagString: Monster
@@ -1601,27 +1601,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &631742789658539850
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7258021766050022061}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.0232295
-  m_Center: {x: -0.01999998, y: 0.4732293, z: -0.07999992}
 --- !u!114 &6713624687190917648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1867,6 +1846,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &6424939044919562926
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258021766050022061}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!1 &7270954150357205758
 GameObject:
   m_ObjectHideFlags: 0

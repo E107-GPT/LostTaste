@@ -28,7 +28,7 @@ public class MonsterKingController : MonsterController
         base.Init();
 
         _stat = new MonsterStat(_unitType);
-        _jumpCoolDown = 15;      // 15
+        _jumpCoolDown = 13;      // 15
         //_stat.Hp = _stat.MaxHp / 2;
     }
 
@@ -46,7 +46,7 @@ public class MonsterKingController : MonsterController
         if (distToDetectPlayer <= _stat.AttackRange)
         {
             // phase
-            if (_stat.Hp <= _stat.MaxHp / 2)
+            if (_stat.Hp <= _stat.MaxHp / 1.6f)     // 2500
             {
                 PhaseTwePatternSelector(); 
             }

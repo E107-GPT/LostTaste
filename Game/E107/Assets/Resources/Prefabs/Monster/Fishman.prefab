@@ -594,12 +594,12 @@ GameObject:
   - component: {fileID: 4842962377850766520}
   - component: {fileID: 6394238334794714410}
   - component: {fileID: 4900173364198846474}
-  - component: {fileID: 6434327513948303958}
   - component: {fileID: 5685573613917256098}
   - component: {fileID: 8200034986178026200}
   - component: {fileID: -1024028495624081311}
   - component: {fileID: 7232618242301830044}
   - component: {fileID: 1297586739853823959}
+  - component: {fileID: 6475699612999203023}
   m_Layer: 6
   m_Name: Fishman
   m_TagString: Monster
@@ -712,27 +712,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &6434327513948303958
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069410130451658744}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.92
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &5685573613917256098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,6 +957,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &6475699612999203023
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069410130451658744}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2181127467642648679
 GameObject:
   m_ObjectHideFlags: 0

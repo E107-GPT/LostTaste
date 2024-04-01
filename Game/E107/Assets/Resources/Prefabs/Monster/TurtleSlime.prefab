@@ -350,12 +350,12 @@ GameObject:
   - component: {fileID: 6024122728981451192}
   - component: {fileID: 5771422838648138189}
   - component: {fileID: 5650606190535778816}
-  - component: {fileID: 8194373911706706131}
   - component: {fileID: 3283673795523659387}
   - component: {fileID: -5382735496789203042}
   - component: {fileID: 2527347370225403940}
   - component: {fileID: 523940104450970860}
   - component: {fileID: 1295093294157235178}
+  - component: {fileID: 2637980709203736416}
   m_Layer: 6
   m_Name: TurtleSlime
   m_TagString: Monster
@@ -468,27 +468,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &8194373911706706131
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2512359250700414682}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.89
-  m_Center: {x: -0.02, y: 0.34, z: -0.08}
 --- !u!114 &3283673795523659387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,6 +713,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &2637980709203736416
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2512359250700414682}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2962975709413957079
 GameObject:
   m_ObjectHideFlags: 0

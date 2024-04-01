@@ -140,12 +140,12 @@ GameObject:
   - component: {fileID: 9103418311782639623}
   - component: {fileID: 7994957749209716735}
   - component: {fileID: 7770457774668119104}
-  - component: {fileID: 6421337732303896918}
   - component: {fileID: 1041583568710745806}
   - component: {fileID: -8323049192624240779}
   - component: {fileID: 2542071288681537023}
   - component: {fileID: 624686928254891713}
   - component: {fileID: -3299326766933294950}
+  - component: {fileID: 8313478197769608136}
   m_Layer: 6
   m_Name: NagaWizard
   m_TagString: Monster
@@ -258,27 +258,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &6421337732303896918
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 494290473515397347}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.2795854
-  m_Center: {x: 0, y: 0.8595853, z: 0}
 --- !u!114 &1041583568710745806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,6 +503,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &8313478197769608136
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494290473515397347}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &643483743346568514
 GameObject:
   m_ObjectHideFlags: 0
