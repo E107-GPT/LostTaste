@@ -13,6 +13,14 @@ public class HUDManager : MonoBehaviour
     [Header("[ 모험 상태 ]")]
     public TextMeshProUGUI nicknameText; // 닉네임 텍스트
 
+    // 팝업 창
+    [Header("[ 팝업 창 ]")]
+    public GameObject GameMenuWindow; // 게임 메뉴 창
+    public Button partyFinfoButton;
+
+    private bool isGameMenuOpen = false;
+    private bool isPartyInfoOpen = false;
+
     // 플레이어 상태
     [Header("[ 플레이어 상태 ]")]
     public TextMeshProUGUI playerHealthText; // 플레이어 체력 텍스트
@@ -42,10 +50,36 @@ public class HUDManager : MonoBehaviour
     {
         // 플레이어 상태 업데이트
         UpdatePlayerStatus();
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !isPartyInfoOpen)
+        {
+            if (isGameMenuOpen)
+            {
+                GameMenuWindow.SetActive(false);
+                isGameMenuOpen = false;
+            }
+            else
+            {
+                GameMenuWindow.SetActive(true);
+                isGameMenuOpen = true;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab) && !isGameMenuOpen)
+        {
+            if (isPartyInfoOpen)
+            {
+                partyFinfoButton.onClick.Invoke();
+            }
+            else
+            {
+                // PartyInfoWindow.SetActive(true);
+            }
+        }
     }
 
-    // 사용자 정보를 UI에 업데이트하는 메서드
-    void UpdateUserInfoDisplay()
+        // 사용자 정보를 UI에 업데이트하는 메서드
+        void UpdateUserInfoDisplay()
     {
         // UserInfo 인스턴스 가져오기
         UserInfo userInfo = UserInfo.GetInstance();
