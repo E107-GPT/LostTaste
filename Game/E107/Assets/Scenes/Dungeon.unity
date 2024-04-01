@@ -387,6 +387,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7890328581533509747, guid: d7b8627a236348642adf238f6f97c972, type: 3}
   m_PrefabInstance: {fileID: 255383708}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &255383713 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6074448176234657741, guid: d7b8627a236348642adf238f6f97c972, type: 3}
+  m_PrefabInstance: {fileID: 255383708}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &255383714 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4560041434740118122, guid: d7b8627a236348642adf238f6f97c972, type: 3}
+  m_PrefabInstance: {fileID: 255383708}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &258701908 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9021440141752400560, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
@@ -1024,6 +1046,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 677012488}
     - target: {fileID: 2242691003827349245, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: skillIcon
+      value: 
+      objectReference: {fileID: 1709797923}
+    - target: {fileID: 2242691003827349245, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: itemInfoUI
       value: 
       objectReference: {fileID: 677012489}
@@ -1043,6 +1069,10 @@ PrefabInstance:
       propertyPath: itemSkillIcon
       value: 
       objectReference: {fileID: 677012484}
+    - target: {fileID: 2242691003827349245, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: skillNoneIcon
+      value: 
+      objectReference: {fileID: 823351912}
     - target: {fileID: 2242691003827349245, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: itemFlavorText
       value: 
@@ -1664,13 +1694,53 @@ PrefabInstance:
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: GameMenuButton
+      value: 
+      objectReference: {fileID: 1424683484}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: GameMenuWindow
+      value: 
+      objectReference: {fileID: 255383709}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: GameOverWindow
       value: 
       objectReference: {fileID: 1507488862}
     - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: PartyInfoWindow
+      value: 
+      objectReference: {fileID: 1840857732}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: partyInfoButton
+      value: 
+      objectReference: {fileID: 1323634640}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: partyFinfoButton
+      value: 
+      objectReference: {fileID: 1323634640}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: myPartyCloseButton
+      value: 
+      objectReference: {fileID: 1205793129}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: partyRecruitButton
+      value: 
+      objectReference: {fileID: 1204266733}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: partyListCloseButton
+      value: 
+      objectReference: {fileID: 1205793130}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: AdventureResultWindow
       value: 
       objectReference: {fileID: 1507488862}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: comeBackToGameCampButton
+      value: 
+      objectReference: {fileID: 255383714}
+    - target: {fileID: 5391772507279358525, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: comeBackToGameDungeonButton
+      value: 
+      objectReference: {fileID: 255383713}
     - target: {fileID: 5417281274924788876, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -1792,6 +1862,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 677012488}
     - target: {fileID: 6099160738129960601, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: skillIcon
+      value: 
+      objectReference: {fileID: 1709797923}
+    - target: {fileID: 6099160738129960601, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: itemInfoUI
       value: 
       objectReference: {fileID: 677012489}
@@ -1811,6 +1885,10 @@ PrefabInstance:
       propertyPath: itemSkillIcon
       value: 
       objectReference: {fileID: 677012484}
+    - target: {fileID: 6099160738129960601, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: skillNoneIcon
+      value: 
+      objectReference: {fileID: 823351912}
     - target: {fileID: 6099160738129960601, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: itemFlavorText
       value: 
@@ -2076,6 +2154,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 677012488}
     - target: {fileID: 7304866158694098572, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: skillIcon
+      value: 
+      objectReference: {fileID: 1709797923}
+    - target: {fileID: 7304866158694098572, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: itemInfoUI
       value: 
       objectReference: {fileID: 677012489}
@@ -2095,6 +2177,10 @@ PrefabInstance:
       propertyPath: itemSkillIcon
       value: 
       objectReference: {fileID: 677012484}
+    - target: {fileID: 7304866158694098572, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: skillNoneIcon
+      value: 
+      objectReference: {fileID: 823351912}
     - target: {fileID: 7304866158694098572, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: itemFlavorText
       value: 
@@ -3807,7 +3893,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 130367245957496121, guid: 98aeeb7f66fe8a141820e37643b2c62d, type: 3}
   m_PrefabInstance: {fileID: 677012472}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1709797923}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -4762,6 +4848,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821733684}
   m_CullTransparentMesh: 1
+--- !u!1 &823351912 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4853912937300105968, guid: 98aeeb7f66fe8a141820e37643b2c62d, type: 3}
+  m_PrefabInstance: {fileID: 677012472}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &903921909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5849,6 +5940,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1204266733 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7577066534291624227, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
+  m_PrefabInstance: {fileID: 1840857730}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1205793129 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 658318071404185863, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
+  m_PrefabInstance: {fileID: 1840857730}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1205793130 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8084707000866137541, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
+  m_PrefabInstance: {fileID: 1840857730}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1234755030
 GameObject:
   m_ObjectHideFlags: 0
@@ -6082,6 +6206,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1294327041}
   m_CullTransparentMesh: 1
+--- !u!114 &1323634640 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8102377829995399436, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+  m_PrefabInstance: {fileID: 382873389}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848693755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1385313705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7564,6 +7699,17 @@ MonoBehaviour:
   closeButton: {fileID: 1407194893}
   popupWindow: {fileID: 1655736924}
   inputs: []
+--- !u!114 &1424683484 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8640477288831105937, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+  m_PrefabInstance: {fileID: 382873389}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1492595923 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5936340325103141270, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
@@ -8049,6 +8195,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1705189967}
   m_CullTransparentMesh: 1
+--- !u!1 &1709797923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6572076939232702515, guid: 98aeeb7f66fe8a141820e37643b2c62d, type: 3}
+  m_PrefabInstance: {fileID: 677012472}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1725151766
 GameObject:
   m_ObjectHideFlags: 0
@@ -11443,6 +11594,10 @@ PrefabInstance:
       propertyPath: targetPortalLocation
       value: 
       objectReference: {fileID: 357627024152176308}
+    - target: {fileID: 3811867891444641531, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3811867891444641531, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: stageText
       value: 

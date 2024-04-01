@@ -1717,6 +1717,9 @@ GameObject:
   - component: {fileID: 3334076693347764272}
   - component: {fileID: 3650961297727396467}
   - component: {fileID: 2269059036913708473}
+  - component: {fileID: 3538222074377680962}
+  - component: {fileID: 8122510349117115639}
+  - component: {fileID: 1129120642439400155}
   m_Layer: 5
   m_Name: Cancel Button
   m_TagString: Untagged
@@ -1867,6 +1870,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   submitButton: {fileID: 6074448176234657741}
+--- !u!114 &3538222074377680962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686139241342887877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f174c173dab79bb448a0ae9ea8f80c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 6074448176234657741}
+  popupWindow: {fileID: 4808968815077877526}
+  inputs: []
+--- !u!114 &8122510349117115639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686139241342887877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f174c173dab79bb448a0ae9ea8f80c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 6074448176234657741}
+  popupWindow: {fileID: 6864054925237077398}
+  inputs: []
+--- !u!114 &1129120642439400155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686139241342887877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f174c173dab79bb448a0ae9ea8f80c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 6074448176234657741}
+  popupWindow: {fileID: 1039267611675866146}
+  inputs: []
 --- !u!1 &1686983345564592034
 GameObject:
   m_ObjectHideFlags: 0
@@ -7970,7 +8018,8 @@ GameObject:
   - component: {fileID: 4560041434740118122}
   - component: {fileID: 6115855764260387048}
   - component: {fileID: 7916249606711417024}
-  - component: {fileID: 7654833160789053220}
+  - component: {fileID: 4820607689319329573}
+  - component: {fileID: 6750886227746566456}
   m_Layer: 5
   m_Name: Cancel Button
   m_TagString: Untagged
@@ -8108,19 +8157,36 @@ MonoBehaviour:
   closeButton: {fileID: 4560041434740118122}
   popupWindow: {fileID: 5086955870155003568}
   inputs: []
---- !u!114 &7654833160789053220
+--- !u!114 &4820607689319329573
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7463652026637868064}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8ec2823ba1314e4b92abaabf7edb0a9, type: 3}
+  m_Script: {fileID: 11500000, guid: f174c173dab79bb448a0ae9ea8f80c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  submitButton: {fileID: 4560041434740118122}
+  closeButton: {fileID: 4560041434740118122}
+  popupWindow: {fileID: 4808968815077877526}
+  inputs: []
+--- !u!114 &6750886227746566456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7463652026637868064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f174c173dab79bb448a0ae9ea8f80c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 4560041434740118122}
+  popupWindow: {fileID: 6864054925237077398}
+  inputs: []
 --- !u!1 &7746419635893881395
 GameObject:
   m_ObjectHideFlags: 0

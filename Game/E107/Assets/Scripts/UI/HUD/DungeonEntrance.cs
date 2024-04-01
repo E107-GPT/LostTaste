@@ -25,7 +25,6 @@ public class DungeonEntrance : MonoBehaviour
     [Header("[ 게임 상태 ]")]
     public GameObject timeContainerPanel; // 게임 시간 패널
     public TextMeshProUGUI gameTimeText; // 게임 시간 텍스트
-    public GameObject partyListButtonPanel; // 파티 모집 패널
 
     // 지도 패널
     [Header("[ 지도 패널 ]")]
@@ -92,7 +91,6 @@ public class DungeonEntrance : MonoBehaviour
 
             isInCamp = false;
             timeContainerPanel.SetActive(true); // 게임 시간 UI 활성화
-            partyListButtonPanel.SetActive(false); // 파티 모집 UI 비활성화
             stageText.text = "STAGE 1 - 깊은 숲"; // 스테이지 텍스트 업데이트
 
             stageLevelText.text = "STAGE 1"; // 스테이지 레벨 텍스트를 업데이트

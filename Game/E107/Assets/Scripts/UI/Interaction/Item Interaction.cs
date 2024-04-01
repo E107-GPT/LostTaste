@@ -69,6 +69,11 @@ public class ItemInteraction : MonoBehaviour
             // 아이템 상자일 경우 상자 정보 표시
             DisplayChestInfo(_detectedInteractable as RandomItemChest);
         }
+        else if (_detectedInteractable is FixedItemChest)
+        {
+            // 보스 아이템 상자일 경우 상자 정보 표시
+            DisplayBossChestInfo(_detectedInteractable as FixedItemChest);
+        }
     }
 
     // 아이템 정보를 UI에 표시
@@ -124,9 +129,22 @@ public class ItemInteraction : MonoBehaviour
                 chestTypeName = "찬란한 황금 상자";
                 colorHex = "#FFD700"; // 금색
                 break;
+            case ItemChestType.BOSS:
+                chestTypeName = "마계의 상자";
+                colorHex = "#E74C3C"; // 빨간색
+                break;
             default:
                 break;
         }
+
+        nameText.text = $"<color={colorHex}>{chestTypeName}</color>";
+    }
+
+    // 보스 아이템 상자 정보를 UI에 표시
+    void DisplayBossChestInfo(FixedItemChest itemChest)
+    {
+        string chestTypeName = "마계의 상자";
+        string colorHex = "#E74C3C";
 
         nameText.text = $"<color={colorHex}>{chestTypeName}</color>";
     }
