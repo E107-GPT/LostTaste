@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// 직업 스킬 쿨타임 UI 매니저는 직업 스킬의 쿨타임을 표시하는 기능을 제공합니다.
+/// 직업 스킬 쿨타임 UI 매니저는 직업 스킬 쿨타임을 표시하는 기능을 제공합니다.
 /// </summary>
 public class ClassSkillCooldownUIManager : MonoBehaviour
 {

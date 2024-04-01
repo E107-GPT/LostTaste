@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public abstract class ConsumingSkill : Skill
 {
+    public static event Action<bool> OnConsumingSkillCast; // 회복 스킬 시전 여부 전달을 위한 이벤트 정의
+
     [field: SerializeField]
     public GameObject NextItem { get; set; }
 
@@ -24,6 +27,8 @@ public abstract class ConsumingSkill : Skill
 
     protected override IEnumerator SkillCoroutine()
     {
+        OnConsumingSkillCast?.Invoke(true); // 스킬 시전 성공하면 이벤트 발생
+
         GameObject player = transform.root.gameObject;
         PlayerController playerController = player.GetComponent<PlayerController>();
 

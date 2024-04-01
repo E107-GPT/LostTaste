@@ -5,22 +5,22 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// 직업 스킬 쿨타임 UI 매니저는 직업 스킬의 쿨타임을 표시하는 기능을 제공합니다.
+/// 대쉬 쿨타임 UI 매니저는 대쉬 쿨타임을 표시하는 기능을 제공합니다.
 /// </summary>
 public class DashSkillCooldownUIManager : MonoBehaviour
 {
     // ------------------------------------------------ 변수 선언 ------------------------------------------------
 
-    // 직업 스킬 쿨타임 UI 매니저가 사용할 변수 선언
+    // 대쉬 쿨타임 UI 매니저가 사용할 변수 선언
     private PlayerController _playerController; // 플레이어 컨트롤러 참조 변수
 
     // 대쉬 쿨타임
     private float dashSkillCoolDown;
 
-    // 직업 스킬 패널
-    [Header("[ 직업 스킬 패널 ]")]
-    public Image dashCoolDownImage; // 대시 스킬 쿨타임 이미지
-    public Image dashSkillKeyImage; // 직업 스킬 키 이미지
+    // 대쉬 패널
+    [Header("[ 대쉬 패널 ]")]
+    public Image dashCoolDownImage; // 대시 쿨타임 이미지
+    public Image dashSkillKeyImage; // 대쉬 키 이미지
     public TextMeshProUGUI dashCoolDownText; // 직업 스킬 쿨타임
 
 
@@ -32,7 +32,7 @@ public class DashSkillCooldownUIManager : MonoBehaviour
         ResetCoolDownUI(dashCoolDownText, dashCoolDownImage, dashSkillKeyImage);
     }
 
-    // 각 직업 스킬의 OnSkillCast 이벤트를 구독
+    // OnSkillCast 이벤트를 구독
     void OnEnable()
     {
         DashState.OnDashCast += HandleDashCast;
@@ -55,7 +55,7 @@ public class DashSkillCooldownUIManager : MonoBehaviour
 
             if (_playerController == null) return; // PlayerController 컴포넌트를 찾을 수 없을 때
 
-            // 스킬 쿨타임 가져옴
+            // 대쉬 쿨타임 가져옴
             dashSkillCoolDown = _playerController.DashCoolDownTime;
 
             StartCoroutine(UpdateDashCoolDown(dashSkillCoolDown, dashCoolDownText, dashCoolDownImage, dashSkillKeyImage));
