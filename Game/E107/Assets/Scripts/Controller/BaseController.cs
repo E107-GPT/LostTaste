@@ -170,6 +170,10 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void EnterMonsterKingSlashState() { }		// Slash
 	public virtual void ExecuteMonsterKingSlashState() { }
 	public virtual void ExitMonsterKingSlashState() { }
+
+    public virtual void EnterMonsterKingStabChargeState() { }   // Stab Charge
+    public virtual void ExecuteMonsterKingStabChargeState() { }
+    public virtual void ExitMonsterKingStabChargeState() { }
 	public virtual void EnterMonsterKingStabState() { }			// Stab
 	public virtual void ExecuteMonsterKingStabState() { }
 	public virtual void ExitMonsterKingStabState() { }

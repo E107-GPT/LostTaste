@@ -6,9 +6,7 @@ using static UnityEngine.ParticleSystem;
 public class MonsterKingStabChargePattern : Pattern
 {
     private MonsterKingController _controller;
-    private Transform _leftArm;                 // particle À§Ä¡¸¦ Àâ±â À§ÇÔ
-    private ParticleSystem _particle;
-    private Coroutine _coroutine;
+    private Transform _leftArm;                 // particle ìœ„ì¹˜ë¥¼ ìž¡ê¸° ìœ„í•¨
 
     protected override void Init()
     {
@@ -18,12 +16,6 @@ public class MonsterKingStabChargePattern : Pattern
 
     public override void DeActiveCollider()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-            _coroutine = null;
-            if (_particle != null) Managers.Effect.Stop(_particle);
-        }
     }
 
     IEnumerator CheckPatternObject(int attackDamage)
@@ -31,16 +23,15 @@ public class MonsterKingStabChargePattern : Pattern
         Root = _controller.transform;
         _leftArm = _controller.LeftArm.transform;
 
-        _particle = Managers.Effect.Play(Define.Effect.KingStabChargeEffect, _leftArm);
+        ParticleSystem _particle = Managers.Effect.Play(Define.Effect.KingStabChargeEffect, _leftArm);
 
-        yield return null;
+        yield return new WaitForSeconds(1.5f);
+
+        Managers.Effect.Stop(_particle);
     }
 
     public override void SetCollider(int attackDamage)
     {
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(CheckPatternObject(attackDamage));
-        }
+        StartCoroutine(CheckPatternObject(attackDamage));
     }
 }

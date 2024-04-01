@@ -42,7 +42,7 @@ public class CrocodileController : MonsterController
     private void RandomPatternSelector()
     {
         int rand = Random.Range(0, 101);
-        if (rand <= 100)
+        if (rand <= 30)
         {
             _statemachine.ChangeState(new CrocodileSwordState(this));
         }
@@ -126,7 +126,7 @@ public class CrocodileController : MonsterController
         base.ExitCrocodileSwordState();
         _swordPS.Stop();
         _agent.avoidancePriority = 50;
-        _monsterInfo.Patterns[0].DeActiveCollider();
+        //_monsterInfo.Patterns[0].DeActiveCollider();
     }
 
     [PunRPC]

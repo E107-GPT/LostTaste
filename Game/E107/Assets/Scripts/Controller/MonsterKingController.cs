@@ -19,7 +19,7 @@ public class MonsterKingController : MonsterController
     private float _jumpCoolDown;
     private float _jumpLastTime;
 
-    private Vector3 _tracePosition;
+    //private Vector3 _tracePosition;
 
     public GameObject Weapon { get => _weapon; }
     public GameObject LeftArm { get => _leftArm; }
@@ -79,9 +79,9 @@ public class MonsterKingController : MonsterController
     private void PhaseOnePatternSelector()
     {
         int rand = Random.Range(0, 101);
-        if (rand <= 20)
+        if (rand <= 100)
         {
-            _statemachine.ChangeState(new MonsterKingStabState(this));
+            _statemachine.ChangeState(new MonsterKingStabChargeState(this));
         }
         else if (rand <= 60)
         {
@@ -249,7 +249,7 @@ public class MonsterKingController : MonsterController
         _animator.SetFloat("SlashSpeed", 1.0f);
     }
 
-    public override void EnterMonsterKingStabState()            // Stab
+    public override void EnterMonsterKingStabChargeState()      // Stab Charge
     {
         _agent.velocity = Vector3.zero;
         _agent.speed = 0;
@@ -261,14 +261,42 @@ public class MonsterKingController : MonsterController
             transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeMonsterKingStabState", RpcTarget.Others);
         }
-        //// test
-        //else
-        //{
-        //    Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-        //    transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
-        //}
 
+        _monsterInfo.Patterns[2].SetCollider(_stat.PatternDamage);
+        _animator.SetFloat("StabChargeSpeed", 0.3f);
+        _animator.CrossFade("StabCharge", 0.3f, -1, 0);
+
+    }
+
+    public override void ExecuteMonsterKingStabChargeState()
+    {
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
+
+
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("StabCharge"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+            if (aniTime >= 1.0f)
+            {
+                _statemachine.ChangeState(new MonsterKingStabState(this));
+            }
+        }
+    }
+
+    public override void ExitMonsterKingStabChargeState()
+    {
+    }
+
+    public override void EnterMonsterKingStabState()            // Stab
+    {
+        _animator.SetFloat("StabSpeed", 1.0f);
         _animator.CrossFade("Stab", 0.3f, -1, 0);
+        
+        _monsterInfo.Patterns[3].SetCollider(_stat.PatternDamage - 15);
     }         
     public override void ExecuteMonsterKingStabState() 
     {
@@ -277,40 +305,13 @@ public class MonsterKingController : MonsterController
             _statemachine.ChangeState(new DieState(this));
         }
 
-        _animator.SetFloat("StabSpeed", 0.1f);
+        
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Stab"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime <= 0.2f)        // 공격 준비
-            {
-                _animator.SetFloat("StabSpeed", 0.39f);
-                _monsterInfo.Patterns[2].SetCollider(_stat.PatternDamage);
-            }
-            else if (aniTime <= 0.4f)   // 공격 진행
-            {
-                _animator.SetFloat("StabSpeed", 0.8f);
-                _monsterInfo.Patterns[2].DeActiveCollider();
-                _monsterInfo.Patterns[3].SetCollider(_stat.PatternDamage - 15);
-            }
-            else if (aniTime <= 0.52f)  // 공격 후 뒷걸음질 전
-            {
-                _monsterInfo.Patterns[3].DeActiveCollider();
-                _animator.SetFloat("StabSpeed", 1.0f);
-            }
-            else if (aniTime <= 0.58f)  // 뒷걸음질 시작
-            {
-                _animator.SetFloat("StabSpeed", 1.0f);
-            }
-            else if (aniTime <= 0.8f)   // 원위치로 이동
-            {
-                _animator.SetFloat("StabSpeed", 1.0f);
-            }
-            else if (aniTime <= 1.0f)
-            {
-                _animator.SetFloat("StabSpeed", 1.0f);
-            }
-            else if (aniTime > 1.0f)
+            
+            if (aniTime >= 1.0f)
             {
                 _statemachine.ChangeState(new IdleState(this));
             }
@@ -319,7 +320,6 @@ public class MonsterKingController : MonsterController
     public override void ExitMonsterKingStabState() 
     {
         _agent.avoidancePriority = 50;
-        _animator.SetFloat("StabSpeed", 1.0f);
     }
 
     public override void EnterMonsterKingJumpStartState()       // JumpStart
