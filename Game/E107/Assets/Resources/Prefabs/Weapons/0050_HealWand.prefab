@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5765867852955860849
+--- !u!1 &5635764440116067210
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6579665528245675467}
-  - component: {fileID: 7845395322665200238}
-  - component: {fileID: 5405593007894863524}
-  - component: {fileID: -224207640726716138}
-  - component: {fileID: -4083852286888289012}
-  - component: {fileID: -19745164964731283}
+  - component: {fileID: 5007318110006747440}
+  - component: {fileID: 8273757790533201557}
+  - component: {fileID: 6140303594517879391}
+  - component: {fileID: 6988977749266864745}
+  - component: {fileID: 9116261169115091218}
+  - component: {fileID: -4606598655910700596}
   m_Layer: 9
-  m_Name: 0047_IceWand
+  m_Name: 0050_HealWand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6579665528245675467
+--- !u!4 &5007318110006747440
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5765867852955860849}
+  m_GameObject: {fileID: 5635764440116067210}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
@@ -36,21 +36,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7845395322665200238
+--- !u!33 &8273757790533201557
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5765867852955860849}
-  m_Mesh: {fileID: 4421283882645334083, guid: 8607e7654138db448a3b953613c633dc, type: 3}
---- !u!23 &5405593007894863524
+  m_GameObject: {fileID: 5635764440116067210}
+  m_Mesh: {fileID: -2209923435809284409, guid: e4f5d2afb1ae56540a1079042be19baf, type: 3}
+--- !u!23 &6140303594517879391
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5765867852955860849}
+  m_GameObject: {fileID: 5635764440116067210}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -86,53 +86,55 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-224207640726716138
+--- !u!114 &6988977749266864745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5765867852955860849}
+  m_GameObject: {fileID: 5635764440116067210}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 47
-  <Name>k__BackingField: "\uC5BC\uC74C \uC9C0\uD321\uC774"
-  <Tier>k__BackingField: 0
-  <FlavorText>k__BackingField: "\uCC28\uAC11\uC2B5\uB2C8\uB2E4."
-  <Icon>k__BackingField: {fileID: 21300000, guid: 2b8b7f6961859bc4bbb30498e17bbba3, type: 3}
+  <Id>k__BackingField: 50
+  <Name>k__BackingField: "\uD68C\uBCF5\uC758 \uC9C0\uD321\uC774"
+  <Tier>k__BackingField: 2
+  <FlavorText>k__BackingField: "\uCD95\uBCF5\uBC1B\uC740 \uB098\uBB34\uB85C \uB9CC\uB4E0
+    \uC9C0\uD321\uC774 \uC785\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 21300000, guid: 720531aa47301514cb50d0f2ab7b0d08, type: 3}
   <LeftSkill>k__BackingField: {fileID: 0}
-  <RightSkill>k__BackingField: {fileID: -4083852286888289012}
+  <RightSkill>k__BackingField: {fileID: 9116261169115091218}
   <IsHidden>k__BackingField: 0
   isDropped: 1
---- !u!114 &-4083852286888289012
+--- !u!114 &9116261169115091218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5765867852955860849}
+  m_GameObject: {fileID: 5635764440116067210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52050f12af8fb854baf9a0932c7bbb71, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d658075a0df6bf45a928d9d62ec3afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: "\uC544\uC774\uC2A4\uC0F7"
-  <Description>k__BackingField: "\uC0AC\uC7A5\uB2D8 \uC544\uC774\uC2A4\uC0F7!"
-  <Icon>k__BackingField: {fileID: 21300000, guid: 848bf5638f618f14fa833063e3c9bb4e, type: 3}
-  <SkillCoolDownTime>k__BackingField: 0
-  <RequiredMp>k__BackingField: 5
-  <Damage>k__BackingField: 10
-  weaponEffect: 47
---- !u!114 &-19745164964731283
+  <Name>k__BackingField: "\uD68C\uBCF5"
+  <Description>k__BackingField: "\uCD95\uBCF5\uC774 \uB2F9\uC2E0\uC758 \uBAB8\uC5D0
+    \uC2A4\uBA70\uB4ED\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 21300000, guid: bc74cc91f05e5744fa672d6d11f2e85d, type: 3}
+  <SkillCoolDownTime>k__BackingField: 10
+  <RequiredMp>k__BackingField: 20
+  <Damage>k__BackingField: 0
+  <HpRecoveryAmount>k__BackingField: 50
+--- !u!114 &-4606598655910700596
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5765867852955860849}
+  m_GameObject: {fileID: 5635764440116067210}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}

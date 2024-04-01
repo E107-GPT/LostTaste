@@ -244,6 +244,17 @@ public class ItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerEx
                 int hpRecoveryAmount = rareSteakSkill.HpRecoveryAmount;
                 itemSkillHpRecoveryText.text = hpRecoveryAmount.ToString();
             }
+            else if (item.RightSkill is HealWandSkill)
+            {
+                // Hp 회복 패널 활성화
+                hpRecoveryPanel.SetActive(true);
+                mpRecoveryPanel.SetActive(false);
+
+                // 회복량 업데이트
+                HealWandSkill healWandSkill = (HealWandSkill)item.RightSkill;
+                int hpRecoveryAmount = healWandSkill.HpRecoveryAmount;
+                itemSkillHpRecoveryText.text = hpRecoveryAmount.ToString();
+            }
             else if (item.RightSkill is BoredAppleSkill)
             {
                 // Mp 회복 패널 활성화
@@ -267,7 +278,6 @@ public class ItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerEx
                 int mpRecoveryAmount = cucumberSkill.MpRecoveryAmount;
                 itemSkillMpRecoveryText.text = mpRecoveryAmount.ToString();
             }
-
         }
         else if (item.RightSkill is IAttackSkill)
         {
