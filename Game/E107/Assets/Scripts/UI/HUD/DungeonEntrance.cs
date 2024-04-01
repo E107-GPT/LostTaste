@@ -86,7 +86,7 @@ public class DungeonEntrance : MonoBehaviour
     // 플레이어가 캠프에 진입할 때 호출되는 메서드
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !hasEntered)
+        if (other.CompareTag("Player") && !hasEntered && other.gameObject.name == "Player")
         {
             classSelectPanel.SetActive(true); // 직업 선택 패널 활성화
 

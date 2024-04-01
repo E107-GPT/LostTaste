@@ -21,6 +21,8 @@ public class NinjaClassSkill : Skill, IAttackSkill
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.NinjaClassSkillStartEffect, Root);
         ps.transform.parent = _playerController._righthand.transform;
         ps.transform.localPosition = new Vector3();
+
+        yield return null;  // 쿨타임 인식을 위한 1틱 대기
         _playerController.StateMachine.ChangeState(new IdleState(_playerController));
 
 
