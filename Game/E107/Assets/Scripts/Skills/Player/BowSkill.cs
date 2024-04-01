@@ -19,6 +19,7 @@ public class BowSkill : Skill, IAttackSkill
     protected override IEnumerator SkillCoroutine()
     {
         GameObject player = transform.root.gameObject;
+        PlayerController playerController = player.GetComponent<PlayerController>();
 
         Vector3 dir = player.transform.forward;
         dir = new Vector3(dir.x, 0, dir.z);
@@ -27,6 +28,8 @@ public class BowSkill : Skill, IAttackSkill
         gameObject.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
 
         yield return new WaitForSeconds(0.3f);
+        playerController.StateMachine.ChangeState(new IdleState(playerController));
+        gameObject.GetComponent<Animator>().CrossFade("IDLE", 0.1f, -1, 0);
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BowSkillEffect, player.transform);
         ps.transform.position += Vector3.up * 0.5f;
