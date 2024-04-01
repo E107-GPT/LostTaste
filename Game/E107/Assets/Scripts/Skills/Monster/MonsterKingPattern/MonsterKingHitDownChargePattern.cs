@@ -21,6 +21,7 @@ public class MonsterKingHitDownChargePattern : Pattern
         _rightArm = _controller.RightArm.transform;
 
         ParticleSystem particle = Managers.Effect.Play(Define.Effect.KingHitDownStartEffect, _rightArm);
+        particle.transform.parent = _rightArm;
 
         yield return new WaitForSeconds(1.5f);
 
