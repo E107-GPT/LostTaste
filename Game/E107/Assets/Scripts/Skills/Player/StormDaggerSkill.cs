@@ -25,6 +25,7 @@ public class StormDaggerSkill : Skill, IAttackSkill
 
         //particleSystem.transform.parent = player.transform;
         //particleSystem.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+        Root.GetComponent<Animator>().CrossFade("ATTACK2", 0.2f, -1, 0);
         yield return new WaitForSeconds(0.1f);
         start = Managers.Effect.Play(Define.Effect.StormDaggerEffect, player.transform);
 
