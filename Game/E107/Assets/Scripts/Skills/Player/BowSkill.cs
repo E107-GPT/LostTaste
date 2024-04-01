@@ -44,7 +44,7 @@ public class BowSkill : Skill, IAttackSkill
         ps.transform.rotation = player.transform.rotation;
 
         GameObject skillObject = Managers.Resource.Instantiate("Skills/ArrowSkillObject");
-        skillObject.GetComponent<ArrowSkillObject>().SetUp(player.transform, Damage, _seq, 1);
+        skillObject.GetComponent<ArrowSkillObject>().SetUp(player.transform, Damage, _seq, 1, OnBreak());
         skillObject.transform.localEulerAngles = player.transform.forward;
 
         float timer = 0;
@@ -62,5 +62,11 @@ public class BowSkill : Skill, IAttackSkill
 
         Managers.Effect.Stop(ps);
         Managers.Resource.Destroy(skillObject);
+    }
+
+    private IEnumerator OnBreak()
+    {
+        Debug.Log("arrow broken!");
+        yield return null;
     }
 }
