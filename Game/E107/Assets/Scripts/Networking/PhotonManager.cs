@@ -37,6 +37,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public TextMeshProUGUI[] partyMemberInfo = new TextMeshProUGUI[4];
 
     public TextMeshProUGUI roomDescription;
+
+    public GameObject JoiningWarning;
+    public GameObject PartyStatusPanel;
     #endregion
 
     #region MonoBehaviour Callbacks
@@ -83,6 +86,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
 
         partyUI.SetActive(false);
+        PartyStatusPanel.SetActive(true);
+        PartyStatusPanel.SetActive(false);
     }
 
     #endregion
@@ -141,7 +146,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         string captainName = UserInfo.GetInstance().getNickName();
 
         RoomOptions room = new RoomOptions();
-        room.MaxPlayers = 4;
+        room.MaxPlayers = maxplayersPerRoom;
         room.IsVisible = false;
         room.IsOpen = false;
         room.CleanupCacheOnLeave = false;
@@ -230,6 +235,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         
         if (nickname == null) return;
 
+        if (selectRoom.MaxPlayers <= selectRoom.PlayerCount)
+        {
+            JoiningWarning.SetActive(true);
+            return;
+        }
+
         // no password enter
         PhotonNetwork.JoinRoom(selectRoom.Name);
         GameObject.Find("Party Joining Window").SetActive(false);
@@ -315,6 +326,28 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.Log(player.Key);
             partyMemberInfo[(int)player.Value.CustomProperties["Number"]].text = player.Value.NickName;
             //idx++;
+        }
+    }
+
+    public void PrintPartyStatus()
+    {
+        Debug.Log("Party Status Update");
+        PartyStatusPanel.SetActive(true);
+        GameObject[] playerStatus = new GameObject[4];
+
+        for(int i = 0; i<4; i++)
+        {
+            playerStatus[i] = PartyStatusPanel.transform.Find("Party Member " + (i + 1)).gameObject;
+            playerStatus[i].SetActive(false);
+        }
+
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            Debug.Log(player.Value.CustomProperties);
+            Debug.Log(player.Value.CustomProperties["Number"]);
+            int index = player.Value.CustomProperties.ContainsKey("Number") ? (int)player.Value.CustomProperties["Number"] : 0;
+            playerStatus[index].SetActive(true);
+            playerStatus[index].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = player.Value.NickName;
         }
     }
 
@@ -417,11 +450,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 Managers.Player.SetLocalPlayerInfo(player.GetComponent<PhotonView>().ViewID, Define.ClassType.None);
                 Managers.Player.LoadPlayersInfoInCurrentRoom();
 
-
-
-
-
-
+                PrintPartyStatus();
             }
         }
 
@@ -463,13 +492,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Managers.Player.AddPlayer(newPlayer);
         Managers.Player.LoadPlayersInfoInCurrentRoom();
 
-
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
         Managers.Player.LoadPlayersInfoInCurrentRoom();
+        PrintPartyStatus();
 
 
 
@@ -495,7 +524,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
 
         Debug.Log("anyone left");
-        
 
     }
 
@@ -505,8 +533,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         {
             MonsterManager.Instance.ReStartManage();
         }
-        
-        
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log(returnCode + " : " + message);
+        // 파티 다 찼을 때 경고 줘야함
+        //JoiningWarning.SetActive(true);
     }
 
     
