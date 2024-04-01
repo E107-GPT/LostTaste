@@ -111,6 +111,7 @@ public class Define
         MagicFieldWhite,
         BowSkillEffect,
         HealOnce,
+        BowArrowBrokenEFfect,
         MaxCount
     }
 

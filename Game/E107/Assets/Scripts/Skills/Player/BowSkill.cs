@@ -1,4 +1,5 @@
 using ExitGames.Client.Photon;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -44,7 +45,7 @@ public class BowSkill : Skill, IAttackSkill
         ps.transform.rotation = player.transform.rotation;
 
         GameObject skillObject = Managers.Resource.Instantiate("Skills/ArrowSkillObject");
-        skillObject.GetComponent<ArrowSkillObject>().SetUp(player.transform, Damage, _seq, 1, OnBreak());
+        skillObject.GetComponent<ArrowSkillObject>().SetUp(player.transform, Damage, _seq, 1, new ArrowSkillObject.OnBreakCallback(OnBreak));
         skillObject.transform.localEulerAngles = player.transform.forward;
 
         float timer = 0;
@@ -64,9 +65,12 @@ public class BowSkill : Skill, IAttackSkill
         Managers.Resource.Destroy(skillObject);
     }
 
-    private IEnumerator OnBreak()
+    private IEnumerator OnBreak(Collider other)
     {
-        Debug.Log("arrow broken!");
-        yield return null;
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.BowArrowBrokenEFfect, other.transform);
+        
+        yield return new WaitForSeconds(0.5f);
+
+        Managers.Effect.Stop(ps);
     }
 }

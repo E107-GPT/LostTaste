@@ -44,7 +44,7 @@ public class SkillObject : MonoBehaviour
 
         if (_penetration == 0)
         {
-            OnBreak();
+            OnBreak(other);
             Managers.Resource.Destroy(gameObject);
         }
     }
@@ -57,5 +57,5 @@ public class SkillObject : MonoBehaviour
     /// <summary>
     /// 관통 횟수가 모두 소진되어 부서졌을 때 발동할 이벤트
     /// </summary>
-    protected virtual void OnBreak() { }
+    protected virtual void OnBreak(Collider other) { }
 }
