@@ -261,6 +261,7 @@ public class PlayerController : BaseController
                 break;
             case Define.SkillType.ClassSkill:
                 _playerClass.ClassSkill.Cast();
+                _stat.Mp -= _playerClass.ClassSkill.RequiredMp;
                 //gameObject.GetComponent<WarriorClassSkill>().Cast();
                 if (photonView.IsMine) photonView.RPC("ChageSkillState", RpcTarget.Others, Define.SkillType.ClassSkill, gameObject.transform.rotation);
                 break;
@@ -390,7 +391,13 @@ public class PlayerController : BaseController
             _detectedInteractable.OnInteracted(this.gameObject);
             if (photonView.IsMine)
             {
-                if(_detectedInteractable is ItemChest) photonView.RPC("OpenChestRPC", RpcTarget.Others);
+
+                if (_detectedInteractable is ItemChest) {
+                    ItemChest box = _detectedInteractable as ItemChest;
+                    int viewID = box.GetComponent<PhotonView>().ViewID;
+                    photonView.RPC("OpenChestRPC", RpcTarget.Others,viewID); 
+                }
+                
             }
 
         }
@@ -531,13 +538,21 @@ public class PlayerController : BaseController
     }
 
     [PunRPC]
-    void OpenChestRPC()
+    void OpenChestRPC(int viewID)
     {
         // 추후 수정
         // todo 이름 받아와서 열까?
         //
 
-        _detectedInteractable.OnInteracted(this.gameObject);
+        ItemChest[] list = GameObject.FindObjectsOfType<ItemChest>();
+        foreach(var box in list)
+        {
+            if(box.GetComponent<PhotonView>().ViewID == viewID)
+            {
+                box.OnInteracted(gameObject);
+            }
+        }
+        //_detectedInteractable.OnInteracted(this.gameObject);
     }
 
     [PunRPC]
