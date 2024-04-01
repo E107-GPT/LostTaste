@@ -76,16 +76,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
 
 
-        GameObject infoPartyMemeber = GameObject.Find("Party Member Layout Group");
-        for(int i = 0; i<4; i++)
-        {
-            string partyName = "Party Member " + (i + 1);
-            GameObject party = GameObject.Find(partyName);
-            Transform parentTransform = party.transform;
-            Transform childTransform = parentTransform.Find("Party Memeber Nickname Text " +(i+1));
+        //GameObject infoPartyMemeber = GameObject.Find("Party Member Layout Group");
+        //for(int i = 0; i<4; i++)
+        //{
+        //    string partyName = "Party Member " + (i + 1);
+        //    GameObject party = GameObject.Find(partyName);
+        //    Transform parentTransform = party.transform;
+        //    Transform childTransform = parentTransform.Find("Party Memeber Nickname Text " +(i+1));
 
-            partyMemberInfo[i] = childTransform.GetComponent<TextMeshProUGUI>();
-        }
+        //    partyMemberInfo[i] = childTransform.GetComponent<TextMeshProUGUI>();
+        //}
 
         partyUI.SetActive(false);
         PartyStatusPanel.SetActive(true);
