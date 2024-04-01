@@ -102,6 +102,7 @@ public class Define
         HealOnceEffect,
         PriestClassSkillEffect,
         PlayerWalkEffect,
+        DustDirtyEffect,
         MaxCount
     }
 

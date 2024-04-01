@@ -10,6 +10,7 @@ public class StrongSwingSkill : Skill, IAttackSkill
     [field: SerializeField]
     private Vector3 Scale = new Vector3(5.0f, 2.0f, 5.0f);
 
+    public Define.Effect swingEffect = Define.Effect.StrongSwingEffect;
     protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
@@ -20,7 +21,7 @@ public class StrongSwingSkill : Skill, IAttackSkill
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0, 0.7f);
         yield return new WaitForSeconds(0.5f);
 
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.StrongSwingEffect, Root);
+        ParticleSystem ps = Managers.Effect.Play(swingEffect, Root);
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
