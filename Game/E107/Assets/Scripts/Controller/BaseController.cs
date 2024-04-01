@@ -137,6 +137,12 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void ExcuteDash() { }
 	public virtual void ExitDash() { }
 
+    // BOW
+    public virtual void EnterBow() { }
+    public virtual void ExecuteBow() { }
+    public virtual void ExitBow() { }
+
+
     // DrillDuckSlideBeforeState - not loop
     public virtual void EnterDrillDuckSlideBeforeState() { }
     public virtual void ExcuteDrillDuckSlideBeforeState() { }
