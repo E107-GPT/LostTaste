@@ -25,6 +25,15 @@ public class MonologueManager: MonoBehaviour
     // 모험 결과 창
     [Header("[ 모험 결과 창 ]")]
     public GameObject adventureResultsWindow;
+    public GameObject finalStageIcon; // Final Stage 클리어 아이콘
+    public GameObject CongratulationsImagePanel; // 축하 이미지
+    public TextMeshProUGUI CongratulationsTitleText; // 축하 제목 텍스트
+    public TextMeshProUGUI stageClearText; // 스테이지 클리어 텍스트
+
+    // 확인 버튼
+    [Header("[ 확인 버튼 ]")]
+    public GameObject returnToCampButton; // 캠프 로드 버튼
+    public GameObject goToEndingButton; // 엔딩 로드 버튼
 
     // 독백 UI 활성화 시 비활성화 할 패널
     [Header("[ 독백 UI 활성화 시 비활성화 할 패널 ]")]
@@ -176,7 +185,6 @@ public class MonologueManager: MonoBehaviour
     // 독백 UI를 비활성화하는 메서드
     public void CloseMonologue()
     {
-        Debug.Log("@@@@@@@@@@@@@@@@@@@@@@@");
         // 독백 UI 비활성화
         monologuePanel.SetActive(false);
         isMonologuePanelOpen = false;
@@ -192,6 +200,17 @@ public class MonologueManager: MonoBehaviour
         monsterKingHealth.SetActive(false); ; // 몬스터킹
 
         // 몬스터 킹 처치 후 독백 UI 비활성화 시 모험 결과 창 활성화
-        if (isMonsterKingPanelOpened) adventureResultsWindow.SetActive(true);
+        if (isMonsterKingPanelOpened)
+        {
+            // 모험 결과 창 업데이트 및 활성화
+            finalStageIcon.SetActive(true);
+            CongratulationsImagePanel.SetActive(true);
+            CongratulationsTitleText.text = "마왕을 물리쳤습니다!";
+            stageClearText.text = "모든 스테이지를 클리어했습니다!";
+
+            returnToCampButton.SetActive(false);
+            goToEndingButton.SetActive(true);
+            adventureResultsWindow.SetActive(true);
+        }
     }
 }

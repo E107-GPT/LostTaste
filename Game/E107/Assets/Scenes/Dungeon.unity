@@ -526,6 +526,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 360352065}
     - target: {fileID: 573323344523275353, guid: 103ba1436647d154c8f1ffc69ffed46d, type: 3}
+      propertyPath: finalStageIcon
+      value: 
+      objectReference: {fileID: 1748719416}
+    - target: {fileID: 573323344523275353, guid: 103ba1436647d154c8f1ffc69ffed46d, type: 3}
+      propertyPath: stageClearText
+      value: 
+      objectReference: {fileID: 1748719415}
+    - target: {fileID: 573323344523275353, guid: 103ba1436647d154c8f1ffc69ffed46d, type: 3}
       propertyPath: crocodileHealth
       value: 
       objectReference: {fileID: 484040979}
@@ -534,9 +542,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 382873394}
     - target: {fileID: 573323344523275353, guid: 103ba1436647d154c8f1ffc69ffed46d, type: 3}
+      propertyPath: goToEndingButton
+      value: 
+      objectReference: {fileID: 1239643794}
+    - target: {fileID: 573323344523275353, guid: 103ba1436647d154c8f1ffc69ffed46d, type: 3}
       propertyPath: monsterKingHealth
       value: 
       objectReference: {fileID: 1492595923}
+    - target: {fileID: 573323344523275353, guid: 103ba1436647d154c8f1ffc69ffed46d, type: 3}
+      propertyPath: returnToCampButton
+      value: 
+      objectReference: {fileID: 1239643795}
     - target: {fileID: 573323344523275353, guid: 103ba1436647d154c8f1ffc69ffed46d, type: 3}
       propertyPath: monologueCloseButton
       value: 
@@ -545,6 +561,14 @@ PrefabInstance:
       propertyPath: adventureResultsWindow
       value: 
       objectReference: {fileID: 1507488862}
+    - target: {fileID: 573323344523275353, guid: 103ba1436647d154c8f1ffc69ffed46d, type: 3}
+      propertyPath: CongratulationsTitleText
+      value: 
+      objectReference: {fileID: 776888646}
+    - target: {fileID: 573323344523275353, guid: 103ba1436647d154c8f1ffc69ffed46d, type: 3}
+      propertyPath: CongratulationsImagePanel
+      value: 
+      objectReference: {fileID: 1475897612}
     - target: {fileID: 8864472854295184623, guid: 103ba1436647d154c8f1ffc69ffed46d, type: 3}
       propertyPath: m_Name
       value: Monologue
@@ -2146,6 +2170,14 @@ PrefabInstance:
       propertyPath: stageClearText
       value: 
       objectReference: {fileID: 1748719415}
+    - target: {fileID: 6467139422801943980, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: goToEndingButton
+      value: 
+      objectReference: {fileID: 1239643794}
+    - target: {fileID: 6467139422801943980, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
+      propertyPath: returnToCampButton
+      value: 
+      objectReference: {fileID: 1239643795}
     - target: {fileID: 6467139422801943980, guid: 3ba95bb339f426c45b41efe7642ea7c1, type: 3}
       propertyPath: adventureResultsWindow
       value: 
@@ -6359,6 +6391,16 @@ PrefabInstance:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2998866258480102952, guid: a74f1bbeda1efcf4eaaebf0dd83999a1, type: 3}
   m_PrefabInstance: {fileID: 1234959003}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239643794 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1473461917974084353, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239643795 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 895757988801123002, guid: ac310d5d3581ccd499cc343582c16c91, type: 3}
+  m_PrefabInstance: {fileID: 1507488860}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1294327041 stripped
 GameObject:
