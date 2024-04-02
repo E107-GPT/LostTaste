@@ -168,7 +168,7 @@ public class InventoryManager : MonoBehaviour
                 BoredAppleSkill boredAppleSkill = (BoredAppleSkill)item.RightSkill;
                 float recoveryPeriod = boredAppleSkill.RecoveryPeriod;
                 int mpRecoveryAmountPerPeriod = boredAppleSkill.MpRecoveryAmountPerPeriod;
-                MpRecovery.text = $"{mpRecoveryAmountPerPeriod / recoveryPeriod}Mp/s";
+                MpRecovery.text = $"{mpRecoveryAmountPerPeriod / recoveryPeriod}/s";
             }
             else if (item.RightSkill is CucumberSkill)
             {
