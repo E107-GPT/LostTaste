@@ -36,8 +36,10 @@ public class BowSkill : Skill, IAttackSkill
 
         // 발사됨
         Managers.Sound.Play(AudioClip);
-
-        playerController.StateMachine.ChangeState(new IdleState(playerController));
+        if (playerController.StateMachine.CurState is SkillState)
+        {
+            playerController.StateMachine.ChangeState(new IdleState(playerController));
+        }
         gameObject.GetComponent<Animator>().CrossFade("IDLE", 0.1f, -1, 0);
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BowSkillEffect, player.transform);
