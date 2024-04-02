@@ -33,13 +33,13 @@ public class SpecterAttackSkill : Skill
         {
             Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.45f);
 
             ParticleSystem ps = Managers.Effect.Play(Define.Effect.SpecterAttackEffect, Root);
             Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
             skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
 
-            skillObj.localScale = new Vector3(4.0f, 5.0f, _range);    // 1.1f
+            skillObj.localScale = new Vector3(_range, 5.0f, _range);    // 1.1f
             skillObj.position = Root.transform.TransformPoint(Vector3.forward * _range);
             skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
             skillObj.rotation = Root.rotation;
