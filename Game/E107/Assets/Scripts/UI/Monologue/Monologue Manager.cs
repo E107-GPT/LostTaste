@@ -145,7 +145,7 @@ public class MonologueManager: MonoBehaviour
             monsterKingController = GameObject.Find("MonsterKing(Clone)").GetComponent<MonsterKingController>();
 
             // 독백 텍스트 업데이트
-            monologueText.text = "최후의 일격으로 마왕을 쓰러뜨린 순간, 온몸에 전율을 느꼈다...\n달콤한 꽃 향기와 함께 달아오른 강렬한 맛이 입안에서 춤춘다...";
+            monologueText.text = "최후의 일격으로 마왕을 쓰러뜨린 순간, 온몸에 전율을 느꼈다...\n달콤한 꽃 향기와 함께 달아오른 강렬한 맛이 입안에서 맴돈다...";
             monologueText2.text = "' 이걸로... 끝인가... '";
 
             // 보스가 사망할 경우 독백 UI를 활성화
