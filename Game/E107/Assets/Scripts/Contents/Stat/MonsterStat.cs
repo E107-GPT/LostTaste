@@ -29,15 +29,15 @@ public class MonsterStat : Stat
         {
             // Boss
             case UnitType.DrillDuck:
-                _detectRange = 20.0f;
+                _detectRange = 25.0f;
                 _patternDamage = 30;
                 break;
             case UnitType.Crocodile:
-                _detectRange = 20.0f;
+                _detectRange = 22.0f;
                 _patternDamage = 40;
                 break;
             case UnitType.IceKing:
-                _detectRange = 20.0f;
+                _detectRange = 25.0f;
                 _patternDamage = 40;
                 break;
             case UnitType.MonsterKing:
