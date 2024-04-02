@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,6 +44,7 @@ public class EndingSceneManager : MonoBehaviour
         // 스토리가 완료되고 로딩도 완료된 경우 자동으로 씬 전환
         if (asyncLoad.progress >= 0.9f)
         {
+            PhotonNetwork.LeaveRoom();
             asyncLoad.allowSceneActivation = true;
         }
     }
@@ -51,6 +53,7 @@ public class EndingSceneManager : MonoBehaviour
     public void OnSkipButtonClicked()
     {
         // 씬 전환을 즉시 허용합니다.
+        PhotonNetwork.LeaveRoom();
         asyncLoad.allowSceneActivation = true;
     }
 }
