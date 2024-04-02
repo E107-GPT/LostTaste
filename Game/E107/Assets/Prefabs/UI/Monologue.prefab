@@ -1102,7 +1102,6 @@ GameObject:
   - component: {fileID: 8675579852380382607}
   - component: {fileID: 6328143078148268735}
   - component: {fileID: 5954842123930180058}
-  - component: {fileID: 6185053934842045399}
   m_Layer: 11
   m_Name: Confirm Button
   m_TagString: Untagged
@@ -1212,19 +1211,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6185053934842045399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7657664767549176998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b64b8b5c43bd3847b003675c6d7b061, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fingerCursor: {fileID: 2800000, guid: 29c29659f635567459665387c4b75d1f, type: 3}
 --- !u!1 &7680700567574297796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,6 +1418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57be6b695847fd1468296099d09dbbda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  adventureResultsWindow: {fileID: 0}
   HUD: {fileID: 0}
   chatWindow: {fileID: 0}
   chatBackground: {fileID: 0}
