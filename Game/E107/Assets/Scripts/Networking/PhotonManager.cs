@@ -334,6 +334,19 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public int GetCurrentPartyMemberCount()
+    {
+        int idx = 0;
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            if (player.Value.CustomProperties.ContainsKey("Number"))
+            {
+                idx++;
+            }
+        }
+        return idx;
+    }
+
     public void PrintPartyStatus()
     {
         Debug.Log("Party Status Update");
