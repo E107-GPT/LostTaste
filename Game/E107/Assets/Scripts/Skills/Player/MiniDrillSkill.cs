@@ -29,7 +29,7 @@ public class MiniDrillSkill : Skill, IAttackSkill
 
         particleSystem = Managers.Effect.Play(Define.Effect.DrillDuckBeforeEffect, player.transform);
         particleSystem.transform.parent = player.transform;
-        particleSystem.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+        particleSystem.transform.localScale = Scale * 0.25f;
 
         yield return new WaitForSeconds(1.0f);
 
@@ -39,7 +39,7 @@ public class MiniDrillSkill : Skill, IAttackSkill
 
         particleSystem = Managers.Effect.Play(Define.Effect.DrillDuckSlideEffect, player.transform);
         particleSystem.transform.parent = player.transform;
-        particleSystem.transform.localScale = new Vector3(10.0f, 2.5f, 5.0f);
+        particleSystem.transform.localScale = new Vector3(Scale.x * 10.0f, Scale.y * 2.5f, Scale.z * 5.0f);
         particleSystem.transform.localPosition = new Vector3(0, 0.5f, -1.0f);
 
         GameObject skillObject = Managers.Resource.Instantiate("Skills/SkillObject");
