@@ -23,41 +23,14 @@ const NavBar = () => {
                     color={"white"}
                     minHeight={"10vh"}
                 >
-                    <Box width={"33.3%"}>
-                        <img src={LogoImg} height={"50vh"}></img>
-                    </Box>
+                    <Box width={"33.3%"}></Box>
                     <Box width={"33.3%"}>
                         <Stack
                             direction={"row"}
                             justifyContent={"center"}
                             alignItems={"center"}
                         >
-                            {pageList.map((obj, index) => (
-                                <Box
-                                    key={index}
-                                    width="30%"
-                                    textAlign={"center"}
-                                    borderBottom={
-                                        curPage === obj.pageName
-                                            ? "3px solid #FFD257"
-                                            : "3px solid transparent"
-                                    }
-                                >
-                                    <Button
-                                        color="inherit"
-                                        onClick={() => {
-                                            navigate(obj.path);
-                                            setCurPage(obj.pageName);
-                                        }}
-                                        size={"large"}
-                                        fullWidth
-                                    >
-                                        <Box sx={{ fontSize: "20px" }}>
-                                            {obj.content}
-                                        </Box>
-                                    </Button>
-                                </Box>
-                            ))}
+                            <img src={LogoImg} height={"50vh"}></img>
                         </Stack>
                     </Box>
                     <Box width={"33.3%"}></Box>
