@@ -50,6 +50,11 @@ public class BossStatusManager : MonoBehaviour
     public IceKingController iceKingController; // 아이스킹
     public MonsterKingController monsterKingController; // 아이스킹
 
+    // 확인 버튼
+    [Header("[ 확인 버튼 ]")]
+    public GameObject returnToCampButton; // 캠프 로드 버튼
+    public GameObject goToEndingButton; // 엔딩 로드 버튼
+
     // 매 프레임마다 호출되는 Update 메서드
     void Update()
     {
@@ -163,13 +168,6 @@ public class BossStatusManager : MonoBehaviour
         if (Hp <= 0)
         {
             monsterKingStatus.SetActive(false);
-
-            // 모험 결과 창 업데이트 및 활성화
-            finalStageIcon.SetActive(true);
-            CongratulationsImagePanel.SetActive(true);
-            CongratulationsTitleText.text = "마왕을 물리쳤습니다!";
-            stageClearText.text = "모든 스테이지를 클리어했습니다!";
-            // adventureResultsWindow.SetActive(true);
         }
     }
 }
