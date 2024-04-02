@@ -46,7 +46,7 @@ public class MonsterKingController : MonsterController
         if (distToDetectPlayer <= _stat.AttackRange)
         {
             // phase
-            if (_stat.Hp <= _stat.MaxHp / 1.6f)     // 2500
+            if (_stat.Hp <= _stat.MaxHp / 1.6f)     // 3125
             {
                 PhaseTwePatternSelector(); 
             }

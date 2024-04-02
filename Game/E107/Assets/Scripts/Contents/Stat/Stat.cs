@@ -42,8 +42,6 @@ public class Stat
         switch (_unitType)
         {
             case Define.UnitType.Player:
-                // 100으로 돌려야함
-                // 전사 기준 스탯( HP: 300 )
                 _hp = 300;
                 _maxHp = 300;
                 _mp = 100;
@@ -54,22 +52,22 @@ public class Stat
                 break;
 
             case Define.UnitType.Mushroom:      // stage 1
-                _hp = 150;
-                _maxHp = 150;
+                _hp = 230;
+                _maxHp = 230;
                 _attackDamage = 4;
                 _moveSpeed = 6.0f;
                 _attackRange = 1.4f;
                 break;
             case Define.UnitType.TurtleSlime:
-                _hp = 220;
-                _maxHp = 220;
+                _hp = 330;
+                _maxHp = 330;
                 _attackDamage = 5;
                 _moveSpeed = 5.0f;
                 _attackRange = 2.0f;
                 break;
             case Define.UnitType.ToxicFlower:
-                _hp = 200;
-                _maxHp = 200;
+                _hp = 300;
+                _maxHp = 300;
                 _attackDamage = 8;
                 _moveSpeed = 6.5f;
                 _attackRange = 10.0f;
@@ -83,22 +81,22 @@ public class Stat
                 break;
 
             case Define.UnitType.Crab:          // stage 2
-                _hp = 200;
-                _maxHp = 200;
+                _hp = 300;
+                _maxHp = 300;
                 _attackDamage = 6;
                 _moveSpeed = 6.0f;
                 _attackRange = 2.3f;
                 break;
             case Define.UnitType.Fishman:
-                _hp = 250;
-                _maxHp = 250;
+                _hp = 380;
+                _maxHp = 380;
                 _attackDamage = 7;
                 _moveSpeed = 6.0f;
                 _attackRange = 2.3f;
                 break;
             case Define.UnitType.NagaWizard:
-                _hp = 200;
-                _maxHp = 200;
+                _hp = 300;
+                _maxHp = 300;
                 _attackDamage = 10;
                 _moveSpeed = 5.5f;
                 _attackRange = 10.0f;
@@ -112,29 +110,29 @@ public class Stat
                 break;
 
             case Define.UnitType.Demon:         // stage 3
-                _hp = 250;
-                _maxHp = 250;
+                _hp = 380;
+                _maxHp = 380;
                 _attackDamage = 14;
                 _moveSpeed = 5.5f;
                 _attackRange = 10.0f;
                 break;
             case Define.UnitType.Salamander:
-                _hp = 250;
-                _maxHp = 250;
+                _hp = 380;
+                _maxHp = 380;
                 _attackDamage = 12;
                 _moveSpeed = 5.5f;
                 _attackRange = 10.0f;
                 break;
             case Define.UnitType.Specter:
-                _hp = 250;
-                _maxHp = 250;
+                _hp = 380;
+                _maxHp = 380;
                 _attackDamage = 25;
                 _moveSpeed = 6.5f;
                 _attackRange = 2.5f;
                 break;
             case Define.UnitType.Skeleton:
-                _hp = 220;
-                _maxHp = 220;
+                _hp = 330;
+                _maxHp = 330;
                 _attackDamage = 25;
                 _moveSpeed = 5.5f;
                 _attackRange = 2.5f;
@@ -148,8 +146,8 @@ public class Stat
                 break;
 
             case Define.UnitType.MonsterKing:   // Final Stage
-                _hp = 4000;
-                _maxHp = 4000;
+                _hp = 5000;
+                _maxHp = 5000;
                 _attackDamage = 30;         // 사용안함
                 _moveSpeed = 8.0f;
                 _attackRange = 8.0f;
