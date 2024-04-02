@@ -41,7 +41,7 @@ public class FireKatanaSkill : Skill, IAttackSkill
         skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq++);
 
 
-        skillObj.localScale = new Vector3(3.0f, 3.0f, 3.0f);
+        skillObj.localScale = new Vector3(4.0f, 4.0f, 4.0f);
 
 
         skillObj.transform.parent = ps.transform;

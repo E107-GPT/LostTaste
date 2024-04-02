@@ -51,10 +51,11 @@ public class StormDaggerSkill : Skill, IAttackSkill
         finish.transform.position = new Vector3(finish.transform.position.x, Root.position.y + 0.5f, finish.transform.position.z);
         finish.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
 
+        yield return new WaitForSeconds(0.1f);
 
         playerController.StateMachine.ChangeState(new IdleState(playerController));
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.1f);
 
         skillObject = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObject.GetComponent<SkillObject>().SetUp(player.transform, Damage, _seq);
