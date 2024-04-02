@@ -24,8 +24,41 @@ public class AdventureResultWindow : MonoBehaviour
     [Header("[ 게임 시간 ]")]
     public TextMeshProUGUI gameTimeText; // 게임 시간 텍스트
 
+    // 플레이 인원 수
+    [Header("[ 플레이 인원 수 ]")]
+    public TextMeshProUGUI playerCountText; // 플레이 인원 수 텍스트
 
     // ------------------------------------------------ Life Cycle ------------------------------------------------
+    void Start()
+    {
+        int currentPartyCount = DungeonEntrance.Instance.currentPartyMemberCount;
+
+        string colorHex = "";
+
+        switch (currentPartyCount)
+        {
+            case 1:
+                colorHex = "#E74C3C";
+                playerCountText.text = $"<color={colorHex}>{currentPartyCount}인 플레이!!!</color>";
+                break;
+            case 2:
+                colorHex = "#9B59B6";
+                playerCountText.text = $"<color={colorHex}>{currentPartyCount}인 플레이!!</color>";
+                break;
+            case 3:
+                colorHex = "#3498DB";
+                playerCountText.text = $"<color={colorHex}>{currentPartyCount}인 플레이!</color>";
+                break;
+            case 4:
+                colorHex = "#BFBFBF";
+                playerCountText.text = $"<color={colorHex}>{currentPartyCount}인 플레이</color>";
+                break;
+            default:
+                colorHex = "#FFFFFF"; // 기본 값으로 흰색 반환
+                playerCountText.text = $"<color={colorHex}>몇명이서 한거에요??</color>";
+                break;
+        }
+    }
 
     void OnEnable()
     {

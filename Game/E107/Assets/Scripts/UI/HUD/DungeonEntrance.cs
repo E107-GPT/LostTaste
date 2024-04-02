@@ -12,6 +12,8 @@ public class DungeonEntrance : MonoBehaviour
 {
     public static DungeonEntrance Instance { get; private set; }
 
+    public int currentPartyMemberCount;
+
     private float gameTime = 0f;
     public float GameTime => gameTime; // 외부에서 접근 가능하도록 게터 추가
 
@@ -107,6 +109,8 @@ public class DungeonEntrance : MonoBehaviour
             stageClearText.text = "클리어한 스테이지가 없습니다.";
 
             hasEntered = true; // 플레이어가 입장했음을 표시
+
+            currentPartyMemberCount = FindObjectOfType<PhotonManager>().GetCurrentPartyMemberCount();
         }
     }
 }
