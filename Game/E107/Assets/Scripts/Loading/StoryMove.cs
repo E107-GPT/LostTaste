@@ -53,7 +53,7 @@ public class StoryMove : MonoBehaviour
         while (currentPositionIndex < positions.Length - 1)
         {
             // 일정 시간 대기
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(6f);
 
             // 현재 위치에서 다음 위치로 인덱스 업데이트
             currentPositionIndex++;
@@ -65,7 +65,7 @@ public class StoryMove : MonoBehaviour
             }
             if (currentPositionIndex == positions.Length - 1)
             {
-                yield return new WaitForSeconds(10f);
+                yield return new WaitForSeconds(6f);
                 loadingSceneManager.CompleteStory(); // 스토리 완료 처리
             }
         }
