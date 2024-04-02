@@ -13,7 +13,7 @@ public class NormalAttackSkill : Skill, IAttackSkill
     protected override void Init() {
         if (Damage == 0)
         {
-            Damage = 50;
+            Damage = 25;
         }
     }
 
