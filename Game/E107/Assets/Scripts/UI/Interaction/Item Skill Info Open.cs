@@ -220,7 +220,7 @@ public class ItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerEx
             // 데미지 패널 비활성화
             damagePanel.SetActive(false);
 
-            Debug.Log($"회복 아이템임 {item.RightSkill}");
+            // Debug.Log($"회복 아이템임 {item.RightSkill}");
 
             if (item.RightSkill is BibimbapSkill)
             {
@@ -242,17 +242,6 @@ public class ItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerEx
                 // 회복량 업데이트
                 RareSteakSkill rareSteakSkill = (RareSteakSkill)item.RightSkill;
                 int hpRecoveryAmount = rareSteakSkill.HpRecoveryAmount;
-                itemSkillHpRecoveryText.text = hpRecoveryAmount.ToString();
-            }
-            else if (item.RightSkill is HealWandSkill)
-            {
-                // Hp 회복 패널 활성화
-                hpRecoveryPanel.SetActive(true);
-                mpRecoveryPanel.SetActive(false);
-
-                // 회복량 업데이트
-                HealWandSkill healWandSkill = (HealWandSkill)item.RightSkill;
-                int hpRecoveryAmount = healWandSkill.HpRecoveryAmount;
                 itemSkillHpRecoveryText.text = hpRecoveryAmount.ToString();
             }
             else if (item.RightSkill is BoredAppleSkill)
@@ -278,6 +267,18 @@ public class ItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerEx
                 int mpRecoveryAmount = cucumberSkill.MpRecoveryAmount;
                 itemSkillMpRecoveryText.text = mpRecoveryAmount.ToString();
             }
+        }
+        else if (item.RightSkill is HealWandSkill)
+        {
+            // Hp 회복 패널 활성화
+            damagePanel.SetActive(false);
+            hpRecoveryPanel.SetActive(true);
+            mpRecoveryPanel.SetActive(false);
+
+            // 회복량 업데이트
+            HealWandSkill healWandSkill = (HealWandSkill)item.RightSkill;
+            int hpRecoveryAmount = healWandSkill.HpRecoveryAmount;
+            itemSkillHpRecoveryText.text = hpRecoveryAmount.ToString();
         }
         else if (item.RightSkill is IAttackSkill)
         {
