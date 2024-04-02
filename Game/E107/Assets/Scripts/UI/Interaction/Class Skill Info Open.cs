@@ -129,7 +129,7 @@ public class ClassSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPointerE
             PriestClassSkill priestClassSkill = (PriestClassSkill)classSkill;
             int healCount = priestClassSkill.HealCount;
             int healMount = priestClassSkill.HealMount;
-            classSkillHpRecoveryText.text = $"{healCount}초간 초당 {healMount * 2} 회복";
+            classSkillHpRecoveryText.text = $"{healCount / 2}초간 초당 {healMount * 2} 회복";
         }
         else if (classSkill is NinjaClassSkill)
         {
