@@ -174,14 +174,19 @@ public class MonsterController : BaseController
     {
         base.ExcuteSkill();
 
+        //if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("AttackBefore"))
+        //{
+        //    float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+        //    if (aniTime >= 1.0f)
+        //    {
+                
+        //    }
+        //}
         // 상태 전환이 완벽하게 이뤄졌을 때 "Attack" 애니메이션이 끝났는지 확인
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            //if (CurState is DieState)
-            //{
-            //    _statemachine.ChangeState(new DieState(this));
-            //}
 
             if (aniTime >= 1.0f)
             {
