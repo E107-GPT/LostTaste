@@ -21,6 +21,11 @@ public class SkillObject : MonoBehaviour
         
         _damage = damage;
         _id = _newId++;
+        if (id == -1)
+        {
+            _id = -1;
+        }
+        
         Debug.Log(_id);
         _attacker = attacker;
         _penetration = penetration;
