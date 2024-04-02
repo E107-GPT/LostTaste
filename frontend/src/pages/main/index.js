@@ -29,7 +29,7 @@ const MainPage = () => {
                     justifyContent={"center"}
                 >
                     <Box
-                        marginY={"3%"}
+                        marginY={"3vh"}
                         bgcolor={"rgba(0,0,0,0.5)"}
                         padding={"1%"}
                         paddingTop={"3%"}
