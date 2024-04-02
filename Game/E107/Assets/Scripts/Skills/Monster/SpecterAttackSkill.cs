@@ -39,8 +39,8 @@ public class SpecterAttackSkill : Skill
             Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
             skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
 
-            skillObj.localScale = new Vector3(_range, 5.0f, _range);    // 1.1f
-            skillObj.position = Root.transform.TransformPoint(Vector3.forward * _range);
+            skillObj.localScale = new Vector3(2.5f, 5.0f, 2.5f);    // _range = 2.5f 였음
+            skillObj.position = Root.transform.TransformPoint(Vector3.forward * 2.5f);
             skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
             skillObj.rotation = Root.rotation;
 

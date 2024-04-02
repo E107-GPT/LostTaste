@@ -130,7 +130,7 @@ public class Stat
                 _maxHp = 380;
                 _attackDamage = 25;
                 _moveSpeed = 6.5f;
-                _attackRange = 2.5f;
+                _attackRange = 4.0f;
                 break;
             case Define.UnitType.Skeleton:
                 _hp = 330;
