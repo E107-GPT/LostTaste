@@ -213,7 +213,7 @@ public class firstItemSkillInfoOpen : MonoBehaviour, IPointerEnterHandler, IPoin
                 BoredAppleSkill boredAppleSkill = (BoredAppleSkill)item.RightSkill;
                 float recoveryPeriod = boredAppleSkill.RecoveryPeriod;
                 int mpRecoveryAmountPerPeriod = boredAppleSkill.MpRecoveryAmountPerPeriod;
-                itemSkillMpRecoveryText.text = $"{mpRecoveryAmountPerPeriod / recoveryPeriod}Mp/s";
+                itemSkillMpRecoveryText.text = $"{mpRecoveryAmountPerPeriod / recoveryPeriod}/s";
             }
             else if (item.RightSkill is CucumberSkill)
             {
