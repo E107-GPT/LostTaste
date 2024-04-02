@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 /// <summary>
 /// 직업 선택 UI가 나오도록 하는 클래스입니다.
 /// </summary>
@@ -19,6 +18,10 @@ public class ClassSelectionWindow : MonoBehaviour
     // 직업선택 UI
     [Header("[ 직업선택 UI ]")]
     public GameObject classSelectionUI;
+
+    // 스테이지 패널
+    [Header("[ 스테이지 패널 ]")]
+    public GameObject stagePanel; // 스테이지 패널
 
     // 버튼
     [Header("[ 버튼 ]")]
@@ -201,5 +204,14 @@ public class ClassSelectionWindow : MonoBehaviour
         {
             _playerController.ChangeClass(Define.ClassType.Ninja);
         }
+
+        stagePanel.SetActive(true);
+        Invoke("DisableStagePanel", 1.5f);
+    }
+
+    // 1.5초 후에 호출되어 스테이지 패널을 비활성화하는 메서드
+    private void DisableStagePanel()
+    {
+        stagePanel.SetActive(false);
     }
 }

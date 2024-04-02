@@ -22,11 +22,22 @@ public class MonologueManager: MonoBehaviour
     private bool isIceKingPanelOpened = false;
     private bool isMonsterKingPanelOpened = false;
 
+    // 모험 결과 창
+    [Header("[ 모험 결과 창 ]")]
+    public GameObject adventureResultsWindow;
+
     // 독백 UI 활성화 시 비활성화 할 패널
     [Header("[ 독백 UI 활성화 시 비활성화 할 패널 ]")]
     public GameObject HUD; // HUD
     public GameObject chatWindow; // 채팅 창
     public GameObject chatBackground; // 채팅 배경
+
+    // 독백 UI 비활성화 시 비활성화 할 보스 체력 UI
+    [Header("[ 독백 UI 비활성화 시 비활성화 할 보스 체력 UI ]")]
+    public GameObject drillDuckHealth; // 드릴덕
+    public GameObject crocodileHealth; // 크로커다일
+    public GameObject iceKingHealth; // 아이스킹
+    public GameObject monsterKingHealth; // 몬스터킹
 
     // 독백 UI
     [Header("[ 독백 UI ]")]
@@ -36,6 +47,7 @@ public class MonologueManager: MonoBehaviour
     [Header("[ 독백 UI 내부 요소 ]")]
     public TextMeshProUGUI nicknameText; // 플레이어 닉네임 텍스트
     public TextMeshProUGUI monologueText; // 독백 텍스트
+    public TextMeshProUGUI monologueText2; // 독백 텍스트2
     public Button monologueCloseButton; // 확인 버튼
 
 
@@ -86,8 +98,8 @@ public class MonologueManager: MonoBehaviour
             drillDuckController = GameObject.Find("DrillDuck(Clone)").GetComponent<DrillDuckController>();
 
             // 독백 텍스트 업데이트
-            monologueText.text = "신 맛이 돌아왔다.";
-
+            monologueText.text = "마왕의 오른팔로 악명 높은 숲의 주인, '드릴덕'을 처치했다...\n과열된 드릴의 연기로 눈이 따가워지면서 날카로운 쓴맛이 입 안에 번져든다...";
+            monologueText2.text = "' 미각이 돌아온걸까? '";
             // 보스가 사망할 경우 독백 UI를 활성화
             int Hp = drillDuckController.Stat.Hp;
             if (Hp <= 0)
@@ -101,7 +113,8 @@ public class MonologueManager: MonoBehaviour
             crocodileController = GameObject.Find("Crocodile(Clone)").GetComponent<CrocodileController>();
 
             // 독백 텍스트 업데이트
-            monologueText.text = "짠 맛이 돌아왔다.";
+            monologueText.text = "해변의 수호자, '크로커다일'과의 힘겨운 전투 끝에 마침내 승리했다...\n침과 바닷물이 섞인 액체를 뱉어내는 순간 입 안에서 강한 소금 맛이 느껴진다...";
+            monologueText2.text = "' 이런, 바닷물 맛이 반가울 줄이야. '";
 
             // 보스가 사망할 경우 독백 UI를 활성화
             int Hp = crocodileController.Stat.Hp;
@@ -116,7 +129,8 @@ public class MonologueManager: MonoBehaviour
             iceKingController = GameObject.Find("IceKing(Clone)").GetComponent<IceKingController>();
 
             // 독백 텍스트 업데이트
-            monologueText.text = "단 맛이 돌아왔다.";
+            monologueText.text = "얼음 궁전의 군주, '아이스킹'이라면, 왠지 단맛이 돌아오지 않았을까?...\n바닥에 떨어진 얼음 조각을 주워 다급히 입안으로 털어 넣자, 상쾌한 신맛이 입안을 가득 채웠다...";
+            monologueText2.text = "' 어떻게 만들어진 얼음이길래 신 맛이 나는거냐고! '";
 
             // 보스가 사망할 경우 독백 UI를 활성화
             int Hp = iceKingController.Stat.Hp;
@@ -131,7 +145,8 @@ public class MonologueManager: MonoBehaviour
             monsterKingController = GameObject.Find("MonsterKing(Clone)").GetComponent<MonsterKingController>();
 
             // 독백 텍스트 업데이트
-            monologueText.text = "모든 맛이 돌아왔다.";
+            monologueText.text = "최후의 일격으로 마왕을 쓰러뜨린 순간, 온몸에 전율을 느꼈다...\n달콤한 꽃 향기와 함께 달아오른 강렬한 맛이 입안에서 춤춘다...";
+            monologueText2.text = "' 이걸로... 끝인가... '";
 
             // 보스가 사망할 경우 독백 UI를 활성화
             int Hp = monsterKingController.Stat.Hp;
@@ -154,17 +169,29 @@ public class MonologueManager: MonoBehaviour
         HUD.SetActive(false);
         chatWindow.SetActive(false);
         chatBackground.SetActive(false);
+
+        Invoke("CloseMonologue", 5f);
     }
 
     // 독백 UI를 비활성화하는 메서드
-    void CloseMonologue()
+    public void CloseMonologue()
     {
-        // 독백 UI 활성화
+        Debug.Log("@@@@@@@@@@@@@@@@@@@@@@@");
+        // 독백 UI 비활성화
         monologuePanel.SetActive(false);
         isMonologuePanelOpen = false;
 
-        // 다른 UI 비활성화
+        // 다른 UI 활성화
         HUD.SetActive(true);
         chatWindow.SetActive(true);
+
+        // 보스 체력바 비활성화
+        drillDuckHealth.SetActive(false); ; // 드릴덕
+        crocodileHealth.SetActive(false); ; // 크로커다일
+        iceKingHealth.SetActive(false); ; // 아이스킹
+        monsterKingHealth.SetActive(false); ; // 몬스터킹
+
+        // 몬스터 킹 처치 후 독백 UI 비활성화 시 모험 결과 창 활성화
+        if (isMonsterKingPanelOpened) adventureResultsWindow.SetActive(true);
     }
 }
