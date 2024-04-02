@@ -5,58 +5,73 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾î°¡ Stage 2¿¡ ÀÔÀåÇÏ¸é ½ºÅ×ÀÌÁö ÅØ½ºÆ®¸¦ ¾Ë¸Â°Ô ¾÷µ¥ÀÌÆ®ÇÏ´Â ÄÄÆ÷³ÍÆ®ÀÔ´Ï´Ù.
+/// í”Œë ˆì´ì–´ê°€ Stage 2ì— ì…ì¥í•˜ë©´ ìŠ¤í…Œì´ì§€ í…ìŠ¤íŠ¸ë¥¼ ì•Œë§ê²Œ ì—…ë°ì´íŠ¸í•˜ëŠ” ì»´í¬ë„ŒíŠ¸ì…ë‹ˆë‹¤.
 /// </summary>
 public class Stage2Entrance : MonoBehaviour
 {
-    // Áöµµ ÆĞ³Î
-    [Header("[ Áöµµ ÆĞ³Î ]")]
-    public TextMeshProUGUI stageText; // ½ºÅ×ÀÌÁö ÀÌ¸§ ÅØ½ºÆ®
+    public MonologueManager monologueManager; // Inspectorì—ì„œ í• ë‹¹
 
-    // ½ºÅ×ÀÌÁö ÆĞ³Î
-    [Header("[ ½ºÅ×ÀÌÁö ÆĞ³Î ]")]
-    public GameObject stagePanel; // ½ºÅ×ÀÌÁö ÆĞ³Î
-    public TextMeshProUGUI stageLevelText; // ½ºÅ×ÀÌÁö ·¹º§ ÅØ½ºÆ®
-    public TextMeshProUGUI stageNameText; // ½ºÅ×ÀÌÁö ÀÌ¸§ ÅØ½ºÆ®
+    // ì§€ë„ íŒ¨ë„
+    [Header("[ ì§€ë„ íŒ¨ë„ ]")]
+    public TextMeshProUGUI stageText; // ìŠ¤í…Œì´ì§€ ì´ë¦„ í…ìŠ¤íŠ¸
 
-    // Å¬¸®¾î ÇÑ ½ºÅ×ÀÌÁö
-    [Header("[ Å¬¸®¾î ÇÑ ½ºÅ×ÀÌÁö ]")]
-    public GameObject stageXIcon; // Å¬¸®¾î ÇÑ ½ºÅ×ÀÌÁö ¾øÀ½ ¾ÆÀÌÄÜ
-    public GameObject stage1Icon; // Stage 1 Å¬¸®¾î ¾ÆÀÌÄÜ
-    public TextMeshProUGUI stageClearText; // ½ºÅ×ÀÌÁö Å¬¸®¾î ÅØ½ºÆ®
+    // ìŠ¤í…Œì´ì§€ íŒ¨ë„
+    [Header("[ ìŠ¤í…Œì´ì§€ íŒ¨ë„ ]")]
+    public GameObject stagePanel; // ìŠ¤í…Œì´ì§€ íŒ¨ë„
+    public TextMeshProUGUI stageLevelText; // ìŠ¤í…Œì´ì§€ ë ˆë²¨ í…ìŠ¤íŠ¸
+    public TextMeshProUGUI stageNameText; // ìŠ¤í…Œì´ì§€ ì´ë¦„ í…ìŠ¤íŠ¸
 
-    // µå¸±´ö Ã¼·Â ½½¶óÀÌ´õ
-    [Header("[ µå¸±´ö Ã¼·Â ½½¶óÀÌ´õ ]")]
+    // í´ë¦¬ì–´ í•œ ìŠ¤í…Œì´ì§€
+    [Header("[ í´ë¦¬ì–´ í•œ ìŠ¤í…Œì´ì§€ ]")]
+    public GameObject stageXIcon; // í´ë¦¬ì–´ í•œ ìŠ¤í…Œì´ì§€ ì—†ìŒ ì•„ì´ì½˜
+    public GameObject stage1Icon; // Stage 1 í´ë¦¬ì–´ ì•„ì´ì½˜
+    public TextMeshProUGUI stageClearText; // ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´ í…ìŠ¤íŠ¸
+
+    // ë“œë¦´ë• ì²´ë ¥ ìŠ¬ë¼ì´ë”
+    [Header("[ ë“œë¦´ë• ì²´ë ¥ ìŠ¬ë¼ì´ë” ]")]
     public GameObject drillDuckHealthBar;
 
-    private bool hasEntered = false; // ÇÃ·¹ÀÌ¾î°¡ ÀÌ¹Ì ÀÔÀåÇß´ÂÁö ¿©ºÎ¸¦ ÀúÀåÇÏ´Â º¯¼ö
+    private bool hasEntered = false; // í”Œë ˆì´ì–´ê°€ ì´ë¯¸ ì…ì¥í–ˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
 
-    // ÇÃ·¹ÀÌ¾î°¡ Ä·ÇÁ¿¡ ÁøÀÔÇÒ ¶§ È£ÃâµÇ´Â ¸Ş¼­µå
+    void Start()
+    {
+        // MonologueManager ê²Œì„ ì˜¤ë¸Œì íŠ¸ì— ë¶€ì°©ëœ MonologueManager ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
+        monologueManager = GameObject.FindObjectOfType<MonologueManager>();
+    }
+
+    // í”Œë ˆì´ì–´ê°€ ìº í”„ì— ì§„ì…í•  ë•Œ í˜¸ì¶œë˜ëŠ” ë©”ì„œë“œ
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !hasEntered)
         {
-            stageText.text = "STAGE 2 - ÀØÇôÁø ÇØº¯"; // ½ºÅ×ÀÌÁö ÅØ½ºÆ® ¾÷µ¥ÀÌÆ®
-            stageLevelText.text = "STAGE 2"; // ½ºÅ×ÀÌÁö ·¹º§ ÅØ½ºÆ®¸¦ ¾÷µ¥ÀÌÆ®
-            stageNameText.text = "ÀØÇôÁø ÇØº¯"; // ½ºÅ×ÀÌÁö ÀÌ¸§ ÅØ½ºÆ®¸¦ ¾÷µ¥ÀÌÆ®
+            stageText.text = "STAGE 2 - ìŠí˜€ì§„ í•´ë³€"; // ìŠ¤í…Œì´ì§€ í…ìŠ¤íŠ¸ ì—…ë°ì´íŠ¸
+            stageLevelText.text = "STAGE 2"; // ìŠ¤í…Œì´ì§€ ë ˆë²¨ í…ìŠ¤íŠ¸ë¥¼ ì—…ë°ì´íŠ¸
+            stageNameText.text = "ìŠí˜€ì§„ í•´ë³€"; // ìŠ¤í…Œì´ì§€ ì´ë¦„ í…ìŠ¤íŠ¸ë¥¼ ì—…ë°ì´íŠ¸
 
-            stageXIcon.SetActive(false); // Å¬¸®¾î ÇÑ ½ºÅ×ÀÌÁö ¾øÀ½ ¾ÆÀÌÄÜ ºñÈ°¼ºÈ­
-            stage1Icon.SetActive(true); // Stage 1 Å¬¸®¾î ¾ÆÀÌÄÜ È°¼ºÈ­
-            stageClearText.text = "Å¬¸®¾îÇÑ ½ºÅ×ÀÌÁöÀÔ´Ï´Ù.";
+            stageXIcon.SetActive(false); // í´ë¦¬ì–´ í•œ ìŠ¤í…Œì´ì§€ ì—†ìŒ ì•„ì´ì½˜ ë¹„í™œì„±í™”
+            stage1Icon.SetActive(true); // Stage 1 í´ë¦¬ì–´ ì•„ì´ì½˜ í™œì„±í™”
+            stageClearText.text = "í´ë¦¬ì–´í•œ ìŠ¤í…Œì´ì§€ì…ë‹ˆë‹¤.";
 
-            drillDuckHealthBar.SetActive(false); // ÀÌÀü ½ºÅ×ÀÌÁö º¸½º Ã¼·Â ¹Ù ºñÈ°¼ºÈ­
+            drillDuckHealthBar.SetActive(false); // ì´ì „ ìŠ¤í…Œì´ì§€ ë³´ìŠ¤ ì²´ë ¥ ë°” ë¹„í™œì„±í™”
 
-            StartCoroutine(ShowStagePanel());
+            ShowStagePanel();
 
-            hasEntered = true; // ÇÃ·¹ÀÌ¾î°¡ ÀÔÀåÇßÀ½À» Ç¥½Ã
+            hasEntered = true; // í”Œë ˆì´ì–´ê°€ ì…ì¥í–ˆìŒì„ í‘œì‹œ
+            Debug.Log("!!!!!!!!!!!!!!!!!!!");
+            monologueManager.CloseMonologue();
+            Debug.Log("?????????????????");
         }
     }
 
-    // 5ÃÊ°£ ½ºÅ×ÀÌÁö ÆĞ³ÎÀ» È°¼ºÈ­ÇÏ°í, ´Ù½Ã ºñÈ°¼ºÈ­ ÇÏ´Â ÄÚ·çÆ¾
-    IEnumerator ShowStagePanel()
+    // 5ì´ˆê°„ ìŠ¤í…Œì´ì§€ íŒ¨ë„ì„ í™œì„±í™”í•˜ê³ , ë‹¤ì‹œ ë¹„í™œì„±í™” í•˜ëŠ” ì½”ë£¨í‹´
+    void ShowStagePanel()
     {
         stagePanel.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
+        Invoke("CloseStagePanel", 1.5f);
+    }
+
+    void CloseStagePanel()
+    {
         stagePanel.SetActive(false);
     }
 }

@@ -106,17 +106,7 @@ public class DungeonEntrance : MonoBehaviour
             finalStageIcon.SetActive(false); // Final Stage 클리어 아이콘 비활성화
             stageClearText.text = "클리어한 스테이지가 없습니다.";
 
-            StartCoroutine(ShowStagePanel());
-
             hasEntered = true; // 플레이어가 입장했음을 표시
         }
-    }
-
-    // 5초간 스테이지 패널을 활성화하고, 다시 비활성화 하는 코루틴
-    IEnumerator ShowStagePanel()
-    {
-        stagePanel.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
-        stagePanel.SetActive(false);
     }
 }

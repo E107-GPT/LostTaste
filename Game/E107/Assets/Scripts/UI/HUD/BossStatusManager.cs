@@ -169,7 +169,7 @@ public class BossStatusManager : MonoBehaviour
             CongratulationsImagePanel.SetActive(true);
             CongratulationsTitleText.text = "마왕을 물리쳤습니다!";
             stageClearText.text = "모든 스테이지를 클리어했습니다!";
-            adventureResultsWindow.SetActive(true);
+            // adventureResultsWindow.SetActive(true);
         }
     }
 }
