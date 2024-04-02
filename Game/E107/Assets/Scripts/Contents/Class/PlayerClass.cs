@@ -120,7 +120,7 @@ public class PlayerClass : MonoBehaviourPunCallbacks
         _clothes["NoneBody"].SetActive(true);
 
 
-        _playerController.ObtainWeapon("0028_BubbleWand");
+        _playerController.ObtainWeapon("0000_Fist");
 
         _classSkill = gameObject.GetOrAddComponent<EmptySkill>();
     }
@@ -172,7 +172,7 @@ public class PlayerClass : MonoBehaviourPunCallbacks
         _clothes["MageBackPack"].SetActive(true);
 
 
-        _playerController.ObtainWeapon("0028_BubbleWand");
+        _playerController.ObtainWeapon("0047_IceWand");
 
         _classSkill = gameObject.GetOrAddComponent<MageClassSkill>();
     }
@@ -191,7 +191,7 @@ public class PlayerClass : MonoBehaviourPunCallbacks
         _clothes["NinjaMask"].SetActive(true);
 
 
-        _playerController.ObtainWeapon("0012_HeroSword");
+        _playerController.ObtainWeapon("0046_ThreeMinuteDagger");
 
         _classSkill = gameObject.GetOrAddComponent<NinjaClassSkill>();
     }
