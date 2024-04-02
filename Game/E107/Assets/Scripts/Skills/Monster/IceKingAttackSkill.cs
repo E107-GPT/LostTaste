@@ -33,9 +33,9 @@ public class IceKingAttackSkill : Skill
         skillObj.localScale = new Vector3(1.0f, 3.0f, _range / 2);
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.IceKingCleaveEffect, Root);
-        ps.transform.position = skillObj.transform.position - skillObj.transform.forward * 3.0f;
+        ps.transform.position = skillObj.transform.position - skillObj.transform.forward;
 
-        float moveDuration = 0.33f;
+        float moveDuration = 0.42f;
         float timer = 0;
         float speed = 20.0f;
         while (timer < moveDuration)
@@ -47,10 +47,10 @@ public class IceKingAttackSkill : Skill
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.1f);
+        // yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(skillObj.gameObject);
 
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.7f);
         Managers.Effect.Stop(ps);
     }
 }

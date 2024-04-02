@@ -39,7 +39,7 @@ public class IceKingController : MonsterController
     private void RandomPatternSelector()
     {
         int rand = Random.Range(0, 101);
-        if (rand <= 30)
+        if (rand <= 0)
         {
             _statemachine.ChangeState(new IceKingSpikeState(this));
         }

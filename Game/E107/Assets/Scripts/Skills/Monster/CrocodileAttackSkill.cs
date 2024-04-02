@@ -32,8 +32,10 @@ public class CrocodileAttackSkill : Skill
         skillObj.rotation = Root.rotation;
 
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.1f);
         Managers.Resource.Destroy(skillObj.gameObject);
+
+        yield return new WaitForSeconds(0.3f);
         Managers.Effect.Stop(ps);
     }
 }

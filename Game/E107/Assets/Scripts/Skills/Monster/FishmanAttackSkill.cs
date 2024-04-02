@@ -34,7 +34,7 @@ public class FishmanAttackSkill : Skill
         {
             Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.55f);
 
             ParticleSystem ps = Managers.Effect.Play(Define.Effect.FishmanAttackEffect, Root);
             Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
@@ -45,8 +45,10 @@ public class FishmanAttackSkill : Skill
             skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
             skillObj.rotation = Root.rotation;
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
             Managers.Resource.Destroy(skillObj.gameObject);
+
+            //yield return 
             Managers.Effect.Stop(ps);
         }
         #endregion

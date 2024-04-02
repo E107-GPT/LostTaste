@@ -31,7 +31,7 @@ public class SalamanderAttackSkill : Skill
             dir = new Vector3(dir.x, 0, dir.z);
             Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
 
             ParticleSystem ps = Managers.Effect.Play(Define.Effect.SalamanderFlameEffect, Root);
             Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
@@ -40,8 +40,10 @@ public class SalamanderAttackSkill : Skill
             ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 
             skillObj.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            skillObj.position = Root.transform.position;
-            skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
+            Vector3 psForward = ps.transform.TransformDirection(Vector3.forward * 1.2f);
+            skillObj.position = ps.transform.position + psForward;
+            //skillObj.position = Root.transform.position;
+            //skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
             skillObj.rotation.SetLookRotation(dir);
 
             float moveDuration = 1.1f; // 투사체가 날아가는 시간을 설정합니다.

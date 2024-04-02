@@ -62,7 +62,7 @@ public class DrillDuckAttackSkill : Skill
             skillObj.localScale = new Vector3(1.8f, 6.0f, _range + 0.3f);    // 5.0f
             
 
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.1f);
             Managers.Resource.Destroy(skillObj.gameObject);
 
             yield return new WaitForSeconds(0.8f);
