@@ -49,6 +49,8 @@ public class IceKingController : MonsterController
         }
     }
 
+    #region State
+
     // Normal Attack
     public override void EnterSkill()
     {
@@ -102,8 +104,10 @@ public class IceKingController : MonsterController
     {
         base.ExitIceKingSpikeState();
         _agent.avoidancePriority = 50;
-        _monsterInfo.Patterns[0].DeActiveCollider();
     }
+    #endregion
+
+    #region Photon
 
     [PunRPC]
     void RPC_ChangeIceKingSpikeState()
@@ -137,5 +141,5 @@ public class IceKingController : MonsterController
         MonsterAttacked(damage);
 
     }
-
+    #endregion
 }

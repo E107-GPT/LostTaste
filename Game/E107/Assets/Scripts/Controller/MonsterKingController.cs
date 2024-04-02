@@ -28,8 +28,7 @@ public class MonsterKingController : MonsterController
         base.Init();
 
         _stat = new MonsterStat(_unitType);
-        _jumpCoolDown = 13;      // 15
-        //_stat.Hp = _stat.MaxHp / 2;
+        _jumpCoolDown = 13;
     }
 
     protected override void ChangeStateFromMove()
@@ -251,7 +250,7 @@ public class MonsterKingController : MonsterController
 
         _animator.SetFloat("StabChargeSpeed", 0.3f);
         _animator.CrossFade("StabCharge", 0.3f, -1, 0);
-        _monsterInfo.Patterns[4].SetCollider(_stat.PatternDamage);
+        _monsterInfo.Patterns[4].SetCollider();
     }
 
     public override void ExecuteMonsterKingStabChargeState()
@@ -320,8 +319,6 @@ public class MonsterKingController : MonsterController
 
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
-            //Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
-            //transform.rotation = Quaternion.LookRotation(dirTarget.normalized, Vector3.up);
             photonView.RPC("RPC_ChangeMonsterKingJumpStartState", RpcTarget.Others);
         }
 
@@ -372,10 +369,7 @@ public class MonsterKingController : MonsterController
         }
         else
         {
-            // 테스트를 위함
-            // Managers.Sound.Play("Monster/KingJumpAirEffect", Define.Sound.Effect);
-            _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, new GameObject().transform);  // 이 부분만 남겼음
-            // StartCoroutine(CheckParticleAndChangeState(_particle.main.duration));
+            _particle = Managers.Effect.Play(Define.Effect.KingJumpAirEffect, new GameObject().transform);
             PrintText("PhotonNetwork 연결 필요!");
         }
         

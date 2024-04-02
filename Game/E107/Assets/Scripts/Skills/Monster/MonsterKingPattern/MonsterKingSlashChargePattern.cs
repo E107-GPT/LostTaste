@@ -14,21 +14,14 @@ public class MonsterKingSlashChargePattern : Pattern
 
     public override void DeActiveCollider()
     {
-        if (_particle != null)
-        {
-            Managers.Effect.Stop(_particle);
-            _particle = null;
-        }
+        Managers.Effect.Stop(_particle);
+        _particle = null;
     }
 
     public override void SetCollider()
     {
         Root = _controller.transform;
-
-        if ( _particle == null )
-        {
-            _particle = Managers.Effect.Play(Define.Effect.KingSlashStartEffect, Root);
-        }
+        _particle = Managers.Effect.Play(Define.Effect.KingSlashStartEffect, Root);
     }
 
     public override void SetCollider(int attackDamage)

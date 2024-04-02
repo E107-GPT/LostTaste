@@ -49,6 +49,7 @@ public class DrillDuckController : MonsterController
         }
     }
 
+    #region State
     public override void EnterSkill()
     {
         base.EnterSkill();
@@ -87,7 +88,7 @@ public class DrillDuckController : MonsterController
             _agent.SetDestination(destPos);
             photonView.RPC("RPC_ChangeDrillDuckSlideBeforeState", RpcTarget.Others);
         }
-        _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
+        _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
         _animator.CrossFade("BeforeSlide", 0.2f, -1, 0);
     }
     public override void ExcuteDrillDuckSlideBeforeState()
@@ -104,7 +105,7 @@ public class DrillDuckController : MonsterController
 
             if (aniTime >= 1.0f)
             {
-                _monsterInfo.Patterns[1].DeActiveCollider();
+                _monsterInfo.Patterns[0].DeActiveCollider();
                 _statemachine.ChangeState(new DrillDuckSlideState(this));
             }
         }
@@ -120,7 +121,7 @@ public class DrillDuckController : MonsterController
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         _agent.radius *= 2;
 
-        _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
+        _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
 
         _animator.CrossFade("Slide", 0.2f, -1, 0);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDrillDuckSlideState", RpcTarget.Others);
@@ -148,7 +149,7 @@ public class DrillDuckController : MonsterController
             }
             else if (aniTime <= 0.7f)
             {
-                _monsterInfo.Patterns[0].DeActiveCollider();
+                _monsterInfo.Patterns[1].DeActiveCollider();
             }
             else if (aniTime >= 1.0f)
             {
@@ -162,6 +163,9 @@ public class DrillDuckController : MonsterController
         _agent.avoidancePriority = 50;
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
+#endregion
+
+    #region Photon
     [PunRPC]
     void RPC_ChangeDrillDuckSlideBeforeState()
     {
@@ -202,4 +206,5 @@ public class DrillDuckController : MonsterController
         MonsterAttacked(damage);
 
     }
+    #endregion
 }

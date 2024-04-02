@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Controller에서 관리
-// DectPlayer의 위치를 갱신해야함
+/// <summary>
+/// Controller에서 관리
+/// DectPlayer의 위치를 갱신해야함
+/// </summary>
 public class MonsterKingJumpAirPattern : Pattern
 {
     //private MonsterKingController _controller;
