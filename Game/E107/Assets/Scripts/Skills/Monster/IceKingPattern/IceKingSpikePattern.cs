@@ -7,7 +7,6 @@ using static UnityEngine.ParticleSystem;
 public class IceKingSpikePattern : Pattern
 {
     private IceKingController _controller;
-    private Coroutine _coroutine;
     private Transform _sectorLoc;
 
     protected override void Init()
@@ -18,7 +17,6 @@ public class IceKingSpikePattern : Pattern
 
     IEnumerator IceSpike(int attackDamage)
     {
-        Debug.Log("HIT BOX START");
         yield return new WaitForSeconds(1.55f);
         Root = _controller.transform;
 
@@ -37,32 +35,18 @@ public class IceKingSpikePattern : Pattern
         yield return new WaitForSeconds(0.2f);
 
         Managers.Resource.Destroy(_sectorLoc.gameObject);
-        Debug.Log("HIT BOX STOP");
 
         yield return new WaitForSeconds(0.7f);
         
         Managers.Effect.Stop(_particleSystem);
-        Debug.Log("EFFECT STOP");
     }
 
     public override void DeActiveCollider()
     {
-        if (_coroutine != null)
-        {
-            // wait for seconds로 없애는 타이밍을 맞추기 힘들다
-            StopCoroutine(_coroutine);
-            _coroutine = null;
-            //if (_particleSystem != null) Managers.Effect.Stop(_particleSystem);
-            if (_sectorLoc != null) Managers.Resource.Destroy(_sectorLoc.gameObject);
-            
-        }
     }
     public override void SetCollider(int attackDamage)
     {
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(IceSpike(attackDamage));
-        }
+        StartCoroutine(IceSpike(attackDamage));
     }
 
     public override void SetCollider()

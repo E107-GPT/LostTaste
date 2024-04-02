@@ -34,7 +34,8 @@ public class NPC : MonoBehaviour, IPlayerInteractable
     {
         npcNamePanel.SetActive(false);
 
-        closeButton.onClick.AddListener(CloseManual);
+        if (closeButton != null)
+            closeButton.onClick.AddListener(CloseManual);
     }
 
     public virtual void OnInteracted(GameObject player)

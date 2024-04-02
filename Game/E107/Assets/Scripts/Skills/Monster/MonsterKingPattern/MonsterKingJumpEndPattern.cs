@@ -5,8 +5,6 @@ using UnityEngine;
 public class MonsterKingJumpEndPattern : Pattern
 {
     private MonsterKingController _controller;
-    private ParticleSystem _particle;
-    private Transform _cylinderLoc;
 
     protected override void Init()
     {
@@ -22,14 +20,14 @@ public class MonsterKingJumpEndPattern : Pattern
     {
         Root = _controller.transform;
 
-        _cylinderLoc = Managers.Resource.Instantiate("Patterns/KingJumpEndCollider").transform;
+        Transform _cylinderLoc = Managers.Resource.Instantiate("Patterns/KingJumpEndCollider").transform;
         _cylinderLoc.GetComponent<PatternObject>().Init(Root, attackDamage, _seq);
         _cylinderLoc.rotation = Quaternion.identity;
 
         Vector3 rootUp = Root.TransformDirection(Vector3.up);
         _cylinderLoc.position = Root.position + rootUp;
 
-        _particle = Managers.Effect.Play(Define.Effect.KingJumpEndEffect, _cylinderLoc);
+        ParticleSystem _particle = Managers.Effect.Play(Define.Effect.KingJumpEndEffect, _cylinderLoc);
         Managers.Sound.Play("Monster/KingJumpEndEffect", Define.Sound.Effect);
 
         yield return new WaitForSeconds(0.1f);

@@ -43,49 +43,13 @@ public class MonsterStat : Stat
             case UnitType.MonsterKing:
                 _detectRange = 30.0f;
                 _patternDamage = 40;
+                // HitDownEnd: PatternDamage - 10
+                // HitDownAfter: PatternDamage - 10
+                // Slash: PatternDamage - 5
+                // Stab: PatternDamage - 15
+                // JumpStart: PatternDamage - 30
+                // JumpEnd: PatternDamage + 20
                 break;
-
-            // Normal
-            //case UnitType.Mushroom:
-            //    _level = 1;
-            //    _detectRange = 15.0f;
-            //    break;
-            //case UnitType.TurtleSlime:
-            //    _level = 1;
-            //    _detectRange = 15.0f;
-            //    break;
-            //case UnitType.ToxicFlower:
-            //    _level = 1;
-            //    _detectRange = 15.0f;
-            //    break;
-            //case UnitType.Crab:
-            //    _level = 1;
-            //    _detectRange = 15.0f;
-            //    break;
-            //case UnitType.Fishman:
-            //    _level = 1;
-            //    _detectRange = 15.0f;
-            //    break;
-            //case UnitType.NagaWizard:
-            //    _level = 1;
-            //    _detectRange = 15.0f;
-            //    break;
-            //case UnitType.Demon:
-            //    _level = 1;
-            //    _detectRange = 15.0f;
-            //    break;
-            //case UnitType.Salamander:
-            //    _level = 1;
-            //    _detectRange = 15.0f;
-            //    break;
-            //case UnitType.Specter:
-            //    _level = 1;
-            //    _detectRange = 15.0f;
-            //    break;
-            //case UnitType.Skeleton:
-            //    _level = 1;
-            //    _detectRange = 15.0f;
-            //    break;
         }
     }
 }

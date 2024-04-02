@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
+/// <summary>
+/// 사용하지 않음( Not Used )
+/// MonsterKingHitDownPattern에서 사용( used in MonsterKingHitDownPattern )
+/// </summary>
 public class MonsterKingHitDownAfterPattern : Pattern
 {
     private MonsterKingController _controller;
-    private Coroutine _coroutine;
     private Transform _donutLoc;
 
     private const int _colliderCnt = 14;
@@ -45,16 +48,10 @@ public class MonsterKingHitDownAfterPattern : Pattern
             go.transform.localPosition = pos;
         }
 
-        // effect를 생성 
-
-        // 소리 재생
         Managers.Sound.Play("Monster/KingHitDownAfterEffect", Define.Sound.Effect);
 
         yield return new WaitForSeconds(0.2f);
-        // hit box 안에 effect가 존재
         Managers.Resource.Destroy(_donutLoc.gameObject);
-
-        // effect가 끝나는 시간까지 대기하다가 없앰
     }
 
     public override void SetCollider(int attackDamage)

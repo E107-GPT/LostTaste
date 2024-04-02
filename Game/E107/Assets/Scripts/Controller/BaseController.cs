@@ -142,6 +142,7 @@ public abstract class BaseController : MonoBehaviour
     public virtual void ExecuteBow() { }
     public virtual void ExitBow() { }
 
+    #region DrillDuck State
     // DrillDuckSlideBeforeState - not loop
     public virtual void EnterDrillDuckSlideBeforeState() { }
     public virtual void ExcuteDrillDuckSlideBeforeState() { }
@@ -151,17 +152,23 @@ public abstract class BaseController : MonoBehaviour
     public virtual void EnterDrillDuckSlideState() { }
     public virtual void ExcuteDrillDuckSlideState() { }
     public virtual void ExitDrillDuckSlideState() { }
+    #endregion
 
+    #region Crocodile State
     // CrocodileSwordState - not loop
     public virtual void EnterCrocodileSwordState() { }
     public virtual void ExcuteCrocodileSwordState() { }
     public virtual void ExitCrocodileSwordState() { }
+    #endregion
 
+    #region IceKing State
     // IceKingSpikeState - not loop
     public virtual void EnterIceKingSpikeState() { }
     public virtual void ExcuteIceKingSpikeState() { }
     public virtual void ExitIceKingSpikeState() { }
+    #endregion
 
+    #region MonsterKing State
     // MonsterKing - not loop
     public virtual void EnterMonsterKingHitDownChargeState() { }    // HitDown Charge
     public virtual void ExecuteMonsterKingHitDownChargeState() { }
@@ -193,7 +200,7 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void EnterMonsterKingJumpEndState() { }		// JumpEnd
 	public virtual void ExecuteMonsterKingJumpEndState() { }
 	public virtual void ExitMonsterKingJumpEndState() { }
-
+    #endregion
 
 
 

@@ -50,7 +50,7 @@ public class Stat
                 _moveSpeed = 5.0f;
                 _attackRange = 1.8f;
                 break;
-
+            #region Stage 1
             case Define.UnitType.Mushroom:      // stage 1
                 _hp = 230;
                 _maxHp = 230;
@@ -79,7 +79,8 @@ public class Stat
                 _moveSpeed = 8.0f;
                 _attackRange = 3.0f;
                 break;
-
+            #endregion
+            #region State 2
             case Define.UnitType.Crab:          // stage 2
                 _hp = 300;
                 _maxHp = 300;
@@ -108,7 +109,8 @@ public class Stat
                 _moveSpeed = 8.0f;
                 _attackRange = 6.0f;
                 break;
-
+            #endregion
+            #region State 3
             case Define.UnitType.Demon:         // stage 3
                 _hp = 380;
                 _maxHp = 380;
@@ -144,7 +146,7 @@ public class Stat
                 _moveSpeed = 8.0f;
                 _attackRange = 5.0f;
                 break;
-
+            #endregion
             case Define.UnitType.MonsterKing:   // Final Stage
                 _hp = 5000;
                 _maxHp = 5000;

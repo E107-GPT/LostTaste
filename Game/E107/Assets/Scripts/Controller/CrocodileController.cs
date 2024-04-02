@@ -52,6 +52,7 @@ public class CrocodileController : MonsterController
         }
     }
 
+    #region State
     // Normal Attack
     public override void EnterSkill()
     {
@@ -102,18 +103,6 @@ public class CrocodileController : MonsterController
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             
-            //if (aniTime <= 0.2f)
-            //{
-            //    _animator.SetFloat("SwordSpeed", 0.2f);
-            //}
-            //else if (aniTime <= 0.23f)
-            //{
-            //    _animator.SetFloat("SwordSpeed", 0.06f);
-            //}
-            //else if (aniTime <= 1.0f)
-            //{
-            //    _animator.SetFloat("SwordSpeed", 1.0f);
-            //}
             if (aniTime >= 1.0f)
             {
                 _statemachine.ChangeState(new IdleState(this));
@@ -126,9 +115,10 @@ public class CrocodileController : MonsterController
         base.ExitCrocodileSwordState();
         _swordPS.Stop();
         _agent.avoidancePriority = 50;
-        //_monsterInfo.Patterns[0].DeActiveCollider();
     }
+    #endregion
 
+    #region Photon
     [PunRPC]
     void RPC_ChangeCrocodileSwordState()
     {
@@ -161,4 +151,5 @@ public class CrocodileController : MonsterController
         MonsterAttacked(damage);
 
     }
+    #endregion
 }

@@ -18,7 +18,7 @@ public class MonsterKingStabChargePattern : Pattern
     {
     }
 
-    IEnumerator CheckPatternObject(int attackDamage)
+    IEnumerator CheckPatternObject()
     {
         _leftArm = _controller.LeftArm.transform;
 
@@ -31,11 +31,11 @@ public class MonsterKingStabChargePattern : Pattern
 
     public override void SetCollider(int attackDamage)
     {
-        StartCoroutine(CheckPatternObject(attackDamage));
+        throw new System.NotImplementedException();
     }
 
     public override void SetCollider()
     {
-        throw new System.NotImplementedException();
+        StartCoroutine(CheckPatternObject());
     }
 }
