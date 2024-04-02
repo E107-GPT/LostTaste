@@ -5,10 +5,6 @@ using UnityEngine;
 public class MonsterKingStabPattern : Pattern
 {
     private MonsterKingController _controller;
-    private Coroutine _coroutine;
-
-    private Transform _leftArm;
-    // private Transform _stabLoc;
 
     protected override void Init()
     {
@@ -17,13 +13,6 @@ public class MonsterKingStabPattern : Pattern
     }
     public override void DeActiveCollider()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-            _coroutine = null;
-            //if (_particle != null) Managers.Effect.Stop(_particle);
-            //if (_stabLoc != null) Managers.Resource.Destroy(_stabLoc.gameObject);
-        }
     }
 
     IEnumerator CheckPatternObject(int attackDamage)

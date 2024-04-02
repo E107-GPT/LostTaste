@@ -46,6 +46,7 @@ public class MonsterKingHitDownPattern : Pattern
         Managers.Effect.Stop(_particle);
 
         #region HitDownAfter
+
         Transform _donutLoc = Managers.Resource.Instantiate("Patterns/KingDonutCenter").transform;
         ParticleSystem[] particles = new ParticleSystem[_colliderCnt];
 

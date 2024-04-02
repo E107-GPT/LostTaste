@@ -6,7 +6,6 @@ public class CrocodileSwordPattern : Pattern
 {
     private CrocodileController _controller;
     private ParticleSystem _particleSystem;
-    private Coroutine _fireSword;
 
     protected override void Init()
     {
@@ -57,7 +56,7 @@ public class CrocodileSwordPattern : Pattern
 
     public override void SetCollider(int attackDamage)
     {
-        _fireSword = StartCoroutine(FireSword(attackDamage));
+        StartCoroutine(FireSword(attackDamage));
     }
 
     public override void SetCollider()
