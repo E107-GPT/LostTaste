@@ -16,7 +16,7 @@ public class DrillDuckAttackSkill : Skill
 
     protected override void Init()
     {
-        SkillCoolDownTime = 0.2f;
+        SkillCoolDownTime = 0.15f;
         _controller = GetComponent<DrillDuckController>();
         _animator = _controller.GetComponent<Animator>();
 
@@ -26,7 +26,8 @@ public class DrillDuckAttackSkill : Skill
 
     protected override IEnumerator SkillCoroutine()
     {
-        _animator.CrossFade("AttackBefore", 0.3f, -1, 0);
+        _animator.SetFloat("AttackBeforeSpeed", 0.5f);
+        _animator.CrossFade("AttackBefore", 0.2f, -1, 0);
 
         yield return new WaitForSeconds(SkillCoolDownTime);
 
@@ -36,9 +37,10 @@ public class DrillDuckAttackSkill : Skill
         }
         else
         {
+            _animator.SetFloat("AttackSpeed", 0.5f);
             _animator.CrossFade("Attack", 0.3f, -1, 0);
 
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(0.5f);
 
             ParticleSystem ps = Managers.Effect.Play(Define.Effect.DrillDuckAttackEffect, Root);
             Vector3 rootForward = Root.TransformDirection(Vector3.forward * _range);
@@ -46,18 +48,18 @@ public class DrillDuckAttackSkill : Skill
             Vector3 rootUp = Root.TransformDirection(Vector3.up * 1.5f);
             ps.transform.position = Root.position + rootForward + rootRight + rootUp;
 
-            yield return new WaitForSeconds(0.2f);
+            //yield return new WaitForSeconds(0.2f);
 
             Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
             skillObj.GetComponent<SkillObject>().SetUp(Root, _damage, _seq);
 
             skillObj.rotation = Root.rotation;
-            rootForward = Root.TransformDirection(Vector3.forward * (_range / 2));
-            rootRight = Root.TransformDirection(Vector3.right * 0.8f);
+            rootForward = Root.TransformDirection(Vector3.forward * 2.0f);
+            rootRight = Root.TransformDirection(Vector3.right * 0.65f);
             rootUp = Root.TransformDirection(Vector3.up * 1.5f);
 
             skillObj.position = Root.position + rootForward + rootRight + rootUp;
-            skillObj.localScale = new Vector3(1.7f, 6.0f, _range);    // 5.0f
+            skillObj.localScale = new Vector3(1.8f, 6.0f, _range + 0.3f);    // 5.0f
             
 
             yield return new WaitForSeconds(0.15f);
