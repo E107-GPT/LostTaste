@@ -41,8 +41,8 @@ public class DemonAttackSkill : Skill
             ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 
             skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
-            skillObj.position = Root.transform.position;
-            skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
+            Vector3 psForward = ps.transform.TransformDirection(Vector3.forward * 2.0f);
+            skillObj.position = ps.transform.position + psForward;
             skillObj.rotation.SetLookRotation(dir);
 
             float moveDuration = 1.1f; // 투사체가 날아가는 시간을 설정합니다.
