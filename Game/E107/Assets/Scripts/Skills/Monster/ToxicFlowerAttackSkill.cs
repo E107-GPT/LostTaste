@@ -32,7 +32,7 @@ public class ToxicFlowerAttackSkill : Skill
             dir = new Vector3(dir.x, 0, dir.z);
             Root.GetComponent<Animator>().CrossFade("Attack", 0.3f, -1, 0);
 
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.25f);
 
             ParticleSystem ps = Managers.Effect.Play(Define.Effect.ToxicFlowerMissileEffect, Root);
             Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
@@ -40,7 +40,7 @@ public class ToxicFlowerAttackSkill : Skill
 
             ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
 
-            skillObj.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+            skillObj.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             skillObj.position = Root.transform.position;
             skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
             skillObj.rotation.SetLookRotation(dir);

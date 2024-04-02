@@ -45,8 +45,10 @@ public class MushroomAttackSkill : Skill
 
             ParticleSystem ps = Managers.Effect.Play(Define.Effect.MushroomAttackEffect, skillObj);
 
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.1f);
             Managers.Resource.Destroy(skillObj.gameObject);
+
+            yield return new WaitForSeconds(0.2f);
             Managers.Effect.Stop(ps);
         }
         #endregion
