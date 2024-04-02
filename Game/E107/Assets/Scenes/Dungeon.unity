@@ -5557,6 +5557,10 @@ MonoBehaviour:
       monsterPrefab: {fileID: 7366281943995135627, guid: f666c966b308d3449a8febf41c3fe8e5, type: 3}
     - spawnPoint: {fileID: 2587490529438456170, guid: 6769a55104ca7314184ffc3f8c5ee63b, type: 3}
       monsterPrefab: {fileID: 7366281943995135627, guid: f666c966b308d3449a8febf41c3fe8e5, type: 3}
+    - spawnPoint: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      monsterPrefab: {fileID: 6128315377525838514, guid: 55ab4b2de0b25a54e9f9feb1386f20d5, type: 3}
+    - spawnPoint: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      monsterPrefab: {fileID: 6128315377525838514, guid: 55ab4b2de0b25a54e9f9feb1386f20d5, type: 3}
   - mapName: FinalBoss
     spawnPoints:
     - spawnPoint: {fileID: 3654152708261117529, guid: 4d231404bf73e8a469627b396749faa5, type: 3}
@@ -10614,6 +10618,63 @@ MonoBehaviour:
   sceneViewId: 303
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!1001 &6100284415653898505
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 204.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 606.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.080109864
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.99678606
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 189.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953624672509723619, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8254608753809548374, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
+      propertyPath: m_Name
+      value: IceBoss-Demon02
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e6b0c61417d3b1d489233dd6c8d19f5b, type: 3}
 --- !u!1 &6783761048029793692 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 764613544670264160, guid: 98be26a488394c944abbb6bd6878e7cb, type: 3}
@@ -11952,6 +12013,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7166908767650125559, guid: ad5b15d1531efb84d835d74b463b73f6, type: 3}
   m_PrefabInstance: {fileID: 7599961049909477969}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8812308208151250666
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8940316586688863832, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_Name
+      value: IceBoss-Demon01
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 197.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 606.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.12193289
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9925384
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 165.993
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164640799625935705, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2e3f56673be9b124397262da7ed1d80e, type: 3}
 --- !u!1 &9107678559587164125 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6546076504525848899, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
@@ -11984,3 +12102,5 @@ SceneRoots:
   - {fileID: 1047851868}
   - {fileID: 1725151768}
   - {fileID: 1234755032}
+  - {fileID: 8812308208151250666}
+  - {fileID: 6100284415653898505}
