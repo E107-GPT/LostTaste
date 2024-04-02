@@ -13,6 +13,7 @@ public class HUDManager : MonoBehaviour
     private PhotonManager photonManager;
     private bool isGameMenuOpen = false;
     private bool isPartyInfoOpen = false;
+    private ManualBoardUI manualBoardUI;
 
     // 모험 상태
     [Header("[ 모험 상태 ]")]
@@ -81,36 +82,41 @@ public class HUDManager : MonoBehaviour
         // 플레이어 상태 업데이트
         UpdatePlayerStatus();
 
-        // ESC 눌렀을 때
-        if (Input.GetKeyDown(KeyCode.Escape) && !isPartyInfoOpen && !isGameMenuOpen)
-        {
-            // 게임 메뉴를 여는 이벤트
-            GameMenuButton.onClick.Invoke();
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && !isPartyInfoOpen && isGameMenuOpen)
-        {
-            // 게임 메뉴를 닫는 이벤트
-            comeBackToGameCampButton.onClick.Invoke();
-            comeBackToGameDungeonButton.onClick.Invoke();
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && isPartyInfoOpen && !isGameMenuOpen)
-        {
-            // 파티 정보를 닫는 이벤트
-            partyListCloseButton.onClick.Invoke();
-            myPartyCloseButton.onClick.Invoke();
-        }
+        manualBoardUI = GameObject.FindObjectOfType<ManualBoardUI>();
 
-        // Tab 눌렀을 때
-        if (Input.GetKeyDown(KeyCode.Tab) && !isGameMenuOpen && !isPartyInfoOpen)
+        if (manualBoardUI != null && !manualBoardUI.isManualOpen)
         {
-            // 파티 정보를 여는 이벤트
-            partyInfoButton.onClick.Invoke();
-        } 
-        else if (Input.GetKeyDown(KeyCode.Tab) && !isGameMenuOpen && isPartyInfoOpen)
-        {
-            // 파티 정보를 닫는 이벤트
-            partyListCloseButton.onClick.Invoke();
-            myPartyCloseButton.onClick.Invoke();
+            // ESC 눌렀을 때
+            if (Input.GetKeyDown(KeyCode.Escape) && !isPartyInfoOpen && !isGameMenuOpen)
+            {
+                // 게임 메뉴를 여는 이벤트
+                GameMenuButton.onClick.Invoke();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && !isPartyInfoOpen && isGameMenuOpen)
+            {
+                // 게임 메뉴를 닫는 이벤트
+                comeBackToGameCampButton.onClick.Invoke();
+                comeBackToGameDungeonButton.onClick.Invoke();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && isPartyInfoOpen && !isGameMenuOpen)
+            {
+                // 파티 정보를 닫는 이벤트
+                partyListCloseButton.onClick.Invoke();
+                myPartyCloseButton.onClick.Invoke();
+            }
+
+            // Tab 눌렀을 때
+            if (Input.GetKeyDown(KeyCode.Tab) && !isGameMenuOpen && !isPartyInfoOpen)
+            {
+                // 파티 정보를 여는 이벤트
+                partyInfoButton.onClick.Invoke();
+            }
+            else if (Input.GetKeyDown(KeyCode.Tab) && !isGameMenuOpen && isPartyInfoOpen)
+            {
+                // 파티 정보를 닫는 이벤트
+                partyListCloseButton.onClick.Invoke();
+                myPartyCloseButton.onClick.Invoke();
+            }
         }
     }
 

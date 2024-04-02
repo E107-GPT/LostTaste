@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ManualBoardUI : MonoBehaviour
 {
+    public bool isManualOpen = false;
+
     public enum ManualType
     {
         Basic, // 기본 조작법
@@ -19,6 +21,7 @@ public class ManualBoardUI : MonoBehaviour
     // 조작법을 표시하는 함수
     public void ShowManual(ManualBoardUI.ManualType type)
     {
+        isManualOpen = true;
         currentManualType = type; // 현재 타입 설정
         basicManualPanel.SetActive(type == ManualType.Basic); // 조건에 따라 기본 조작법 패널 활성화
         combatManualPanel.SetActive(type == ManualType.Combat); // 조건에 따라 전투 조작법 패널 활성화
@@ -26,6 +29,7 @@ public class ManualBoardUI : MonoBehaviour
 
     public void HideManual()
     {
+        isManualOpen = false;
         basicManualPanel.SetActive(false); // 기본 조작법 패널 비활성화
         combatManualPanel.SetActive(false); // 전투 조작법 패널 비활성화
     }

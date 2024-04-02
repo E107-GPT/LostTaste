@@ -4820,6 +4820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 401395e6b1fd8534488ada4c5367eefa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isManualOpen: 0
   basicManualPanel: {fileID: 1893138735}
   combatManualPanel: {fileID: 2089617985}
 --- !u!1 &821733684 stripped
@@ -4870,6 +4871,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4853912937300105968, guid: 98aeeb7f66fe8a141820e37643b2c62d, type: 3}
   m_PrefabInstance: {fileID: 677012472}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &845101439 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1233877948917260497, guid: 7077ede2a1212604d9a455af0a76d0ac, type: 3}
+  m_PrefabInstance: {fileID: 649613604}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &903921909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5071,6 +5083,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &982115369 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4268158857050150929, guid: 41f19464c02c5ca40a4a7d7778643fc9, type: 3}
+  m_PrefabInstance: {fileID: 1066304798}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &983796363 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3869633547308172995, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
@@ -10746,6 +10769,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 695884727}
     - target: {fileID: 649278867852220409, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
+    - target: {fileID: 649278867852220409, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
       objectReference: {fileID: 818002715}
@@ -10753,10 +10780,18 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 649278867852220409, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 656245860787626102, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: HUD
       value: 
       objectReference: {fileID: 695884727}
+    - target: {fileID: 656245860787626102, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
     - target: {fileID: 656245860787626102, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
@@ -10765,6 +10800,10 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 656245860787626102, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 950050797252894588, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: portal
       value: 
@@ -10858,6 +10897,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 695884727}
     - target: {fileID: 3041545939471846228, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
+    - target: {fileID: 3041545939471846228, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
       objectReference: {fileID: 818002715}
@@ -10865,10 +10908,18 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 3041545939471846228, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 3256958282461578705, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: HUD
       value: 
       objectReference: {fileID: 695884727}
+    - target: {fileID: 3256958282461578705, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
     - target: {fileID: 3256958282461578705, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
@@ -10877,10 +10928,18 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 3256958282461578705, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 4166468097419159355, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: HUD
       value: 
       objectReference: {fileID: 695884727}
+    - target: {fileID: 4166468097419159355, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
     - target: {fileID: 4166468097419159355, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
@@ -10889,10 +10948,18 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 4166468097419159355, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 4317078264407904411, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: HUD
       value: 
       objectReference: {fileID: 695884727}
+    - target: {fileID: 4317078264407904411, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
     - target: {fileID: 4317078264407904411, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
@@ -10901,6 +10968,10 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 4317078264407904411, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 4317078264407904411, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueTexts.Array.data[0]
       value: "\uB098\uB294 \uC804\uAD6D\uC744 \uB3CC\uBA70 \uD3AB\uC744 \uD314\uACE0
@@ -10963,6 +11034,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 695884727}
     - target: {fileID: 6644962785291218107, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
+    - target: {fileID: 6644962785291218107, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
       objectReference: {fileID: 818002715}
@@ -10970,10 +11045,18 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 6644962785291218107, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 6780136595093013580, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: HUD
       value: 
       objectReference: {fileID: 695884727}
+    - target: {fileID: 6780136595093013580, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
     - target: {fileID: 6780136595093013580, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
@@ -10982,6 +11065,10 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 6780136595093013580, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 7692796324622983203, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: portal.Array.size
       value: 1
@@ -10999,6 +11086,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 695884727}
     - target: {fileID: 8444290271435604805, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
+    - target: {fileID: 8444290271435604805, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
       objectReference: {fileID: 818002715}
@@ -11006,10 +11097,18 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 8444290271435604805, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 8596655034759514108, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: HUD
       value: 
       objectReference: {fileID: 695884727}
+    - target: {fileID: 8596655034759514108, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
     - target: {fileID: 8596655034759514108, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
@@ -11018,10 +11117,18 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 8596655034759514108, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 8682761719351120936, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: HUD
       value: 
       objectReference: {fileID: 695884727}
+    - target: {fileID: 8682761719351120936, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
     - target: {fileID: 8682761719351120936, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
@@ -11030,6 +11137,10 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 8682761719351120936, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 8878115851015421689, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: HUD
       value: 
@@ -11039,13 +11150,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 818002716}
     - target: {fileID: 8878115851015421689, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
+    - target: {fileID: 8878115851015421689, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: closeButton
+      value: 
+      objectReference: {fileID: 845101439}
+    - target: {fileID: 8878115851015421689, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 8878115851015421689, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     - target: {fileID: 9019863678652770044, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: HUD
       value: 
       objectReference: {fileID: 695884727}
+    - target: {fileID: 9019863678652770044, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
     - target: {fileID: 9019863678652770044, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
       propertyPath: dialogueUI
       value: 
@@ -11054,6 +11181,10 @@ PrefabInstance:
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 9019863678652770044, guid: 194c365083276fe4cbd38008d00a739e, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11721,13 +11852,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7413903341861275419, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: HUD
+      value: 
+      objectReference: {fileID: 695884727}
+    - target: {fileID: 7413903341861275419, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: boardUI
       value: 
       objectReference: {fileID: 818002716}
     - target: {fileID: 7413903341861275419, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: ChatWindow
+      value: 
+      objectReference: {fileID: 1385313707}
+    - target: {fileID: 7413903341861275419, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: closeButton
+      value: 
+      objectReference: {fileID: 982115369}
+    - target: {fileID: 7413903341861275419, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
       propertyPath: npcNamePanel
       value: 
       objectReference: {fileID: 7428490330655023917}
+    - target: {fileID: 7413903341861275419, guid: 6725bc5a6eb998549b950c9466229e5c, type: 3}
+      propertyPath: ChatBackground
+      value: 
+      objectReference: {fileID: 360352065}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

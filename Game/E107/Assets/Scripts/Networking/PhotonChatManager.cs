@@ -9,35 +9,36 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 /// <summary>
-/// Ã¤ÆÃÃ¢À» °ü¸®ÇÏ´Â Å¬·¡½ºÀÔ´Ï´Ù.
+/// ì±„íŒ…ì°½ì„ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤ì…ë‹ˆë‹¤.
 /// </summary>
 public class PhotonChatManager : MonoBehaviour
 {
-    // ------------------------------------------------ º¯¼ö ¼±¾ğ ------------------------------------------------
-    // Ã¤ÆÃ Background
-    [Header("[ Ã¤ÆÃ Background ]")]
-    public GameObject chatBackground; // Ã¤ÆÃÃ¢ È°¼ºÈ­½Ã Ä³¸¯ÅÍ Á¶ÀÛ ºÒ°¡´ÉÇÏ°Ô ÇÏ±â À§ÇØ È­¸é ÀüÃ¼¸¦ °¡¸®´Â Åõ¸íÇÑ GameObject
+    // ------------------------------------------------ ë³€ìˆ˜ ì„ ì–¸ ------------------------------------------------
 
-    // Ã¤ÆÃÃ¢
-    [Header("[ Ã¤ÆÃÃ¢ ]")]
+    // ì±„íŒ… Background
+    [Header("[ ì±„íŒ… Background ]")]
+    public GameObject chatBackground; // ì±„íŒ…ì°½ í™œì„±í™”ì‹œ ìºë¦­í„° ì¡°ì‘ ë¶ˆê°€ëŠ¥í•˜ê²Œ í•˜ê¸° ìœ„í•´ í™”ë©´ ì „ì²´ë¥¼ ê°€ë¦¬ëŠ” íˆ¬ëª…í•œ GameObject
+
+    // ì±„íŒ…ì°½
+    [Header("[ ì±„íŒ…ì°½ ]")]
     public GameObject ChattingPanel;
 
-    // Ã¤ÆÃ InputField
-    [Header("[ Ã¤ÆÃ InputField ]")]
+    // ì±„íŒ… InputField
+    [Header("[ ì±„íŒ… InputField ]")]
     public TMP_InputField chatInputField;
 
-    // Ã¤ÆÃ ÄÁÅ×ÀÌ³Ê
-    [Header("[ Ã¤ÆÃ ÄÁÅ×ÀÌ³Ê ]")]
+    // ì±„íŒ… ì»¨í…Œì´ë„ˆ
+    [Header("[ ì±„íŒ… ì»¨í…Œì´ë„ˆ ]")]
     public GameObject chatContainer;
 
-    // Ã¤ÆÃ ¾ÆÀÌÅÛ
-    [Header("[ Ã¤ÆÃ ¾ÆÀÌÅÛ ]")]
+    // ì±„íŒ… ì•„ì´í…œ
+    [Header("[ ì±„íŒ… ì•„ì´í…œ ]")]
     public GameObject[] ChatItem;
 
-    // Ã¤ÆÃÃ¢ ¿ÀÇÂ ¿©ºÎ
+    // ì±„íŒ…ì°½ ì˜¤í”ˆ ì—¬ë¶€
     bool isChatOpen;
 
-    // Ã¤ÆÃÃ¢ È°¼ºÈ­ ¿©ºÎ
+    // ì±„íŒ…ì°½ í™œì„±í™” ì—¬ë¶€
     bool isChatActive;
 
     // Serialization to send to Photon
@@ -49,8 +50,8 @@ public class PhotonChatManager : MonoBehaviour
         public string message;
     }
 
-
     public int playerIndex;
+
 
     // ------------------------------------------------ Life Cylce ------------------------------------------------
 
@@ -69,26 +70,26 @@ public class PhotonChatManager : MonoBehaviour
             ChattingPanel.SetActive(isChatOpen);
         }
 
-        // Enter Å°¸¦ ÀÎ½Ä
+        // Enter í‚¤ë¥¼ ì¸ì‹
         if (isChatOpen && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)))
         {
-            if (isChatActive)
+            if (!isChatActive && chatInputField.isFocused == false)
             {
-                SendMessage(); // ¸Ş¼¼Áö¸¦ º¸³¿
-                DisableChatWindow(); // Ã¤ÆÃÃ¢ ºñÈ°¼ºÈ­
+                ActivateChatWindow(); // ì±„íŒ…ì°½ í™œì„±í™”
             }
-            else
+            else if (isChatActive)
             {
-                ActivateChatWindow(); // Ã¤ÆÃÃ¢ È°¼ºÈ­
+                SendMessage(); // ë©”ì„¸ì§€ë¥¼ ë³´ëƒ„
+                DisableChatWindow(); // ì±„íŒ…ì°½ ë¹„í™œì„±í™”
             }
         }
     }
 
 
-    // ------------------------------------------------ »ç¿ëÀÚ Á¤ÀÇ ¸Ş¼­µå ------------------------------------------------
+    // ------------------------------------------------ ì‚¬ìš©ì ì •ì˜ ë©”ì„œë“œ ------------------------------------------------
 
-    // Ã¤ÆÃÃ¢ È°¼ºÈ­ µÇ¾î ÀÖÀ» ½Ã ¸Ş¼¼Áö¸¦ º¸³»´Â ¸Ş¼­µå
-    // rpc·Î send -> get message·Î Àü´Ş
+    // ì±„íŒ…ì°½ í™œì„±í™” ë˜ì–´ ìˆì„ ì‹œ ë©”ì„¸ì§€ë¥¼ ë³´ë‚´ëŠ” ë©”ì„œë“œ
+    // rpcë¡œ send -> get messageë¡œ ì „ë‹¬
     public void SendMessage()
     {
         if (!isChatActive) return;
@@ -113,6 +114,8 @@ public class PhotonChatManager : MonoBehaviour
         }
         string messageJson = JsonUtility.ToJson(message);
         view.RPC("ReceiveMessage", RpcTarget.All, messageJson);
+
+        DisableChatWindow();
     }
 
     [PunRPC]
@@ -133,37 +136,37 @@ public class PhotonChatManager : MonoBehaviour
         ChattingPanel.SetActive(true);
     }
 
-    // Ã¤ÆÃÃ¢À» È°¼ºÈ­ÇÏ´Â ¸Ş¼­µå
+    // ì±„íŒ…ì°½ì„ í™œì„±í™”í•˜ëŠ” ë©”ì„œë“œ
     void ActivateChatWindow()
     {
         if (isChatActive) return;
 
-        // Ã¤ÆÃ chatBackground È°¼ºÈ­
+        // ì±„íŒ… chatBackground í™œì„±í™”
         chatBackground.SetActive(true);
 
-        // Ã¤ÆÃ InputField È°¼ºÈ­
-        chatInputField.ActivateInputField(); // ÀÔ·Â ÇÊµå È°¼ºÈ­
-        chatInputField.Select(); // ÀÔ·Â ÇÊµå ¼±ÅÃ
+        // ì±„íŒ… InputField í™œì„±í™”
+        chatInputField.ActivateInputField(); // ì…ë ¥ í•„ë“œ í™œì„±í™”
+        chatInputField.Select(); // ì…ë ¥ í•„ë“œ ì„ íƒ
 
-        // Ã¤ÆÃÃ¢ È°¼ºÈ­
+        // ì±„íŒ…ì°½ í™œì„±í™”
         isChatActive = true;
     }
 
-    // Ã¤ÆÃÃ¢À» ºñÈ°¼ºÈ­ÇÏ´Â ¸Ş¼­µå
+    // ì±„íŒ…ì°½ì„ ë¹„í™œì„±í™”í•˜ëŠ” ë©”ì„œë“œ
     void DisableChatWindow()
     {
         if (!isChatActive) return;
 
-        // InputField ÃÊ±âÈ­
+        // InputField ì´ˆê¸°í™”
         chatInputField.text = "";
 
-        // Ã¤ÆÃ chatBackground ºñÈ°¼ºÈ­
+        // ì±„íŒ… chatBackground ë¹„í™œì„±í™”
         chatBackground.SetActive(false);
 
-        // ÀÔ·Â ÇÊµå ºñÈ°¼ºÈ­
+        // ì…ë ¥ í•„ë“œ ë¹„í™œì„±í™”
         chatInputField.DeactivateInputField();
 
-        // Ã¤ÆÃÃ¢ ºñÈ°¼ºÈ­
+        // ì±„íŒ…ì°½ ë¹„í™œì„±í™”
         isChatActive = false;
     }
 }
