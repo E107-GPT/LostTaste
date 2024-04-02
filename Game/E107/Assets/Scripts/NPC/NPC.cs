@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPC : MonoBehaviour, IPlayerInteractable
 {
@@ -10,7 +11,14 @@ public class NPC : MonoBehaviour, IPlayerInteractable
     public string dialogueNpcName;
     public string[] dialogueTexts;
     public GameObject npcNamePanel;
+
+    // ManualBoard
+    public Button closeButton;
+
+    // 대화 시 비활성화 할 UI 
     public GameObject HUD;
+    public GameObject ChatWindow;
+    public GameObject ChatBackground;
 
     [SerializeField]
     private ManualBoardUI.ManualType manualType;
@@ -25,6 +33,8 @@ public class NPC : MonoBehaviour, IPlayerInteractable
     private void Start()
     {
         npcNamePanel.SetActive(false);
+
+        closeButton.onClick.AddListener(CloseManual);
     }
 
     public virtual void OnInteracted(GameObject player)
@@ -58,9 +68,12 @@ public class NPC : MonoBehaviour, IPlayerInteractable
 
             if (_npcType == Define.NPCType.Normal)
             {
+                // 대화 시작 시 UI 비활성화
+                HUD.SetActive(false);
+                ChatWindow.SetActive(false);
+                ChatBackground.SetActive(false);
 
                 // 다음 대사 표시
-                HUD.SetActive(false);
                 // 첫 번째 대사 표시 (상호작용이 처음 시작될 때)
                 if (currentDialogueIndex < dialogueTexts.Length)
                 {
@@ -122,7 +135,9 @@ public class NPC : MonoBehaviour, IPlayerInteractable
 
     void FinishInteraction()
     {
+        // 대화 종료 후 UI 활성화
         HUD.SetActive(true);
+        ChatWindow.SetActive(true);
 
         if (_npcType == Define.NPCType.Normal)
         {
@@ -150,5 +165,11 @@ public class NPC : MonoBehaviour, IPlayerInteractable
 
             npcNamePanel.SetActive(show);
         }
+    }
+
+    void CloseManual()
+    {
+        boardUI.HideManual();
+        isInteracting = false;
     }
 }
