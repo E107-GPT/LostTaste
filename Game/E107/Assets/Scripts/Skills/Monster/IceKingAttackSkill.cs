@@ -33,9 +33,9 @@ public class IceKingAttackSkill : Skill
         skillObj.localScale = new Vector3(1.0f, 3.0f, _range / 2);
 
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.IceKingCleaveEffect, Root);
-        ps.transform.position = skillObj.transform.position - skillObj.transform.forward * 3.0f;
+        ps.transform.position = skillObj.transform.position - skillObj.transform.forward;
 
-        float moveDuration = 0.33f;
+        float moveDuration = 0.42f;
         float timer = 0;
         float speed = 20.0f;
         while (timer < moveDuration)
