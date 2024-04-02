@@ -23,7 +23,7 @@ public class CrocodileSwordPattern : Pattern
         skillObj.GetComponent<SkillObject>().SetUp(Root, attackDamage, _seq);
 
         skillObj.localScale = new Vector3(10.0f, 5.0f, 3.0f);
-        skillObj.position = Root.transform.TransformPoint(Vector3.forward * 1.5f);
+        skillObj.position = Root.transform.TransformPoint(Vector3.forward * 2.5f);
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 1.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 
