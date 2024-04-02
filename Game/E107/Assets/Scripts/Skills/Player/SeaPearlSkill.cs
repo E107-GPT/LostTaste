@@ -58,7 +58,7 @@ public class SeaPearlSkill : Skill, IAttackSkill
         ps.transform.position += Vector3.up * 0.5f;
 
         Transform skillObject = Managers.Resource.Instantiate("Skills/SkillObject").transform;
-        skillObject.GetComponent<SkillObject>().SetUp(root.transform, Damage, _seq);
+        skillObject.GetComponent<SkillObject>().SetUp(root.transform, Damage, -1);
         skillObject.localScale = new Vector3(0.7f, 0.7f, 0.7f);
         skillObject.position = ps.transform.position;
         skillObject.rotation.SetLookRotation(dir);

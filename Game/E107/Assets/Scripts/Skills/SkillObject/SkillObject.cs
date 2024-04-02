@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class SkillObject : MonoBehaviour
 {
+    public static int _newId;
     int _damage;
     int _id;
     Transform _attacker;
@@ -17,8 +18,10 @@ public class SkillObject : MonoBehaviour
 
     public void SetUp(Transform attacker, int damage, int id, int penetration)
     {
+        
         _damage = damage;
-        _id = id;
+        _id = _newId++;
+        Debug.Log(_id);
         _attacker = attacker;
         _penetration = penetration;
     }
