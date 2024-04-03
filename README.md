@@ -30,6 +30,12 @@
 
 <br/>
 
+## 스토리 소개
+
+
+
+<br/>
+
 ## 🍖 주요 기능
 
 |                                                  |                                         |
@@ -40,9 +46,9 @@
 | `오프닝 영상` 오프닝 영상 | `게임 화면` 게임 입장시 화면 |
 | <img src="./Docs/GameImg/DungeonGIF.gif"> | <img src="./Docs/GameImg/ClassGIF.gif"> |
 | `테마던전` 숲, 해변, 얼음 총 3가지의 테마 던전 | `직업` 워리어, 프리스트, 메이지, 닌자 총 4가지의 직업                      |
-| <img src="./Docs/readme_gif/multi-play.gif">     | <img src="./Docs/readme_gif/single-single-play3.gif"> |
-| `다양한 아이템` 일반, 고급, 레어, 희귀, 전설, 보스 등급 아이템          | `다양한 스킬` 아이템에 따른 다양한 스킬                   |
-| <img src="./Docs/readme_gif/multi-play.gif">     | <img src="./Docs/readme_gif/single-single-play3.gif"> |
+| <img src="./Docs/GameImg/ItemGIF.gif"> | <img src="./Docs/GameImg/SkillGIF.gif"> |
+| `다양한 아이템` 일반, 고급, 레어, 희귀, 전설, 보스 등급 아이템          | `다양한 스킬` 아이템에 따른 다양한 스킬 과 직업 스킬                 |
+| <img src="./Docs/GameImg/MonsterGIF.gif">     | <img src="./Docs/readme_gif/single-single-play3.gif"> |
 | `다양한 몬스터` 일반, 중간 보스, 최종 보스 몬스터          | `NPC와의 대화` NPC와 상호작용을 통한 대화                   |
 | <img src="./Docs/readme_gif/multi-play.gif">     | <img src="./Docs/readme_gif/single-single-play3.gif"> |
 | `싱글 플레이` 혼자서 플레이 하는 모드          | `멀티 플레이` 다른 사용자들과 함께 플레이                  |
@@ -93,7 +99,7 @@
 
 ## 🧱 서비스 아키텍쳐
 
-![배포아키텍쳐](./Docs/README_assets/아키텍처.png)
+![배포아키텍쳐](./Docs/Architecture.png)
 <br/>
 
 <br/>
