@@ -38,7 +38,7 @@
 | `메인 화면` 게임 메인 화면 | `로그인 화면` 로그인 화면 |
 | <img src="./Docs/GameImg/OpeningGIF.gif"> | <img src="./Docs/GameImg/CampGIF.gif"> |
 | `오프닝 영상` 오프닝 영상 | `게임 화면` 게임 입장시 화면 |
-| <img src="./Docs/GameImg/DungeonGIF.gif"> | <img src="./Docs/GameImg/ClassGIF.gif.gif"> |
+| <img src="./Docs/GameImg/DungeonGIF.gif"> | <img src="./Docs/GameImg/ClassGIF.gif"> |
 | `테마던전` 숲, 해변, 얼음 총 3가지의 테마 던전 | `직업` 워리어, 프리스트, 메이지, 닌자 총 4가지의 직업                      |
 | <img src="./Docs/readme_gif/multi-play.gif">     | <img src="./Docs/readme_gif/single-single-play3.gif"> |
 | `다양한 아이템` 일반, 고급, 레어, 희귀, 전설, 보스 등급 아이템          | `다양한 스킬` 아이템에 따른 다양한 스킬                   |
