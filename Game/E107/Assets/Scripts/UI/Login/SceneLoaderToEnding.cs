@@ -11,6 +11,7 @@ public class SceneLoaderToEnding : MonoBehaviour
     // Camp Scene을 로드하는 메서드
     public void LoadEndingScene()
     {
+        Managers.Sound.Clear();
         SceneManager.LoadScene("Ending");
     }
 }
