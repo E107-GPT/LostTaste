@@ -1,6 +1,6 @@
 #  🏹**LOST TASTE**
 
-<img src="./Docs/README_assets/movezoo.png">
+<img src="./Docs/GameImg/MainImg.png">
 
 <br>
 
@@ -14,7 +14,7 @@
 
 ## 🍞 김피탕 팀원 소개 🍞
 
-| <img src="./Docs/readme_profile/jaewon.jpg" width="100%" height="100"> | <img src="./Docs/readme_profile/changhee.jpg" width="100%" height="100"> | <img src="./Docs/readme_profile/hyunmin.jpg" width="100%" height="100"> |     <img src="./Docs/readme_profile/hyunki.jpg" width="100%" height="100">     |                             <img src="./Docs/readme_profile/sejin.jpg" width="100%" height="100">                              | <img src="./Docs/readme_profile/younghun.jpg" width="100%" height="100"> |
+| <img src="./Docs/Profile/Suyeong.png" width="100%" height="100"> | <img src="./Docs/Profile/Bonwoong.jpg" width="100%" height="100"> | <img src="./Docs/Profile/DongHyun.jpg" width="100%" height="100"> |     <img src="./Docs/Profile/HyunKi.png" width="100%" height="100">     |                             <img src="./Docs/Profile/MyeongSeong.jpg" width="100%" height="100">                              | <img src="./Docs/Profile/Hocheol.png" width="100%" height="100"> |
 | :--------------------------------------------------------------------: | :----------------------------------------------------------------------: | :---------------------------------------------------------------------: | :----------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------: |
 |                                 장수영                                 |                                  구본웅                                  |                                 김동현                                  |                                     신현기                                     |                                                             최명성                                                             |                                  황호철                                  |
 |                     팀장<br>Backend<br>Game Client                     |                          Backend<br>Game Client                          |                               Game Client                               |                                  Game Client                                   |                                                Game Client<br>CI/CD<br>Frontend                                                |                               Game Client                                |
