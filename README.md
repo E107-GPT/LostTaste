@@ -37,7 +37,6 @@
 | <img src="./Docs/GameImg/MainGIF.gif"> | <img src="./Docs/GameImg/LogInGIF.gif"> |
 | `메인 화면` 게임 메인 화면 | `로그인 화면` 로그인 화면 |
 | <img src="./Docs/readme_gif/main-racer-buy.gif"> | <img src="./Docs/readme_gif/main-profile.gif"> |
-
 | `오프닝 영상` 오프닝 영상 | `게임 화면` 게임 입장시 화면 |
 | <img src="./Docs/GameImg/OpeningGIF.gif"> | <img src="./Docs/GameImg/CampGIF.gif"> |
 | `테마던전` 숲, 해변, 얼음 총 3가지의 테마 던전 | `직업` 워리어, 프리스트, 메이지, 닌자 총 4가지의 직업                      |
