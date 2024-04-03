@@ -53,10 +53,16 @@ public class PlayerClass : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom && !photonView.IsMine)
         { // 내가 방에 들어 왔는데 다른 사람들 캐릭터가 불러와지는 경우
             Player p = photonView.Owner;
-            if (p.CustomProperties.TryGetValue("Class", out object classType))
+            if (p.CustomProperties.TryGetValue("Class", out object classType) && p.CustomProperties.TryGetValue("Number", out object number))
             {
                 Define.ClassType type = (Define.ClassType)classType;
                 ChangeClass(type);
+
+                int num = (int)number;
+                Debug.Log($"Player num ==> {num}");
+                SetPlyaerColor(num + 1);
+                
+                
 
             }
         }
@@ -67,6 +73,27 @@ public class PlayerClass : MonoBehaviourPunCallbacks
 
         
 
+    }
+
+    void SetPlyaerColor(int N)
+    {
+        switch (N)
+        {
+            case 1:
+                Managers.Resource.Instantiate("Player/CharacterCircleRed", transform);
+                break;
+            case 2:
+
+                Managers.Resource.Instantiate("Player/CharacterCircleYellow", transform);
+                break;
+            case 3:
+
+                Managers.Resource.Instantiate("Player/CharacterCircleGreen", transform);
+                break;
+            case 4:
+                Managers.Resource.Instantiate("Player/CharacterCircleBlue", transform);
+                break;
+        }
     }
 
     void UndresseAll()
