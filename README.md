@@ -34,7 +34,6 @@
 
 |                                                  |                                         |
 | ------------------------------------------------ | -------------------------------------------------- |
-
 | <img src="./Docs/GameImg/MainGIF.gif"> | <img src="./Docs/GameImg/LogInGIF.gif"> |
 | `메인 화면` 게임 메인 화면 | `로그인 화면` 로그인 화면 |
 | <img src="./Docs/readme_gif/main-racer-buy.gif"> | <img src="./Docs/readme_gif/main-profile.gif"> |
