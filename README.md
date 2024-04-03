@@ -66,7 +66,6 @@
 <img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white">
-<img src="https://img.shields.io/badge/Photon-004480?style=for-the-badge&logo=photon&logoColor=white">
 
 #### **INFRA**
 
@@ -75,6 +74,11 @@
 <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white"/> 
 <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"/>
 <img src="https://img.shields.io/badge/letsencrypt-003A70?style=for-the-badge&logo=letsencrypt&logoColor=white">
+
+#### **Game**
+
+<img src="https://img.shields.io/badge/Unity-FFFFFF?style=for-the-badge&logo=unity&logoColor=white">
+<img src="https://img.shields.io/badge/Photon-004480?style=for-the-badge&logo=photon&logoColor=white">
 
 #### **협업**
 
@@ -102,6 +106,6 @@
 
 ## 프로젝트 기록
 
-![Notion 협업링크](https://round-tower-80e.notion.site/E107-439c9a3c4cde4e3dbc1bc20511f64965?pvs=4)
+[Notion 협업링크](https://round-tower-80e.notion.site/E107-439c9a3c4cde4e3dbc1bc20511f64965?pvs=4)
 
 
