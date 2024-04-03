@@ -77,7 +77,7 @@
 
 #### **Game**
 
-<img src="https://img.shields.io/badge/Unity-FFFFFF?style=for-the-badge&logo=unity&logoColor=white">
+<img src="https://img.shields.io/badge/Unity-FFFFFF?style=for-the-badge&logo=unity&logoColor=black">
 <img src="https://img.shields.io/badge/Photon-004480?style=for-the-badge&logo=photon&logoColor=white">
 
 #### **협업**
