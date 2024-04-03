@@ -23,27 +23,13 @@ const MainPage = () => {
                     backgroundPosition: "center", // 이미지 위치 설정
                 }}
             >
-                <Stack
-                    direction={"column"}
-                    alignItems={"center"}
-                    justifyContent={"center"}
-                >
-                    <Box
-                        marginY={"3vh"}
-                        bgcolor={"rgba(0,0,0,0.5)"}
-                        padding={"1%"}
-                        paddingTop={"3%"}
-                        borderRadius={"20px"}
-                    >
+                <Stack direction={"column"} alignItems={"center"} justifyContent={"center"}>
+                    <Box marginY={"3vh"} bgcolor={"rgba(0,0,0,0.5)"} padding={"1%"} paddingTop={"3%"} borderRadius={"20px"}>
                         <Stack justifyContent={"center"} alignItems={"center"}>
-                            <YouTube videoId={"piL6PbEEgPE"} opts={opts} />;
-                            {/* <img src={LogoImg}></img> */}
+                            <YouTube videoId={"d7mb8xStgxE"} opts={opts} />;{/* <img src={LogoImg}></img> */}
                         </Stack>
                     </Box>
-                    <a
-                        href="https://j10e107.p.ssafy.io/file/download/LostTaste.zip"
-                        download={"LostTaste.zip"}
-                    >
+                    <a href="https://j10e107.p.ssafy.io/file/download/LostTaste.zip" download={"LostTaste.zip"}>
                         <Box
                             color={"black"}
                             bgcolor={"#FFD257"}
@@ -53,12 +39,7 @@ const MainPage = () => {
                                 boxShadow: `0px 7px #121212`,
                             }}
                         >
-                            <Stack
-                                minWidth={"15vw"}
-                                direction={"column"}
-                                alignItems={"center"}
-                                justifyContent={"center"}
-                            >
+                            <Stack minWidth={"15vw"} direction={"column"} alignItems={"center"} justifyContent={"center"}>
                                 <Button
                                     color="inherit"
                                     fullWidth
