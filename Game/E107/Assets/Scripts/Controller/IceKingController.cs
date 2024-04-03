@@ -102,7 +102,6 @@ public class IceKingController : MonsterController
     }
     public override void ExitIceKingSpikeState()
     {
-        base.ExitIceKingSpikeState();
         _agent.avoidancePriority = 50;
     }
     #endregion

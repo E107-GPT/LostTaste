@@ -120,50 +120,67 @@ public class DrillDuckController : MonsterController
         // 경로상의 플레이어를 밀쳐내면서 돌진
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         _agent.radius *= 2;
+        _agent.speed = _stat.MoveSpeed * 2.0f;
 
-        _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
-
+        _animator.SetFloat("SlideSpeed", 0.5f);
         _animator.CrossFade("Slide", 0.2f, -1, 0);
+        _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDrillDuckSlideState", RpcTarget.Others);
 
     }
     public override void ExcuteDrillDuckSlideState()
     {
-        if (CurState is DieState)
-        {
-            _statemachine.ChangeState(new DieState(this));
-        }
-
-        _animator.SetFloat("SlideSpeed", 0.5f);
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
-            if (aniTime <= 0.2f)
+            //if (aniTime <= 0.2f)
+            //{
+            //    _agent.speed = _stat.MoveSpeed;
+            //}
+            //else if (aniTime <= 0.5f)
+            //{
+            //    _agent.speed = _stat.MoveSpeed * 3.0f;
+            //}
+            //else
+            if (aniTime >= 1.0f)
             {
-                _agent.speed = _stat.MoveSpeed;
-            }
-            else if (aniTime <= 0.5f)
-            {
-                _agent.speed = _stat.MoveSpeed * 3.0f;
-            }
-            else if (aniTime <= 0.7f)
-            {
-                _monsterInfo.Patterns[1].DeActiveCollider();
-            }
-            else if (aniTime >= 1.0f)
-            {
-                _statemachine.ChangeState(new IdleState(this));
+                _statemachine.ChangeState(new DrillDuckSlideAfterState(this));
             }
         }
     }
     public override void ExitDrillDuckSlideState()
     {
+        _monsterInfo.Patterns[1].DeActiveCollider();
+    }
+
+    public override void EnterDrillDuckSlideAfterState()
+    {
+        _animator.CrossFade("AfterSlide", 0.2f, -1, 0);
+
+        // Photon
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDrillDuckSlideAfterState", RpcTarget.Others);
+    }
+    public override void ExecuteDrillDuckSlideAfterState()
+    {
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("AfterSlide"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+            if (aniTime >= 1.0f)
+            {
+                _statemachine.ChangeState(new IdleState(this));
+            }
+        }
+    }
+    public override void ExitDrillDuckSlideAfterState()
+    {
+        _agent.speed = _stat.MoveSpeed / 2.0f;
         _agent.radius /= 2;
         _agent.avoidancePriority = 50;
         _agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
-#endregion
+    #endregion
 
     #region Photon
     [PunRPC]
@@ -176,6 +193,11 @@ public class DrillDuckController : MonsterController
     void RPC_ChangeDrillDuckSlideState()
     {
         _statemachine.ChangeState(new DrillDuckSlideState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDrillDuckSlideAfterState()
+    {
+        _statemachine.ChangeState(new DrillDuckSlideAfterState(this));
     }
 
 

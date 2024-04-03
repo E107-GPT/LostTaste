@@ -152,6 +152,10 @@ public abstract class BaseController : MonoBehaviour
     public virtual void EnterDrillDuckSlideState() { }
     public virtual void ExcuteDrillDuckSlideState() { }
     public virtual void ExitDrillDuckSlideState() { }
+
+    public virtual void EnterDrillDuckSlideAfterState() { }
+    public virtual void ExecuteDrillDuckSlideAfterState() { }
+    public virtual void ExitDrillDuckSlideAfterState() { }
     #endregion
 
     #region Crocodile State

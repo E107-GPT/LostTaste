@@ -72,7 +72,6 @@ public class CrocodileController : MonsterController
     // Sword
     public override void EnterCrocodileSwordState()
     {
-        base.EnterCrocodileSwordState();
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
             Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
@@ -91,14 +90,6 @@ public class CrocodileController : MonsterController
     }
     public override void ExcuteCrocodileSwordState()
     {
-        if (CurState is DieState)
-        {
-            _statemachine.ChangeState(new DieState(this));
-        }
-
-        base.ExcuteCrocodileSwordState();
-
-        
         if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Sword"))
         {
             float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
@@ -112,7 +103,6 @@ public class CrocodileController : MonsterController
 
     public override void ExitCrocodileSwordState()
     {
-        base.ExitCrocodileSwordState();
         _swordPS.Stop();
         _agent.avoidancePriority = 50;
     }
