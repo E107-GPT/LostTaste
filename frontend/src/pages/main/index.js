@@ -40,40 +40,40 @@ const MainPage = () => {
                             {/* <img src={LogoImg}></img> */}
                         </Stack>
                     </Box>
-                    <Box
-                        color={"black"}
-                        bgcolor={"#FFD257"}
-                        boxShadow={0}
-                        sx={{
-                            borderRadius: "50px",
-                            boxShadow: `0px 7px #121212`,
-                        }}
+                    <a
+                        href="https://j10e107.p.ssafy.io/file/download/LostTaste.zip"
+                        download={"LostTaste.zip"}
                     >
-                        <Stack
-                            minWidth={"15vw"}
-                            direction={"column"}
-                            alignItems={"center"}
-                            justifyContent={"center"}
+                        <Box
+                            color={"black"}
+                            bgcolor={"#FFD257"}
+                            boxShadow={0}
+                            sx={{
+                                borderRadius: "50px",
+                                boxShadow: `0px 7px #121212`,
+                            }}
                         >
-                            <Button
-                                color="inherit"
-                                fullWidth
-                                sx={{
-                                    padding: "10px",
-                                    borderRadius: "50px",
-                                    fontSize: "20px",
-                                    fontWeight: 700,
-                                }}
+                            <Stack
+                                minWidth={"15vw"}
+                                direction={"column"}
+                                alignItems={"center"}
+                                justifyContent={"center"}
                             >
-                                <a
-                                    href="https://j10e107.p.ssafy.io/file/download/LostTaste.zip"
-                                    download={"LostTaste.zip"}
+                                <Button
+                                    color="inherit"
+                                    fullWidth
+                                    sx={{
+                                        padding: "10px",
+                                        borderRadius: "50px",
+                                        fontSize: "20px",
+                                        fontWeight: 700,
+                                    }}
                                 >
                                     게임 다운로드
-                                </a>
-                            </Button>
-                        </Stack>
-                    </Box>
+                                </Button>
+                            </Stack>
+                        </Box>
+                    </a>
                 </Stack>
             </Box>
         </>
