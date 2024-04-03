@@ -34,8 +34,8 @@
 
 |                                                  |                                                       |
 | ------------------------------------------------ | ----------------------------------------------------- |
-| <img src="./Docs/readme_gif/main-login.gif">     | <img src="./Docs/readme_gif/main-racer-list.gif">     |
-| `로그인 화면` 회원가입 / 로그인                     | `캠프(로비)` 플레이어의 대기실                    |
+| <img src="./Docs/GameImg/MainGIF.gif"> | <img src="./Docs/GameImg/MainGIF.gif"> |
+| `메인 화면` 게임 메인 화면 | `로그인 화면` 로그인 화면 |
 | <img src="./Docs/readme_gif/main-racer-buy.gif"> | <img src="./Docs/readme_gif/main-profile.gif">        |
 | `로딩 영상` 캠프 입장 전, 로딩 영상                 | `플레이어 상태` 한눈에 들어오는 플레이어 상태 정보          |
 | <img src="./Docs/readme_gif/single-play.gif">    | <img src="./Docs/readme_gif/main-rank.gif">           |
