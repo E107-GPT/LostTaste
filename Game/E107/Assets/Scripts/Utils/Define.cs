@@ -116,6 +116,7 @@ public class Define
         StormDaggerFinishEffect,
         BoomArrowBrokenEffect,
         BoomBowSkillEffect,
+        TefalEffect,
         MaxCount
     }
 
