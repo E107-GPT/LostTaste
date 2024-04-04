@@ -118,6 +118,9 @@ public class Define
         BoomBowSkillEffect,
         TefalEffect,
         AxeWhirlwindEffect,
+        SpearSkillEffect,
+        ThunderHammerEffect,
+        PoleArmSkillEffect,
         StabEffect,
         MaxCount
     }
