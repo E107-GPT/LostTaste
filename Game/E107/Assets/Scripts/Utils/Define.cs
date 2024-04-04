@@ -117,6 +117,7 @@ public class Define
         BoomArrowBrokenEffect,
         BoomBowSkillEffect,
         TefalEffect,
+        AxeWhirlwindEffect,
         MaxCount
     }
 
