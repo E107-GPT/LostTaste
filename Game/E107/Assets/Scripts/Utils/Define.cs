@@ -121,6 +121,7 @@ public class Define
         SpearSkillEffect,
         ThunderHammerEffect,
         PoleArmSkillEffect,
+        StabEffect,
         MaxCount
     }
 
