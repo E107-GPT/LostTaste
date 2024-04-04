@@ -114,6 +114,7 @@ public class Define
         BowArrowBrokenEFfect,
         StormDaggerEffect,
         StormDaggerFinishEffect,
+        AxeWhirlwindEffect,
         MaxCount
     }
 
