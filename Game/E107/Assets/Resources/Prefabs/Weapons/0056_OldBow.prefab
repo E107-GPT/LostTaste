@@ -53,7 +53,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3208986711215728786
 Transform:
   m_ObjectHideFlags: 0
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 1114128714064785279}
   - component: {fileID: 8740565764004689423}
   m_Layer: 9
-  m_Name: 0045_Bow
+  m_Name: 0056_OldBow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -483,10 +483,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 45
-  <Name>k__BackingField: "\uD65C"
-  <Tier>k__BackingField: 3
-  <FlavorText>k__BackingField: "\uB9C8\uB098\uB85C \uD654\uC0B4\uC744 \uB9CC\uB4ED\uB2C8\uB2E4."
+  <Id>k__BackingField: 56
+  <Name>k__BackingField: "\uB0A1\uC740 \uD65C"
+  <Tier>k__BackingField: 0
+  <FlavorText>k__BackingField: "\uB0A1\uC740 \uD65C\uC758 \uD65C \uC2DC\uC704\uB294
+    \uC57D\uD569\uB2C8\uB2E4."
   <Icon>k__BackingField: {fileID: 21300000, guid: 77e14972daf3a164394314eed7899c15, type: 3}
   <LeftSkill>k__BackingField: {fileID: 0}
   <RightSkill>k__BackingField: {fileID: 1114128714064785279}
@@ -504,15 +505,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c203083226d4294f8e05a54c10358dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: "\uD654\uC0B4 \uC3D8\uAE30"
-  <Description>k__BackingField: "\uD65C\uC740 \uAC00\uB9CC\uD788 \uC11C\uC11C \uC3F4\uC57C
-    \uBA85\uC911\uB960\uC774 \uC88B\uC2B5\uB2C8\uB2E4."
-  <Icon>k__BackingField: {fileID: 21300000, guid: 1cf10ada6669c9e4380e42f7f36f1d24, type: 3}
-  <SkillCoolDownTime>k__BackingField: 0
-  <RequiredMp>k__BackingField: 5
-  <Damage>k__BackingField: 50
+  <Name>k__BackingField: "\uC870\uC2EC\uC2A4\uB7FD\uACE0 \uC57D\uD558\uAC8C \uD654\uC0B4
+    \uC3D8"
+  <Description>k__BackingField: "\uC870\uC2EC \uC870\uC2EC"
+  <Icon>k__BackingField: {fileID: 21300000, guid: 7766182687479d5468a948af4c023bc4, type: 3}
+  <SkillCoolDownTime>k__BackingField: 1
+  <RequiredMp>k__BackingField: 15
+  <Damage>k__BackingField: 40
   <Duration>k__BackingField: 0.4
-  <Velocity>k__BackingField: 30
+  <Velocity>k__BackingField: 20
   <AudioClip>k__BackingField: {fileID: 8300000, guid: 327abfd8802775d418b743912fa6fa57, type: 3}
 --- !u!114 &8740565764004689423
 MonoBehaviour:
@@ -552,7 +553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6738511547862107817
 Transform:
   m_ObjectHideFlags: 0
