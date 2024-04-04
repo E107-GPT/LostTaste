@@ -120,6 +120,7 @@ public class Define
         AxeWhirlwindEffect,
         SpearSkillEffect,
         ThunderHammerEffect,
+        IceBroomEffect,
         PoleArmSkillEffect,
         StabEffect,
         MaxCount
