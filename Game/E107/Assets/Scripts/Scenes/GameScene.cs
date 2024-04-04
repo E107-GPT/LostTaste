@@ -25,16 +25,4 @@ public class GameScene : BaseScene
 
     }
 
-    // 던전 입장
-    public static void EnterDungeon()
-    {
-        SceneManager.LoadScene("DungeonForest");
-    }
-
-    // 던전 종료
-    public static void ExitDungeon()
-    {
-        SceneManager.LoadScene("Camp");
-    }
-
 }

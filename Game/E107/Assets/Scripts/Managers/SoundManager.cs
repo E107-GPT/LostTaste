@@ -11,6 +11,12 @@ public class SoundManager
     // Audio Clip
     // Audio Listener
 
+    private string _lastBgmPath = "";
+
+    public string LastBgmPath
+    {
+        get { return _lastBgmPath; }
+    }
 
     public void Init()
     {
@@ -25,24 +31,30 @@ public class SoundManager
             for (int i = 0; i < soundNames.Length - 1; i++)
             {
                 GameObject go = new GameObject { name = soundNames[i] };
-                // ªı∑Œ ª˝º∫«ÿº≠
+                // ÏÉàÎ°ú ÏÉùÏÑ±Ìï¥ÏÑú
                 _audioSources[i] = go.AddComponent<AudioSource>();
-                // Audio Source ¥ﬁæ∆¡÷∞Ì
+                // Audio Source Îã¨ÏïÑÏ£ºÍ≥†
                 go.transform.parent = root.transform;
-                // @Soundæ»ø° ≥÷æÓ¡÷±‚
+                // @SoundÏïàÏóê ÎÑ£Ïñ¥Ï£ºÍ∏∞
             }
 
             _audioSources[(int)Define.Sound.BGM].loop = true;
         }
     }
 
-    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
+    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f, float volume = 0.5f)
     {
+        if (type == Define.Sound.BGM && _lastBgmPath == path) return;
         AudioClip audioClip = GetOrAddAudioClip(path, type);
-        Play(audioClip, type, pitch);
+        Play(audioClip, type, pitch, volume);
+
+        if (type == Define.Sound.BGM)
+        {
+            _lastBgmPath = path;
+        }
 
     }
-    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
+    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f, float volume = 0.5f)
     {
         if (audioClip == null) return;
 
@@ -52,6 +64,7 @@ public class SoundManager
             AudioSource audioSource = _audioSources[(int)Define.Sound.BGM];
             if (audioSource.isPlaying) audioSource.Stop();
             audioSource.pitch = pitch;
+            audioSource.volume = volume;
             audioSource.clip = audioClip;
             audioSource.Play();
 
@@ -60,14 +73,17 @@ public class SoundManager
         {
             AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
             audioSource.pitch = pitch;
+            audioSource.volume = volume;
             audioSource.PlayOneShot(audioClip);
 
         }
+
+       
     }
 
     public void Clear()
     {
-        // æ∆∏∂µµ æ¿¿Ã πŸ≤Ó¥¬ ∞ÊøÏ
+        // ÏïÑÎßàÎèÑ Ïî¨Ïù¥ Î∞îÎÄåÎäî Í≤ΩÏö∞
         foreach(AudioSource audioSource in _audioSources)
         {
             audioSource.clip = null;
@@ -95,6 +111,7 @@ public class SoundManager
             }
 
         }
+
         if (audioClip == null)
             Debug.Log($"AudioClip Missing {path}");
 

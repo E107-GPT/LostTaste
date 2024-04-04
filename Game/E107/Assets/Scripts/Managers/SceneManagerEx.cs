@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,19 @@ public class SceneManagerEx
 {
     public BaseScene CurrentScene { get { return GameObject.FindObjectOfType<BaseScene>(); } }
 
-    public void LoadScene(Define.Scene type)
-    {
-        Managers.Clear();
-        SceneManager.LoadScene(GetSceneName(type));
+    //public void LoadScene(Define.Scene type)
+    //{
+    //    Managers.Clear();
+    //    SceneManager.LoadScene(GetSceneName(type));
+    //}
 
+    public void LoadScene(Define.Scene type, bool clear = false)
+    {
+        if(clear) Managers.Clear();
+
+        
+        SceneManager.LoadScene(GetSceneName(type));
+        
     }
 
     string GetSceneName(Define.Scene type)

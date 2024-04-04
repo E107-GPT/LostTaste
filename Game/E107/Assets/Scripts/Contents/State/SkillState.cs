@@ -6,7 +6,7 @@ public class SkillState: State
 {
     public SkillState(BaseController controller) : base(controller)
     {
-        // »ı¼ºÀÚ ³»ºÎ ·ÎÁ÷ÀÌ ÇÊ¿äÇÏ´Ù¸é ¿©±â¿¡ ÀÛ¼ºÇÕ´Ï´Ù.
+        // ìƒì„±ì ë‚´ë¶€ ë¡œì§ì´ í•„ìš”í•˜ë‹¤ë©´ ì—¬ê¸°ì— ì‘ì„±í•©ë‹ˆë‹¤.
     }
     public override void Enter()
     {

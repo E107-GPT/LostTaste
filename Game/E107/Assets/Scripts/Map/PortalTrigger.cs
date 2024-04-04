@@ -2,58 +2,211 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
+using Photon.Realtime;
 
-// ¹æ ÀÌµ¿ Æ÷Å» 
+
+
 
 public class PortalTrigger : MonoBehaviour
 {
-    public Transform targetPortalLocation;  // ÀÌµ¿ÇÒ Æ÷Å» À§Ä¡
+    public Transform targetPortalLocation;  
 
-    private HashSet<GameObject> playersInPortal = new HashSet<GameObject>();
-    public int totalPlayers = 1;    // ÇÊ¿äÇÑ ÇÃ·¹ÀÌ¾î ¼ö, °ÔÀÓ ¼³Á¤¿¡ µû¶ó Á¶Á¤ (Áö±İÀº 1¸í)
+    private Dictionary<string, GameObject> playersInPortal = new Dictionary<string, GameObject>();
+    public int totalPlayers = 1;    
 
     public string targetMapName;
 
-    // Æ®¸®°Å ¹üÀ§¾È¿¡ µé¾î¿À¸é ÀÎ¿ø¼ö Ã¼Å©
+    public GameObject portal;
+
+    public List<GameObject> itemBox;
+
+    public bool isBossRoom = false;
+
+    public string bgmName;
+
+
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+        if (itemBox == null) return;
+        foreach(var box in itemBox)
+        {
+            box.SetActive(false);
+        }
+    }
+
+    private void Start()
+    {
+    }
+
+
+
+    public Color nextBackgroundColor; // ë³€ê²½í•  ë°°ê²½ìƒ‰
+
+
+    public void ActivateItemBox()
+    {
+        // itemBoxê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ë‹¤ë©´, ë©”ì„œë“œë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤.
+        if (itemBox == null)
+        {
+            Debug.LogWarning("Item box is not assigned.");
+            return;
+        }
+
+
+        foreach (var box in itemBox)
+        {
+            box.SetActive(true);
+        }
+
+        //itemBox.SetActive(false);
+
+        //if (isBossRoom) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        //{
+        //    var goldenBox = GetItemBoxByName("Golden");
+        //    if (goldenBox != null)
+        //    {
+        //        goldenBox.SetActive(true); // Golden ï¿½ï¿½ï¿½Ú¸ï¿½ È°ï¿½ï¿½È­
+        //    }
+        //}
+
+        //else // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        //{
+        //    GameObject boxToActivate = null; // È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+
+        //     boxToActivate = GetItemBoxByName("Wooden");
+
+
+        //    if (boxToActivate != null)
+        //    {
+        //        boxToActivate.SetActive(true);
+        //    }
+        //}
+    }
+
+
+
+    
+    //GameObject GetItemBoxByName(string boxName)
+    //{
+        
+    //    if (itemBox.name.Contains(boxName)) 
+    //    {
+    //        return itemBox;
+    //    }
+       
+    //    return null; 
+    //}
+
+    private void ChangeCameraBackgroundColor()
+    {
+        Camera.main.backgroundColor = nextBackgroundColor;
+    }
+
+    public void ActivatePortal(bool isActive)
+    {
+        portal.SetActive(isActive);
+        Debug.Log("ActivatePortal called with " + isActive);
+
+        
+        if (isActive)
+        {
+            //ChangeCameraBackgroundColor();
+            ActivateItemBox(); 
+        }
+        else
+        {
+
+
+
+            itemBox[0].SetActive(false);
+            itemBox[1].SetActive(false);
+        }
+    }
+
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            playersInPortal.Add(other.gameObject);
-            CheckAllPlayersInPortal();
-            MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
-            Debug.Log("¸ó½ºÅÍ ¼ÒÈ¯µÊ");
-        }
-    }
-
-    // Æ®¸®°Å ¹üÀ§ ¹ÛÀ¸·Î ³ª°¡¸é ÀÎ¿ø¼ö Ã¼Å©
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            playersInPortal.Remove(other.gameObject);
-        }
-    }
-
-    // ¸ğµç ÇÃ·¹ÀÌ¾î°¡ Æ÷Å» ±ÙÃ³¿¡ ÀÖÀ»¶§ ½ÇÇà
-    private void CheckAllPlayersInPortal()
-    {
-        if (playersInPortal.Count == totalPlayers)
-        {
-            // ¸ğµç ÇÃ·¹ÀÌ¾î¸¦ ¸ñÇ¥ Æ÷Å» À§Ä¡·Î ÀÌµ¿
-            foreach (GameObject player in playersInPortal)
+            ParticleSystem[] particleSystems = other.gameObject.GetComponentsInChildren<ParticleSystem>();
+            ParticleSystem moveEffect = null;
+            foreach(var ps in particleSystems)
             {
-                NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
-                if (agent != null)
+                if(ps.name == "PlayerWalkEffect")
                 {
-                    agent.Warp(targetPortalLocation.position);
-                }
-                else
-                {
-                    player.transform.position = targetPortalLocation.position;
+                    ps.gameObject.SetActive(false);
+                    moveEffect = ps;
+                    break;
                 }
             }
-            
+
+
+            other.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
+            ChangeCameraBackgroundColor();
+
+            if (!string.IsNullOrEmpty(bgmName))
+            {
+
+                //Managers.Sound.Clear();
+                Managers.Sound.Play(bgmName, Define.Sound.BGM, 1.0f, 0.3f);
+                
+            }
+
+            MonsterManager.Instance._curMap = targetMapName;
+            moveEffect.gameObject.SetActive(true);
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                MonsterManager.Instance.SendMonsterSpawnMsg(targetMapName);
+                
+                return;
+            }
+
+            MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+            Debug.Log("ëª¬ìŠ¤í„° ìƒì„± ì™„ë£Œ");
+            MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
         }
+    }
+
+   
+    private void OnTriggerExit(Collider other)
+    {
+    }
+
+    // ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½Å» ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    //private void CheckAllPlayersInPortal()
+    //{
+    //    if (playersInPortal.Count == totalPlayers)
+    //    {
+    //        Debug.Log(playersInPortal.Count + " / " + totalPlayers);
+
+    //        // ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½Ç¥ ï¿½ï¿½Å» ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½
+    //        foreach (KeyValuePair<string, GameObject> player in playersInPortal)
+    //        {
+    //            NavMeshAgent agent = player.Value.GetComponent<NavMeshAgent>();
+    //            Debug.Log($"{agent.gameObject.name}");
+    //            if (agent.transform.GetComponent<PlayerController>().photonView.IsMine == false) continue;
+    //            //Debug.Log($"{agent.gameObject.name}");
+    //            if (agent != null)
+    //            {
+    //                Debug.Log("ìˆëŠ”ê°€?" + player.Value.GetComponent<NavMeshAgent>());
+
+    //                //agent.Warp(targetPortalLocation.position);
+    //                agent.transform.GetComponent<PlayerController>().WarpTo(targetPortalLocation.position);
+    //            }
+    //        }
+    //        portal.SetActive(false);
+    //        MonsterManager.Instance.portalTrigger = this;
+    //        MonsterManager.Instance.SpawnMonstersForMap(targetMapName);
+    //        Debug.Log("ëª¬ìŠ¤í„° ìƒì„± ì™„ë£Œ");
+    //        MonsterManager.Instance.RestartCheckMonstersCoroutine(targetMapName);
+    //    }
+    //}
+
+    public void Clear()
+    {
+        playersInPortal.Clear();
     }
 }

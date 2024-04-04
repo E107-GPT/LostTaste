@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -6,96 +7,166 @@ using UnityEngine;
 
 public class MonsterManager : MonoBehaviour
 {
-    // TYPEÀÌ ´Ã¾î³ª¸é ÀÌ·¯ÇÑ ¹è¿­°ú prefab º¯¼ö¸¦ Ãß°¡ÇÑ´Ù.
-    //[SerializeField]
-    //private string[] monsterNames;     // monster ÀÌ¸§ ¹è¿­, Inspector view¿¡¼­ Á÷Á¢ ÀÔ·Â
-    //[SerializeField]
-    //private GameObject monsterPrefab;   // monster TYPE prefab
-
-    //private List<MonsterController> entitys;  // Monster entity¸¦ ´ã´Â´Ù
-
     public static MonsterManager Instance { get; private set; }
+
+    // ê° ë§µì— ì†Œí™˜ëœ ëª¬ìŠ¤í„° ë¦¬ìŠ¤íŠ¸
+    public List<GameObject> monstersInCurrentMap = new List<GameObject>();
+
+    public PortalTrigger portalTrigger;
+
+    PhotonView photonView;
+
+    public List<GameObject> PortalList;
+
+    public string _curMap;
+
+    //public string targetMapName;
 
     [System.Serializable]
     public class MonsterSpawnInfo
     {
         public string mapName;
-        public GameObject monsterPrefab;
-        public Transform[] spawnPoints;
+        public SpawnPointInfo[] spawnPoints;
+    }
+
+    [System.Serializable]
+    public class SpawnPointInfo
+    {
+        public Transform spawnPoint;
+        public GameObject monsterPrefab; // ê° ìŠ¤í° í¬ì¸íŠ¸ë³„ë¡œ ëª¬ìŠ¤í„° í”„ë¦¬íŒ¹ ì§€ì •
     }
 
     public List<MonsterSpawnInfo> monsterSpawnInfos;
+
+    private bool continueCheckingMonsters = true;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            photonView = GetComponent<PhotonView>();
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-        //entitys = new List<MonsterController>();
 
-        //for (int i = 0; i < monsterNames.Length; i++)
-        //{
-        //    Vector3 pos = new Vector3(0, 5, 300);
-        //    GameObject clone = Instantiate(monsterPrefab, pos, Quaternion.identity);
-        //    MonsterController monsterController = clone.GetComponent<MonsterController>();
-
-        //    monsterController.Setup(Define.UnitType.DrillDuck.ToString());         // BaseController¿¡¼­ °¢ °´Ã¼ÀÇ ÀÌ¸§À» ºÎ¿©
-        //    monsterController.name = $"{monsterController.ID:D2}_Monster_{monsterController.name}";    // 00_Monster_name À¸·Î hierarchy Ã¢¿¡¼­ º¸ÀÓ
-
-        //    entitys.Add(monsterController);
-        //}
+        //StartCoroutine(CheckMonstersCoroutine());
     }
 
-    private void Update()
+    IEnumerator CheckMonstersCoroutine(string mapName)
     {
-        // Monster µ¿ÀÛÀº BaseController¿¡¼­ Update() Áß
-        // ¿©±â¼­µµ MonsterController¸¦ Init()ÇÏ¸é ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ µ¿ÀÛÇÏÁö ¾Ê´Â´Ù.
+        bool monstersCleared = false;
 
-        //for (int i = 0; i < entitys.Count; ++i)
-        //{
-        //    //if (entitys[i].GetComponent<Monster>().Hp < 0)
-        //    //{
-        //    //    Destroy(entitys[i], 3.0f);
-        //    //    entitys[i] = null;
-        //    //    continue;
-        //    //}
-        //    entitys[i].Init();
-        //}
+        PortalTrigger portal = PortalList.Find((e) =>  e.transform.root.name == mapName ).GetComponent<PortalTrigger>();
+
+        Debug.Log(portal.name);
+        
+        while (!monstersCleared)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            monstersInCurrentMap.RemoveAll(monster => monster == null);
+            Debug.Log(monstersInCurrentMap.Count);
+            if (monstersInCurrentMap.Count == 0)
+            {
+
+                //portal.ActivatePortal(true);
+
+                Debug.Log("í¬íƒˆ ì¼œ!!");
+                portal.gameObject.SetActive(true);
+                portal.ActivateItemBox();
+                monstersCleared = true;
+                SendActivatePortal(portal.name);
+                StopCoroutine("CheckMonstersCoroutine");
+
+            }
+        }
     }
 
-    // Æ¯Á¤ ¸Ê¿¡ ¸ó½ºÅÍ ¼ÒÈ¯
+    // íŠ¹ì • ë§µì— ëª¬ìŠ¤í„° ì†Œí™˜
     public void SpawnMonstersForMap(string mapName)
     {
+        _curMap = mapName;
+        if (monstersInCurrentMap.Count != 0) return;
         foreach (MonsterSpawnInfo info in monsterSpawnInfos)
         {
-            if ( info == null)
-            {
-                Debug.Log("info is null");
-            }
-
             if (info.mapName == mapName)
             {
-                foreach (Transform spawnPoint in info.spawnPoints)
+                foreach (SpawnPointInfo spawnInfo in info.spawnPoints)
                 {
-                    GameObject clone = Instantiate(info.monsterPrefab, spawnPoint.position, spawnPoint.rotation);
-                    Debug.Log(clone);
+                    // ê° ìŠ¤í° í¬ì¸íŠ¸ë³„ë¡œ ì§€ì •ëœ ëª¬ìŠ¤í„° í”„ë¦¬íŒ¹ìœ¼ë¡œ ëª¬ìŠ¤í„°ë¥¼ ì†Œí™˜
+                    GameObject clone = null;
+                    Debug.Log($"ë°©ì•ˆì¸ê°€?{PhotonNetwork.InRoom}");
+                    if (PhotonNetwork.IsConnected && !PhotonNetwork.InRoom) clone = Instantiate(spawnInfo.monsterPrefab, spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
+                    else if (PhotonNetwork.IsMasterClient) clone = PhotonNetwork.Instantiate($"Prefabs/Monster/{spawnInfo.monsterPrefab.name}", spawnInfo.spawnPoint.position, spawnInfo.spawnPoint.rotation);
+                    monstersInCurrentMap.Add(clone);
+
+
                 }
                 break;
             }
         }
     }
 
-    //private void FixedUpdate()
-    //{
-    //    for (int i = 0; i < entitys.Count; ++i)
-    //    {
-    //        entitys[i].GetComponent<MonsterController>().FreezeVelocity();
-    //    }
-    //}
+
+    public void RestartCheckMonstersCoroutine(string newMapName)
+    {
+        StartCoroutine(CheckMonstersCoroutine(newMapName));
+    }
+
+    public void SendMonsterSpawnMsg(string mapName)
+    {
+        Debug.Log("ëª¬ìŠ¤í„° ìŠ¤í° í•´ë‹¬ë¼ê³  ë©”ì„¸ì§€ë¥¼ ë³´ëƒ„");
+        photonView.RPC("RPC_SpawnMonster", RpcTarget.MasterClient, mapName);
+    }
+
+    [PunRPC]
+    void RPC_SpawnMonster(string mapName)
+    {
+        Debug.Log("ë§ˆìŠ¤í„°ê°€ ë°›ì•˜ìŠµë‹ˆë‹¤.");
+        SpawnMonstersForMap(mapName);
+        RestartCheckMonstersCoroutine(mapName);
+    }
+
+    public void SendActivatePortal(string portalName)
+    {
+        Debug.Log("ë‹¤ë¥¸ ì‚¬ëŒë“¤ í¬íƒˆ ì¼œë¼ê³  ì–˜ê¸°í•˜ê¸°");
+        photonView.RPC("RPC_ActivatePortal",RpcTarget.Others, portalName);
+        
+    }
+
+    [PunRPC]
+    void RPC_ActivatePortal(string portalName)
+    {
+        //portalTrigger.ActivatePortal(true);
+        Debug.Log(portalName);
+        Debug.Log(PortalList.Find((e) => e.name == portalName));
+        GameObject go = PortalList.Find((e) => e.name == portalName);
+        go.SetActive(true);
+        Debug.Log("ì—¬ê¸°ì„œ ì¼œì ¸ì•¼í•¨");
+        go.GetComponent<PortalTrigger>().ActivateItemBox();
+
+    }
+
+    public void ReStartManage()
+    {
+        Debug.Log($"Restart Manage {_curMap}");
+        if (string.IsNullOrEmpty(_curMap)) return;
+        foreach(var monster in GameObject.FindGameObjectsWithTag("Monster"))
+        {
+            monstersInCurrentMap.Add(monster);
+        }
+
+        Debug.Log("RestartCheckMonstersCoroutine");
+        RestartCheckMonstersCoroutine(_curMap);
+    }
+
+    public void SomeOneOpenChet()
+    {
+        PortalTrigger portal = PortalList.Find((e) => e.transform.root.name == _curMap).GetComponent<PortalTrigger>();
+
+    }
 }

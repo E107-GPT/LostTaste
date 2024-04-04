@@ -3,18 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
+using Photon.Realtime;
 
 public abstract class BaseController : MonoBehaviour
 {
+	[SerializeField]
+	protected Define.UnitType _unitType;	// Setting the Unity Editor
+
 	protected Animator _animator;
 	protected Rigidbody _rigidbody;
 	protected NavMeshAgent _agent;
-	// ∞¯∞›¿⁄¿« ∏∂¡ˆ∏∑ ∞¯∞› Ω√∞£¿ª ¿˙¿Â«œ¥¬ ªÁ¿¸
+
 	protected Dictionary<int, float> lastAttackTimes = new Dictionary<int, float>();
-	protected float damageCooldown = 0.3f; // «««ÿ∏¶ ¥ŸΩ√ πﬁ±‚±Ó¡ˆ¿« ¥Î±‚ Ω√∞£(√ )
+	protected float damageCooldown = 0.5f;
+	
+	
+	// ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ∆ÆÔøΩÔøΩ≈©
+	[SerializeField]
+	protected bool isConnected = false;
+	public PhotonView photonView;
 
-
-	protected StateMachine _statemachine;
+    // protected bool _isDie;
+    protected StateMachine _statemachine;
 
     public State CurState
     {
@@ -23,6 +34,7 @@ public abstract class BaseController : MonoBehaviour
     }
 	public NavMeshAgent Agent { get { return _agent; } }
 	public StateMachine StateMachine { get { return _statemachine; } }
+	public Define.UnitType UnitType { get { return _unitType; } }	
 
     private static long entity_ID = 0;
 	private long id;
@@ -45,26 +57,36 @@ public abstract class BaseController : MonoBehaviour
 
 	private void Awake()
 	{
+		//Debug.Log("AWAKE!!!");
 		_statemachine = new StateMachine();
 		_animator = GetComponent<Animator>();
 		_rigidbody = GetComponent<Rigidbody>();
+		_rigidbody.isKinematic = true;				// Ï∫êÎ¶≠ÌÑ∞Í∞Ä Î™¨Ïä§ÌÑ∞Î•º Î∞ÄÏóàÏùÑÎïå Í∞ÄÏÜçÎèÑÎ•º Î∞õÏßÄ ÏïäÍ∏∞ ÏúÑÌï®
 		_agent = GetComponent<NavMeshAgent>();
+		photonView = GetComponent<PhotonView>();
 		Init();
 	}
 
     private void Start()
     {
-		
-    }
+		isConnected = PhotonNetwork.InRoom;
+
+
+	}
     void Update()
 	{
+        //if(CurState is DieState)
+        //{
+        //    _animator.Play("Die", 0);
+        //    return;
+        //}
 		_statemachine.Execute();
 	}
 
     //public abstract void Updated();
     public virtual void Setup(string name)
 	{
-		// id, ¿Ã∏ß, ªˆªÛ º≥¡§
+		// id, ÔøΩÃ∏ÔøΩ, ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ
 		ID = entity_ID;
         entityName = name;
 		int color = Random.Range(0, 1000000);
@@ -78,9 +100,9 @@ public abstract class BaseController : MonoBehaviour
 
 	public abstract void Init();
 
-	public virtual void TakeDamage(int skillObjectId, int damage) {
-		Debug.Log($"{gameObject.name} is damaged {damage} by {skillObjectId}");
-	
+	public virtual void TakeDamage(int skillObjectId, int damage) 
+	{
+		//Debug.Log($"{gameObject.name} is damaged {damage} by {skillObjectId}");
 	}
 
 	// IDLE
@@ -89,14 +111,21 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void ExitIdle() { }
 
 	// DIE
-	public virtual void EnterDie() { }
+	public virtual void EnterDie() {
+	}
 	public virtual void ExcuteDie() { }
 	public virtual void ExitDie() { }
 
 	// SKILL
-	public virtual void EnterSkill() { }
-	public virtual void ExcuteSkill() { }
-	public virtual void ExitSkill() { }
+	public virtual void EnterSkill() {
+		if (CurState is DieState) _statemachine.ChangeState(new DieState(this));
+    }
+	public virtual void ExcuteSkill() {
+		if (CurState is DieState) _statemachine.ChangeState(new DieState(this));
+	}
+	public virtual void ExitSkill() {
+        if (CurState is DieState) _statemachine.ChangeState(new DieState(this));
+    }
 
 	// MOVE
 	public virtual void EnterMove() { }
@@ -108,8 +137,80 @@ public abstract class BaseController : MonoBehaviour
 	public virtual void ExcuteDash() { }
 	public virtual void ExitDash() { }
 
-	// DrillDuck Slide
-	//public virtual void EnterSlide() { }
-	//public virtual void ExcuteSlide() { }
-	//public virtual void ExitSlide() { }
+    // BOW
+    public virtual void EnterBow() { }
+    public virtual void ExecuteBow() { }
+    public virtual void ExitBow() { }
+
+    #region DrillDuck State
+    // DrillDuckSlideBeforeState - not loop
+    public virtual void EnterDrillDuckSlideBeforeState() { }
+    public virtual void ExcuteDrillDuckSlideBeforeState() { }
+    public virtual void ExitDrillDuckSlideBeforeState() { }
+
+    // DrillDuckSlideState - not loop
+    public virtual void EnterDrillDuckSlideState() { }
+    public virtual void ExcuteDrillDuckSlideState() { }
+    public virtual void ExitDrillDuckSlideState() { }
+
+    public virtual void EnterDrillDuckSlideAfterState() { }
+    public virtual void ExecuteDrillDuckSlideAfterState() { }
+    public virtual void ExitDrillDuckSlideAfterState() { }
+    #endregion
+
+    #region Crocodile State
+    // CrocodileSwordState - not loop
+    public virtual void EnterCrocodileSwordState() { }
+    public virtual void ExcuteCrocodileSwordState() { }
+    public virtual void ExitCrocodileSwordState() { }
+    #endregion
+
+    #region IceKing State
+    // IceKingSpikeState - not loop
+    public virtual void EnterIceKingSpikeState() { }
+    public virtual void ExcuteIceKingSpikeState() { }
+    public virtual void ExitIceKingSpikeState() { }
+    #endregion
+
+    #region MonsterKing State
+    // MonsterKing - not loop
+    public virtual void EnterMonsterKingHitDownChargeState() { }    // HitDown Charge
+    public virtual void ExecuteMonsterKingHitDownChargeState() { }
+    public virtual void ExitMonsterKingHitDownChargeState() { }
+    public virtual void EnterMonsterKingHitDownState() { }		    // HitDown
+	public virtual void ExecuteMonsterKingHitDownState() { }
+	public virtual void ExitMonsterKingHitDownState() { }
+
+    public virtual void EnterMonsterKingSlashChargeState() { }      // Slash Charge
+    public virtual void ExecuteMonsterKingSlashChargeState() { }
+    public virtual void ExitMonsterKingSlashChargeState() { }
+    public virtual void EnterMonsterKingSlashState() { }		    // Slash
+	public virtual void ExecuteMonsterKingSlashState() { }
+	public virtual void ExitMonsterKingSlashState() { }
+
+    public virtual void EnterMonsterKingStabChargeState() { }       // Stab Charge 
+    public virtual void ExecuteMonsterKingStabChargeState() { }
+    public virtual void ExitMonsterKingStabChargeState() { }
+	public virtual void EnterMonsterKingStabState() { }			// Stab
+	public virtual void ExecuteMonsterKingStabState() { }
+	public virtual void ExitMonsterKingStabState() { }
+
+	public virtual void EnterMonsterKingJumpStartState() { }	// JumpStart
+	public virtual void ExecuteMonsterKingJumpStartState() { }
+	public virtual void ExitMonsterKingJumpStartState() { }
+	public virtual void EnterMonsterKingJumpAirState() { }		// JumpAir
+	public virtual void ExecuteMonsterKingJumpAirState() { }
+	public virtual void ExitMonsterKingJumpAirState() { }
+	public virtual void EnterMonsterKingJumpEndState() { }		// JumpEnd
+	public virtual void ExecuteMonsterKingJumpEndState() { }
+	public virtual void ExitMonsterKingJumpEndState() { }
+    #endregion
+
+
+
+    void OnHitEvent()
+	{
+		_statemachine.ChangeState(new IdleState(this));
+
+	}
 }

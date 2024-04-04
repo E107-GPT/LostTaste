@@ -1,210 +1,407 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    #region private serializable fields
-    [Tooltip("πÊ √÷¥Î ¿‘¿Â ºˆ")]
-    [SerializeField]
-    //private byte maxplayersPerRoom = 4;
-
-
-    #endregion
-
     #region private fields
-    // ≈¨∂Û¿Ãæ∆Æ π¯»£
-    string gameVersion = "1";
+    string gameVersion = "2";
+    private byte maxplayersPerRoom = 4;
     bool isConnecting;
 
-    // πÊ ¿Ã∏ß¿∏∑Œ ∑Î ¡§∫∏ ∞¸∏Æ
-    // ¡ﬂ∫π ∫“∞°
-    Dictionary<string, RoomInfo> roomlist = new Dictionary<string, RoomInfo>();
+    // room list -use> update, print room
+    List<RoomInfo> roomlist = new List<RoomInfo>();
 
-    // º±≈√«— πÊ ¡§∫∏
+    // current room
     private RoomInfo selectRoom;
     #endregion
 
     #region public fields
-    [Tooltip("∆«≥⁄¿∫ ¿Ã∏ß∞˙ πˆ∆∞ ∞°¡¸")]
-    [SerializeField]
-    public GameObject controlPanel;
-
-    [Tooltip("∆«≥⁄¿∫ ¿Ã∏ß∞˙ πˆ∆∞ ∞°¡¸")]
-    [SerializeField]
-    public GameObject progressLabel;
-
-    [Tooltip("∆«≥⁄¿∫ ¿Ã∏ß∞˙ πˆ∆∞ ∞°¡¸")]
-    [SerializeField]
-    public GameObject createRoomPanel;
-
-
-    [Tooltip("∆«≥⁄¿∫ ¿Ã∏ß∞˙ πˆ∆∞ ∞°¡¸")]
-    [SerializeField]
+    public GameObject partyUI;
     public GameObject passwordPanel;
+    public GameObject partyListPanel;
+    public GameObject partyInfoPanel;
+    public GameObject partyMakePanel;
+    public GameObject partyCaptain;
 
+    public GameObject[] partySelectButton = new GameObject[20];
+    public TextMeshProUGUI[] partyDescription = new TextMeshProUGUI[20];
+    public TextMeshProUGUI[] partyLeader = new TextMeshProUGUI[20];
+    public TextMeshProUGUI[] partyMember = new TextMeshProUGUI[20];
+    
+    public TextMeshProUGUI[] partyMemberInfo = new TextMeshProUGUI[4];
 
+    public TextMeshProUGUI roomDescription;
+
+    public GameObject JoiningWarning;
+    public GameObject PartyStatusPanel;
     #endregion
 
     #region MonoBehaviour Callbacks
     private void Awake()
     {
-        // ∏∂Ω∫≈Õ∞° ¿Â∏È¿ª ∑ŒµÂ«œ∏È ∞∞¿∫ πÊø° ¿÷¥¬ ∏µÁ ≈¨∂Û¿Ãæ∆Æ∞° ¿⁄µø¿∏∑Œ ∑π∫ß¿ª µø±‚»≠«œµµ∑œ «‘
         PhotonNetwork.AutomaticallySyncScene = true;
+        Connect();
     }
     void Start()
     {
-        progressLabel.SetActive(false);
-        controlPanel.SetActive(true);
-        createRoomPanel.SetActive(false);
-        passwordPanel.SetActive(false);
+        partyDescription = new TextMeshProUGUI[20];
+        partyLeader = new TextMeshProUGUI[20];
+        partyMember = new TextMeshProUGUI[20];
+        roomDescription.text = UserInfo.GetInstance().getNickName() + "'s Party";
+
+        // 20Í∞úÏùò ÌååÌã∞Ïóê ÎåÄÌïú Ï†ïÎ≥¥ ÏÑ§Ï†ï
+        for (int i = 0; i < 20; i++)
+        {
+            string partyName = "Party " + (i + 1);
+            GameObject party = GameObject.Find(partyName);
+
+            partySelectButton[i] = party;
+            partyDescription[i] = party.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            partyLeader[i] = party.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            partyMember[i] = party.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+            partySelectButton[i].SetActive(false);
+
+            Button partyConnect = partySelectButton[i].GetComponent<Button>();
+
+            // ÎûåÎã§ÏãùÏóêÏÑú ÏÇ¨Ïö©ÌïòÍ∏∞ ÏúÑÌï¥ ÌòÑÏû¨ Ïù∏Îç±Ïä§Î•º Î≥ÄÏàòÏóê Ìï†Îãπ.
+            int index = i;
+            // ÌååÌã∞ Ï†ëÏÜç Î≤ÑÌäºÏóê ÌÅ¥Î¶≠ Ïù¥Î≤§Ìä∏ Î¶¨Ïä§ÎÑàÎ•º Ï∂îÍ∞Ä. ÌÅ¥Î¶≠ Ïãú roomEnter Ìï®ÏàòÎ•º Ìò∏Ï∂ú.
+            partyConnect.onClick.AddListener(()=> ClickRoom(index));
+        }
+
+
+        //GameObject infoPartyMemeber = GameObject.Find("Party Member Layout Group");
+        //for(int i = 0; i<4; i++)
+        //{
+        //    string partyName = "Party Member " + (i + 1);
+        //    GameObject party = GameObject.Find(partyName);
+        //    Transform parentTransform = party.transform;
+        //    Transform childTransform = parentTransform.Find("Party Memeber Nickname Text " +(i+1));
+
+        //    partyMemberInfo[i] = childTransform.GetComponent<TextMeshProUGUI>();
+        //}
+
+        partyUI.SetActive(false);
+        PartyStatusPanel.SetActive(true);
+        PartyStatusPanel.SetActive(false);
     }
+
     #endregion
 
     #region public Methods
-    // Connect ø¨∞· ∞˙¡§¿ª Ω√¿€«œ¥¬ ∏ﬁº“µÂ
+    // ÎÑ§Ìä∏ÏõåÌÅ¨ Ïó∞Í≤∞ÏùÑ ÏúÑÌïú Connect Ìï®Ïàò
     public void Connect()
     {
         isConnecting = true;
-        progressLabel.SetActive(true);
-        controlPanel.SetActive(false);
-
-        // ∆˜≈Ê ≥◊∆Æøˆ≈© ø¨∞· ø©∫Œ »Æ¿Œ
         if (PhotonNetwork.IsConnected)
         {
-            // ∏ÆΩ∫∆Æ √‚∑¬«œ±‚
-            progressLabel.SetActive(false);
-            controlPanel.SetActive(true);
-            createRoomPanel.SetActive(true);
-            Debug.Log("∑Œ∫˘");
+            // Ïù¥ÎØ∏ Ïó∞Í≤∞Îêú Í≤ΩÏö∞
+            Debug.Log("PhotonNetwork: Ïù¥ÎØ∏ Ïó∞Í≤∞ÎêòÏñ¥ ÏûàÏäµÎãàÎã§.");
         }
         else
         {
-            // ∞‘¿” πˆ¿¸ ºº∆√
+            // setting
             PhotonNetwork.GameVersion = gameVersion;
-
-            // ∆˜≈Ê ≈¨∂ÛøÏµÂø° ø¨∞·µ«¥¬ Ω√¿€ ¡ˆ¡°
+            PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
+            
+            // Ìè¨ÌÜ§ Ïó∞Í≤∞ ÏÑúÎ≤ÑÎ•º krÎ°ú Í≥†Ï†ïÌïòÏó¨ ÌïúÍµ≠ ÏÑúÎ≤ÑÏóêÎßå Ïó∞Í≤∞ÎêòÎèÑÎ°ù ÏÑ§Ï†ï
+            PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "kr";
+            
+            // start connect
             PhotonNetwork.ConnectUsingSettings();
         }
     }
 
-    public override void OnJoinedLobby()
+    public void ExitRoom()
     {
-        Debug.Log("JoinLobby");
-        progressLabel.SetActive(false);
-        createRoomPanel.SetActive(true);
+        // Î∞©Ïù¥ ÏïÑÎãàÎ©¥ ÌÉàÌá¥ Î∂àÍ∞Ä
+        if (!PhotonNetwork.InRoom) return;
+        // room -> Lobby
+        PhotonNetwork.LeaveRoom();
+
+        GameObject player = Managers.Resource.Instantiate("Player/Player");
+        Transform pTrans = GameObject.Find("Player").GetComponent<Transform>();
+        
+        // Player Setting
+        player.name = "Player";
+        player.GetComponent<PlayerController>().Agent.Warp(pTrans.position);
+        player.transform.rotation = pTrans.rotation;
+        
+        GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player;
+        roomDescription.text = UserInfo.GetInstance().getNickName() + "'s Party";
+        partyUI.SetActive(false);
     }
 
+    // Enter the dungeon portal without a room
+    public void MakePersonalRoom()
+    {
+        Debug.Log("CreatePersonalRoom");
+        //PhotonManager manager = GameObject.Find("gm").GetComponent<PhotonManager>();
+
+        string roomName = UserInfo.GetInstance().getNickName() + "Ïùò Î∞©";
+        string captainName = UserInfo.GetInstance().getNickName();
+
+        RoomOptions room = new RoomOptions();
+        room.MaxPlayers = maxplayersPerRoom;
+        room.IsVisible = false;
+        room.IsOpen = false;
+        room.CleanupCacheOnLeave = false;
+
+        // ÏãúÎìú ÏÉùÏÑ±
+        int seed = (int)System.DateTime.Now.Ticks;
+
+        // set custom properties
+        room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "seed", seed } };
+        room.CustomRoomPropertiesForLobby = new string[] { "captain", "seed" };
+
+        PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
+        roomName = roomName + "`" + seed;
+        PhotonNetwork.CreateRoom(roomName, room);
+
+    }
+
+    // Make multy Rroom
     public void makeRoom()
     {
-        PhotonUIManager manager = GameObject.Find("GameManager").GetComponent<PhotonUIManager>();
-        string roomName = manager.GetTitle();
-        string captainName = manager.GetName();
+        PhotonUIManager manager = GameObject.Find("gm").GetComponent<PhotonUIManager>();
+        string roomName = manager.GetDescription();
+        string captainName = UserInfo.GetInstance().getNickName();
+
+        if (roomName.Length == 0) return;
+        
+        if(captainName == null)
+            captainName = "player";
 
         if (captainName == null || roomName == null) return;
 
-
         RoomOptions room = new RoomOptions();
-        room.MaxPlayers = 4;
+        room.MaxPlayers = maxplayersPerRoom;
         room.IsVisible = true;
         room.IsOpen = true;
-        PhotonNetwork.NickName = manager.GetName();
+        room.CleanupCacheOnLeave = false;
+
         bool ispassword = manager.GetIsPassword();
-        int password = manager.GetPassword();
-        Debug.Log("pw" + password);
+        string password = manager.GetPassword();
+
+        // ÏãúÎìú ÏÉùÏÑ±
+        int seed = (int)System.DateTime.Now.Ticks;
+
+        // ÏÉùÏÑ±Îêú Î∞© Ïù¥Î¶Ñ + ` + ÏãúÎìú Í∞í
+        roomDescription.text = roomName;
+        roomName  = roomName+ "`" + seed;
+
+        // Register in lobby
         if (ispassword)
         {
-            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword }, { "password", password } };
-            room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword", "password" };
+            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword }, { "password", password }, { "seed", seed } };
+            room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword", "password", "seed" };
         }
         else
         {
-            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword } };
-            room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword" };
+            room.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "captain", captainName }, { "ispassword", ispassword }, { "seed", seed } };
+            room.CustomRoomPropertiesForLobby = new string[] { "captain", "ispassword", "seed" };
         }
-
-        Debug.Log("pw" + (bool)room.CustomRoomProperties["ispassword"]);
+        partyMakePanel.SetActive(false);
+        partyUI.SetActive(false);
         PhotonNetwork.CreateRoom(roomName, room);
     }
 
-    public void roomEnter(string roomName)
+    public void ClickRoom(int roomNumber)
     {
-        if (roomlist.Count < 1) return;
-        string nickname = GameObject.Find("GameManager").GetComponent<PhotonUIManager>().GetName();
-        if (nickname == null) return;
-        PhotonNetwork.NickName = nickname;
-
-        RoomInfo curRoom = null;
-        printList();
-        foreach (KeyValuePair<string, RoomInfo> room in roomlist)
+        selectRoom = roomlist[roomNumber];
+        string printRoomName = selectRoom.Name;
+        int lastIndex = printRoomName.LastIndexOf("`");
+        if (lastIndex != -1)
+            printRoomName = printRoomName.Substring(0, lastIndex);
+        if ((bool)selectRoom.CustomProperties["ispassword"])
         {
-            curRoom = room.Value;
-            break;
-        }
-
-        if ((bool)curRoom.CustomProperties["ispassword"])
-        {
-            //password panel open
-            // ∫Òπ¯ ∞À¡ı »ƒ ¿‘¿Â
-            selectRoom = curRoom;
             passwordPanel.SetActive(true);
+            Debug.Log(GameObject.Find("Party Joining PW Content Text"));
+            GameObject.Find("Party Joining PW Content Text").GetComponent<TextMeshProUGUI>().text = printRoomName + "ÌååÌã∞Ïóê Ï∞∏Ïó¨ÌïòÏãúÍ≤†ÏäµÎãàÍπå?";
+            
+            //password panel open
+            GameObject.Find("Party Joining Window").SetActive(false);
         }
         else
-        {
-            // no password πŸ∑Œ ¿‘¿Â
-            PhotonNetwork.JoinRoom(roomName);
-        }
+            GameObject.Find("Party Joining Content Text").GetComponent<TextMeshProUGUI>().text = printRoomName + "ÌååÌã∞Ïóê Ï∞∏Ïó¨ÌïòÏãúÍ≤†ÏäµÎãàÍπå?";
     }
 
-    public void PasswordValidation(int pw)
+    public void roomEnter()
     {
-        // ∫Òπ–π¯»£ ∏¬¿∏∏È ¿‘¿Â
-        if ((int)selectRoom.CustomProperties["password"] == pw)
+        // ÎÇòÏ§ëÏóê ÏàòÏ†ï
+        string nickname = "Player";//UserInfo.GetInstance().getNickName();
+        
+        if (nickname == null) return;
+
+        if (selectRoom.MaxPlayers <= selectRoom.PlayerCount)
+        {
+            JoiningWarning.SetActive(true);
+            return;
+        }
+
+        // no password enter
+        PhotonNetwork.JoinRoom(selectRoom.Name);
+        GameObject.Find("Party Joining Window").SetActive(false);
+        partyUI.SetActive(false);
+    }
+
+    public void PasswordValidation()
+    {
+        string pw = gameObject.GetComponent<PhotonUIManager>().GetPassword();
+
+        if ((string)selectRoom.CustomProperties["password"] == pw)
         {
             PhotonNetwork.JoinRoom(selectRoom.Name);
+            partyUI.SetActive(false);
         }
     }
 
     public void printList()
     {
-        foreach (KeyValuePair<string, RoomInfo> room in roomlist)
+        for(int i = 0; i<20; i++)
         {
-            ExitGames.Client.Photon.Hashtable has = room.Value.CustomProperties;
-            string roomInfo = "room : " + room.Value.Name + " \n" + room.Value.PlayerCount + " / " + room.Value.MaxPlayers + "\n" + "isvisible : " + room.Value.IsVisible + "\n" + "isopen : " + room.Value.IsOpen
-                + "\n captain : " + has["captain"] + "\n" + has["ispassword"] + " / " + has["password"];
-            Debug.Log(roomInfo);
+            partySelectButton[i].SetActive(false);
+        }
+
+        int idx = 0;
+        foreach (RoomInfo room in roomlist)
+        {
+            partySelectButton[idx].SetActive(true);
+
+            ExitGames.Client.Photon.Hashtable has = room.CustomProperties;
+
+
+            // ÎßàÏßÄÎßâ ` Ïù¥ÌõÑ ÏãúÎìúÍ∞íÏùÑ Ï†úÏô∏ÌïòÍ≥† Ï∂úÎ†•
+            string printRoomName = room.Name;
+            int lastIndex = printRoomName.LastIndexOf("`");
+            if (lastIndex != -1)
+                printRoomName = printRoomName.Substring(0, lastIndex);
+
+
+            partyDescription[idx].text = printRoomName;
+            partyLeader[idx].text = (string)has["captain"];
+            partyMember[idx].text = room.PlayerCount + " / 4";
+
+            idx ++;
+
+            //string roomInfo = "room : " + room.Value.Name + " \n" + room.Value.PlayerCount + " / " + room.Value.MaxPlayers + "\n" + "isvisible : " + room.Value.IsVisible + "\n" + "isopen : " + room.Value.IsOpen
+            //    + "\n captain : " + has["captain"] + "\n" + has["ispassword"] + " / " + has["password"];
         }
     }
+
+    public void OpenPartyWindow()
+    {
+        partyUI.SetActive(true);
+        if (PhotonNetwork.InRoom)
+        {
+            PrintPlayer();
+            partyInfoPanel.SetActive(true);
+            partyListPanel.SetActive(false);
+        }
+        else
+        {
+            partyInfoPanel.SetActive(false);
+            partyListPanel.SetActive(true);
+        }
+    }
+
+    public void PrintPlayer()
+    {
+        for(int i = 0; i<4; i++)
+        {
+            Debug.Log(partyMemberInfo[i]);
+            partyMemberInfo[i].text = "ÌååÌã∞Ïõê Î™®ÏßëÏ§ë...";
+        }
+        int idx = 0;
+        // Ïù¥Í±∞ Ï≤¥ÌÅ¨Ìï¥Î≥¥Í∏∞
+        //Debug.Log(GameObject.Find("Party Leader Nickname"));
+        //GameObject.Find("Party Leader Nickname").GetComponent<TextMeshProUGUI>().text = (string)PhotonNetwork.CurrentRoom.CustomProperties["captain"];
+
+        partyCaptain.GetComponent<TextMeshProUGUI>().text = (string)PhotonNetwork.MasterClient.NickName;
+
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            Debug.Log(player.Key);
+            Debug.Log((int)player.Value.CustomProperties["Number"]);
+            partyMemberInfo[(int)player.Value.CustomProperties["Number"]].text = player.Value.NickName;
+            //idx++;
+        }
+    }
+
+    public int GetCurrentPartyMemberCount()
+    {
+        int idx = 0;
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            if (player.Value.CustomProperties.ContainsKey("Number"))
+            {
+                idx++;
+            }
+        }
+        return idx;
+    }
+
+    public void PrintPartyStatus()
+    {
+        Debug.Log("Party Status Update");
+        PartyStatusPanel.SetActive(true);
+        GameObject[] playerStatus = new GameObject[4];
+
+        for(int i = 0; i<4; i++)
+        {
+            playerStatus[i] = PartyStatusPanel.transform.Find("Party Member " + (i + 1)).gameObject;
+            playerStatus[i].SetActive(false);
+        }
+
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            Debug.Log(player.Value.CustomProperties);
+            Debug.Log(player.Value.CustomProperties["Number"]);
+            int index = player.Value.CustomProperties.ContainsKey("Number") ? (int)player.Value.CustomProperties["Number"] : 0;
+            playerStatus[index].SetActive(true);
+            playerStatus[index].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = player.Value.NickName;
+        }
+    }
+
     #endregion
 
     #region MonoBehaviourPunCallbacks callbacks
     public override void OnConnectedToMaster()
     {
-        if (isConnecting)
-        {
-            Debug.Log("OnConnectedToMaster");
-            // ∏∂Ω∫≈Õø° µÈæÓ∞¨¿ª ∂ß ∑£¥˝ πÊ µÈæÓ∞°±‚
-
-            PhotonNetwork.JoinLobby();
-        }
+        Debug.Log("OnConnectedToMaster"); 
+        PhotonNetwork.JoinLobby();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         foreach (RoomInfo rooom in roomList)
         {
-            if (!roomlist.ContainsKey(rooom.Name))
+            bool change = false;
+            for(int i = 0; i< roomlist.Count; i++)
             {
-                roomlist.Add(rooom.Name, rooom);
+                if(roomlist[i].Name == rooom.Name)
+                {
+                    if (rooom.PlayerCount != 0)
+                        roomlist[i] = rooom;
+                    // no player, no open, no multy
+                    else if (rooom.PlayerCount == 0 || !rooom.IsOpen || !rooom.IsVisible)
+                    {
+                        roomlist.Remove(roomlist[i]);
+                    }
+                    change = true;
+                }
             }
-            else // ¿÷¿∏∏È ∞ªΩ≈
+
+            if (!change)
             {
-                if (rooom.PlayerCount != 0)
-                    roomlist[rooom.Name] = rooom;
-                else // ¿Ø¿˙∞° æ¯¿∏∏È πÊ ªË¡¶
-                    roomlist.Remove(rooom.Name);
+                if(rooom.PlayerCount != 0)
+                    roomlist.Add(rooom);
             }
         }
         printList();
@@ -213,39 +410,162 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         isConnecting = false;
-        progressLabel.SetActive(false);
-        controlPanel.SetActive(true);
+
+        if(partyUI!=null)
+            partyUI.SetActive(false);
         Debug.LogWarningFormat("OnDisconnected {0}", cause);
-    }
-
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        Debug.Log("πÊ µÈæÓ∞°±‚ Ω«∆–");
-    }
-
-    public override void OnCreatedRoom()
-    {
-        // ∫ª¿Œ ƒ∑«¡∑Œ µÈæÓ∞°±‚
-        PhotonNetwork.LoadLevel("Room for 1");
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("OnJoinedRoom");
+        partyListPanel.SetActive(false);
+        passwordPanel.SetActive(false);
+        PhotonNetwork.NickName = UserInfo.GetInstance().getNickName();
+        string printRoomName = PhotonNetwork.CurrentRoom.Name;
+        int lastIndex = printRoomName.LastIndexOf("`");
+        if (lastIndex != -1)
+            printRoomName = printRoomName.Substring(0, lastIndex);
+
+        roomDescription.text = printRoomName;
+
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        {
+            // my player -> spawn
+            // Debug.Log($"{PhotonNetwork.PlayerList[i].IsLocal}");
+            if (PhotonNetwork.PlayerList[i].IsLocal)
+            {
+                GameObject singlePlayer = GameObject.Find("Player");
+                Vector3 position = Vector3.zero;
+                Quaternion rotate = Quaternion.identity;
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    position = singlePlayer.transform.position;
+                    rotate = singlePlayer.transform.rotation;
+                }
+                else
+                {
+                    GameObject spawnPoint = GameObject.Find("CampSpawn");
+                    position = spawnPoint.transform.position;
+                    rotate = spawnPoint.transform.rotation;
+                }
+
+                if (singlePlayer != null)
+                {
+                    Destroy(singlePlayer);
+                }
+
+                //Assets/Resources/Prefabs/Player/Player.prefab
+                GameObject player = PhotonNetwork.Instantiate("Prefabs/Player/Player", position, rotate, 0);
+                
+                player.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.PlayerList[i].ActorNumber);
+                HUDManager hud = GameObject.Find("HUD").GetComponent<HUDManager>();
+                hud.playerController = player.GetComponent<PlayerController>();
+                player.name = "Player";
+                GameObject.Find("Main Camera").GetComponent<CameraController>()._player = player;
+
+    
+                Managers.Player.SetLocalPlayerInfo(player.GetComponent<PhotonView>().ViewID, Define.ClassType.None);
+                Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+                PrintPartyStatus();
+            }
+        }
+
+        ExitGames.Client.Photon.Hashtable info = PhotonNetwork.CurrentRoom.CustomProperties;
+        Debug.Log("seed : " + info["seed"]);
+        
+        Managers.Random.SetSeed((int)info["seed"]);
+    }
+
+    public override void OnJoinedLobby()
+    {
+        Debug.Log($"JoinLobby   {PhotonNetwork.CurrentLobby}");
+    }
+
+    public override void OnLeftRoom()
+    {
+        Managers.Player.Clear();
+        
+        Debug.Log("Î∞©ÏóêÏÑú ÎÇòÍ∞îÏäµÎãàÎã§.");
+        PlayerController[] list = GameObject.FindObjectsOfType<PlayerController>();
+
+        //object viewIDObj;
+        //PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("ViewID", out viewIDObj);
+
+        //foreach (PlayerController p in list)
+        //{
+
+        //    if (p.GetComponent<PhotonView>().ViewID != (int)viewIDObj)
+        //    {
+        //        PhotonNetwork.Destroy(p.gameObject);
+        //    }
+        //}
+        Managers.Scene.LoadScene(Define.Scene.Dungeon);
 
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Managers.Player.AddPlayer(newPlayer);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+        PrintPartyStatus();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Managers.Player.RemovePlayer(otherPlayer);
+        Managers.Player.LoadPlayersInfoInCurrentRoom();
+
+        PlayerController[] list = GameObject.FindObjectsOfType<PlayerController>();
+        object viewIDObj;
+        otherPlayer.CustomProperties.TryGetValue("ViewID", out viewIDObj);
+
+        foreach (PlayerController p in list)
+        {
+            
+            if (p.GetComponent<PhotonView>().ViewID == (int)viewIDObj)
+            {
+                // ÎßàÏä§ÌÑ∞Í∞Ä ÏßÄÏõåÎùº.
+                if(PhotonNetwork.IsMasterClient) PhotonNetwork.Destroy(p.gameObject);
+            }
+        }
+
+        PrintPartyStatus();
+        Debug.Log("anyone left");
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if(PhotonNetwork.LocalPlayer == newMasterClient)
+        {
+            MonsterManager.Instance.ReStartManage();
+        }
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log(returnCode + " : " + message);
+        // ÌååÌã∞ Îã§ Ï∞ºÏùÑ Îïå Í≤ΩÍ≥† Ï§òÏïºÌï®
+        //JoiningWarning.SetActive(true);
+    }
+
+    
+
+
+
+
+
 
 
     #endregion
 
-    private void OnGUI()
-    {
-        foreach (KeyValuePair<string, RoomInfo> room in roomlist)
-        {
-            if (GUILayout.Button(room.Value.Name))
-            {
-                roomEnter(room.Value.Name);
-            }
-        }
-    }
+    // ÎßàÏä§ÌÑ∞ ÌÅ¥ÎùºÏù¥Ïñ∏Ìä∏Í∞Ä Î≥ÄÍ≤ΩÎêòÏóàÏùÑ Îïå Ìò∏Ï∂úÎêòÎäî Î©îÏÜåÎìú
 }

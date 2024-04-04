@@ -92,8 +92,8 @@ public class KeyedRandomizer
     ///     <code>
     ///     var krng = new KeyedRandomizer(123);
     ///     var schrodingersBox = new ProbabilityTable&lt;string>() {
-    ///         "dead": 0.5,
-    ///         "alive": 0.5,
+    ///         { "dead", 0.5 },
+    ///         { "alive", 0.5 },
     ///     };
     ///     string result = krng.GetFromTable(123, schrodingersBox);
     ///     </code>
@@ -130,6 +130,28 @@ public class KeyedRandomizer
         }
         throw new ArithmeticException("수학적으로 불가능한 경우가 일어났습니다.");
     }
+
+    /// <summary>
+    /// 배열에서 랜덤한 원소를 뽑습니다.
+    /// </summary>
+    /// <param name="key">랜덤 키</param>
+    /// <param name="elements"></param> 뽑을 원소가 포함된 배열
+    /// <returns></returns> 뽑힌 원소
+    public E Get<E>(UInt16 key, E[] elements)
+    {
+        return elements[GetInt(key, 0, elements.Length)];
+    }
+
+    /// <summary>
+    /// 리스트에서 랜덤한 원소를 뽑습니다.
+    /// </summary>
+    /// <param name="key">랜덤 키</param>
+    /// <param name="elements"></param> 뽑을 원소가 포함된 리스트
+    /// <returns></returns> 뽑힌 원소
+    public E Get<E>(UInt16 key, IList<E> elements)
+    {
+        return elements[GetInt(key, 0, elements.Count)];
+    }
 }
 
 /// <summary>
@@ -144,8 +166,8 @@ public class ProbabilityTable<E> : Dictionary<E, double> {
     ///     확률 테이블을 만듭니다. 예시:
     ///     <code>
     ///     var schrodingersBox = new ProbabilityTable&lt;string>() {
-    ///         "dead": 0.5,
-    ///         "alive": 0.5,
+    ///         { "dead", 0.5 },
+    ///         { "alive", 0.5 },
     ///     };
     ///     </code>
     ///     가중치는 모든 원소의 가중치 합에 대한 비로 반영됩니다.

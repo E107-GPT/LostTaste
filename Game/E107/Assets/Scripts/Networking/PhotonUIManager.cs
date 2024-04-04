@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PhotonUIManager : MonoBehaviour
 {
     #region private constants
     string roomName = "Room Name";
-    int password = 0;
+    string password;
     bool ispassword = false;
+    string description;
+    string message;
+
+    public TextMeshProUGUI chatField;
+
 
     [SerializeField]
     string userName = "player";
@@ -20,35 +26,23 @@ public class PhotonUIManager : MonoBehaviour
     #endregion
 
     #region public Methods
-
-    public void SetName(string uname)
+    public void SetDescription(string description)
     {
-        userName = uname;
+        this.description = description;
     }
-
-    public string GetName()
+    public string GetDescription()
     {
-        return userName;
-    }
-
-    public void SetTitle(string newRoomName)
-    {
-        roomName = newRoomName;
-        Debug.Log(roomName);
-    }
-
-    public string GetTitle()
-    {
-        return roomName;
+        return description;
     }
 
     public void SetPassword(string pw)
     {
         if (pw.Length <= 0) return;
-        password = int.Parse(pw);
+        //password = int.Parse(pw);
+        password = pw;
         ispassword = true;
     }
-    public int GetPassword()
+    public string GetPassword()
     {
         return password;
     }
@@ -60,10 +54,25 @@ public class PhotonUIManager : MonoBehaviour
     public void SetEnterPassword()
     {
         Debug.Log((password));
-        GameObject.Find("GameManager").GetComponent<PhotonManager>().PasswordValidation(password);
+        GameObject.Find("gm").GetComponent<PhotonManager>().PasswordValidation();
     }
 
+    public void SetChatMessage(string message)
+    {
+        this.message = message;
+    }
+    public string GetChatMessage()
+    {
+        string msg = message;
+        //chatField.text = "";
 
+        return msg;
+    }
+
+    public void enterRoom()
+    {
+        GameObject.Find("gm").GetComponent<PhotonManager>().roomEnter();
+    }
     public void TestPost()
     {
         Dictionary<string, string> request = new Dictionary<string, string>();
@@ -86,6 +95,11 @@ public class PhotonUIManager : MonoBehaviour
         request.Add("password", "qwe123!@#");
 
         gameObject.GetComponent<HTTPRequest>().POSTCall("auth/login", request);
+    }
+
+    public void OpenPartyWindow()
+    {
+        GetComponent<PhotonManager>().OpenPartyWindow();
     }
 
     #endregion

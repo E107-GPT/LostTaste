@@ -17,6 +17,8 @@ public class Define
         Login,
         Lobby,
         Game,
+        Camp,
+        Dungeon
     }
     public enum UIEvent
     {
@@ -36,7 +38,123 @@ public class Define
     public enum  UnitType
     {
         Player = 0,
-        Slime,
+        Mushroom,
         DrillDuck,
+        TurtleSlime,
+        ToxicFlower,
+        Crab,
+        Fishman,
+        NagaWizard,
+        Demon,
+        Salamander,
+        Specter,
+        Skeleton,
+        Crocodile,
+        IceKing,
+        MonsterKing,
+    }
+
+    public enum Effect
+    {
+        NormalAttackEffect,
+        BubbleWandSkillEffect,
+        DrillDuckBeforeEffect,
+        DrillDuckSlideEffect,
+        DrillDuckAttackEffect,
+        StrongSwingEffect,
+        GalaxyZzzSkillEffect,
+        WarriorClassSkillStartEffect,
+        WarriorClassSkillEffect,
+        WarriorClassSkillDrawEffect,
+        SemUmbrellaSkillEffect,
+        BoomerangSkillEffect,
+        ToxicFlowerMissileEffect,
+        SalamanderFlameEffect,
+        NagaWizardLightningEffect,
+        DemonFireballEffect,
+        CrabAttackEffect,
+        FishmanAttackEffect,
+        SkeletonAttackEffect,
+        SpecterAttackEffect,
+        CrocodileSwordEffect,
+        CrocodileAttackEffect,
+        CrocodileSwordTail,
+        IceKingCleaveEffect,
+        IceKingSpikeEffect,
+        KingHitDownAfterEffect,
+        KingHitDownEndEffect,
+        KingHitDownStartEffect,
+        KingSlashLurkerEffect,
+        KingSlashStartEffect,
+        KingStabChargeEffect,
+        KingStabEffect,
+        KingJumpStartEffect,
+        KingJumpAirEffect,
+        KingJumpEndEffect,
+        MushroomAttackEffect,
+        TurtleSlimeAttackEffect,
+        SunFallEffect,
+        ExplosionSunFallEffect,
+        NinjaClassSkillFinishEffect,
+        NinjaClassSkillStartEffect,
+        MageClassSkillEffect,
+        MageClassSkillAuraEffect,
+        HealOnceEffect,
+        PriestClassSkillEffect,
+        PlayerWalkEffect,
+        SeaPearlSkillEffect,
+        DustDirtyEffect,
+        IceBallEffect,
+        FireKatanaEffect,
+        GroundSlamRed,
+        ExplosionDecalFire,
+        MagicFieldWhite,
+        BowSkillEffect,
+        HealOnce,
+        BowArrowBrokenEFfect,
+        StormDaggerEffect,
+        StormDaggerFinishEffect,
+        MaxCount
+    }
+
+    public enum NPCType
+    {
+        Normal,
+        Manual,
+    }
+
+    public enum SkillType
+    {
+        None,
+        LeftSkill,
+        RightSkill,
+        ClassSkill
+    }
+
+    public enum ClassType
+    {
+        None,
+        Warrior,
+        Priest,
+        Mage,
+        Ninja
+
+    }
+
+    public enum Clothes
+    {
+        NoneBody,
+        WarriorHat,
+        WarriorBody,
+        WarriorShield,
+        WarriorCloak,
+        PriestHat,
+        PriestBody,
+        MageHat,
+        MageBody,
+        MageBackPack,
+        NinjaHair,
+        NinjaMask,
+        NinjaBody
     }
 }

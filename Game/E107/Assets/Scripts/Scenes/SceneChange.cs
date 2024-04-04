@@ -39,12 +39,23 @@ public class SceneChange : MonoBehaviour
             switch (portalType)
             {
                 case PortalType.Entrance:
-                    GameScene.EnterDungeon();
+                    EnterDungeon();
                     break;
                 case PortalType.Exit:
-                    GameScene.ExitDungeon();
+                    ExitDungeon();
                     break;
             }
         }
+    }
+
+    public void EnterDungeon()
+    {
+        Managers.Scene.LoadScene(Define.Scene.Dungeon);
+    }
+
+    // 던전 종료
+    public void ExitDungeon()
+    {
+        Managers.Scene.LoadScene(Define.Scene.Camp);
     }
 }

@@ -5,25 +5,13 @@ using static Define;
 
 public class MonsterStat : Stat
 {
-    [SerializeField]
-    protected int _level;
-    //[SerializeField]
-    //protected float _detectRange;
-    [SerializeField]
-    protected float _targetRange;
-    [SerializeField]
-    protected float _patternkDelay;
-    [SerializeField]
-    protected float _patternCDT;    // Cooldown Time
-    [SerializeField]
-    protected float _patternDamage;
+    protected float _detectRange;
+    protected float _detectTime;        // Idle 상태에서 적을 탐색하는 시간
+    protected int _patternDamage;
     
-
-    public int Level { get { return _level; } set { _level = value; } }
-    //public float DetectRange { set => _detectRange = value; get => _detectRange; }
-    public float TargetRange { set => _targetRange = value; get => _targetRange; }
-    public float PatternDelay { set => _patternkDelay = value; get => _patternkDelay; }
-    public float PatternCDT { set => _patternCDT = value; get => _patternCDT; }
+    public float DetectRange { set => _detectRange = value; get => _detectRange; }
+    public float DetectTime { set => _detectTime = value;  get => _detectTime; }
+    public int PatternDamage { set => _patternDamage = value; get => _patternDamage; }
 
     public MonsterStat(UnitType unitType) : base(unitType) 
     {
@@ -34,23 +22,33 @@ public class MonsterStat : Stat
     {
         base.InitStat(unitType);
 
-        _targetRange = 0;
+        _detectTime = 0.01f;
+        _detectRange = 15.0f;
 
         switch (unitType)
         {
-            case UnitType.Slime:
-                _level = 1;
-                //_detectRange = 15.0f;
-                //_attackDelay = 1.0f;
-                //_patternCDT = int.MaxValue;
-                break;
+            // Boss
             case UnitType.DrillDuck:
-                _level = 1;
-                //_detectRange = 15.0f;
-                _targetRange = 15.0f;
-                _patternkDelay = 10.0f;
-                _patternCDT = 10.0f;
-                _patternDamage = 40.0f;
+                _detectRange = 40.0f;
+                _patternDamage = 30;
+                break;
+            case UnitType.Crocodile:
+                _detectRange = 22.0f;
+                _patternDamage = 40;
+                break;
+            case UnitType.IceKing:
+                _detectRange = 25.0f;
+                _patternDamage = 40;
+                break;
+            case UnitType.MonsterKing:
+                _detectRange = 30.0f;
+                _patternDamage = 40;
+                // HitDownEnd: PatternDamage - 10
+                // HitDownAfter: PatternDamage - 10
+                // Slash: PatternDamage - 5
+                // Stab: PatternDamage - 15
+                // JumpStart: PatternDamage - 30
+                // JumpEnd: PatternDamage + 20
                 break;
         }
     }

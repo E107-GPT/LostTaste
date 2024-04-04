@@ -19,7 +19,7 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: kr
     Server: 
     Port: 0
     ProxyServer: 
@@ -39,6 +39,62 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - EnterIdle
+  - ChangeMoveState
+  - ChangeDashState
+  - ChangeIDLEState
+  - EnterSkill
+  - ChangeLeftState
+  - ChangeRightState
+  - LeftSKillCast
+  - RightSkillCast
+  - ChangeIdleState
+  - ChageSkillState
+  - ChangeFirstItem
+  - ChangeSecondItem
+  - DropCurrentItemRPC
+  - EquipItemRPC
+  - ChageDieState
+  - RPC_ChangeIdleState
+  - RPC_ChangeDieState
+  - RPC_ChangeMoveState
+  - RPC_ChangeSkillState
+  - ChangeDieState
+  - RPC_ChangeDrillDuckSlideBeforeState
+  - RPC_ChangeDrillDuckSlideeState
+  - RPC_ChangeDrillDuckSlideState
+  - RPC_WarpTo
+  - ReceiveMessage
+  - RPC_ChangeCrocodileSwordState
+  - RPC_ChangeIceKingSpikeState
+  - OpenChest
+  - OpenChestRPC
+  - SpawnMonster
+  - RPC_ActivatePortal
+  - RPC_SpawnMonster
+  - RPC_ChangeMonsterKingHitDownState
+  - RPC_ChangeMonsterKingJumpAirState
+  - RPC_ChangeMonsterKingJumpEndState
+  - RPC_ChangeMonsterKingJumpStartState
+  - RPC_ChangeMonsterKingSlashState
+  - RPC_ChangeMonsterKingStabState
+  - RPC_JumpTrace
+  - ReStartManage
+  - RPC_PlayerAttacked
+  - RPC_Attacked
+  - RPC_MonsterAttacked
+  - RPC_ItemChanged
+  - RPC_DropCurrentItem
+  - RPC_EquipItem
+  - OnDashFinishedEvent
+  - RPC_ObtainWeapon
+  - RPC_ChangeClass
+  - RPC_Healed
+  - RPC_StartCoroutine
+  - RPC_ChangeMonsterKingHitDownChargeState
+  - RPC_ChangeMonsterKingSlashChargeState
+  - RPC_ChangeMonsterKingStabChargeState
+  - RPC_ChangeDrillDuckSlideAfterState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

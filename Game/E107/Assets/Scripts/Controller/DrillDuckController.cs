@@ -1,119 +1,232 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DrillDuckController : MonsterController
 {
-    private DrillDuckItem _item;
-
-    [SerializeField]
-    private Transform _targetPlayer;        // ∆–≈œ ≈∏∞Ÿ∆√
-
-    private Coroutine _checkMonsterState;
-    private bool _isDonePattern;            // ∆–≈œ¿Ã ≥°≥µ≥™?
-    private float _patternDelay = 0f;       // pattern ºˆ«‡ ¡÷±‚
-
-    private DrillDuckSlideState _slideState;
-    private DrillDuckSkillState _skillState;
-
-    public Transform TargetPlayer { get { return _targetPlayer; } set { _targetPlayer = value; } }
-    public bool IsDonePattern { get { return _isDonePattern; } set { _isDonePattern = value; } }
-    public DrillDuckItem Item { get { return _item; } }
-
     public override void Init()
     {
-        // BaseController
-        _agent.stoppingDistance = 1.5f;
-        _agent.angularSpeed = 500.0f;
-        _agent.acceleration = 40.0f;
-        _statemachine.CurState = new IdleState(this);
+        base.Init();
 
-        // Editor Init
-        _existPlayer = GameObject.FindGameObjectsWithTag("Player");
-
-        // Other Class
         _stat = new MonsterStat(_unitType);
-        _item = GetComponent<DrillDuckItem>();
-        _slideState = new DrillDuckSlideState(this);
-        _skillState = new DrillDuckSkillState(this);
-
-        // Cur Class
-        _isDonePattern = true;
-
-        // State
-        _checkMonsterState = StartCoroutine(CheckDrillDuckState());
-        InvokeRepeating("UpdateDectPlayer", 0, 20.0f);              // 0√  »ƒ »£√‚, 20√ ∏∂¥Ÿ ¿Ãµø ≈∏∞Ÿ∆√ ºˆ¡§ -> ø©±‚º≠ ∞°¿Â ≈´ µ•πÃ¡ˆ∏¶ ≥÷¿∫ «√∑π¿ÃæÓ∏¶ µ˚∂Û∞°∞‘ «“ ºˆ ¿÷¿Ω
     }
 
-    private void FixedUpdate()
+    protected override void ChangeStateFromMove()
     {
-        FreezeVelocity();
-    }
-
-    // ∫∏Ω∫ ∆–≈œ¿ª ¿ß«— ≈∏∞Ÿ∆√
-    private void UpdateTargetPlayer()
-    {
-        _patternDelay++;
-        if (_patternDelay > _stat.PatternDelay)      // ¿Ã «‘ºˆ∞° PatternDelay »£√‚µ«∏È ∆–≈œ ºˆ«‡
+        if (_detectPlayer == null)
         {
-            Collider[] targetPlayers = Physics.OverlapSphere(transform.position, _stat.TargetRange, 1 << 7);
+            _statemachine.ChangeState(new IdleState(this));
+            return;
+        }
+        float distToDetectPlayer = (transform.position - _detectPlayer.position).magnitude;
 
-            // ∆–≈œ ≈∏∞Ÿ∆√ ¡∂∞« √ﬂ∞°
-            PrintText($"∆–≈œ ∞¯∞› π¸¿ß≥ª¿« «√∑π¿ÃæÓ: {targetPlayers.Length}");
-            if (targetPlayers.Length > 0)
-            {
-                for (int i = 0; i < targetPlayers.Length; ++i)
-                {
-                    _targetPlayer = targetPlayers[i].transform;
-                }
+        _agent.SetDestination(_detectPlayer.position);
 
-                _patternDelay = 0;
-            }
+
+        if (distToDetectPlayer <= _stat.AttackRange)
+        {
+            RandomPatternSelector();
+        }
+        else if (distToDetectPlayer > _stat.DetectRange)
+        {
+            _detectPlayer = null;
+            _statemachine.ChangeState(new IdleState(this));
         }
     }
 
-    IEnumerator CheckDrillDuckState()
+    private void RandomPatternSelector()
     {
-        while (_stat.Hp > 0)
+        int rand = Random.Range(0, 101);
+        if (rand <= 30)
         {
-            yield return new WaitForSeconds(0.3f);
+            _statemachine.ChangeState(new DrillDuckSlideBeforeState(this));
+        }
+        else if (rand <= 100)
+        {
+            _statemachine.ChangeState(new SkillState(this));
+        }
+    }
 
-            UpdateAttackPlayer();
-            // Hp∞° 70% ¿Ã«œ∂Û∏È ¿œ¡§ Ω√∞£∏∂¥Ÿ ∆–≈œ ∞¯∞›
-            if ((_unitType is Define.UnitType.DrillDuck) && _isDonePattern == true && (_stat.Hp <= _stat.MaxHp))
+    #region State
+    public override void EnterSkill()
+    {
+        base.EnterSkill();
+        _agent.avoidancePriority = 1;
+    }
+
+    public override void ExcuteSkill()
+    {
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            
+            if (aniTime >= 1.0f)
             {
-                UpdateTargetPlayer();
-            }
-
-
-            if (_targetPlayer != null)
-            {
-                if (CurState is DrillDuckSlideState) continue;
-
-                _statemachine.ChangeState(_slideState);
-            }
-            else if (_attackPlayer != null)
-            {
-                if (CurState is DrillDuckSkillState) continue;
-
-                _statemachine.ChangeState(_skillState);
-            }
-            else if (_existPlayer.Length != 0)
-            {
-                if (CurState is MoveState) continue;
-
-                _statemachine.ChangeState(new MoveState(this));
-            }
-            else
-            {
-                if (CurState is IdleState) continue;
-                _detectPlayer = null;
-                _attackPlayer = null;
                 _statemachine.ChangeState(new IdleState(this));
             }
         }
-
-        _statemachine.ChangeState(new DieState(this));
-        CancelInvoke("UpdateDectPlayer");
     }
+    public override void ExitSkill()
+    {
+        base.ExitSkill();
+        _agent.avoidancePriority = 50;
+    }
+
+    // Before Slide
+    public override void EnterDrillDuckSlideBeforeState()
+    {
+        _agent.velocity = Vector3.zero;
+        _agent.speed = 0;
+        _agent.avoidancePriority = 1;
+
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            Vector3 dirTarget = (_detectPlayer.position - transform.position).normalized;
+            Vector3 destPos = transform.position + dirTarget * _stat.DetectRange;
+            _agent.SetDestination(destPos);
+            photonView.RPC("RPC_ChangeDrillDuckSlideBeforeState", RpcTarget.Others);
+        }
+        _monsterInfo.Patterns[0].SetCollider(_stat.PatternDamage);
+        _animator.CrossFade("BeforeSlide", 0.2f, -1, 0);
+    }
+    public override void ExcuteDrillDuckSlideBeforeState()
+    {
+        if (CurState is DieState)
+        {
+            _statemachine.ChangeState(new DieState(this));
+        }
+
+        _animator.SetFloat("BeforeSlideSpeed", 0.5f);
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("BeforeSlide"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+            if (aniTime >= 1.0f)
+            {
+                _monsterInfo.Patterns[0].DeActiveCollider();
+                _statemachine.ChangeState(new DrillDuckSlideState(this));
+            }
+        }
+    }
+    public override void ExitDrillDuckSlideBeforeState()
+    {
+    }
+
+    // Silde
+    public override void EnterDrillDuckSlideState()
+    {
+        // Í≤ΩÎ°úÏÉÅÏùò ÌîåÎ†àÏù¥Ïñ¥Î•º Î∞ÄÏ≥êÎÇ¥Î©¥ÏÑú ÎèåÏßÑ
+        _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        _agent.radius *= 2;
+        _agent.speed = _stat.MoveSpeed * 2.0f;
+
+        _animator.SetFloat("SlideSpeed", 0.5f);
+        _animator.CrossFade("Slide", 0.2f, -1, 0);
+        _monsterInfo.Patterns[1].SetCollider(_stat.PatternDamage);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDrillDuckSlideState", RpcTarget.Others);
+
+    }
+    public override void ExcuteDrillDuckSlideState()
+    {
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+            //if (aniTime <= 0.2f)
+            //{
+            //    _agent.speed = _stat.MoveSpeed;
+            //}
+            //else if (aniTime <= 0.5f)
+            //{
+            //    _agent.speed = _stat.MoveSpeed * 3.0f;
+            //}
+            //else
+            if (aniTime >= 1.0f)
+            {
+                _statemachine.ChangeState(new DrillDuckSlideAfterState(this));
+            }
+        }
+    }
+    public override void ExitDrillDuckSlideState()
+    {
+        _monsterInfo.Patterns[1].DeActiveCollider();
+    }
+
+    public override void EnterDrillDuckSlideAfterState()
+    {
+        _animator.CrossFade("AfterSlide", 0.2f, -1, 0);
+
+        // Photon
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient) photonView.RPC("RPC_ChangeDrillDuckSlideAfterState", RpcTarget.Others);
+    }
+    public override void ExecuteDrillDuckSlideAfterState()
+    {
+        if (_animator.IsInTransition(0) == false && _animator.GetCurrentAnimatorStateInfo(0).IsName("AfterSlide"))
+        {
+            float aniTime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+            if (aniTime >= 1.0f)
+            {
+                _statemachine.ChangeState(new IdleState(this));
+            }
+        }
+    }
+    public override void ExitDrillDuckSlideAfterState()
+    {
+        _agent.speed = _stat.MoveSpeed / 2.0f;
+        _agent.radius /= 2;
+        _agent.avoidancePriority = 50;
+        _agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+    }
+    #endregion
+
+    #region Photon
+    [PunRPC]
+    void RPC_ChangeDrillDuckSlideBeforeState()
+    {
+        _statemachine.ChangeState(new DrillDuckSlideBeforeState(this));
+    }
+
+    [PunRPC]
+    void RPC_ChangeDrillDuckSlideState()
+    {
+        _statemachine.ChangeState(new DrillDuckSlideState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDrillDuckSlideAfterState()
+    {
+        _statemachine.ChangeState(new DrillDuckSlideAfterState(this));
+    }
+
+
+    [PunRPC]
+    void RPC_ChangeIdleState()
+    {
+        _statemachine.ChangeState(new IdleState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeMoveState()
+    {
+        _statemachine.ChangeState(new MoveState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeSkillState()
+    {
+        _statemachine.ChangeState(new SkillState(this));
+    }
+    [PunRPC]
+    void RPC_ChangeDieState()
+    {
+        _statemachine.ChangeState(new DieState(this));
+    }
+
+    [PunRPC]
+    void RPC_MonsterAttacked(int damage)
+    {
+        MonsterAttacked(damage);
+
+    }
+    #endregion
 }

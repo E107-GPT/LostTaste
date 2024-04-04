@@ -11,23 +11,24 @@ public class CameraController : MonoBehaviour
     Vector3 _delta = new Vector3(3.0f, 6.0f, -5.0f);
 
     [SerializeField]
-    GameObject _player = null;
+    public GameObject _player = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if(_mode == Define.CameraMode.QuarterVeiw)
+        if(_player != null && _mode == Define.CameraMode.QuarterVeiw)
         {
             RaycastHit hit;
             if(Physics.Raycast(_player.transform.position, _delta, out hit, _delta.magnitude, LayerMask.GetMask("Wall")))
             {
-                Debug.Log($"??? : {hit.point}");
+                //Debug.Log($"??? : {hit.point}");
 
                 float dist = (hit.point - _player.transform.position).magnitude * 0.8f;
                 transform.position = _player.transform.position + _delta.normalized * dist;

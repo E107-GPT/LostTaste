@@ -2,230 +2,210 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.SceneManagement;
+using TMPro;
 
+/// <summary>
+/// ë¡œê·¸ì¸ ë° íšŒì›ê°€ì…ì„ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤ì…ë‹ˆë‹¤.
+/// </summary>
 public class Login : MonoBehaviour
 {
-    // ·Î±×ÀÎ ÀÔ·Â ÇÊµå
-    public TMP_InputField loginInputID; // ·Î±×ÀÎ ¾ÆÀÌµğ ÀÔ·Â ÇÊµå
-    public TMP_InputField loginInputPW; // ·Î±×ÀÎ ºñ¹Ğ¹øÈ£ ÀÔ·Â ÇÊµå
+    // ë¡œê·¸ì¸ ì…ë ¥ í•„ë“œ
+    [Header("[ ë¡œê·¸ì¸ ì…ë ¥ í•„ë“œ ]")]
+    public TMP_InputField loginInputID; // ë¡œê·¸ì¸ ì•„ì´ë”” ì…ë ¥ í•„ë“œ
+    public TMP_InputField loginInputPW; // ë¡œê·¸ì¸ ë¹„ë°€ë²ˆí˜¸ ì…ë ¥ í•„ë“œ
 
-    // È¸¿ø°¡ÀÔ ÀÔ·Â ÇÊµå
-    public TMP_InputField signUpInputID; // È¸¿ø°¡ÀÔ ¾ÆÀÌµğ ÀÔ·Â ÇÊµå
-    public TMP_InputField signUpInputNickname; // È¸¿ø°¡ÀÔ ´Ğ³×ÀÓ ÀÔ·Â ÇÊµå
-    public TMP_InputField signUpInputPW; // È¸¿ø°¡ÀÔ ºñ¹Ğ¹øÈ£ ÀÔ·Â ÇÊµå
-    public TMP_InputField signUpInputPWConfirm; // È¸¿ø°¡ÀÔ ºñ¹Ğ¹øÈ£ È®ÀÎ ÀÔ·Â ÇÊµå
+    // íšŒì›ê°€ì… ì…ë ¥ í•„ë“œ
+    [Header("[ íšŒì›ê°€ì… ì…ë ¥ í•„ë“œ ]")]
+    public TMP_InputField signUpInputID; // íšŒì›ê°€ì… ì•„ì´ë”” ì…ë ¥ í•„ë“œ
+    public TMP_InputField signUpInputNickname; // íšŒì›ê°€ì… ë‹‰ë„¤ì„ ì…ë ¥ í•„ë“œ
+    public TMP_InputField signUpInputPW; // íšŒì›ê°€ì… ë¹„ë°€ë²ˆí˜¸ ì…ë ¥ í•„ë“œ
+    public TMP_InputField signUpInputPWConfirm; // íšŒì›ê°€ì… ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ì…ë ¥ í•„ë“œ
 
-    // ¹öÆ°
-    public Button loginButton; // ·Î±×ÀÎ ¹öÆ°
-    public Button signUpButton; // È¸¿ø°¡ÀÔ ¹öÆ°
-    public Button showLoginButton; // ·Î±×ÀÎ Ã¢ Ç¥½Ã ¹öÆ°
-    public Button showSignUpButton; // È¸¿ø°¡ÀÔ Ã¢ Ç¥½Ã ¹öÆ°
+    // ì¸ì¦ ë²„íŠ¼
+    [Header("[ ì¸ì¦ ë²„íŠ¼ ]")]
+    public Button loginButton; // ë¡œê·¸ì¸ ë²„íŠ¼
+    public Button signUpButton; // íšŒì›ê°€ì… ë²„íŠ¼
 
-    // ÆĞ³Î
-    public GameObject loginPanel; // ·Î±×ÀÎ ÆĞ³Î
-    public GameObject signUpPanel; // È¸¿ø°¡ÀÔ ÆĞ³Î
-    public GameObject connectingPanel; // Ä¿³ØÆ® ÆĞ³Î
+    // íŒ¨ë„ ë²„íŠ¼
+    [Header("[ íŒ¨ë„ ë²„íŠ¼ ]")]
+    public Button showLoginButton; // ë¡œê·¸ì¸ íŒ¨ë„ í‘œì‹œ ë²„íŠ¼
+    public Button showSignUpButton; // íšŒì›ê°€ì… íŒ¨ë„ í‘œì‹œ ë²„íŠ¼
 
-    // °æ°í ¹®±¸
-    public TextMeshProUGUI warningText; // °æ°í ÅØ½ºÆ®
+    // íŒ¨ë„
+    [Header("[ íŒ¨ë„ ]")]
+    public GameObject authenticationPanel; // ì¸ì¦ íŒ¨ë„
+    public GameObject loginPanel; // ë¡œê·¸ì¸ íŒ¨ë„
+    public GameObject signUpPanel; // íšŒì›ê°€ì… íŒ¨ë„
+    public GameObject connectingPanel; // ì—°ê²° ì¤‘ íŒ¨ë„
+    public GameObject nicknamePanel; // ë‹‰ë„¤ì„ íŒ¨ë„
 
-    // »ç¿ëÀÚ°¡ ·Î±×ÀÎÀ» ½ÃµµÇÒ ¶§ ¹ß»ıÇÏ´Â ÀÌº¥Æ®
-    public event Action<string, string> onClickLogin;
+    // í…ìŠ¤íŠ¸
+    [Header("[ í…ìŠ¤íŠ¸ ]")]
+    public TextMeshProUGUI warningText; // ê²½ê³  í…ìŠ¤íŠ¸
+    public TextMeshProUGUI nicknameText; // ë‹‰ë„¤ì„ í…ìŠ¤íŠ¸
 
     HTTPRequest request;
 
-    // ------------------------------- ½ºÅ©¸³Æ®°¡ È°¼ºÈ­µÇ¾úÀ» ¶§ È£Ãâ -------------------------------
+    // ê°ì²´ê°€ ì´ˆê¸°í™”ë  ë•Œ í˜¸ì¶œë˜ëŠ” ë©”ì„œë“œ
     private void Awake()
     {
-        // ·Î±×ÀÎ ¹öÆ°¿¡ Å¬¸¯ ÀÌº¥Æ®¸¦ Ãß°¡
+        // ë²„íŠ¼ì— ì´ë²¤íŠ¸ ì¶”ê°€
         if (loginButton != null)
-        {
             this.loginButton.onClick.AddListener(HandleLoginButtonClick);
-        }
 
-        // È¸¿ø°¡ÀÔ ¹öÆ°¿¡ Å¬¸¯ ÀÌº¥Æ®¸¦ Ãß°¡
         if (signUpButton != null)
-        {
             this.signUpButton.onClick.AddListener(HandleSignUpButtonClick);
-        }
 
-        // ·Î±×ÀÎ Ã¢ Ç¥½Ã ¹öÆ°¿¡ Å¬¸¯ ÀÌº¥Æ®¸¦ Ãß°¡ÇÕ´Ï´Ù.
         if (showLoginButton != null)
-        {
             this.showLoginButton.onClick.AddListener(ShowLoginPanel);
-        }
 
-        // È¸¿ø°¡ÀÔ Ã¢ Ç¥½Ã ¹öÆ°¿¡ Å¬¸¯ ÀÌº¥Æ®¸¦ Ãß°¡ÇÕ´Ï´Ù.
         if (showSignUpButton != null)
-        {
             this.showSignUpButton.onClick.AddListener(ShowSignupPanel);
-        }
 
-        if(connectingPanel!= null)
-        connectingPanel.SetActive(false);
+        // ì—°ê²° ì¤‘ íŒ¨ë„ ìˆ¨ê¸°ê¸°, í•´ë‹¹ íŒ¨ë„ì€ ë‚˜ì¤‘ì— í‘œì‹œë¨
+        if (connectingPanel != null)
+            connectingPanel.SetActive(false);
 
+        // HTTPRequest ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•„ì„œ í• ë‹¹
         request = GameObject.Find("GameManager").GetComponent<HTTPRequest>();        
     }
 
-    // ------------------------------- ·Î±×ÀÎ ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÇ´Â ÇÔ¼ö -------------------------------
+    // ì‚¬ìš©ì ë‹‰ë„¤ì„ì„ UIì— ì—…ë°ì´íŠ¸í•˜ëŠ” ë©”ì„œë“œ
+    void UpdateUserNicknameDisplay()
+    {
+        // UserInfo ì¸ìŠ¤í„´ìŠ¤ ê°€ì ¸ì˜¤ê¸°
+        UserInfo userInfo = UserInfo.GetInstance();
+
+        // ë‹‰ë„¤ì„ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+        string nickname = userInfo.getNickName();
+
+        // ê°€ì ¸ì˜¨ ì •ë³´ë¥¼ TextMeshProUGUIì— ì ìš©
+        nicknameText.text = nickname + "<color=white>ë‹˜, í™˜ì˜í•©ë‹ˆë‹¤!</color>";
+    }
+
+    // ë¡œê·¸ì¸ ë²„íŠ¼ í´ë¦­ì‹œ í˜¸ì¶œë˜ëŠ” ë©”ì„œë“œ
     public void HandleLoginButtonClick()
     {
-        // ÀÔ·ÂµÈ ¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ °¡Á®¿È
+        // ì…ë ¥ëœ ì•„ì´ë””ì™€ ë¹„ë°€ë²ˆí˜¸ ê°€ì ¸ì˜¤ê¸°
         string id = loginInputID.text;
         string pw = loginInputPW.text;
-        Debug.Log(id);
-        Debug.Log(pw);
 
-        // À¯È¿ÇÏÁö ¾ÊÀº ¾ÆÀÌµğ ¹× ºñ¹Ğ¹øÈ£ÀÎ °æ¿ì
-        if (!IsNotValidIDPW(id, pw))
-        {
-            warningText.text = "¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇØÁÖ¼¼¿ä.";
-            warningText.gameObject.SetActive(true); // °æ°í ¹®±¸ È°¼ºÈ­
-            return;
-        }
+        // ì¸ì¦ ì •ë³´ ì¶œë ¥
+        // Debug.LogFormat("ì¸ì¦ ì •ë³´: id: {0}, pw={1}", id, pw);
 
-        // ¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ µğ¹ö±× ·Î±×·Î Ãâ·Â
-        Debug.LogFormat("·Î±×ÀÎ Á¤º¸: id: {0}, pw={1}", id, pw);
-
-
-        // onClickLogin ÀÌº¥Æ®¸¦ È£ÃâÇÏ¿© ·Î±×ÀÎÀ» ½Ãµµ
-        //onClickLogin?.Invoke(id, pw);
-
+        // ë¡œê·¸ì¸ ìš”ì²­ ë³´ë‚´ê¸°
         Dictionary<string, string> requestParam = new Dictionary<string, string>();
-
         requestParam.Add("accountId", id);
         requestParam.Add("password", pw);
-
         request.POSTCall("auth/login", requestParam);
     }
 
-    // ------------------------------- È¸¿ø°¡ÀÔ ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÇ´Â ÇÔ¼ö -------------------------------
+    // íšŒì›ê°€ì… ë²„íŠ¼ í´ë¦­ì‹œ í˜¸ì¶œë˜ëŠ” ë©”ì„œë“œ
     public void HandleSignUpButtonClick()
     {
-        // ÀÔ·ÂµÈ ¾ÆÀÌµğ, ´Ğ³×ÀÓ, ºñ¹Ğ¹øÈ£, ºñ¹Ğ¹øÈ£ È®ÀÎÀ» °¡Á®¿È
+        // ì…ë ¥ëœ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
         string id = signUpInputID.text;
         string nickname = signUpInputNickname.text;
         string pw = signUpInputPW.text;
         string pwConfirm = signUpInputPWConfirm.text;
 
-        // Áßº¹µÈ ¾ÆÀÌµğÀÎ °æ¿ì
-        if (!IsDuplicateID(id))
-        {
-            warningText.text = "Áßº¹µÈ ¾ÆÀÌµğ ÀÔ´Ï´Ù.";
-            warningText.gameObject.SetActive(true); // °æ°í ¹®±¸ È°¼ºÈ­
-            return;
-        }
-
-        // Áßº¹µÈ ´Ğ³×ÀÓÀÎ °æ¿ì
-        if (!IsDuplicateNickname(nickname))
-        {
-            warningText.text = "Áßº¹µÈ ´Ğ³×ÀÓ ÀÔ´Ï´Ù.";
-            warningText.gameObject.SetActive(true); // °æ°í ¹®±¸ È°¼ºÈ­
-            return;
-        }
-
-        // ºñ¹Ğ¹øÈ£¿Í ºñ¹Ğ¹øÈ£ È®ÀÎÀÌ ÀÏÄ¡ÇÏÁö ¾Ê´Â °æ¿ì
+        // ë¹„ë°€ë²ˆí˜¸ì™€ ë¹„ë°€ë²ˆí˜¸ í™•ì¸ì´ ì¼ì¹˜í•˜ëŠ”ì§€ í™•ì¸
         if (pw != pwConfirm)
         {
-            warningText.text = "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.";
-            warningText.gameObject.SetActive(true); // °æ°í ¹®±¸ È°¼ºÈ­
+            warningText.text = "ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.";
+            warningText.gameObject.SetActive(true); // ê²½ê³  í…ìŠ¤íŠ¸ í‘œì‹œ
             return;
         }
 
-        // ¿©±â¿¡ È¸¿ø°¡ÀÔ ·ÎÁ÷ Ãß°¡ ÇÊ¿ä @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        Debug.LogFormat("È¸¿ø°¡ÀÔ Á¤º¸: id={0}, nickname={1}, pw={2}", id, nickname, pw);
+        // íšŒì›ê°€ì… ì •ë³´ ì¶œë ¥
+        // Debug.LogFormat("íšŒì›ê°€ì… ì •ë³´: id={0}, nickname={1}, pw={2}", id, nickname, pw);
 
-        // È¸¿ø°¡ÀÔ ¼º°ø ÈÄ ·Î±×ÀÎ Ã¢À» º¸¿©ÁÜ
-        //ShowLoginPanel();
-
+        // íšŒì›ê°€ì… ìš”ì²­ ë³´ë‚´ê¸°
         Dictionary<string, string> requestParam = new Dictionary<string, string>();
-
         requestParam.Add("accountId", id);
         requestParam.Add("password", pw);
         requestParam.Add("nickname", nickname);
-
         request.POSTCall("user", requestParam);
     }
 
-    public void SignupFailure()
-    {
-        warningText.text = "È¸¿ø°¡ÀÔ¿¡ ½ÇÆĞÇß½À´Ï´Ù.";
-        warningText.gameObject.SetActive(true); // °æ°í ¹®±¸ È°¼ºÈ­
-        return;
-    }
+    // ë¡œê·¸ì¸ ì‹¤íŒ¨ì‹œ í˜¸ì¶œë˜ëŠ” ë©”ì„œë“œ
     public void LoginFailure()
     {
-        warningText.text = "·Î±×ÀÎ¿¡ ½ÇÆĞÇß½À´Ï´Ù.";
-        warningText.gameObject.SetActive(true); // °æ°í ¹®±¸ È°¼ºÈ­
+        warningText.text = "ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”.";
+        warningText.gameObject.SetActive(true); // ê²½ê³  í…ìŠ¤íŠ¸ í‘œì‹œ
         return;
     }
 
-    // ¿Ã¹Ù¸¥ ¾ÆÀÌµğ ¹× ºñ¹Ğ¹øÈ£ ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÇÔ¼ö
-    private bool IsNotValidIDPW(string id, string pw)
+    // íšŒì›ê°€ì… ì‹¤íŒ¨ì‹œ í˜¸ì¶œë˜ëŠ” ë©”ì„œë“œ
+    public void SignupFailure()
     {
-        // ¿©±â¿¡ ¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£ÀÇ À¯È¿¼ºÀ» È®ÀÎÇÏ´Â ·ÎÁ÷ ÀÛ¼º ÇÊ¿ä @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        return true; // ÀÓ½Ã·Î true¸¦ ¹İÈ¯ÇÏµµ·Ï ¼³Á¤
+        warningText.text = "íšŒì›ê°€ì…ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.";
+        warningText.gameObject.SetActive(true); // ê²½ê³  í…ìŠ¤íŠ¸ í‘œì‹œ
+        return;
     }
 
-    // ¾ÆÀÌµğ Áßº¹ ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÇÔ¼ö
-    private bool IsDuplicateID(string id)
-    {
-        // ¿©±â¿¡ ¾ÆÀÌµğ Áßº¹ ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ·ÎÁ÷À» ÀÛ¼º ÇÊ¿ä @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        return true; // ÀÓ½Ã·Î false¸¦ ¹İÈ¯ÇÏµµ·Ï ¼³Á¤
-    }
-
-    // ´Ğ³×ÀÓ Áßº¹ ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÇÔ¼ö
-    private bool IsDuplicateNickname(string nickname)
-    {
-        // ¿©±â¿¡ ´Ğ³×ÀÓ Áßº¹ ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ·ÎÁ÷À» ÀÛ¼º ÇÊ¿ä @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        return true; // ÀÓ½Ã·Î false¸¦ ¹İÈ¯ÇÏµµ·Ï ¼³Á¤
-    }
-
-    // ·Î±×ÀÎ ÆĞ³ÎÀ» È°¼ºÈ­ÇÏ°í È¸¿ø°¡ÀÔ ÆĞ³ÎÀ» ºñÈ°¼ºÈ­ÇÏ´Â ÇÔ¼ö
+    // ë¡œê·¸ì¸ íŒ¨ë„ í‘œì‹œ ë° íšŒì›ê°€ì… íŒ¨ë„ ìˆ¨ê¸°ëŠ” ë©”ì„œë“œ
     public void ShowLoginPanel()
     {
-        // ÀÔ·Â ÇÊµå ÃÊ±âÈ­
+        // ì…ë ¥ í•„ë“œ ì´ˆê¸°í™”
         loginInputID.text = "";
         loginInputPW.text = "";
 
-        // ÆĞ³Î º¯°æ
+        // íŒ¨ë„ í‘œì‹œ
         loginPanel.SetActive(true);
         signUpPanel.SetActive(false);
 
-        // °æ°í ¹®±¸ ºñÈ°¼ºÈ­
+        // ê²½ê³  í…ìŠ¤íŠ¸ ìˆ¨ê¸°ê¸°
         warningText.gameObject.SetActive(false);
     }
 
-    public void ShowConnecting()
-    {
-        connectingPanel.SetActive(true);
-    }
-    public void CloseConnecting()
-    {
-        connectingPanel.SetActive(false);
-    }
-
-    // È¸¿ø°¡ÀÔ ÆĞ³ÎÀ» È°¼ºÈ­ÇÏ°í ·Î±×ÀÎ ÆĞ³ÎÀ» ºñÈ°¼ºÈ­ÇÏ´Â ÇÔ¼ö
+    // íšŒì›ê°€ì… íŒ¨ë„ í‘œì‹œ ë° ë¡œê·¸ì¸ íŒ¨ë„ ìˆ¨ê¸°ëŠ” ë©”ì„œë“œ
     public void ShowSignupPanel()
     {
-        // ÀÔ·Â ÇÊµå ÃÊ±âÈ­
+        // ì…ë ¥ í•„ë“œ ì´ˆê¸°í™”
         signUpInputID.text = "";
         signUpInputNickname.text = "";
         signUpInputPW.text = "";
         signUpInputPWConfirm.text = "";
 
-        // ÆĞ³Î º¯°æ
+        // íŒ¨ë„ í‘œì‹œ
         signUpPanel.SetActive(true);
         loginPanel.SetActive(false);
 
-        // °æ°í ¹®±¸ ºñÈ°¼ºÈ­
+        // ê²½ê³  í…ìŠ¤íŠ¸ ìˆ¨ê¸°ê¸°
         warningText.gameObject.SetActive(false);
     }
 
-    public void MoveScene()
+    // ì—°ê²° ì¤‘ íŒ¨ë„ í‘œì‹œí•˜ëŠ” ë©”ì„œë“œ
+    public void ShowConnecting()
     {
-        SceneManager.LoadScene(0);
+        connectingPanel.SetActive(true);
+    }
+
+    // ì—°ê²° ì¤‘ íŒ¨ë„ ìˆ¨ê¸°ëŠ” ë©”ì„œë“œ
+    public void CloseConnecting()
+    {
+        connectingPanel.SetActive(false);
+    }
+
+    // ê²½ê³  ë©”ì‹œì§€ë¥¼ í‘œì‹œí•˜ëŠ” ë©”ì„œë“œ
+    public void ShowWarnMessage(string message)
+    {
+        if (message.Length > 0)
+            warningText.text = message;
+        else
+            warningText.text = "ì…ë ¥ì— ë¬¸ì œê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.";
+    }
+
+    // ì¸ì¦ íŒ¨ë„ì„ ë‹«ëŠ” ë©”ì„œë“œ
+    public void CloseAuthenticationPanel()
+    {
+        connectingPanel.SetActive(false);
+        authenticationPanel.SetActive(false);
+        nicknamePanel.SetActive(true);
+
+        // ì‚¬ìš©ì ë‹‰ë„¤ì„ í‘œì‹œ
+        UpdateUserNicknameDisplay();
     }
 }

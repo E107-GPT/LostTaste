@@ -21,27 +21,17 @@ public abstract class State : IState
     public abstract void Exit();
 }
 
+// ì•„ë§ˆ í•„ìš” ì—†ì–´ì§ˆ ë¶€ë¶„
 
 
+//public abstract class State<T> where T : class
+//{
+//    í•´ë‹¹ ìƒíƒœë¥¼ ì‹œì‘í•  ë•Œ 1íšŒ í˜¸ì¶œ
+//    public abstract void Enter(T entity);
 
+//    í•´ë‹¹ ìƒíƒœë¥¼ ì—…ë°ì´íŠ¸í•  ë•Œ ë§¤ í”„ë ˆì„ í˜¸ì¶œ
+//    public abstract void Execute(T entity);
 
-
-
-
-// ¾Æ¸¶ ÇÊ¿ä ¾ø¾îÁú ºÎºĞ
-
-
-public abstract class State<T> where T : class
-{
-    // ÇØ´ç »óÅÂ¸¦ ½ÃÀÛÇÒ ¶§ 1È¸ È£Ãâ
-    public abstract void Enter(T entity);
-
-    // ÇØ´ç »óÅÂ¸¦ ¾÷µ¥ÀÌÆ®ÇÒ ¶§ ¸Å ÇÁ·¹ÀÓ È£Ãâ
-    public abstract void Execute(T entity);
-
-    // ÇØ´ç »óÅÂ¸¦ Á¾·áÇÒ ¶§ 1È¸ È£Ãâ
-    public abstract void Exit(T entity);
-}
-
-
-
+//    í•´ë‹¹ ìƒíƒœë¥¼ ì¢…ë£Œí•  ë•Œ 1íšŒ í˜¸ì¶œ
+//    public abstract void Exit(T entity);
+//}

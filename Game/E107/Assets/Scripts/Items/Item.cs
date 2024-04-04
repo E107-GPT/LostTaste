@@ -1,28 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Item : MonoBehaviour
+using Photon.Pun;
+public class Item : MonoBehaviour, IPlayerInteractable
 {
-    [SerializeField]
-    protected int _attackDamage = 50;
-    [SerializeField]
-    float _attackRange = 8.0f;
-    [SerializeField]
-    bool isDropped = false;
-    CapsuleCollider _itemCollider;
+    protected CapsuleCollider _itemCollider;
 
-    GameObject _normalAttackObj;
-    BoxCollider _normalAttackCollider;
+    [field: SerializeField]
+    public int Id { get; set; }
 
-    // Start is called before the first frame update
-    void Start()
+    [field: SerializeField]
+    public string Name { get; set; }
+    [field: SerializeField]
+    public ItemTier Tier { get; set; }
+    [field: SerializeField]
+    public string FlavorText { get; set; }
+    [field: SerializeField]
+    public Sprite Icon { get; set; }
+
+    [field: SerializeField]
+    public Skill LeftSkill { get; protected set; }
+    [field: SerializeField]
+    public Skill RightSkill { get; protected set; }
+
+    // true일 시 아이템 상자에서 나오지 않음
+    [field: SerializeField]
+    public bool IsHidden { get; protected set; }
+
+    [SerializeField]
+    protected bool isDropped = false;
+
+    void Awake()
     {
+        if (LeftSkill == null) {
+            LeftSkill = gameObject.GetOrAddComponent<NormalAttackSkill>();
+        }
+        if (RightSkill == null) {
+            RightSkill = gameObject.GetOrAddComponent<EmptySkill>();
+        }
+
         Init();
     }
 
-    protected void Init()
+    protected virtual void Init()
     {
+
         _itemCollider = gameObject.AddComponent<CapsuleCollider>();
         if (isDropped)
         {
@@ -31,68 +53,46 @@ public class Item : MonoBehaviour
         else
         {
             _itemCollider.enabled = false;
-            OnEquip();
+            OnEquipped();
         }    
     }
 
-    public void OnEquip()
+    public void OnEquipped()
     {
-        _normalAttackObj = new GameObject("NormalAttack");
-
-        Debug.Log(_attackDamage);
-        _normalAttackObj.AddComponent<SkillObject>().SetUp(transform, _attackDamage, 1);
-
-        _normalAttackCollider = _normalAttackObj.AddComponent<BoxCollider>();
-        _normalAttackCollider.isTrigger = true;
-        _normalAttackObj.SetActive(false);
         _itemCollider.enabled = false;
         transform.localPosition = new Vector3(0, 0, 0);
         transform.localRotation = new Quaternion(0, 0, 0, 0);
-        DontDestroyOnLoad(_normalAttackObj);
+        
         isDropped = false;
     }
 
     public void OnDropped()
     {
-        Destroy(_normalAttackObj);
         isDropped = true;
         _itemCollider.enabled = true;
 
     }
-    public void NormalAttack()
+    public int CastLeftSkill() { return LeftSkill.Cast(); }
+
+    public int CastRightSkill() { return RightSkill.Cast(); }
+
+    public void OnInteracted(GameObject player)
     {
-        StartCoroutine(NormalAttackCorotine());
+        player.GetComponent<PlayerController>().EquipItem(this);
     }
 
-    IEnumerator NormalAttackCorotine()
+    public string GetFullId()
     {
-        Debug.Log("Normal Attack");
-        
-        yield return new WaitForSeconds(0.3f);
-        _normalAttackObj.SetActive(true);
-        _normalAttackObj.GetComponent<SkillObject>().SetUp(transform.root, _attackDamage, 1);
-        Managers.Sound.Play("swing1");
-        Transform root = gameObject.transform.root;
-
-        _normalAttackObj.transform.localScale = new Vector3(1.0f, 1.0f, _attackRange);
-        _normalAttackObj.transform.position = root.transform.TransformPoint(Vector3.forward * (_attackRange / 2));
-        //_normalAttackObj.transform.position = root.position + root.forward * (_attackRange/2);
-        _normalAttackObj.transform.position = new Vector3(_normalAttackObj.transform.position.x, root.position.y + 0.5f, _normalAttackObj.transform.position.z);
-        _normalAttackObj.transform.rotation = root.rotation;
-
-
-        yield return new WaitForSeconds(0.3f);
-        _normalAttackObj.SetActive(false);
-
-
+        return "ITM_" + Id.ToString().PadLeft(4, '0');
     }
+}
 
-    public void SkillAttack()
-    {
-
-
-
-    }
-
-
-    }
+public enum ItemTier
+{
+    COMMON = 0, // 일반
+    UNCOMMON = 1, // 고급
+    RARE = 2, // 레어
+    EPIC = 3, // 희귀
+    LEGENDARY = 4, // 전설
+    BOSS = 5 // 보스
+}
