@@ -40,11 +40,11 @@ public class ThunderHammerSkill : Skill, IAttackSkill
         thunder.transform.position = skillObj.position;
 
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.3f);
         Managers.Resource.Destroy(skillObj.gameObject);
 
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         Managers.Effect.Stop(ps);
     }
 }
