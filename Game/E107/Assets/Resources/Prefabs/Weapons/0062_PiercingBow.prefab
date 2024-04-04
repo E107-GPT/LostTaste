@@ -178,7 +178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1855155841409246839
 Transform:
   m_ObjectHideFlags: 0
@@ -424,10 +424,10 @@ GameObject:
   - component: {fileID: 3505238756852739556}
   - component: {fileID: 8813774825390679790}
   - component: {fileID: 390956441660699915}
-  - component: {fileID: 1114128714064785279}
+  - component: {fileID: -1883554992356636683}
   - component: {fileID: 8740565764004689423}
   m_Layer: 9
-  m_Name: 0056_OldBow
+  m_Name: 0062_PiercingBow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -483,17 +483,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c73f9d009c682f42b599582576af92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: 56
-  <Name>k__BackingField: "\uB0A1\uC740 \uD65C"
-  <Tier>k__BackingField: 0
-  <FlavorText>k__BackingField: "\uB0A1\uC740 \uD65C\uC758 \uD65C \uC2DC\uC704\uB294
-    \uC57D\uD569\uB2C8\uB2E4."
+  <Id>k__BackingField: 62
+  <Name>k__BackingField: "\uAD00\uD1B5 \uD65C"
+  <Tier>k__BackingField: 1
+  <FlavorText>k__BackingField: "\uAC15\uD558\uAC8C \uC3D8\uAE30 \uC704\uD574 \uD798\uC744
+    \uBAA8\uC74D\uC2DC\uB2E4!"
   <Icon>k__BackingField: {fileID: 21300000, guid: 77e14972daf3a164394314eed7899c15, type: 3}
   <LeftSkill>k__BackingField: {fileID: 0}
-  <RightSkill>k__BackingField: {fileID: 1114128714064785279}
+  <RightSkill>k__BackingField: {fileID: -1883554992356636683}
   <IsHidden>k__BackingField: 0
   isDropped: 1
---- !u!114 &1114128714064785279
+--- !u!114 &-1883554992356636683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -502,19 +502,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4754133259279152715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c203083226d4294f8e05a54c10358dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f91ed9865ced62418f05dc5c8cb8888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: "\uC870\uC2EC\uC2A4\uB7FD\uACE0 \uC57D\uD558\uAC8C \uD654\uC0B4
-    \uC3D8\uAE30"
-  <Description>k__BackingField: "\uC870\uC2EC \uC870\uC2EC"
-  <Icon>k__BackingField: {fileID: 21300000, guid: 7766182687479d5468a948af4c023bc4, type: 3}
+  <Name>k__BackingField: "\uAC15\uD558\uAC8C \uC3D8\uAE30"
+  <Description>k__BackingField: "\uC801\uC744 \uAD00\uD1B5\uD569\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 21300000, guid: 5a63ec82f4e4b4f458b7cd37ff6ed4a3, type: 3}
   <SkillCoolDownTime>k__BackingField: 1
-  <RequiredMp>k__BackingField: 15
-  <Damage>k__BackingField: 40
+  <RequiredMp>k__BackingField: 20
+  <Damage>k__BackingField: 50
   <Duration>k__BackingField: 0.4
-  <Velocity>k__BackingField: 20
-  <AudioClip>k__BackingField: {fileID: 8300000, guid: 327abfd8802775d418b743912fa6fa57, type: 3}
+  <Velocity>k__BackingField: 25
+  <AudioClip>k__BackingField: {fileID: 8300000, guid: b48e632c5a6c6174e8bccaa9f04d399f, type: 3}
 --- !u!114 &8740565764004689423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,7 +552,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6738511547862107817
 Transform:
   m_ObjectHideFlags: 0
