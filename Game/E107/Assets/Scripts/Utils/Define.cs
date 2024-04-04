@@ -115,6 +115,7 @@ public class Define
         StormDaggerEffect,
         StormDaggerFinishEffect,
         AxeWhirlwindEffect,
+        ThunderHammerEffect,
         MaxCount
     }
 
