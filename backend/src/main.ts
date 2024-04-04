@@ -9,20 +9,26 @@ import { BusinessExceptionFilter } from './exception/exception-filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     httpsOptions: {
-      key: fs.readFileSync(path.join(process.cwd(), process.env.HTTPS_KEY_PATH)),
-      cert: fs.readFileSync(path.join(process.cwd(), process.env.HTTPS_CERT_PATH)),
-    }
+      key: fs.readFileSync(
+        path.join(process.cwd(), process.env.HTTPS_KEY_PATH),
+      ),
+      cert: fs.readFileSync(
+        path.join(process.cwd(), process.env.HTTPS_CERT_PATH),
+      ),
+    },
   });
 
   initializeSwagger(app);
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,
-    transformOptions: {
-      enableImplicitConversion: true
-    }
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
   app.useGlobalFilters(new BusinessExceptionFilter());
-
+  app.enableCors();
   await app.listen(process.env.SERVER_PORT);
 }
 bootstrap();
