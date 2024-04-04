@@ -1,8 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as fs from 'fs';
+<<<<<<< HEAD
+=======
+import * as path from 'path';
+import { BusinessExceptionFilter } from './exception/exception-filter';
+>>>>>>> 7352ca8f72583167efc8ca3fe09206d5a54789e3
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -13,8 +18,15 @@ async function bootstrap() {
   });
 
   initializeSwagger(app);
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    transformOptions: {
+      enableImplicitConversion: true
+    }
+  }));
+  app.useGlobalFilters(new BusinessExceptionFilter());
 
-  await app.listen(443);
+  await app.listen(process.env.SERVER_PORT);
 }
 bootstrap();
 
