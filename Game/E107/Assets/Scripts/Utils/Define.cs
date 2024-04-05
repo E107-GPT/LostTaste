@@ -114,6 +114,19 @@ public class Define
         BowArrowBrokenEFfect,
         StormDaggerEffect,
         StormDaggerFinishEffect,
+        BoomArrowBrokenEffect,
+        BoomBowSkillEffect,
+        TefalEffect,
+        AxeWhirlwindEffect,
+        SpearSkillEffect,
+        ThunderHammerEffect,
+        IceBroomEffect,
+        PoleArmSkillEffect,
+        StabEffect,
+        WindSpearSkillEffect,
+        KhopeshEffect,
+        DaggerNormalAttackEffect,
+        ThunderSpearSkillEffect,
         MaxCount
     }
 
