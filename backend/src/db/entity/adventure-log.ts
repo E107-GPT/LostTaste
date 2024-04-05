@@ -32,7 +32,7 @@ export class AdventureLog {
    * 밀리초 단위
    */
   @Column({
-    type: 'time',
+    type: 'int',
     nullable: false,
     comment: '플레이 시간'
   })
