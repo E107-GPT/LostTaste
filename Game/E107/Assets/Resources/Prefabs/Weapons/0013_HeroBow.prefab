@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 1613483221260054976}
   - component: {fileID: 3971552034091883902}
   - component: {fileID: 5775576595420225445}
+  - component: {fileID: 1071128407210202151}
   - component: {fileID: 8547201276526533830}
   m_Layer: 9
   m_Name: 0013_HeroBow
@@ -231,9 +232,33 @@ MonoBehaviour:
   <FlavorText>k__BackingField: "\uD3C9\uBC94\uD55C \uD65C\uC785\uB2C8\uB2E4."
   <Icon>k__BackingField: {fileID: 21300000, guid: 77e14972daf3a164394314eed7899c15, type: 3}
   <LeftSkill>k__BackingField: {fileID: 0}
-  <RightSkill>k__BackingField: {fileID: 0}
+  <RightSkill>k__BackingField: {fileID: 1071128407210202151}
   <IsHidden>k__BackingField: 0
   isDropped: 1
+--- !u!114 &1071128407210202151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322224181999384908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e29ade70cbc4f7643851840ac85d4fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uD2B8\uB9AC\uD50C \uC0F7"
+  <Description>k__BackingField: "\uC804\uBC29\uC5D0 \uD654\uC0B4 \uC138 \uAC1C\uB97C
+    \uB3D9\uC2DC\uC5D0 \uBC1C\uC0AC\uD574 \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
+  <Icon>k__BackingField: {fileID: 0}
+  <SkillCoolDownTime>k__BackingField: 1
+  <RequiredMp>k__BackingField: 0
+  <Damage>k__BackingField: 50
+  <Duration>k__BackingField: 0.4
+  <Velocity>k__BackingField: 30
+  <AudioClip>k__BackingField: {fileID: 8300000, guid: 327abfd8802775d418b743912fa6fa57, type: 3}
+  <ArrowCount>k__BackingField: 3
+  <SpreadAngle>k__BackingField: 30
 --- !u!114 &8547201276526533830
 MonoBehaviour:
   m_ObjectHideFlags: 0
