@@ -1,10 +1,17 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { CreatedAt, GeneratedId } from "../typeorm-utils";
+import { Member } from "./member";
 
 @Entity({ comment: '게임 클리어 기록' })
-export class GameClearLog {
+export class AdventureLog {
   @GeneratedId('게임 클리어 기록 ID', 'game_clear_log_id')
   id: string;
+
+  @ManyToOne(() => Member, { eager: false })
+  @JoinColumn({
+    name: 'captain_id'
+  })
+  captain: Member;
 
   @Column({
     type: 'varchar',
