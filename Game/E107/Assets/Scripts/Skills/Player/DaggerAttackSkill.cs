@@ -8,7 +8,7 @@ public class DaggerAttackSkill : NormalAttackSkill
     protected override IEnumerator SkillCoroutine()
     {
         Root = transform.root;
-        Scale = new Vector3(0.5f, 2.0f, 1.5f);
+        Vector3 Scale = new Vector3(0.5f, 2.0f, 1.5f);
 
         //Debug.Log("Normal Attack");
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);

@@ -162,6 +162,35 @@ public class MonologueManager: MonoBehaviour
             int Hp = monsterKingController.Stat.Hp;
             if (Hp <= 0)
             {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    HTTPRequest request;
+                    request = GameObject.Find("gm").GetComponent<HTTPRequest>();
+                    string roomName = PhotonNetwork.CurrentRoom.Name;
+                    int memberCount = PhotonNetwork.CurrentRoom.PlayerCount;
+
+                    string printRoomName = roomName;
+                    int lastIndex = printRoomName.LastIndexOf("`");
+                    if (lastIndex != -1)
+                        printRoomName = printRoomName.Substring(0, lastIndex);
+
+                    float time = GameObject.Find("Portal-ForestEntrance-Spawn").GetComponent<DungeonEntrance>().GameTime;
+
+                    Debug.Log(time);
+
+                    // 로그인 요청 보내기
+                    Dictionary<string, string> requestParam = new Dictionary<string, string>();
+                    requestParam.Add("partyName", printRoomName);
+                    requestParam.Add("memberCount", memberCount.ToString());
+                    requestParam.Add("playTimeSec", time.ToString());
+                    requestParam.Add("rngSeed", PhotonNetwork.CurrentRoom.CustomProperties["seed"].ToString());
+
+                    Debug.Log(requestParam);
+                    request.POSTCall("adventure", requestParam);
+
+
+                    Debug.Log("지금 내가 마스터인가???????");
+                }
                 OpenMonologue();
                 isMonsterKingPanelOpened = true;
             }
@@ -212,30 +241,6 @@ public class MonologueManager: MonoBehaviour
             returnToCampButton.SetActive(false);
             goToEndingButton.SetActive(true);
             adventureResultsWindow.SetActive(true);
-
-            HTTPRequest request;
-            request = GameObject.Find("gm").GetComponent<HTTPRequest>();
-            string roomName = PhotonNetwork.CurrentRoom.Name;
-            int memberCount = PhotonNetwork.CurrentRoom.PlayerCount;
-
-            string printRoomName = roomName;
-            int lastIndex = printRoomName.LastIndexOf("`");
-            if (lastIndex != -1)
-                printRoomName = printRoomName.Substring(0, lastIndex);
-
-            float time = GameObject.Find("Portal-ForestEntrance-Spawn").GetComponent<DungeonEntrance>().GameTime;
-
-            Debug.Log(time);
-
-            // 로그인 요청 보내기
-            Dictionary<string, string> requestParam = new Dictionary<string, string>();
-            requestParam.Add("partyName", printRoomName);
-            requestParam.Add("memberCount", memberCount.ToString());
-            requestParam.Add("playTimeSec", time.ToString());
-            requestParam.Add("rngSeed", PhotonNetwork.CurrentRoom.CustomProperties["seed"].ToString());
-
-            Debug.Log(requestParam);
-            request.POSTCall("adventure", requestParam);
         }
     }
 }
