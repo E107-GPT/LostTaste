@@ -13,7 +13,7 @@ public class DaggerAttackSkill : NormalAttackSkill
         //Debug.Log("Normal Attack");
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
         yield return new WaitForSeconds(0.3f);
-        ParticleSystem ps = Managers.Effect.Play(Define.Effect.NormalAttackEffect, Root);
+        ParticleSystem ps = Managers.Effect.Play(Define.Effect.DaggerNormalAttackEffect, Root);
         ps.transform.localScale = new Vector3(0.5f, 1.0f, 1.5f);
 
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
