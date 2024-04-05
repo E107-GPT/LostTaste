@@ -18,6 +18,7 @@ public class HUDManager : MonoBehaviour
     // 모험 상태
     [Header("[ 모험 상태 ]")]
     public TextMeshProUGUI nicknameText; // 닉네임 텍스트
+    public TextMeshProUGUI currentServerText; // 서버 텍스트
 
     // 팝업 창
     [Header("[ 팝업 창 ]")]
@@ -128,9 +129,12 @@ public class HUDManager : MonoBehaviour
 
         // 닉네임 정보 가져오기
         string nickname = userInfo.getNickName();
+        int currentServer = userInfo.GetCurrentServer();
 
         // 가져온 정보를 TextMeshProUGUI에 적용
         nicknameText.text = nickname;
+        currentServerText.text = currentServer.ToString();
+
     }
 
     // 플레이어 상태를 업데이트 하는 메서드

@@ -6,7 +6,7 @@ public class UserInfo
     private string nickname;
     private string accessToken;
     private int jelly;
-    private int currentServer;
+    private int currentServer = 1;
 
     UserInfo() { }
 
