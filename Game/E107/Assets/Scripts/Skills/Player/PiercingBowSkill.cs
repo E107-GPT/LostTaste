@@ -67,7 +67,7 @@ public class PiercingBowSkill : Skill, IAttackSkill
         Managers.Resource.Destroy(skillObject);
     }
 
-    private IEnumerator OnBreak(Collider other)
+    private IEnumerator OnBreak(GameObject player, Collider other)
     {
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BowArrowBrokenEFfect, other.transform);
         

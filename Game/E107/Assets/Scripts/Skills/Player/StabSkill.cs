@@ -25,7 +25,8 @@ public class StabSkill : Skill, IAttackSkill
         skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
         Vector3 offset = Root.forward.normalized * 1.5f;
-        ps.transform.position += offset;
+        Vector3 rootUp = Root.TransformDirection(Vector3.up * 0.5f);
+        ps.transform.position += (offset + rootUp);
         skillObj.position += offset;
 
         skillObj.localScale = Scale;
@@ -33,8 +34,8 @@ public class StabSkill : Skill, IAttackSkill
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 
+        yield return new WaitForSeconds(0.1f);
         _playerController.StateMachine.ChangeState(new IdleState(_playerController));
-        yield return new WaitForSeconds(0.2f);
         Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
 
