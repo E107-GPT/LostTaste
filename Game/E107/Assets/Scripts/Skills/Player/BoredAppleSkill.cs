@@ -5,15 +5,15 @@ using UnityEngine;
 public class BoredAppleSkill : ConsumingSkill
 {
     [field: SerializeField]
-    [field: Header("È¸º¹ ÁÖ±â(ÃÊ)")]
+    [field: Header("íšŒë³µ ì£¼ê¸°(ì´ˆ)")]
     public float RecoveryPeriod { get; set; }
 
     [field: SerializeField]
-    [field: Header("ÁÖ±â´ç MP È¸º¹·®")]
+    [field: Header("ì£¼ê¸°ë‹¹ MP íšŒë³µëŸ‰")]
     public int MpRecoveryAmountPerPeriod { get; set; }
 
     [field: SerializeField]
-    [field: Header("ÁÖ±â È½¼ö")]
+    [field: Header("ì£¼ê¸° íšŸìˆ˜")]
     public int PeriodCount { get; set; } 
 
     protected override IEnumerator OnConsume(PlayerController playerController)
@@ -23,7 +23,6 @@ public class BoredAppleSkill : ConsumingSkill
         for (int i = 0; i < PeriodCount; i++)
         {
             yield return new WaitForSeconds(RecoveryPeriod);
-            Debug.Log("period");
 
             playerController.Stat.Mp = Mathf.Min(playerController.Stat.MaxMp, playerController.Stat.Mp + MpRecoveryAmountPerPeriod);
         }

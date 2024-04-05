@@ -120,6 +120,7 @@ public class PhotonUIManager : MonoBehaviour
                 break;
         }
 
+        UserInfo.GetInstance().SetCurrentServer(idx);
         Debug.Log(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime);
     }
 
