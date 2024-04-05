@@ -5297,6 +5297,7 @@ GameObject:
   - component: {fileID: 1047851866}
   - component: {fileID: 1047851869}
   - component: {fileID: 1047851870}
+  - component: {fileID: 1047851871}
   m_Layer: 0
   m_Name: gm
   m_TagString: Untagged
@@ -5487,6 +5488,18 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1047851871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047851865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fecd6d43ebf114d8c0501a0a8ea980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1064457667
 GameObject:
   m_ObjectHideFlags: 0
@@ -7246,7 +7259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4735601408535869163, guid: eb9e56a5dbd7ef94dafd6b2b45bb04c5, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4960859471566226355, guid: eb9e56a5dbd7ef94dafd6b2b45bb04c5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -9579,11 +9592,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6359715323584515560, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
       propertyPath: m_Size
-      value: 0.3888889
+      value: 0.38888893
       objectReference: {fileID: 0}
     - target: {fileID: 6359715323584515560, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 1.0000001
       objectReference: {fileID: 0}
     - target: {fileID: 6482303365333883083, guid: 1d370c1613054694d886a62f06eb0a7d, type: 3}
       propertyPath: m_AnchorMax.y

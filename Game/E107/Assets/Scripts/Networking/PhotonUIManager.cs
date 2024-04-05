@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class PhotonUIManager : MonoBehaviour
 {
@@ -100,6 +102,25 @@ public class PhotonUIManager : MonoBehaviour
     public void OpenPartyWindow()
     {
         GetComponent<PhotonManager>().OpenPartyWindow();
+    }
+
+    public void ServerChange(int idx)
+    {
+        switch (idx)
+        {
+
+            case 1:
+                PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "3cace9da-35aa-49cd-a454-f748a53ca1ef";
+                break;
+            case 2:
+                PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "91851ade-708c-4a66-8f90-5b526eba80a2";
+                break;
+            case 3:
+                PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "169642ab-8e8d-42f1-bb00-ffeffe4d038c";
+                break;
+        }
+
+        Debug.Log(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime);
     }
 
     #endregion
