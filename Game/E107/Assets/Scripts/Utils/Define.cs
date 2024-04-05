@@ -126,6 +126,7 @@ public class Define
         WindSpearSkillEffect,
         KhopeshEffect,
         DaggerNormalAttackEffect,
+        ThunderSpearSkillEffect,
         MaxCount
     }
 
