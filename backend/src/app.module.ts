@@ -14,6 +14,8 @@ import { MapToObjectInterceptor } from './common/map-to-object.interceptor';
 import { UserModule } from './user/user.module';
 import { BoardModule } from './board/board.module';
 import { PasswordModule } from './password/password.module';
+import { AdventureModule } from './adventure/adventure.module';
+import { RankingModule } from './ranking/ranking.module';
 
 const configModule = ConfigModule.forRoot({
   isGlobal: true,
@@ -46,7 +48,7 @@ const mapToObjectProvider: ClassProvider = {
 }
 
 @Module({
-  imports: [configModule, typeOrmModule, redisModule, AuthModule, UserModule, CodeModule, BoardModule, PasswordModule],
+  imports: [configModule, typeOrmModule, redisModule, AuthModule, UserModule, CodeModule, BoardModule, PasswordModule, AdventureModule, RankingModule],
   controllers: [AppController],
   providers: [AppService, mapToObjectProvider],
 })
