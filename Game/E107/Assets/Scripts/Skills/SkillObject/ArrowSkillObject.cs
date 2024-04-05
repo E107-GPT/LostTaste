@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ArrowSkillObject : SkillObject
 {
-    public delegate IEnumerator OnBreakCallback(Collider other);
+    public delegate IEnumerator OnBreakCallback(GameObject attacker, Collider other);
 
     private OnBreakCallback _onBreakCallback;
 
     protected override void OnBreak(Collider other)
     {
-        if (_onBreakCallback != null) Managers.Coroutine.Run(_onBreakCallback(other));
+        if (_onBreakCallback != null) Managers.Coroutine.Run(_onBreakCallback(_attacker.gameObject, other));
     }
 
     public void SetUp(Transform attacker, int damage, int id, OnBreakCallback onBreakCallback)
