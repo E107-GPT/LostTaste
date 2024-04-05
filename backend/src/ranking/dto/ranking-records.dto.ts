@@ -7,7 +7,7 @@ export class RankingRecordsDto {
         return {
             records: entities.map(entity => ({
                 partyName: entity.partyName,
-                playTime: Math.floor(entity.playTime / 1000)
+                playTime: entity.playTime
             }))
         };
     }
@@ -15,5 +15,5 @@ export class RankingRecordsDto {
 
 class RankingRecordDto {
     partyName: string;
-    playTime: number;   // 초 단위
+    playTime: number;   // 초 단위, 소숫점 허용
 }
