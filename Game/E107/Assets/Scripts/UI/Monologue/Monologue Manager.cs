@@ -161,7 +161,7 @@ public class MonologueManager: MonoBehaviour
             // 보스가 사망할 경우 독백 UI를 활성화
             int Hp = monsterKingController.Stat.Hp;
             if (Hp <= 0)
-            {a
+            {
                 if (PhotonNetwork.IsMasterClient)
                 {
                     HTTPRequest request;
@@ -187,6 +187,9 @@ public class MonologueManager: MonoBehaviour
 
                     Debug.Log(requestParam);
                     request.POSTCall("adventure", requestParam);
+
+
+                    Debug.Log("지금 내가 마스터인가???????");
                 }
                 OpenMonologue();
                 isMonsterKingPanelOpened = true;
