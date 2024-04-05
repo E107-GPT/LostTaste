@@ -7,7 +7,7 @@ export class RankingRecordsDto {
         return {
             records: entities.map(entity => ({
                 partyName: entity.partyName,
-                playTime: entity.playTime
+                playTime: entity.playTime / 1000
             }))
         };
     }
