@@ -11,7 +11,7 @@ public class HTTPRequest : MonoBehaviour
     //string port = "443";
 
     // GET
-    // °æ·Î¸¸ ÁöÁ¤
+    // ê²½ë¡œë§Œ ì§€ì •
     IEnumerator GET(string path)
     {
         UnityWebRequest request = UnityWebRequest.Get(url + path);
@@ -19,7 +19,7 @@ public class HTTPRequest : MonoBehaviour
         
         yield return request.SendWebRequest();
 
-        if (request.result != UnityWebRequest.Result.Success) // Unity 2020.1 ÀÌÈÄºÎÅÍ´Â isNetworkError¿Í isHttpError ´ë½Å result »ç¿ë
+        if (request.result != UnityWebRequest.Result.Success) // Unity 2020.1 ì´í›„ë¶€í„°ëŠ” isNetworkErrorì™€ isHttpError ëŒ€ì‹  result ì‚¬ìš©
         {
             if (path.Equals("user/profile"))
             {
@@ -50,16 +50,21 @@ public class HTTPRequest : MonoBehaviour
 
     // POST
     // url + path = uri
-    // dictionary·Î °ª Àü´Ş
+    // dictionaryë¡œ ê°’ ì „ë‹¬
     IEnumerator POST(string path, Dictionary<string, string> postParam)
     {
-        // Dictionary¸¦ Á÷Á¢ JSON ¹®ÀÚ¿­·Î º¯È¯
+        // Dictionaryë¥¼ ì§ì ‘ JSON ë¬¸ìì—´ë¡œ ë³€í™˜
         StringBuilder jsonDataBuilder = new StringBuilder("{");
         foreach (var item in postParam)
         {
-            jsonDataBuilder.Append($"\"{item.Key}\":\"{item.Value}\",");
+            if(item.Key == "memberCount" || item.Key == "rngSeed")
+            jsonDataBuilder.Append($"\"{item.Key}\": {int.Parse(item.Value)},");
+            else if(item.Key == "playTimeSec")
+            jsonDataBuilder.Append($"\"{item.Key}\": {float.Parse(item.Value)},");
+            else
+                jsonDataBuilder.Append($"\"{item.Key}\":\"{item.Value}\",");
         }
-        if (jsonDataBuilder.Length > 1) // ¸¶Áö¸· ½°Ç¥¸¦ Á¦°ÅÇÏ±â À§ÇÔ
+        if (jsonDataBuilder.Length > 1) // ë§ˆì§€ë§‰ ì‰¼í‘œë¥¼ ì œê±°í•˜ê¸° ìœ„í•¨
         {
             jsonDataBuilder.Remove(jsonDataBuilder.Length - 1, 1);
         }
@@ -80,19 +85,19 @@ public class HTTPRequest : MonoBehaviour
             //Debug.Log("result" + postRequest.result);
             UserData data = JsonUtility.FromJson<UserData>(postRequest.downloadHandler.text);
 
-            if (path.Equals("user")) // È¸¿ø°¡ÀÔÀÏ °æ¿ì
+            if (path.Equals("user")) // íšŒì›ê°€ì…ì¼ ê²½ìš°
             {
-                // ·Î±×ÀÎ È­¸éÀ¸·Î ÀÌµ¿
+                // ë¡œê·¸ì¸ í™”ë©´ìœ¼ë¡œ ì´ë™
                 Login login = GameObject.Find("Canvas/Authentication Panel").GetComponent<Login>();
                 login.SignupFailure();
-                string msg = "ID : 4-6 ¿µ¼ıÀÚ    ´Ğ³×ÀÓ : 1-16\nºñ¹Ğ¹øÈ£ : 8-32 ¿µ¼ıÀÚÆ¯¼ö¹®ÀÚ";
+                string msg = "ID : 4-6 ì˜ìˆ«ì    ë‹‰ë„¤ì„ : 1-16\në¹„ë°€ë²ˆí˜¸ : 8-32 ì˜ìˆ«ìíŠ¹ìˆ˜ë¬¸ì";
                 if (data.message.Length > 0)
                     msg = data.message[0];
                 login.ShowWarnMessage(msg);
             }
-            else if (path.Equals("auth/login")) // ·Î±×ÀÎÀÏ °æ¿ì
+            else if (path.Equals("auth/login")) // ë¡œê·¸ì¸ì¼ ê²½ìš°
             {
-                string msg = "»ç¿ëÀÚ Á¤º¸¸¦ ºÒ·¯¿Ã ¼ö ¾ø½À´Ï´Ù.";
+                string msg = "ì‚¬ìš©ì ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜¬ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.";
                 if (data.message.Length>0)
                     msg = data.message[0];
 
@@ -101,20 +106,20 @@ public class HTTPRequest : MonoBehaviour
                 login.ShowWarnMessage(msg);
             }
         }
-        else // Åë½Å ¼º°ø
+        else // í†µì‹  ì„±ê³µ
         {
 
-            if (path.Equals("user")) // È¸¿ø°¡ÀÔÀÏ °æ¿ì
+            if (path.Equals("user")) // íšŒì›ê°€ì…ì¼ ê²½ìš°
             {
-                // ·Î±×ÀÎ È­¸éÀ¸·Î ÀÌµ¿
+                // ë¡œê·¸ì¸ í™”ë©´ìœ¼ë¡œ ì´ë™
                 Login login = GameObject.Find("Canvas/Authentication Panel").GetComponent<Login>();
                 login.ShowLoginPanel();
             }
-            else if (path.Equals("auth/login")) // ·Î±×ÀÎÀÏ °æ¿ì
+            else if (path.Equals("auth/login")) // ë¡œê·¸ì¸ì¼ ê²½ìš°
             {
                 UserData data = JsonUtility.FromJson<UserData>(postRequest.downloadHandler.text);
 
-                //¾×¼¼½º ÅäÅ«À¸·Î id, pw ¹Ş¾Æ¿À´Â get º¸³»¾ßÇÔ
+                //ì•¡ì„¸ìŠ¤ í† í°ìœ¼ë¡œ id, pw ë°›ì•„ì˜¤ëŠ” get ë³´ë‚´ì•¼í•¨
                 UserInfo.GetInstance().SetToken(data.accessToken);
 
                 GameObject.Find("Canvas/Authentication Panel").GetComponent<Login>().ShowConnecting();
@@ -131,6 +136,15 @@ public class HTTPRequest : MonoBehaviour
         public string nickname;
         public string error;
         public string[] message;
+    }
+
+    [System.Serializable]
+    class RankData
+    {
+        public string partyName;
+        public int memberCount;
+        public float playTimeSec;
+        public int rngSeed;
     }
 
     public void POSTCall(string path, Dictionary<string, string> postParam)

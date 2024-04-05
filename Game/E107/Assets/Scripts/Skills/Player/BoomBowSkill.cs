@@ -67,12 +67,12 @@ public class BoomBowSkill : Skill, IAttackSkill
         Managers.Resource.Destroy(skillObject);
     }
 
-    private IEnumerator OnBreak(Collider other)
+    private IEnumerator OnBreak(GameObject player, Collider other)
     {
         ParticleSystem ps = Managers.Effect.Play(Define.Effect.BoomArrowBrokenEffect, other.transform);
 
         GameObject skillObj = Managers.Resource.Instantiate("Skills/CircleSkillObject");
-        skillObj.GetComponent<SkillObject>().SetUp(Root.transform, 30, _seq + 1, 1);
+        skillObj.GetComponent<SkillObject>().SetUp(player.transform, 30, _seq + 1, 1);
         skillObj.GetComponent<SphereCollider>().radius = 0.7f;
         skillObj.transform.localScale = ps.transform.localScale;
         skillObj.transform.position = other.transform.position;
