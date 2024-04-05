@@ -8,7 +8,7 @@ public class NormalAttackSkill : Skill, IAttackSkill
     public int Damage { get; set; }
 
     [field: SerializeField]
-    protected Vector3 Scale = new Vector3(3.0f, 2.0f, 3.0f);
+    protected Vector3 Scale;
 
     protected override void Init() {
         if (Damage == 0)
@@ -20,6 +20,7 @@ public class NormalAttackSkill : Skill, IAttackSkill
     protected override IEnumerator SkillCoroutine()
     {
         Root = transform.root;
+
 
         //Debug.Log("Normal Attack");
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
