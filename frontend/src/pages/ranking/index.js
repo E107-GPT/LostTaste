@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import firstIcon from "../../assets/images/first.png";
 import secondIcon from "../../assets/images/second.png";
 import thirdIcon from "../../assets/images/third.png";
+import axios from "axios";
 
 const RankingPage = () => {
     //     {
@@ -15,8 +16,20 @@ const RankingPage = () => {
     const [partyList, setPartyList] = useState([1, 2, 3, 4, 5]);
 
     useEffect(() => {
-        // axios써서 받아오기
-    }, [partyList]);
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    "https://j10e107.p.ssafy.io/api/ranking?limit=10"
+                );
+                console.log(response.data.records);
+                setPartyList(response.data.records);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+        fetchData();
+    }, []);
     return (
         <>
             <Box
@@ -29,26 +42,41 @@ const RankingPage = () => {
                     backgroundPosition: "center", // 이미지 위치 설정
                 }}
             >
-                <Stack direction={"column"} alignItems={"center"} justifyContent={"center"}>
-                    <Box marginY={"3vh"} bgcolor={"rgba(0,0,0,0.9)"} padding={"1%"} borderRadius={"10px"} width={"50vw"}>
-                        <Stack borderBottom={"3px solid #FFD257"} direction={"row"} padding={"1rem"} fontWeight={"700"} color={"white"}>
+                <Stack
+                    direction={"column"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                >
+                    <Box
+                        marginY={"3vh"}
+                        bgcolor={"rgba(0,0,0,0.9)"}
+                        padding={"1%"}
+                        borderRadius={"10px"}
+                        width={"50vw"}
+                    >
+                        <Stack
+                            borderBottom={"3px solid #FFD257"}
+                            direction={"row"}
+                            padding={"1rem"}
+                            fontWeight={"700"}
+                            color={"white"}
+                        >
                             <Box width={"10%"} textAlign={"center"}>
                                 등수
                             </Box>
-                            <Box width={"45%"} textAlign={"center"}>
+                            <Box width={"50%"} textAlign={"center"}>
                                 파티이름
                             </Box>
-                            <Box width={"15%"} textAlign={"center"}>
-                                인원
-                            </Box>
-                            <Box width={"30%"} textAlign={"center"}>
+                            <Box width={"40%"} textAlign={"center"}>
                                 시간
                             </Box>
                         </Stack>
                         {partyList.map((party, i) => (
                             <Box key={i}>
                                 <Stack
-                                    borderBottom={"3px solid rgba(255,210, 87, 0.6)"}
+                                    borderBottom={
+                                        "3px solid rgba(255,210, 87, 0.6)"
+                                    }
                                     direction={"row"}
                                     padding={"1rem"}
                                     fontWeight={"500"}
@@ -57,19 +85,37 @@ const RankingPage = () => {
                                     alignItems={"center"}
                                 >
                                     <Box width={"10%"} textAlign={"center"}>
-                                        {i === 0 ? <img src={firstIcon}></img> : ""}
-                                        {i === 1 ? <img src={secondIcon}></img> : ""}
-                                        {i === 2 ? <img src={thirdIcon}></img> : ""}
+                                        {i === 0 ? (
+                                            <img src={firstIcon}></img>
+                                        ) : (
+                                            ""
+                                        )}
+                                        {i === 1 ? (
+                                            <img src={secondIcon}></img>
+                                        ) : (
+                                            ""
+                                        )}
+                                        {i === 2 ? (
+                                            <img src={thirdIcon}></img>
+                                        ) : (
+                                            ""
+                                        )}
                                         {i > 2 ? i + 1 : ""}
                                     </Box>
-                                    <Box width={"45%"} textAlign={"center"}>
-                                        파티이름
+                                    <Box width={"50%"} textAlign={"center"}>
+                                        {party.partyName}
                                     </Box>
-                                    <Box width={"15%"} textAlign={"center"}>
-                                        인원
-                                    </Box>
-                                    <Box width={"30%"} textAlign={"center"}>
-                                        시간
+                                    <Box width={"40%"} textAlign={"center"}>
+                                        {`${parseInt(
+                                            party.playTimeSec / 60
+                                        )}분 ${
+                                            parseInt(party.playTimeSec % 60) +
+                                            Number(
+                                                (party.playTimeSec % 1).toFixed(
+                                                    3
+                                                )
+                                            )
+                                        }초`}
                                     </Box>
                                 </Stack>
                             </Box>
