@@ -4,7 +4,7 @@ import { Member } from "./member";
 
 @Entity({ comment: '게임 클리어 기록' })
 export class AdventureLog {
-  @GeneratedId('게임 클리어 기록 ID', 'game_clear_log_id')
+  @GeneratedId('게임 클리어 기록 ID', 'adventure_log')
   id: string;
 
   @ManyToOne(() => Member, { eager: false })
