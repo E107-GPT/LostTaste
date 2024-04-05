@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpearSkill : Skill, IAttackSkill
+public class WindSpearSkill : Skill, IAttackSkill
 {
     [field: SerializeField]
     public int Damage { get; set; }
@@ -10,7 +10,7 @@ public class SpearSkill : Skill, IAttackSkill
     [field: SerializeField]
     private Vector3 Scale = new Vector3(1.0f, 5.0f, 1.0f);
 
-    public Define.Effect weaponEffect = Define.Effect.SpearSkillEffect;
+    public Define.Effect weaponEffect = Define.Effect.WindSpearSkillEffect;
     protected override void Init() { }
 
     protected override IEnumerator SkillCoroutine()
@@ -25,7 +25,7 @@ public class SpearSkill : Skill, IAttackSkill
         Transform skillObj = Managers.Resource.Instantiate("Skills/SkillObject").transform;
         skillObj.GetComponent<SkillObject>().SetUp(Root, Damage, _seq);
 
-        Vector3 offset = Root.forward.normalized * 1.5f;
+        Vector3 offset = Root.forward.normalized * 2.5f ;
         //ps.transform.position += offset;
         ps.transform.position = new Vector3(ps.transform.position.x, ps.transform.position.y + 0.5f, ps.transform.position.z);
         skillObj.position += offset;
@@ -38,11 +38,11 @@ public class SpearSkill : Skill, IAttackSkill
         _playerController.isHolding = true;
 
         yield return new WaitForSeconds(0.3f);
-
         _playerController.StateMachine.ChangeState(new IdleState(_playerController));
         Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
         _playerController.isHolding = false;
+
 
 
     }

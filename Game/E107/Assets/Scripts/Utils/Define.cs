@@ -123,6 +123,7 @@ public class Define
         IceBroomEffect,
         PoleArmSkillEffect,
         StabEffect,
+        WindSpearSkillEffect,
         MaxCount
     }
 
