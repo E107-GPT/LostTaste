@@ -71,18 +71,24 @@ public class HTTPRequest : MonoBehaviour
         jsonDataBuilder.Append("}");
         string jsonData = jsonDataBuilder.ToString();
 
+        //Debug.Log(" dasdad: " + jsonData);
+
         byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonData);
         UnityWebRequest postRequest = new UnityWebRequest(url + path, "POST");
         postRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         postRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         postRequest.SetRequestHeader("Content-Type", "application/json");
+        if(!path.Equals("auth/login"))
+        {
+            postRequest.SetRequestHeader("Authorization", "Bearer " + UserInfo.GetInstance().getToken());
+        }
 
         yield return postRequest.SendWebRequest();
 
+            Debug.Log("result" + postRequest.result);
         if (postRequest.result != UnityWebRequest.Result.Success)
         {
-            //Debug.LogError("error" + postRequest.error);
-            //Debug.Log("result" + postRequest.result);
+            Debug.LogError("error" + postRequest.error);
             UserData data = JsonUtility.FromJson<UserData>(postRequest.downloadHandler.text);
 
             if (path.Equals("user")) // 회원가입일 경우
@@ -108,7 +114,7 @@ public class HTTPRequest : MonoBehaviour
         }
         else // 통신 성공
         {
-
+            
             if (path.Equals("user")) // 회원가입일 경우
             {
                 // 로그인 화면으로 이동
