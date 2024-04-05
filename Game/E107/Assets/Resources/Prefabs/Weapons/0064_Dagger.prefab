@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8967874252212517374}
   - component: {fileID: -898702156324279890}
   - component: {fileID: -234351556128756004}
+  - component: {fileID: -8026962507077681298}
   m_Layer: 9
   m_Name: 0064_Dagger
   m_TagString: Untagged
@@ -51,8 +52,8 @@ MonoBehaviour:
   <Name>k__BackingField: "\uB2E8\uAC80"
   <Tier>k__BackingField: 0
   <FlavorText>k__BackingField: "\uD3C9\uBC94\uD55C \uB2E8\uAC80\uC774\uB2E4"
-  <Icon>k__BackingField: {fileID: 21300000, guid: 742f403aa9eba4b01be63d73bda3a2f7, type: 3}
-  <LeftSkill>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 21300000, guid: da0f087fc27f86d4ab3dd7aebf1c103b, type: 3}
+  <LeftSkill>k__BackingField: {fileID: -8026962507077681298}
   <RightSkill>k__BackingField: {fileID: -898702156324279890}
   <IsHidden>k__BackingField: 0
   isDropped: 1
@@ -68,8 +69,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24c84f0ca9b5257468600365607c27ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: "\uCC0C\uB974\uAE30"
-  <Description>k__BackingField: "\uB098\uB3C4 \uD55C\uBC29 \uB108\uB3C4 \uD55C\uBC29"
+  <Name>k__BackingField: "\uCC14\uB7EC\uBCF4\uAE30"
+  <Description>k__BackingField: "\uB2E8\uAC80\uC744 \uC55E\uC73C\uB85C \uCC14\uB7EC\uBCF8\uB2E4"
   <Icon>k__BackingField: {fileID: 21300000, guid: ec12d4548a9c0c5498b08801aaaab790, type: 3}
   <SkillCoolDownTime>k__BackingField: 1
   <RequiredMp>k__BackingField: 10
@@ -99,6 +100,25 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-8026962507077681298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269544113169179180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a63de5c9f9c6c4b9b5e10100edda97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: "\uB2E8\uAC80 \uD718\uB450\uB974\uAE30"
+  <Description>k__BackingField: "\uB2E8\uAC80\uC740 \uAC70\uB9AC\uAC00 \uC9E7\uC2B5\uB2C8\uB2E4"
+  <Icon>k__BackingField: {fileID: 21300000, guid: 627f3e580312fe1468344d804d515e7e, type: 3}
+  <SkillCoolDownTime>k__BackingField: 0
+  <RequiredMp>k__BackingField: 0
+  <Damage>k__BackingField: 25
+  Scale: {x: 0.5, y: 2, z: 1.5}
 --- !u!1001 &7238647009984355361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150,6 +170,10 @@ PrefabInstance:
     - target: {fileID: 7877441343542505112, guid: 645ec62e9afaadd4abb74bf74ae13308, type: 3}
       propertyPath: m_Name
       value: Sword.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877441343542505112, guid: 645ec62e9afaadd4abb74bf74ae13308, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

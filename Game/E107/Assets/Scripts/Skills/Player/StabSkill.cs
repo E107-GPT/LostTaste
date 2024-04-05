@@ -33,8 +33,8 @@ public class StabSkill : Skill, IAttackSkill
         skillObj.position = new Vector3(skillObj.position.x, Root.position.y + 0.5f, skillObj.position.z);
         skillObj.rotation = Root.rotation;
 
+        yield return new WaitForSeconds(0.1f);
         _playerController.StateMachine.ChangeState(new IdleState(_playerController));
-        yield return new WaitForSeconds(0.2f);
         Managers.Resource.Destroy(skillObj.gameObject);
         Managers.Effect.Stop(ps);
 
