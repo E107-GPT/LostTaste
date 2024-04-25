@@ -502,15 +502,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //    }
         //}
         Managers.Scene.LoadScene(Define.Scene.Dungeon);
-
+        //PhotonNetwork.Server
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Managers.Player.AddPlayer(newPlayer);
         Managers.Player.LoadPlayersInfoInCurrentRoom();
-
     }
+
+    
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {

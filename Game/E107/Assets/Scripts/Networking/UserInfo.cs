@@ -6,6 +6,7 @@ public class UserInfo
     private string nickname;
     private string accessToken;
     private int jelly;
+    private int currentServer = 1;
 
     UserInfo() { }
 
@@ -35,7 +36,16 @@ public class UserInfo
     {
         this.jelly = jelly;
     }
+    public void SetCurrentServer(int server)
+    {
+        this.currentServer = server;
+    }
 
+
+    public int GetCurrentServer()
+    {
+        return currentServer;
+    }
     public string getId()
     {
         return id;
