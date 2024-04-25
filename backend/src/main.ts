@@ -3,29 +3,32 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as fs from 'fs';
-<<<<<<< HEAD
-=======
 import * as path from 'path';
 import { BusinessExceptionFilter } from './exception/exception-filter';
->>>>>>> 7352ca8f72583167efc8ca3fe09206d5a54789e3
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     httpsOptions: {
-      key: fs.readFileSync(process.cwd() + '/resources/cert.key'),
-      cert: fs.readFileSync(process.cwd() + '/resources/cert.crt'),
-    }
+      key: fs.readFileSync(
+        path.join(process.cwd(), process.env.HTTPS_KEY_PATH),
+      ),
+      cert: fs.readFileSync(
+        path.join(process.cwd(), process.env.HTTPS_CERT_PATH),
+      ),
+    },
   });
 
   initializeSwagger(app);
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,
-    transformOptions: {
-      enableImplicitConversion: true
-    }
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
   app.useGlobalFilters(new BusinessExceptionFilter());
-
+  app.enableCors();
   await app.listen(process.env.SERVER_PORT);
 }
 bootstrap();
