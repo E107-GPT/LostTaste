@@ -39,6 +39,7 @@ public class Login : MonoBehaviour
     public GameObject signUpPanel; // 회원가입 패널
     public GameObject connectingPanel; // 연결 중 패널
     public GameObject nicknamePanel; // 닉네임 패널
+    public GameObject serverPanel; // 서버 패널
 
     // 텍스트
     [Header("[ 텍스트 ]")]
@@ -204,6 +205,7 @@ public class Login : MonoBehaviour
         connectingPanel.SetActive(false);
         authenticationPanel.SetActive(false);
         nicknamePanel.SetActive(true);
+        serverPanel.SetActive(true);
 
         // 사용자 닉네임 표시
         UpdateUserNicknameDisplay();

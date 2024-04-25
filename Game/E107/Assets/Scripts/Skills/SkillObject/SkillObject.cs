@@ -8,7 +8,7 @@ public class SkillObject : MonoBehaviour
     public static int _newId;
     int _damage;
     int _id;
-    Transform _attacker;
+    protected Transform _attacker;
     int _penetration;
 
     public void SetUp(Transform attacker, int damage, int id)

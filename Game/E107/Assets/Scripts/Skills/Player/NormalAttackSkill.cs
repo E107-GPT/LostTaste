@@ -21,6 +21,7 @@ public class NormalAttackSkill : Skill, IAttackSkill
     {
         Root = transform.root;
 
+
         //Debug.Log("Normal Attack");
         Root.GetComponent<Animator>().CrossFade("ATTACK", 0.1f, -1, 0);
         yield return new WaitForSeconds(0.3f);

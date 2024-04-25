@@ -11,7 +11,10 @@ const NavBar = () => {
         currentPage === "" ? "home" : currentPage
     );
 
-    const pageList = [{ pageName: "home", path: "/", content: "HOME" }];
+    const pageList = [
+        { pageName: "home", path: "/", content: "HOME" },
+        { pageName: "ranking", path: "/ranking", content: "RANKING" },
+    ];
     const navigate = useNavigate();
 
     return (
@@ -23,14 +26,47 @@ const NavBar = () => {
                     color={"white"}
                     minHeight={"10vh"}
                 >
-                    <Box width={"33.3%"}></Box>
+                    <Box width={"33.3%"}>
+                        <Stack
+                            direction={"row"}
+                            alignItems={"center"}
+                            marginLeft={"2vw"}
+                        >
+                            <img src={LogoImg} height={"50vh"}></img>
+                        </Stack>
+                    </Box>
                     <Box width={"33.3%"}>
                         <Stack
                             direction={"row"}
                             justifyContent={"center"}
                             alignItems={"center"}
                         >
-                            <img src={LogoImg} height={"50vh"}></img>
+                            {pageList.map((obj, index) => (
+                                <Box
+                                    key={index}
+                                    width="30%"
+                                    textAlign={"center"}
+                                    borderBottom={
+                                        curPage === obj.pageName
+                                            ? "3px solid #FFD257"
+                                            : "3px solid transparent"
+                                    }
+                                >
+                                    <Button
+                                        color="inherit"
+                                        onClick={() => {
+                                            navigate(obj.path);
+                                            setCurPage(obj.pageName);
+                                        }}
+                                        size={"large"}
+                                        fullWidth
+                                    >
+                                        <Box sx={{ fontSize: "20px" }}>
+                                            {obj.content}
+                                        </Box>
+                                    </Button>
+                                </Box>
+                            ))}
                         </Stack>
                     </Box>
                     <Box width={"33.3%"}></Box>
